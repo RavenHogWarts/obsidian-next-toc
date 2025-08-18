@@ -1,4 +1,4 @@
-import "@style/styles";
+import "@styles/styles";
 import {
 	App,
 	Editor,
