@@ -1,6 +1,6 @@
 # Contribution Guidelines English Version
 
-Thank you for your interest in contributing to Obsidian Sample Plugin! This document provides guidelines and instructions for contributing to this project.
+Thank you for your interest in contributing to Next TOC! This document provides guidelines and instructions for contributing to this project.
 
 ## Table of Contents
 
@@ -40,8 +40,8 @@ By participating in this project, you are expected to uphold our Code of Conduct
 1. **Fork the repository** on GitHub
 2. **Clone your fork** locally
    ```bash
-   git clone https://github.com/RavenHogWarts/obsidian-plugin-starter.git
-   cd obsidian-plugin-starter
+   git clone https://github.com/RavenHogWarts/obsidian-next-toc.git
+   cd obsidian-next-toc
    ```
 3. **Install dependencies**
    ```bash
@@ -151,7 +151,7 @@ Feature requests are welcome. Please provide:
 
 # 贡献指南中文版本
 
-感谢您有兴趣为 Obsidian Sample Plugin 做出贡献！本文档提供了为该项目做出贡献的指南和说明。
+感谢您有兴趣为 Yet Another TOC 做出贡献！本文档提供了为该项目做出贡献的指南和说明。
 
 ## 目录
 
@@ -179,8 +179,8 @@ Feature requests are welcome. Please provide:
 1. **在 GitHub 上 Fork 仓库**
 2. **在本地克隆您的 Fork**
    ```bash
-   git clone https://github.com/RavenHogwarts/obsidian-plugin-starter.git
-   cd obsidian-plugin-starter
+   git clone https://github.com/RavenHogwarts/obsidian-next-toc.git
+   cd obsidian-next-toc
    ```
 3. **安装依赖**
    ```bash

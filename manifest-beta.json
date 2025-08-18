@@ -1,9 +1,9 @@
 {
-	"id": "obsidian-plugin-starter",
-	"name": "Obsidian Plugin Starter",
+	"id": "next-toc",
+	"name": "Next TOC",
 	"version": "1.0.0",
 	"minAppVersion": "1.8.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
+	"description": "Floating panel displaying the current document's reading progress, table of contents, and navigation aids.",
 	"author": "RavenHogWarts",
 	"authorUrl": "https://github.com/RavenHogWarts",
 	"fundingUrl": {

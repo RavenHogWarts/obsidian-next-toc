@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-plugin-starter",
+	"name": "next-toc",
 	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"description": "Floating panel displaying the current document's reading progress, table of contents, and navigation aids.",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node scripts/esbuild.config.mjs",
@@ -18,10 +18,12 @@
 		"test:watch": "jest --watch"
 	},
 	"keywords": [
-		"Obsidian Plugin"
+		"Obsidian Plugin",
+		"Table of Contents",
+		"Reading Progress"
 	],
 	"author": "RavenHogWarts",
-	"license": "MIT",
+	"license": "GPL-3.0-only",
 	"engines": {
 		"node": ">=18.x"
 	},
@@ -48,6 +50,7 @@
 	"dependencies": {
 		"dotenv": "^16.5.0",
 		"lucide-react": "^0.534.0",
+		"radix-ui": "^1.4.3",
 		"react": "^19.1.1",
 		"react-dom": "^19.1.1"
 	}

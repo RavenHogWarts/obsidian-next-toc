@@ -12,7 +12,7 @@ permissions:
     statuses: write
 
 env:
-    PLUGIN_ID: yearly-glance
+    PLUGIN_ID: next-toc
 
 jobs:
     # 安全检查作业 - 验证 PR 来源和标签事件
@@ -98,7 +98,7 @@ jobs:
             - name: Upload artifacts
               uses: actions/upload-artifact@v4
               with:
-                  name: plugin-pr-${{ github.event.number }}
+                  name: ${{ env.PLUGIN_ID }}-pr-${{ github.event.number }}
                   path: build-artifacts/
                   retention-days: 7
 
