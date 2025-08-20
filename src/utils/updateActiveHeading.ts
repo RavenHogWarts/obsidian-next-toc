@@ -1,0 +1,49 @@
+import { HeadingCache, MarkdownView } from "obsidian";
+
+export default function (view: MarkdownView, headings: HeadingCache[]): number {
+	if (!view || !headings || headings.length === 0) {
+		return -1;
+	}
+
+	let activeHeadingIndex;
+
+	const mode = view.getMode();
+	if (mode === "source") {
+		const editor = view.editor;
+
+		const currentLine = editor.getCursor().line;
+		headings.forEach((heading, index) => {
+			if (heading.position.start.line <= currentLine) {
+				activeHeadingIndex = index;
+			}
+		});
+	} else if (mode === "preview") {
+		const scrollLine = view.currentMode.getScroll();
+		activeHeadingIndex = binarySearchClosestHeading(headings, scrollLine);
+	}
+
+	return activeHeadingIndex;
+}
+
+function binarySearchClosestHeading(
+	headings: HeadingCache[],
+	line: number
+): number {
+	let left = 0;
+	let right = headings.length - 1;
+
+	while (left <= right) {
+		const mid = Math.floor((left + right) / 2);
+		const midLine = headings[mid].position.start.line;
+
+		if (midLine === line) {
+			return mid;
+		} else if (midLine < line) {
+			left = mid + 1;
+		} else {
+			right = mid - 1;
+		}
+	}
+
+	return right;
+}
