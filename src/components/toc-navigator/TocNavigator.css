@@ -1,0 +1,28 @@
+.NToc__container {
+	position: absolute;
+	top: 6%;
+	height: fit-content;
+	max-height: 60dvh;
+	overflow: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	z-index: var(--layer-popover);
+
+	&.NToc__container-left {
+		right: auto;
+	}
+	&.NToc__container-right {
+		left: auto;
+	}
+}
+
+.NToc__toc-items {
+	background: var(--background-primary);
+	border-radius: 4px;
+	box-shadow: var(--shadow-s);
+	min-width: 10dvw;
+	max-width: 80dvw;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+}
