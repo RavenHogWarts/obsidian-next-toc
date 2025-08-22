@@ -45,7 +45,7 @@ interface ObsidianSettingProps {
 		  };
 }
 
-export const ObsidianSetting: FC<ObsidianSettingProps> = ({
+const ObsidianSetting: FC<ObsidianSettingProps> = ({
 	children,
 	containerEl,
 	className = "",
@@ -228,11 +228,6 @@ const Button: FC<ObsidianSettingButtonProps> = ({
 
 	return !button ? undefined : <>{createPortal(children, button.buttonEl)}</>;
 };
-(
-	ObsidianSetting as FC<ObsidianSettingProps> & {
-		Button: FC<ObsidianSettingButtonProps>;
-	}
-).Button = Button;
 
 interface ObsidianSettingDropdownProps {
 	children?: ReactNode;
@@ -284,11 +279,6 @@ const Dropdown: FC<ObsidianSettingDropdownProps> = ({
 		<>{createPortal(children, dropdown.selectEl)}</>
 	);
 };
-(
-	ObsidianSetting as FC<ObsidianSettingProps> & {
-		Dropdown: FC<ObsidianSettingDropdownProps>;
-	}
-).Dropdown = Dropdown;
 
 interface ObsidianSettingExtraButtonProps {
 	children?: ReactNode;
@@ -341,11 +331,6 @@ const ExtraButton: FC<ObsidianSettingExtraButtonProps> = ({
 		<>{createPortal(children, extraButton.extraSettingsEl)}</>
 	);
 };
-(
-	ObsidianSetting as FC<ObsidianSettingProps> & {
-		ExtraButton: FC<ObsidianSettingExtraButtonProps>;
-	}
-).ExtraButton = ExtraButton;
 
 interface ObsidianSettingContainerProps
 	extends Omit<ComponentPropsWithoutRef<"div">, "children"> {
@@ -368,11 +353,6 @@ const Container: FC<ObsidianSettingContainerProps> = ({
 		</div>
 	);
 };
-(
-	ObsidianSetting as FC<ObsidianSettingProps> & {
-		Container: FC<ObsidianSettingContainerProps>;
-	}
-).Container = Container;
 
 interface ObsidianSettingMomentFormatProps {
 	children?: ReactNode;
@@ -417,11 +397,6 @@ const MomentFormat: FC<ObsidianSettingMomentFormatProps> = ({
 		<>{createPortal(children, momentFormat.inputEl)}</>
 	);
 };
-(
-	ObsidianSetting as FC<ObsidianSettingProps> & {
-		MomentFormat: FC<ObsidianSettingMomentFormatProps>;
-	}
-).MomentFormat = MomentFormat;
 
 interface ObsidianSettingTextProps {
 	children?: ReactNode;
@@ -461,11 +436,6 @@ const Text: FC<ObsidianSettingTextProps> = ({
 
 	return !text ? undefined : <>{createPortal(children, text.inputEl)}</>;
 };
-(
-	ObsidianSetting as FC<ObsidianSettingProps> & {
-		Text: FC<ObsidianSettingTextProps>;
-	}
-).Text = Text;
 
 interface ObsidianSettingToggleProps {
 	children?: ReactNode;
@@ -499,8 +469,29 @@ const Toggle: FC<ObsidianSettingToggleProps> = ({
 
 	return !toggle ? undefined : <>{createPortal(children, toggle.toggleEl)}</>;
 };
-(
-	ObsidianSetting as FC<ObsidianSettingProps> & {
-		Toggle: FC<ObsidianSettingToggleProps>;
-	}
-).Toggle = Toggle;
+
+// 定义所有扩展组件的类型
+type ObsidianSettingWithComponents = FC<ObsidianSettingProps> & {
+	Button: FC<ObsidianSettingButtonProps>;
+	Dropdown: FC<ObsidianSettingDropdownProps>;
+	ExtraButton: FC<ObsidianSettingExtraButtonProps>;
+	Container: FC<ObsidianSettingContainerProps>;
+	MomentFormat: FC<ObsidianSettingMomentFormatProps>;
+	Text: FC<ObsidianSettingTextProps>;
+	Toggle: FC<ObsidianSettingToggleProps>;
+};
+
+// 一次性赋值所有扩展组件
+const ObsidianSettingWithComponents =
+	ObsidianSetting as ObsidianSettingWithComponents;
+ObsidianSettingWithComponents.Button = Button;
+ObsidianSettingWithComponents.Dropdown = Dropdown;
+ObsidianSettingWithComponents.ExtraButton = ExtraButton;
+ObsidianSettingWithComponents.Container = Container;
+ObsidianSettingWithComponents.MomentFormat = MomentFormat;
+ObsidianSettingWithComponents.Text = Text;
+ObsidianSettingWithComponents.Toggle = Toggle;
+
+// 重新赋值给ObsidianSetting并导出
+Object.assign(ObsidianSetting, ObsidianSettingWithComponents);
+export { ObsidianSetting };
