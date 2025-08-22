@@ -1,4 +1,5 @@
-import useSettings from "@src/hooks/useSettings";
+import usePluginSettings from "@src/hooks/usePluginSettings";
+import useSettingsStore from "@src/hooks/useSettingsStore";
 import { HeadingCache, MarkdownView } from "obsidian";
 import { FC } from "react";
 import "./TocItem.css";
@@ -22,7 +23,8 @@ export const TocItem: FC<TocItemProps> = ({
 	headingActive,
 	onHeadingClick,
 }) => {
-	const settings = useSettings();
+	const settingsStore = useSettingsStore();
+	const settings = usePluginSettings(settingsStore);
 
 	return (
 		<div

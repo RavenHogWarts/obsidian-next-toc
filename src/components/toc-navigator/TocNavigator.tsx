@@ -1,4 +1,5 @@
-import useSettings from "@src/hooks/useSettings";
+import usePluginSettings from "@src/hooks/usePluginSettings";
+import useSettingsStore from "@src/hooks/useSettingsStore";
 import calculateActualDepth from "@src/utils/calculateActualDepth";
 import { HeadingCache, MarkdownView } from "obsidian";
 import {
@@ -23,7 +24,8 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	headings,
 	activeHeadingIndex,
 }) => {
-	const settings = useSettings();
+	const settingsStore = useSettingsStore();
+	const settings = usePluginSettings(settingsStore);
 	const NTocContainerRef = useRef<HTMLDivElement>(null);
 	const NTocGroupRef = useRef<HTMLDivElement>(null);
 	const NTocGroupContentRef = useRef<HTMLDivElement>(null);
@@ -98,9 +100,15 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 
 		if (NTocGroupTocItemsRef.current) {
 			const newWidth = NTocGroupTocItemsRef.current.offsetWidth;
-			// TODO: Update settings
+			settingsStore.updateSettings({
+				...settings,
+				toc: {
+					...settings.toc,
+					width: newWidth,
+				},
+			});
 		}
-	}, [isMouseDragging, NTocGroupTocItemsRef]);
+	}, [isMouseDragging, NTocGroupTocItemsRef, settings, settingsStore]);
 
 	useEffect(() => {
 		if (isMouseDragging) {

@@ -1,4 +1,4 @@
-import { SettingsContext } from "@src/context/SettingsContext";
+import { SettingsStoreContext } from "@src/context/SettingsStoreContext";
 import SettingsStore from "@src/settings/SettingsStore";
 import { isElementValid } from "@src/utils/eventListenerManager";
 import { HeadingCache, MarkdownView } from "obsidian";
@@ -142,13 +142,13 @@ export class NTocRender {
 		const root = this.getOrCreateRoot(container);
 		root.render(
 			<StrictMode>
-				<SettingsContext.Provider value={this.settingsStore}>
+				<SettingsStoreContext.Provider value={this.settingsStore}>
 					<TocNavigator
 						currentView={this.view}
 						headings={this.headings}
 						activeHeadingIndex={this.activeHeadingIndex}
 					/>
-				</SettingsContext.Provider>
+				</SettingsStoreContext.Provider>
 			</StrictMode>
 		);
 		this.root = root;
