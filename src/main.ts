@@ -6,6 +6,7 @@ import {
 	updateNTocRender,
 } from "./components/toc-navigator/NTocRender";
 import { createCursorListenerExtension } from "./services/cursorListenerExtension";
+import { PluginSettingTab } from "./settings/PluginSettingTab";
 import SettingsStore from "./settings/SettingsStore";
 import { NTocPluginSettings } from "./types/types";
 import { createScrollListener } from "./utils/eventListenerManager";
@@ -20,6 +21,8 @@ export default class NTocPlugin extends Plugin {
 
 	async onload() {
 		await this.settingsStore.loadSettings();
+
+		this.addSettingTab(new PluginSettingTab(this));
 
 		this.registerCommands();
 		this.registerEvents();
