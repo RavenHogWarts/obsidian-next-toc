@@ -1,6 +1,7 @@
 import useSettings from "@src/hooks/useSettings";
 import { HeadingCache, MarkdownView } from "obsidian";
 import { FC } from "react";
+import "./TocItem.css";
 
 interface TocItemProps {
 	currentView: MarkdownView;

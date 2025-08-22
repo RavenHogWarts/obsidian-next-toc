@@ -1,7 +1,14 @@
 import useSettings from "@src/hooks/useSettings";
 import calculateActualDepth from "@src/utils/calculateActualDepth";
 import { HeadingCache, MarkdownView } from "obsidian";
-import { FC, useEffect, useRef } from "react";
+import {
+	FC,
+	MouseEvent,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import { TocItem } from "../toc-item/TocItem";
 import "./TocNavigator.css";
 
@@ -19,6 +26,13 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	const settings = useSettings();
 	const NTocContainerRef = useRef<HTMLDivElement>(null);
 	const NTocGroupRef = useRef<HTMLDivElement>(null);
+	const NTocGroupContentRef = useRef<HTMLDivElement>(null);
+	const NTocGroupTocItemsRef = useRef<HTMLDivElement>(null);
+
+	const [isHovered, setIsHovered] = useState(false);
+	const [isMouseDragging, setIsMouseDragging] = useState(false);
+	const [startX, setStartX] = useState(0);
+	const [startWidth, setStartWidth] = useState(0);
 
 	useEffect(() => {
 		if (NTocContainerRef.current) {
@@ -26,15 +40,111 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 			container.classList.add(`NToc__container-${settings.toc.position}`);
 			container.style[settings.toc.position] = `${settings.toc.offset}px`;
 		}
-	}, [settings.toc.position, settings.toc.offset]);
+		if (NTocGroupRef.current) {
+			const group = NTocGroupRef.current;
+			if (settings.toc.show === false) {
+				group.classList.add("NToc__group-hidden");
+			}
+		}
+	}, [settings.toc.position, settings.toc.offset, settings.toc.show]);
+
+	useEffect(() => {
+		if (NTocGroupContentRef.current) {
+			const content = NTocGroupContentRef.current;
+			if (settings.toc.alwaysExpand || isHovered) {
+				content.classList.add("NToc__group-content-expanded");
+			}
+		}
+	}, [settings.toc.alwaysExpand, isHovered]);
+
+	const handleMouseDragStart = useCallback(
+		(e: MouseEvent<HTMLDivElement>) => {
+			e.preventDefault();
+			setIsMouseDragging(true);
+			setStartX(e.clientX);
+			setStartWidth(settings.toc.width);
+		},
+		[settings.toc.width]
+	);
+
+	const handleMouseDrag = useCallback(
+		(e: globalThis.MouseEvent) => {
+			if (!isMouseDragging || !NTocGroupTocItemsRef.current) {
+				return;
+			}
+
+			const delta = e.clientX - startX;
+			const widthDelta =
+				settings.toc.position === "left" ? delta : -delta;
+			const newWidth = startWidth + widthDelta;
+
+			NTocGroupTocItemsRef.current.style.width = `${newWidth}px`;
+		},
+		[
+			isMouseDragging,
+			startX,
+			startWidth,
+			settings.toc.position,
+			NTocGroupTocItemsRef,
+		]
+	);
+
+	const handleMouseDragEnd = useCallback(() => {
+		if (!isMouseDragging) {
+			return;
+		}
+
+		setIsMouseDragging(false);
+
+		if (NTocGroupTocItemsRef.current) {
+			const newWidth = NTocGroupTocItemsRef.current.offsetWidth;
+			// TODO: Update settings
+		}
+	}, [isMouseDragging, NTocGroupTocItemsRef]);
+
+	useEffect(() => {
+		if (isMouseDragging) {
+			currentView.contentEl.addEventListener(
+				"mousemove",
+				handleMouseDrag
+			);
+			currentView.contentEl.addEventListener(
+				"mouseup",
+				handleMouseDragEnd
+			);
+		}
+
+		return () => {
+			currentView.contentEl.removeEventListener(
+				"mousemove",
+				handleMouseDrag
+			);
+			currentView.contentEl.removeEventListener(
+				"mouseup",
+				handleMouseDragEnd
+			);
+		};
+	}, [isMouseDragging, currentView, handleMouseDrag, handleMouseDragEnd]);
 
 	return (
 		<div ref={NTocContainerRef} className="NToc__container">
-			NToc Component
-			<div ref={NTocGroupRef}>
-				<div className="NToc__group-resize"></div>
-				<div className="NToc__group-content">
-					<div className="NToc__toc-items">
+			<div
+				ref={NTocGroupRef}
+				className="NToc__group"
+				onMouseEnter={() =>
+					!settings.toc.alwaysExpand && setIsHovered(true)
+				}
+				onMouseLeave={() =>
+					!settings.toc.alwaysExpand && setIsHovered(false)
+				}
+			>
+				<div
+					className="NToc__group-resize"
+					onMouseDown={handleMouseDragStart}
+				></div>
+				<div ref={NTocGroupContentRef} className="NToc__group-content">
+					<div className="NToc__toc-tools"></div>
+					<div ref={NTocGroupTocItemsRef} className="NToc__toc-items">
 						{headings.map((heading, index) => {
 							const actualDepth = calculateActualDepth(
 								index,
