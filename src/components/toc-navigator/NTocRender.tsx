@@ -1,5 +1,6 @@
 import { SettingsContext } from "@src/context/SettingsContext";
 import SettingsStore from "@src/settings/SettingsStore";
+import { isElementValid } from "@src/utils/eventListenerManager";
 import { HeadingCache, MarkdownView } from "obsidian";
 import { StrictMode } from "react";
 import { createRoot, Root } from "react-dom/client";
@@ -37,6 +38,7 @@ export class NTocRender {
 		if (!this.view) return false;
 		const activeMarkdownView =
 			this.view.app.workspace.getActiveViewOfType(MarkdownView);
+		console.debug("Active markdown view:", activeMarkdownView);
 		return !!activeMarkdownView && activeMarkdownView === this.view;
 	}
 
@@ -44,6 +46,13 @@ export class NTocRender {
 		const nodeList = view.contentEl.querySelectorAll(".NToc__view");
 		return Array.from(nodeList).filter(
 			(el): el is HTMLElement => el instanceof HTMLElement
+		);
+	}
+
+	private isContainerValid(container: HTMLElement): boolean {
+		return (
+			isElementValid(container) &&
+			container.classList.contains("NToc__view")
 		);
 	}
 
@@ -55,12 +64,7 @@ export class NTocRender {
 
 		const [primary, ...duplicates] = containers;
 		for (const dup of duplicates) {
-			const dupRoot = containerRootMap.get(dup);
-			if (dupRoot) {
-				dupRoot.unmount();
-				containerRootMap.delete(dup);
-			}
-			dup.remove();
+			this.destroyContainer(dup);
 		}
 		return primary;
 	}
@@ -74,12 +78,27 @@ export class NTocRender {
 	}
 
 	private destroyContainer(container: HTMLElement): void {
+		if (!this.isContainerValid(container)) {
+			return;
+		}
+
 		const root = containerRootMap.get(container);
 		if (root) {
-			root.unmount();
+			try {
+				root.unmount();
+			} catch (error) {
+				console.warn("Error unmounting React root:", error);
+			}
 			containerRootMap.delete(container);
 		}
-		container.remove();
+
+		try {
+			if (container.parentNode) {
+				container.remove();
+			}
+		} catch (error) {
+			console.warn("Error removing container:", error);
+		}
 	}
 
 	// Destroy all containers for a specific view
@@ -90,14 +109,23 @@ export class NTocRender {
 		}
 	}
 
-	async update(view: MarkdownView, props: NTocRenderProps): Promise<void> {
+	async update(
+		view: MarkdownView | null,
+		props: NTocRenderProps
+	): Promise<void> {
+		if (view === null) {
+			// 视图为null，销毁所有内容
+			this.destroy();
+			return;
+		}
+
 		if (this.view && this.view !== view) {
 			this.destroyView(this.view);
 		}
 		this.view = view;
 		this.headings = props.headings;
 		this.activeHeadingIndex = props.activeHeadingIndex;
-		console.debug("Active heading index:", this.activeHeadingIndex);
+		// console.debug("Active heading index:", this.activeHeadingIndex);
 
 		this.display();
 	}
@@ -138,7 +166,7 @@ export class NTocRender {
 // 导出便捷函数
 export function updateNTocRender(
 	settingsStore: SettingsStore,
-	view: MarkdownView,
+	view: MarkdownView | null,
 	props: NTocRenderProps
 ): void {
 	NTocRender.getInstance(settingsStore).update(view, props);
