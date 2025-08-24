@@ -1,0 +1,230 @@
+/* Base Tab Group Layout */
+.NToc__tab-group {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	max-height: inherit;
+	border-radius: var(--radius-m);
+	overflow: hidden;
+}
+
+.NToc__tab-group[data-orientation="vertical"] {
+	flex-direction: row;
+}
+
+.NToc__tab-list {
+	display: flex;
+	background-color: transparent;
+	color: var(--text-normal);
+	border-bottom: 1px solid var(--background-modifier-border);
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+	scrollbar-width: none; /* Firefox */
+	min-height: 32px; /* Slightly taller for better touch targets */
+}
+
+.NToc__tab-list::-webkit-scrollbar {
+	display: none; /* Chrome, Safari, Edge */
+}
+
+.NToc__tab-list[data-orientation="vertical"] {
+	flex-direction: column;
+	min-width: 150px;
+	max-width: 220px;
+	width: 25%;
+	height: 100%;
+	border-bottom: none;
+	border-right: 1px solid var(--background-modifier-border);
+	position: relative;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+/* Tab Button Reset and Styling */
+button.NToc__tab {
+	all: unset; /* Reset all styles */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 32px;
+	min-height: 32px;
+	padding: 0 var(--size-4-2);
+	cursor: pointer;
+	position: relative;
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+	transition: color 150ms ease, background-color 150ms ease;
+	user-select: none;
+	white-space: nowrap;
+	font-weight: var(--font-normal);
+	flex-shrink: 0;
+	box-shadow: none;
+	outline: none;
+}
+
+button.NToc__tab:focus-visible {
+	box-shadow: none;
+	outline: none;
+}
+
+/* Tab Title Text Styling */
+.NToc__tab .NToc__tab-title {
+	line-height: 1.4;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	padding: 0 var(--size-4-1);
+	max-width: 180px;
+}
+
+/* Active Tab Styling */
+.NToc__tab[data-state="active"] {
+	color: var(--text-normal);
+	background-color: var(--background-primary);
+	font-weight: var(--font-medium);
+	position: relative;
+}
+
+.NToc__tab[data-state="active"]::after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 2px;
+	background-color: var(--text-normal);
+}
+
+/* Tab Hover States */
+.NToc__tab:hover {
+	color: var(--text-normal);
+	background-color: var(--background-modifier-hover);
+}
+
+.NToc__tab:focus-visible {
+	box-shadow: inset 0 0 0 2px var(--background-modifier-border-focus);
+	outline: none;
+}
+
+/* Active Tab in Vertical Orientation */
+.NToc__tab-list[data-orientation="vertical"] .NToc__tab {
+	justify-content: flex-start;
+	padding: var(--size-4-1) var(--size-4-3);
+	height: auto;
+	min-height: 36px;
+	border-left: 3px solid transparent;
+}
+
+.NToc__tab-list[data-orientation="vertical"] .NToc__tab[data-state="active"] {
+	border-left: 3px solid var(--interactive-accent);
+}
+
+.NToc__tab-list[data-orientation="vertical"]
+	.NToc__tab[data-state="active"]::after {
+	display: none;
+}
+
+/* Tab Content Panel Container */
+.NToc__tab-panels {
+	flex: 1;
+	padding: var(--size-4-3);
+	border-radius: 0 0 var(--radius-m) var(--radius-m);
+	background-color: var(--background-primary);
+	overflow: auto;
+	width: 100%;
+}
+
+.NToc__tab-group[data-orientation="vertical"] .NToc__tab-panels {
+	margin-top: 0;
+	border-radius: 0 var(--radius-m) var(--radius-m) 0;
+	height: 100%;
+}
+
+/* Individual Tab Panel */
+.NToc__tab-panel {
+	outline: none;
+	animation: fadeIn 200ms ease;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0.8;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+/* Resize Bar for Vertical Tabs */
+.NToc__tab-list[data-orientation="vertical"] .NToc__tab-resize-bar {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 4px;
+	height: 100%;
+	opacity: 0;
+	background-color: var(--interactive-accent);
+	cursor: ew-resize;
+	transition: opacity 150ms ease;
+	z-index: 10;
+}
+
+.NToc__tab-list[data-orientation="vertical"] .NToc__tab-resize-bar:hover,
+.NToc__tab-list[data-orientation="vertical"] .NToc__tab-resize-bar:active {
+	opacity: 0.7;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+	.NToc__tab-group[data-orientation="vertical"] {
+		flex-direction: column;
+	}
+
+	.NToc__tab-list[data-orientation="vertical"] {
+		flex-direction: row;
+		min-width: 100%;
+		max-width: 100%;
+		width: 100%;
+		height: auto;
+		border-right: none;
+		border-bottom: 1px solid var(--background-modifier-border);
+		overflow-x: auto;
+		overflow-y: hidden;
+	}
+
+	.NToc__tab-list[data-orientation="vertical"] .NToc__tab {
+		border-left: none;
+		border-bottom: 3px solid transparent;
+		padding: var(--size-4-2) var(--size-4-3);
+	}
+
+	.NToc__tab-list[data-orientation="vertical"]
+		.NToc__tab[data-state="active"] {
+		border-left: none;
+		border-bottom: 3px solid var(--interactive-accent);
+	}
+
+	.NToc__tab-list[data-orientation="vertical"] .NToc__tab-resize-bar {
+		display: none;
+	}
+
+	.NToc__tab-group[data-orientation="vertical"] .NToc__tab-panels {
+		border-radius: 0 0 var(--radius-m) var(--radius-m);
+	}
+
+	.NToc__tab .NToc__tab-title {
+		max-width: 140px;
+	}
+}
+
+/* Touch device enhancements */
+@media (pointer: coarse) {
+	.NToc__tab {
+		padding: var(--size-4-2) var(--size-4-3);
+		min-height: 44px; /* Better touch target */
+	}
+
+	.NToc__tab-list {
+		min-height: 44px;
+	}
+}
