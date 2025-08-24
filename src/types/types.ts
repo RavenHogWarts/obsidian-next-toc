@@ -3,12 +3,15 @@ interface IButtonTool {
 	icon: string;
 }
 
+export type NTocPosition = "left" | "right";
+export type NTocProgressStyle = "none" | "bar" | "ring" | "both";
+
 export interface NTocPluginSettings {
 	toc: {
 		show: boolean;
 		alwaysExpand: boolean;
 		width: number;
-		position: "left" | "right";
+		position: NTocPosition;
 		offset: number;
 	};
 	render: {
@@ -18,7 +21,7 @@ export interface NTocPluginSettings {
 	};
 	tool: {
 		useToolbar: boolean;
-		progressStyle: "none" | "bar" | "ring" | "both";
+		progressStyle: NTocProgressStyle;
 		returnToCursor: IButtonTool;
 		returnToTop: IButtonTool;
 		returnToBottom: IButtonTool;
