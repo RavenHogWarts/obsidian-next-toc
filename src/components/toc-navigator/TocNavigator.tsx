@@ -141,6 +141,53 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 		};
 	}, [isMouseDragging, currentView, handleMouseDrag, handleMouseDragEnd]);
 
+	const generateHeadingNumber = useCallback(
+		(index: number): string => {
+			if (settings.render.skipHeading1 && headings[index].level === 1) {
+				return "";
+			}
+
+			const numberStack: number[] = [];
+			let prevLevel = 0;
+
+			for (let i = 0; i <= index; i++) {
+				const heading = headings[i];
+				const level = heading.level;
+
+				// 跳过 h1（如果配置了跳过）
+				if (settings.render.skipHeading1 && level === 1) {
+					continue;
+				}
+
+				if (numberStack.length === 0) {
+					numberStack.push(1);
+				} else if (level > prevLevel) {
+					numberStack.push(1);
+				} else if (level === prevLevel) {
+					numberStack[numberStack.length - 1]++;
+				} else {
+					// 回退到当前层级
+					while (
+						numberStack.length > 0 &&
+						numberStack.length >
+							level - (settings.render.skipHeading1 ? 2 : 1)
+					) {
+						numberStack.pop();
+					}
+					if (numberStack.length === 0) {
+						numberStack.push(1);
+					} else {
+						numberStack[numberStack.length - 1]++;
+					}
+				}
+				prevLevel = level;
+			}
+
+			return numberStack.join(".") + ".";
+		},
+		[headings, settings.render.skipHeading1]
+	);
+
 	return (
 		<div ref={NTocContainerRef} className="NToc__container">
 			<div
@@ -172,9 +219,8 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 									heading={heading}
 									headingIndex={index}
 									headingActualDepth={actualDepth}
-									headingNumber={""}
+									headingNumber={generateHeadingNumber(index)}
 									headingActive={index === activeHeadingIndex}
-									onHeadingClick={() => {}}
 								/>
 							);
 						})}
