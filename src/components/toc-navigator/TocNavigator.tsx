@@ -39,6 +39,15 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	useEffect(() => {
 		if (NTocContainerRef.current) {
 			const container = NTocContainerRef.current;
+			// 移除所有可能的位置类
+			container.classList.remove(
+				"NToc__container-left",
+				"NToc__container-right"
+			);
+			// 清除之前位置的样式
+			container.style.left = "";
+			container.style.right = "";
+			// 设置新位置
 			container.classList.add(`NToc__container-${settings.toc.position}`);
 			container.style[settings.toc.position] = `${settings.toc.offset}px`;
 		}
@@ -46,6 +55,8 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 			const group = NTocGroupRef.current;
 			if (settings.toc.show === false) {
 				group.classList.add("NToc__group-hidden");
+			} else {
+				group.classList.remove("NToc__group-hidden");
 			}
 		}
 	}, [settings.toc.position, settings.toc.offset, settings.toc.show]);
@@ -55,6 +66,8 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 			const content = NTocGroupContentRef.current;
 			if (settings.toc.alwaysExpand || isHovered) {
 				content.classList.add("NToc__group-content-expanded");
+			} else {
+				content.classList.remove("NToc__group-content-expanded");
 			}
 		}
 	}, [settings.toc.alwaysExpand, isHovered]);
@@ -100,13 +113,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 
 		if (NTocGroupTocItemsRef.current) {
 			const newWidth = NTocGroupTocItemsRef.current.offsetWidth;
-			settingsStore.updateSettings({
-				...settings,
-				toc: {
-					...settings.toc,
-					width: newWidth,
-				},
-			});
+			settingsStore.updateSettingByPath("toc.width", newWidth);
 		}
 	}, [isMouseDragging, NTocGroupTocItemsRef, settings, settingsStore]);
 
@@ -149,7 +156,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 				<div
 					className="NToc__group-resize"
 					onMouseDown={handleMouseDragStart}
-				></div>
+				/>
 				<div ref={NTocGroupContentRef} className="NToc__group-content">
 					<div className="NToc__toc-tools"></div>
 					<div ref={NTocGroupTocItemsRef} className="NToc__toc-items">
