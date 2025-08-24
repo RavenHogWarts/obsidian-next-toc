@@ -98,35 +98,36 @@ const ObsidianSetting: FC<ObsidianSettingProps> = ({
 		obsidianSetting.setDisabled(disabled);
 	}, [obsidianSetting, disabled]);
 
-	const obsidianSettingSlotContext = useMemo(
-		() =>
-			({
-				setting: {
-					setting: obsidianSetting,
-					slotEl: obsidianSetting.settingEl,
-				},
-				info: {
-					setting: obsidianSetting,
-					slotEl: obsidianSetting.infoEl,
-				},
-				name: {
-					setting: obsidianSetting,
-					slotEl: obsidianSetting.nameEl,
-				},
-				desc: {
-					setting: obsidianSetting,
-					slotEl: obsidianSetting.descEl,
-				},
-				control: {
-					setting: obsidianSetting,
-					slotEl: obsidianSetting.controlEl,
-				},
-			} satisfies Record<
-				string,
-				ContextType<typeof ObsidianSettingSlotContext>
-			>),
-		[obsidianSetting]
-	);
+	const obsidianSettingSlotContext = useMemo(() => {
+		console.log("Creating slot context with setting:", obsidianSetting);
+		const context = {
+			setting: {
+				setting: obsidianSetting,
+				slotEl: obsidianSetting.settingEl,
+			},
+			info: {
+				setting: obsidianSetting,
+				slotEl: obsidianSetting.infoEl,
+			},
+			name: {
+				setting: obsidianSetting,
+				slotEl: obsidianSetting.nameEl,
+			},
+			desc: {
+				setting: obsidianSetting,
+				slotEl: obsidianSetting.descEl,
+			},
+			control: {
+				setting: obsidianSetting,
+				slotEl: obsidianSetting.controlEl,
+			},
+		} satisfies Record<
+			string,
+			ContextType<typeof ObsidianSettingSlotContext>
+		>;
+		console.log("Slot context created:", context);
+		return context;
+	}, [obsidianSetting]);
 
 	return (
 		<ObsidianSettingContext.Provider value={obsidianSetting}>
@@ -138,29 +139,46 @@ const ObsidianSetting: FC<ObsidianSettingProps> = ({
 					obsidianSettingSlotContext.setting.slotEl
 				)}
 			</ObsidianSettingSlotContext.Provider>
-			<ObsidianSettingSlotContext.Provider
-				value={obsidianSettingSlotContext.info}
-			>
-				{createPortal(children, obsidianSettingSlotContext.info.slotEl)}
-			</ObsidianSettingSlotContext.Provider>
-			<ObsidianSettingSlotContext.Provider
-				value={obsidianSettingSlotContext.name}
-			>
-				{createPortal(children, obsidianSettingSlotContext.name.slotEl)}
-			</ObsidianSettingSlotContext.Provider>
-			<ObsidianSettingSlotContext.Provider
-				value={obsidianSettingSlotContext.desc}
-			>
-				{createPortal(children, obsidianSettingSlotContext.desc.slotEl)}
-			</ObsidianSettingSlotContext.Provider>
-			<ObsidianSettingSlotContext.Provider
-				value={obsidianSettingSlotContext.control}
-			>
-				{createPortal(
-					children,
-					obsidianSettingSlotContext.control.slotEl
-				)}
-			</ObsidianSettingSlotContext.Provider>
+			{infoSlot && (
+				<ObsidianSettingSlotContext.Provider
+					value={obsidianSettingSlotContext.info}
+				>
+					{createPortal(
+						infoSlot,
+						obsidianSettingSlotContext.info.slotEl
+					)}
+				</ObsidianSettingSlotContext.Provider>
+			)}
+			{nameSlot && (
+				<ObsidianSettingSlotContext.Provider
+					value={obsidianSettingSlotContext.name}
+				>
+					{createPortal(
+						nameSlot,
+						obsidianSettingSlotContext.name.slotEl
+					)}
+				</ObsidianSettingSlotContext.Provider>
+			)}
+			{descSlot && (
+				<ObsidianSettingSlotContext.Provider
+					value={obsidianSettingSlotContext.desc}
+				>
+					{createPortal(
+						descSlot,
+						obsidianSettingSlotContext.desc.slotEl
+					)}
+				</ObsidianSettingSlotContext.Provider>
+			)}
+			{controlSlot && (
+				<ObsidianSettingSlotContext.Provider
+					value={obsidianSettingSlotContext.control}
+				>
+					{createPortal(
+						controlSlot,
+						obsidianSettingSlotContext.control.slotEl
+					)}
+				</ObsidianSettingSlotContext.Provider>
+			)}
 		</ObsidianSettingContext.Provider>
 	);
 };
@@ -470,7 +488,6 @@ const Toggle: FC<ObsidianSettingToggleProps> = ({
 	return !toggle ? undefined : <>{createPortal(children, toggle.toggleEl)}</>;
 };
 
-// 定义所有扩展组件的类型
 type ObsidianSettingWithComponents = FC<ObsidianSettingProps> & {
 	Button: FC<ObsidianSettingButtonProps>;
 	Dropdown: FC<ObsidianSettingDropdownProps>;
@@ -481,9 +498,11 @@ type ObsidianSettingWithComponents = FC<ObsidianSettingProps> & {
 	Toggle: FC<ObsidianSettingToggleProps>;
 };
 
-// 一次性赋值所有扩展组件
+// 将ObsidianSetting转换为带有子组件的类型
 const ObsidianSettingWithComponents =
 	ObsidianSetting as ObsidianSettingWithComponents;
+
+// 将子组件作为ObsidianSetting的静态属性
 ObsidianSettingWithComponents.Button = Button;
 ObsidianSettingWithComponents.Dropdown = Dropdown;
 ObsidianSettingWithComponents.ExtraButton = ExtraButton;
@@ -492,6 +511,8 @@ ObsidianSettingWithComponents.MomentFormat = MomentFormat;
 ObsidianSettingWithComponents.Text = Text;
 ObsidianSettingWithComponents.Toggle = Toggle;
 
-// 重新赋值给ObsidianSetting并导出
-Object.assign(ObsidianSetting, ObsidianSettingWithComponents);
+// 重新导出ObsidianSetting（现在包含所有子组件作为静态属性）
+export default ObsidianSettingWithComponents;
+
+// 同时导出ObsidianSetting本身，以便可以直接使用
 export { ObsidianSetting };
