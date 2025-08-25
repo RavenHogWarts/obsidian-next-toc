@@ -119,3 +119,31 @@
 	overflow-y: auto;
 	overscroll-behavior: contain;
 }
+
+.NToc__toc-progress-bar {
+	position: sticky;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 2px;
+	z-index: 1;
+	background: var(--background-modifier-border);
+	transition: all 0.3s ease;
+
+	&::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: var(--NToc__toc-progress-width);
+		background: linear-gradient(
+			90deg,
+			var(--interactive-accent) 0%,
+			var(--interactive-accent-hover) 100%
+		);
+		box-shadow: 0 0 8px var(--interactive-accent-hover);
+		border-radius: 0 2px 2px 0;
+		transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+}

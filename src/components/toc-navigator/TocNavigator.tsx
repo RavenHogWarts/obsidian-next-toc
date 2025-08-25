@@ -1,4 +1,5 @@
 import usePluginSettings from "@src/hooks/usePluginSettings";
+import { useScrollProgress } from "@src/hooks/useScrollProgress";
 import useSettingsStore from "@src/hooks/useSettingsStore";
 import calculateActualDepth from "@src/utils/calculateActualDepth";
 import hasChildren from "@src/utils/hasChildren";
@@ -34,12 +35,26 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	const NTocGroupRef = useRef<HTMLDivElement>(null);
 	const NTocGroupContentRef = useRef<HTMLDivElement>(null);
 	const NTocGroupTocItemsRef = useRef<HTMLDivElement>(null);
+	const NTocProgressBarRef = useRef<HTMLDivElement>(null);
 
 	const [isHovered, setIsHovered] = useState<boolean>(false);
 	const [isMouseDragging, setIsMouseDragging] = useState<boolean>(false);
 	const [startX, setStartX] = useState<number>(0);
 	const [startWidth, setStartWidth] = useState<number>(0);
 	const [collapsedSet, setCollapsedSet] = useState<Set<number>>(new Set());
+
+	// 获取滚动进度
+	const scrollProgress = useScrollProgress(currentView);
+
+	// 更新进度条宽度
+	useEffect(() => {
+		if (NTocProgressBarRef.current && settings.tool.showProgress) {
+			NTocProgressBarRef.current.style.setProperty(
+				"--NToc__toc-progress-width",
+				`${scrollProgress}%`
+			);
+		}
+	}, [scrollProgress, settings.tool.showProgress]);
 
 	useEffect(() => {
 		if (NTocContainerRef.current) {
@@ -300,6 +315,12 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 							ref={NTocGroupTocItemsRef}
 							className="NToc__toc-items"
 						>
+							{settings.tool.showProgress && (
+								<div
+									ref={NTocProgressBarRef}
+									className="NToc__toc-progress-bar"
+								></div>
+							)}
 							{headings.map((heading, index) => {
 								if (!visibilityMap[index]) return null;
 								return (
