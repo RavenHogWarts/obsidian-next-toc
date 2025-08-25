@@ -1,6 +1,7 @@
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
 import calculateActualDepth from "@src/utils/calculateActualDepth";
+import smoothScroll from "@src/utils/smoothScroll";
 import { HeadingCache, MarkdownView } from "obsidian";
 import {
 	FC,
@@ -11,6 +12,7 @@ import {
 	useState,
 } from "react";
 import { TocItem } from "../toc-item/TocItem";
+import { TocToolbar } from "../toc-toolbar/TocToolbar";
 import "./TocNavigator.css";
 
 interface TocNavigatorProps {
@@ -71,6 +73,20 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 			}
 		}
 	}, [settings.toc.alwaysExpand, isHovered]);
+
+	useEffect(() => {
+		if (NTocGroupTocItemsRef.current) {
+			const tocItems = NTocGroupTocItemsRef.current;
+			if (activeHeadingIndex !== -1) {
+				const activeHeadingEl = tocItems.querySelector(
+					`[data-index="${activeHeadingIndex}"]`
+				) as HTMLElement;
+				if (activeHeadingEl) {
+					smoothScroll(tocItems, activeHeadingEl);
+				}
+			}
+		}
+	}, [activeHeadingIndex]);
 
 	const handleMouseDragStart = useCallback(
 		(e: MouseEvent<HTMLDivElement>) => {
@@ -205,7 +221,9 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 					onMouseDown={handleMouseDragStart}
 				/>
 				<div ref={NTocGroupContentRef} className="NToc__group-content">
-					<div className="NToc__toc-tools"></div>
+					{settings.tool.useToolbar && (
+						<TocToolbar headings={headings} />
+					)}
 					<div ref={NTocGroupTocItemsRef} className="NToc__toc-items">
 						{headings.map((heading, index) => {
 							const actualDepth = calculateActualDepth(

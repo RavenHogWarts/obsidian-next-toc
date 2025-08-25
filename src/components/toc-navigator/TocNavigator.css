@@ -2,8 +2,6 @@
 	position: absolute;
 	top: 6%;
 	height: fit-content;
-	max-height: 60dvh;
-	overflow: hidden;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -65,11 +63,9 @@
 	top: 0;
 	visibility: hidden;
 	opacity: 0;
-	min-width: 15dvw;
-	max-width: 80dvw;
 	transition: all 0.2s ease;
-	padding: 8px 0;
-	overflow: hidden;
+	display: flex;
+	flex-direction: column;
 
 	&.NToc__group-content-expanded {
 		opacity: 1;
@@ -93,7 +89,7 @@
 .NToc__group-resize {
 	position: absolute;
 	top: 0;
-	bottom: 0;
+	height: 100%;
 	width: 4px;
 	cursor: ew-resize;
 	background: transparent;
@@ -106,6 +102,7 @@
 }
 
 .NToc__toc-items {
+	position: relative;
 	background: var(--background-primary);
 	border-radius: 4px;
 	box-shadow: var(--shadow-s);
