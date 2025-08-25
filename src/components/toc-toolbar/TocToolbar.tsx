@@ -1,0 +1,151 @@
+import usePluginSettings from "@src/hooks/usePluginSettings";
+import useSettingsStore from "@src/hooks/useSettingsStore";
+import cleanHeading from "@src/utils/cleanHeading";
+import {
+	ArrowLeftRight,
+	ChevronLeft,
+	ChevronRight,
+	ChevronsDownUp,
+	ChevronsUpDown,
+	ClipboardCopy,
+	Pin,
+} from "lucide-react";
+import { HeadingCache, Notice } from "obsidian";
+import { FC, useCallback } from "react";
+import "./TocToolbar.css";
+
+interface TocToolbarProps {
+	headings: HeadingCache[];
+	onCollapseAll: () => void;
+	onExpandAll: () => void;
+	hasAnyCollapsed: boolean;
+}
+
+export const TocToolbar: FC<TocToolbarProps> = ({
+	headings,
+	onCollapseAll,
+	onExpandAll,
+	hasAnyCollapsed,
+}) => {
+	const settingsStore = useSettingsStore();
+	const settings = usePluginSettings(settingsStore);
+
+	const handleOffsetChange = useCallback(
+		(direction: "left" | "right") => {
+			settingsStore.updateSettingByPath(
+				"toc.offset",
+				settings.toc.offset +
+					(direction === "left"
+						? settings.toc.position === "left"
+							? -1
+							: 1
+						: settings.toc.position === "left"
+						? 1
+						: -1)
+			);
+		},
+		[settings.toc.offset, settings.toc.position]
+	);
+
+	const handleCopyToClipboard = useCallback(async () => {
+		const toc = headings
+			.map((heading) => {
+				const indent = "\t".repeat(heading.level - 1);
+				return `${indent}${cleanHeading(heading.heading)}`;
+			})
+			.join("\n");
+
+		try {
+			await navigator.clipboard.writeText(toc);
+			const btn = document.querySelector(
+				".NToc__toc-toolbar-button[data-action='copy-toc-to-clipboard']"
+			);
+			if (btn) {
+				btn.classList.add("success");
+				setTimeout(() => {
+					btn.classList.remove("success");
+				}, 1000);
+			}
+			new Notice("Successfully copied Toc");
+		} catch (error) {
+			console.error("Failed to copy Toc:", error);
+		}
+	}, [headings]);
+
+	return (
+		<div className="NToc__toc-toolbar">
+			<button
+				className={`NToc__toc-toolbar-button  ${
+					settings.toc.alwaysExpand ? "active" : ""
+				}`}
+				data-action="pin-toc-group"
+				onClick={() => {
+					settingsStore.updateSettingByPath(
+						"toc.alwaysExpand",
+						!settings.toc.alwaysExpand
+					);
+				}}
+			>
+				<i className="NToc__toc-toolbar-button-icon">
+					<Pin size={16} />
+				</i>
+			</button>
+			<button
+				className="NToc__toc-toolbar-button"
+				data-action="position-toc-group"
+				onClick={() => {
+					settingsStore.updateSettingByPath(
+						"toc.position",
+						settings.toc.position === "left" ? "right" : "left"
+					);
+				}}
+			>
+				<i className="NToc__toc-toolbar-button-icon">
+					<ArrowLeftRight size={16} />
+				</i>
+			</button>
+			<button
+				className="NToc__toc-toolbar-button"
+				data-action={
+					hasAnyCollapsed ? "expand-toc-items" : "collapse-toc-items"
+				}
+				onClick={hasAnyCollapsed ? onExpandAll : onCollapseAll}
+			>
+				<i className="NToc__toc-toolbar-button-icon">
+					{hasAnyCollapsed ? (
+						<ChevronsUpDown size={16} />
+					) : (
+						<ChevronsDownUp size={16} />
+					)}
+				</i>
+			</button>
+			<button
+				className="NToc__toc-toolbar-button"
+				data-action="offset-move-left"
+				onClick={() => handleOffsetChange("left")}
+			>
+				<i className="NToc__toc-toolbar-button-icon">
+					<ChevronLeft size={16} />
+				</i>
+			</button>
+			<button
+				className="NToc__toc-toolbar-button"
+				data-action="offset-move-right"
+				onClick={() => handleOffsetChange("right")}
+			>
+				<i className="NToc__toc-toolbar-button-icon">
+					<ChevronRight size={16} />
+				</i>
+			</button>
+			<button
+				className="NToc__toc-toolbar-button"
+				data-action="copy-toc-to-clipboard"
+				onClick={handleCopyToClipboard}
+			>
+				<i className="NToc__toc-toolbar-button-icon">
+					<ClipboardCopy size={16} />
+				</i>
+			</button>
+		</div>
+	);
+};

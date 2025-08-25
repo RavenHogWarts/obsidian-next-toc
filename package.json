@@ -28,6 +28,8 @@
 		"node": ">=18.x"
 	},
 	"devDependencies": {
+		"@codemirror/state": "^6.5.2",
+		"@codemirror/view": "^6.38.1",
 		"@types/jest": "^30.0.0",
 		"@types/node": "^24.0.4",
 		"@types/react": "^19.1.8",
