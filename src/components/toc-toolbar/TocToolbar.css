@@ -4,6 +4,7 @@
 	justify-content: center;
 	gap: 4px;
 	margin-bottom: 4px;
+	opacity: 0;
 }
 
 .NToc__toc-toolbar-button {

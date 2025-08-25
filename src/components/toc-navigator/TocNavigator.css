@@ -56,6 +56,12 @@
 	&.NToc__group-hidden {
 		display: none;
 	}
+
+	&:hover {
+		.NToc__toc-toolbar {
+			opacity: 1;
+		}
+	}
 }
 
 .NToc__group-content {

@@ -1,6 +1,7 @@
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
 import calculateActualDepth from "@src/utils/calculateActualDepth";
+import hasChildren from "@src/utils/hasChildren";
 import smoothScroll from "@src/utils/smoothScroll";
 import { HeadingCache, MarkdownView } from "obsidian";
 import {
@@ -8,6 +9,7 @@ import {
 	MouseEvent,
 	useCallback,
 	useEffect,
+	useMemo,
 	useRef,
 	useState,
 } from "react";
@@ -33,10 +35,11 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	const NTocGroupContentRef = useRef<HTMLDivElement>(null);
 	const NTocGroupTocItemsRef = useRef<HTMLDivElement>(null);
 
-	const [isHovered, setIsHovered] = useState(false);
-	const [isMouseDragging, setIsMouseDragging] = useState(false);
-	const [startX, setStartX] = useState(0);
-	const [startWidth, setStartWidth] = useState(0);
+	const [isHovered, setIsHovered] = useState<boolean>(false);
+	const [isMouseDragging, setIsMouseDragging] = useState<boolean>(false);
+	const [startX, setStartX] = useState<number>(0);
+	const [startWidth, setStartWidth] = useState<number>(0);
+	const [collapsedSet, setCollapsedSet] = useState<Set<number>>(new Set());
 
 	useEffect(() => {
 		if (NTocContainerRef.current) {
@@ -204,6 +207,68 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 		[headings, settings.render.skipHeading1]
 	);
 
+	useEffect(() => {
+		// 当视图或标题列表变化时，重置折叠状态
+		setCollapsedSet(new Set());
+	}, [currentView, headings]);
+
+	const toggleCollapsedAt = useCallback((index: number) => {
+		setCollapsedSet((prev) => {
+			const next = new Set(prev);
+			if (next.has(index)) {
+				next.delete(index);
+			} else {
+				next.add(index);
+			}
+			return next;
+		});
+	}, []);
+
+	const onCollapseAll = useCallback(() => {
+		setCollapsedSet(
+			new Set(
+				headings
+					.map((_, index) => index)
+					.filter((index) => hasChildren(index, headings))
+			)
+		);
+	}, [headings]);
+
+	const onExpandAll = useCallback(() => {
+		setCollapsedSet(new Set());
+	}, []);
+
+	const visibilityMap = useMemo(() => {
+		const result: boolean[] = new Array(headings.length).fill(true);
+		const collapsedLevels: number[] = [];
+		for (let i = 0; i < headings.length; i++) {
+			const level = headings[i].level;
+			// 离开较深的折叠子树：弹出所有 >= 当前层级的折叠层级
+			while (
+				collapsedLevels.length > 0 &&
+				level <= collapsedLevels[collapsedLevels.length - 1]
+			) {
+				collapsedLevels.pop();
+			}
+			// 如果仍存在折叠祖先，则当前项不可见
+			result[i] = collapsedLevels.length === 0;
+			// 若当前项为折叠父节点，则把其层级压栈，影响其后代
+			if (collapsedSet.has(i)) {
+				collapsedLevels.push(level);
+			}
+		}
+		return result;
+	}, [headings, collapsedSet]);
+
+	const shouldShowToc = useMemo(() => {
+		if (settings.render.skipHeading1) {
+			const hasOnlyH1 = headings.every((heading) => heading.level === 1);
+			return !hasOnlyH1;
+		}
+
+		return headings.length > 0;
+	}, [headings, settings.render.skipHeading1]);
+
 	return (
 		<div ref={NTocContainerRef} className="NToc__container">
 			<div
@@ -222,27 +287,49 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 				/>
 				<div ref={NTocGroupContentRef} className="NToc__group-content">
 					{settings.tool.useToolbar && (
-						<TocToolbar headings={headings} />
+						<TocToolbar
+							headings={headings}
+							onCollapseAll={onCollapseAll}
+							onExpandAll={onExpandAll}
+							hasAnyCollapsed={collapsedSet.size > 0}
+						/>
 					)}
-					<div ref={NTocGroupTocItemsRef} className="NToc__toc-items">
-						{headings.map((heading, index) => {
-							const actualDepth = calculateActualDepth(
-								index,
-								headings
-							);
 
-							return (
-								<TocItem
-									currentView={currentView}
-									heading={heading}
-									headingIndex={index}
-									headingActualDepth={actualDepth}
-									headingNumber={generateHeadingNumber(index)}
-									headingActive={index === activeHeadingIndex}
-								/>
-							);
-						})}
-					</div>
+					{shouldShowToc && (
+						<div
+							ref={NTocGroupTocItemsRef}
+							className="NToc__toc-items"
+						>
+							{headings.map((heading, index) => {
+								if (!visibilityMap[index]) return null;
+								return (
+									<TocItem
+										currentView={currentView}
+										heading={heading}
+										headingIndex={index}
+										headingActualDepth={calculateActualDepth(
+											index,
+											headings
+										)}
+										headingNumber={generateHeadingNumber(
+											index
+										)}
+										headingActive={
+											index === activeHeadingIndex
+										}
+										headingChildren={hasChildren(
+											index,
+											headings
+										)}
+										isCollapsedParent={collapsedSet.has(
+											index
+										)}
+										onToggleCollapse={toggleCollapsedAt}
+									/>
+								);
+							})}
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

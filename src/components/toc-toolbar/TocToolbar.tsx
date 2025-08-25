@@ -5,6 +5,8 @@ import {
 	ArrowLeftRight,
 	ChevronLeft,
 	ChevronRight,
+	ChevronsDownUp,
+	ChevronsUpDown,
 	ClipboardCopy,
 	Pin,
 } from "lucide-react";
@@ -14,9 +16,17 @@ import "./TocToolbar.css";
 
 interface TocToolbarProps {
 	headings: HeadingCache[];
+	onCollapseAll: () => void;
+	onExpandAll: () => void;
+	hasAnyCollapsed: boolean;
 }
 
-export const TocToolbar: FC<TocToolbarProps> = ({ headings }) => {
+export const TocToolbar: FC<TocToolbarProps> = ({
+	headings,
+	onCollapseAll,
+	onExpandAll,
+	hasAnyCollapsed,
+}) => {
 	const settingsStore = useSettingsStore();
 	const settings = usePluginSettings(settingsStore);
 
@@ -96,9 +106,18 @@ export const TocToolbar: FC<TocToolbarProps> = ({ headings }) => {
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"
-				data-action="expand-toc-items"
+				data-action={
+					hasAnyCollapsed ? "expand-toc-items" : "collapse-toc-items"
+				}
+				onClick={hasAnyCollapsed ? onExpandAll : onCollapseAll}
 			>
-				<i className="NToc__toc-toolbar-button-icon"></i>
+				<i className="NToc__toc-toolbar-button-icon">
+					{hasAnyCollapsed ? (
+						<ChevronsUpDown size={16} />
+					) : (
+						<ChevronsDownUp size={16} />
+					)}
+				</i>
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"

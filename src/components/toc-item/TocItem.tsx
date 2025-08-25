@@ -1,6 +1,7 @@
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
 import scrollToHeading from "@src/utils/scrollToHeading";
+import { ChevronDown, ChevronRight } from "lucide-react";
 import { HeadingCache, MarkdownView } from "obsidian";
 import { FC } from "react";
 import "./TocItem.css";
@@ -12,6 +13,9 @@ interface TocItemProps {
 	headingActualDepth: number;
 	headingNumber: string;
 	headingActive: boolean;
+	headingChildren: boolean;
+	isCollapsedParent: boolean;
+	onToggleCollapse: (index: number) => void;
 }
 
 export const TocItem: FC<TocItemProps> = ({
@@ -21,6 +25,9 @@ export const TocItem: FC<TocItemProps> = ({
 	headingActualDepth,
 	headingNumber,
 	headingActive,
+	headingChildren,
+	isCollapsedParent,
+	onToggleCollapse,
 }) => {
 	const settingsStore = useSettingsStore();
 	const settings = usePluginSettings(settingsStore);
@@ -36,6 +43,24 @@ export const TocItem: FC<TocItemProps> = ({
 			onClick={() => scrollToHeading(currentView, heading)}
 		>
 			<div className="NToc__toc-item">
+				{headingChildren && (
+					<button
+						className="NToc__toc-item-collapse clickable-icon"
+						onClick={(e) => {
+							e.stopPropagation();
+							onToggleCollapse(headingIndex);
+						}}
+						aria-expanded={!isCollapsedParent}
+					>
+						<i className="NToc__toc-item-collapse-icon">
+							{isCollapsedParent ? (
+								<ChevronRight size={16} />
+							) : (
+								<ChevronDown size={16} />
+							)}
+						</i>
+					</button>
+				)}
 				<div className="NToc__toc-item-content">
 					{settings.render.useHeadingNumber && (
 						<div className="NToc__toc-item-number">
