@@ -4,7 +4,6 @@ interface IButtonTool {
 }
 
 export type NTocPosition = "left" | "right";
-export type NTocProgressStyle = "none" | "bar" | "ring" | "both";
 
 export interface NTocPluginSettings {
 	toc: {
@@ -21,7 +20,7 @@ export interface NTocPluginSettings {
 	};
 	tool: {
 		useToolbar: boolean;
-		progressStyle: NTocProgressStyle;
+		showProgress: boolean;
 		returnToCursor: IButtonTool;
 		returnToTop: IButtonTool;
 		returnToBottom: IButtonTool;
@@ -33,7 +32,7 @@ export interface NTocPluginSettings {
 export const DEFAULT_SETTINGS: NTocPluginSettings = {
 	toc: {
 		show: true,
-		alwaysExpand: false,
+		alwaysExpand: true,
 		width: 240,
 		position: "right",
 		offset: 12,
@@ -45,17 +44,17 @@ export const DEFAULT_SETTINGS: NTocPluginSettings = {
 	},
 	tool: {
 		useToolbar: true,
-		progressStyle: "none",
+		showProgress: true,
 		returnToCursor: {
 			enabled: true,
 			icon: "text-cursor-input",
 		},
 		returnToTop: {
-			enabled: true,
+			enabled: false,
 			icon: "arrow-up-to-line",
 		},
 		returnToBottom: {
-			enabled: true,
+			enabled: false,
 			icon: "arrow-down-to-line",
 		},
 		jumpToNextHeading: {

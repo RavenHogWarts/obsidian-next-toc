@@ -36,13 +36,49 @@ export default class SettingsStore {
 		this.#subscribers.forEach((callback) => callback());
 	}
 
+	#mergeWithDefaults<T>(saved: unknown, defaults: T): T {
+		// 如果默认值是对象（且非数组），则递归按默认结构构建结果
+		if (
+			defaults !== null &&
+			typeof defaults === "object" &&
+			!Array.isArray(defaults)
+		) {
+			const result: Record<string, unknown> = {};
+			const defaultRecord = defaults as unknown as Record<
+				string,
+				unknown
+			>;
+			const savedRecord = (saved ?? {}) as Record<string, unknown>;
+			for (const key of Object.keys(defaultRecord)) {
+				result[key] = this.#mergeWithDefaults(
+					savedRecord[key],
+					defaultRecord[key]
+				);
+			}
+			return result as unknown as T;
+		}
+
+		// 基元或数组：类型不匹配或未提供则回退到默认值
+		const isArrayDefault = Array.isArray(defaults as unknown);
+		const isArraySaved = Array.isArray(saved as unknown);
+		if (
+			saved === undefined ||
+			(typeof defaults !== typeof saved && !isArrayDefault) ||
+			(isArrayDefault && !isArraySaved)
+		) {
+			return defaults;
+		}
+		return saved as T;
+	}
+
 	async loadSettings() {
-		this.#plugin.settings = Object.assign(
-			{},
-			DEFAULT_SETTINGS,
-			await this.#plugin.loadData()
+		const saved = await this.#plugin.loadData();
+		// 与默认配置深度对齐：只保留定义内字段并填充缺省
+		this.#plugin.settings = this.#mergeWithDefaults(
+			saved ?? {},
+			DEFAULT_SETTINGS
 		);
-		this.#plugin.saveSettings();
+		await this.#plugin.saveSettings();
 		this.#notifyStoreSubscribers();
 	}
 
