@@ -59,10 +59,9 @@ export const NTocSettings: FC = () => {
 								<ObsidianSetting.Text
 									value={settings.toc.width.toString()}
 									onChange={(value) => {
-										const numValue = parseInt(value) || 240;
 										settingsStore.updateSettingByPath(
 											"toc.width",
-											numValue
+											Number(value)
 										);
 									}}
 								/>
@@ -100,10 +99,9 @@ export const NTocSettings: FC = () => {
 								<ObsidianSetting.Text
 									value={settings.toc.offset.toString()}
 									onChange={(value) => {
-										const numValue = parseInt(value) || 0;
 										settingsStore.updateSettingByPath(
 											"toc.offset",
-											numValue
+											Number(value)
 										);
 									}}
 								/>
