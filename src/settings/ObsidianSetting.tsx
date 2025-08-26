@@ -99,7 +99,6 @@ const ObsidianSetting: FC<ObsidianSettingProps> = ({
 	}, [obsidianSetting, disabled]);
 
 	const obsidianSettingSlotContext = useMemo(() => {
-		console.log("Creating slot context with setting:", obsidianSetting);
 		const context = {
 			setting: {
 				setting: obsidianSetting,
@@ -125,7 +124,6 @@ const ObsidianSetting: FC<ObsidianSettingProps> = ({
 			string,
 			ContextType<typeof ObsidianSettingSlotContext>
 		>;
-		console.log("Slot context created:", context);
 		return context;
 	}, [obsidianSetting]);
 

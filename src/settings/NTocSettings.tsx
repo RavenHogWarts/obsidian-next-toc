@@ -23,10 +23,6 @@ export const NTocSettings: FC = () => {
 								<ObsidianSetting.Toggle
 									value={settings.toc.show}
 									onChange={(value) => {
-										console.log(
-											"Toggle changed to:",
-											value
-										);
 										settingsStore.updateSettingByPath(
 											"toc.show",
 											value
