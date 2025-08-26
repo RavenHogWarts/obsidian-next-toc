@@ -1,0 +1,34 @@
+.NToc__icon-picker {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	cursor: pointer;
+	border-radius: 4px;
+	background-color: var(--background-modifier-form-field);
+	border: 1px solid var(--background-modifier-border);
+	color: var(--text-muted);
+	transition: all 0.2s ease;
+
+	&:hover {
+		background-color: var(--background-modifier-form-field-highlighted);
+		color: var(--text-normal);
+		border-color: var(--interactive-accent);
+	}
+
+	&:active {
+		transform: scale(0.96);
+	}
+}
+
+.NToc__icon-suggestion {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	transition: background-color 0.2s ease;
+
+	:hover {
+		background-color: var(--background-modifier-hover);
+	}
+}
