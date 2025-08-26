@@ -79,6 +79,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 					settings.toc.alwaysExpand ? "active" : ""
 				}`}
 				data-action="pin-toc-group"
+				aria-label="Pin TOC group"
 				onClick={() => {
 					settingsStore.updateSettingByPath(
 						"toc.alwaysExpand",
@@ -93,6 +94,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			<button
 				className="NToc__toc-toolbar-button"
 				data-action="position-toc-group"
+				aria-label="Change TOC group position"
 				onClick={() => {
 					settingsStore.updateSettingByPath(
 						"toc.position",
@@ -109,6 +111,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 				data-action={
 					hasAnyCollapsed ? "expand-toc-items" : "collapse-toc-items"
 				}
+				aria-label="Expand/Collapse TOC items"
 				onClick={hasAnyCollapsed ? onExpandAll : onCollapseAll}
 			>
 				<i className="NToc__toc-toolbar-button-icon">
@@ -122,6 +125,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			<button
 				className="NToc__toc-toolbar-button"
 				data-action="offset-move-left"
+				aria-label="Add offset to the left"
 				onClick={() => handleOffsetChange("left")}
 			>
 				<i className="NToc__toc-toolbar-button-icon">
@@ -131,6 +135,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			<button
 				className="NToc__toc-toolbar-button"
 				data-action="offset-move-right"
+				aria-label="Add offset to the right"
 				onClick={() => handleOffsetChange("right")}
 			>
 				<i className="NToc__toc-toolbar-button-icon">
@@ -140,6 +145,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			<button
 				className="NToc__toc-toolbar-button"
 				data-action="copy-toc-to-clipboard"
+				aria-label="Copy TOC to clipboard"
 				onClick={handleCopyToClipboard}
 			>
 				<i className="NToc__toc-toolbar-button-icon">
