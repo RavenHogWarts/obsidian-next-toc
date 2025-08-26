@@ -284,6 +284,13 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 		return headings.length > 0;
 	}, [headings, settings.render.skipHeading1]);
 
+	// 当 TOC 显示状态变化时重新应用宽度样式
+	useEffect(() => {
+		if (NTocGroupTocItemsRef.current && shouldShowToc) {
+			NTocGroupTocItemsRef.current.style.width = `${settings.toc.width}px`;
+		}
+	}, [shouldShowToc, settings.toc.width]);
+
 	return (
 		<div ref={NTocContainerRef} className="NToc__container">
 			<div
