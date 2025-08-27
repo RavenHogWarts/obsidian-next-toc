@@ -20,13 +20,14 @@
 			right: auto;
 			margin-left: 8px;
 			transform: translateX(-8px);
-			gap:3px;
+			gap: 3px;
 		}
 
 		.NToc__group-resize {
 			right: 0;
 		}
 	}
+
 	&.NToc__container-right {
 		left: auto;
 
@@ -110,7 +111,7 @@
 
 .NToc__toc-items {
 	position: relative;
-	background: var(--background-primary);
+	background: color-mix(in srgb, var(--background-primary)90%, transparent);
 	border-radius: 4px;
 	box-shadow: var(--shadow-s);
 	min-width: 10dvw;
@@ -119,13 +120,14 @@
 	min-height: max(100px, 10dvh);
 	overflow-y: auto;
 	overscroll-behavior: contain;
-	
+
 	display: grid;
 	gap: 3px;
-	padding: 1vh;
+	padding: 0.3vh 1vh;
 }
+
 /* 滚动条 */
-.NToc__toc-items{
+.NToc__toc-items {
 	scrollbar-width: auto;
 }
 
@@ -147,14 +149,15 @@
 .NToc__toc-item-container:hover {
 	transform: translateX(5px);
 }
-.NToc__toc-item-container{
+
+.NToc__toc-item-container {
 	transition: all 0.2s ease;
 }
 
 
 .NToc__toc-progress-bar {
 	position: sticky;
-	top: 0;
+	top: -0.31vh;
 	left: 0;
 	right: 0;
 	height: 2px;
@@ -169,11 +172,9 @@
 		left: 0;
 		height: 100%;
 		width: var(--NToc__toc-progress-width);
-		background: linear-gradient(
-			90deg,
-			var(--interactive-accent) 0%,
-			var(--interactive-accent-hover) 100%
-		);
+		background: linear-gradient(90deg,
+				var(--interactive-accent) 0%,
+				var(--interactive-accent-hover) 100%);
 		box-shadow: 0 0 8px var(--interactive-accent-hover);
 		border-radius: 0 2px 2px 0;
 		transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);

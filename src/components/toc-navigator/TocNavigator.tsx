@@ -332,6 +332,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 								if (!visibilityMap[index]) return null;
 								return (
 									<TocItem
+										key={`toc-item-${index}-${heading.position.start.line}`}
 										currentView={currentView}
 										heading={heading}
 										headingIndex={index}
