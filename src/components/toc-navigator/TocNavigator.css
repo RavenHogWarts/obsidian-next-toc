@@ -123,7 +123,7 @@
 
 	display: grid;
 	gap: 3px;
-	padding: 0.3vh 1vh;
+	padding: 0.3vh 1vh 0.3vh 0.6vh;
 }
 
 /* 滚动条 */
@@ -178,5 +178,72 @@
 		box-shadow: 0 0 8px var(--interactive-accent-hover);
 		border-radius: 0 2px 2px 0;
 		transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+}
+
+@media(max-width:768px) {
+	.NToc__toc-items {
+		max-height: 20dvh;
+		max-width: 60dvw;
+		font-size: medium;
+	}
+
+	.NToc__toc-item-level {
+		display: none;
+	}
+
+	.NToc__toc-item-container {
+		&[data-actual-depth="0"] {
+			padding-left: 0px;
+			font-weight: 600;
+		}
+
+		&[data-actual-depth="1"] {
+			padding-left: 1px;
+			font-weight: 500;
+		}
+
+		&[data-actual-depth="2"] {
+			padding-left: 2px;
+			font-weight: 400;
+		}
+
+		&[data-actual-depth="3"] {
+			padding-left: 3px;
+			font-weight: 400;
+		}
+
+		&[data-actual-depth="4"] {
+			padding-left: 4px;
+			font-weight: 400;
+		}
+
+		&[data-actual-depth="5"] {
+			padding-left: 5px;
+			font-weight: 400;
+		}
+	}
+
+	.NToc__container.NToc__container-left .NToc__group-content {
+		display: flex;
+		flex-direction: row;
+	}
+
+	.NToc__container.NToc__container-right .NToc__group-content {
+		display: flex;
+		flex-direction: row-reverse;
+	}
+
+	.NToc__toc-toolbar {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.NToc__toc-item-container {
+		min-height: auto;
+	}
+
+	.NToc__toc-item-content {
+		max-width: auto;
 	}
 }

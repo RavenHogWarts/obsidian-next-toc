@@ -43,6 +43,7 @@
 
 	&:hover {
 		background: var(--background-modifier-hover);
+		border-radius: 5px;
 
 		.NToc__toc-item-collapse {
 			opacity: 1;
@@ -53,6 +54,7 @@
 	&[data-active="true"] {
 		color: var(--interactive-accent);
 		background: var(--background-modifier-hover);
+		border-radius: 5px;
 
 		.NToc__toc-item-level {
 			background: var(--interactive-accent);
