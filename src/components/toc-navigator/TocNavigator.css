@@ -20,12 +20,14 @@
 			right: auto;
 			margin-left: 8px;
 			transform: translateX(-8px);
+			gap: 3px;
 		}
 
 		.NToc__group-resize {
 			right: 0;
 		}
 	}
+
 	&.NToc__container-right {
 		left: auto;
 
@@ -109,7 +111,7 @@
 
 .NToc__toc-items {
 	position: relative;
-	background: var(--background-primary);
+	background: color-mix(in srgb, var(--background-primary)90%, transparent);
 	border-radius: 4px;
 	box-shadow: var(--shadow-s);
 	min-width: 10dvw;
@@ -118,11 +120,44 @@
 	min-height: max(100px, 10dvh);
 	overflow-y: auto;
 	overscroll-behavior: contain;
+
+	display: grid;
+	gap: 3px;
+	padding: 0.3vh 1vh 0.3vh 0.6vh;
 }
+
+/* 滚动条 */
+.NToc__toc-items {
+	scrollbar-width: auto;
+}
+
+.NToc__toc-items::-webkit-scrollbar {
+	display: block;
+	width: 6px;
+}
+
+.NToc__toc-items::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.NToc__toc-items::-webkit-scrollbar-thumb {
+	background-color: var(--scrollbar-thumb-bg);
+	border-radius: 3px;
+}
+
+/* 目录悬停动画 */
+.NToc__toc-item-container:hover {
+	transform: translateX(5px);
+}
+
+.NToc__toc-item-container {
+	transition: all 0.2s ease;
+}
+
 
 .NToc__toc-progress-bar {
 	position: sticky;
-	top: 0;
+	top: -0.31vh;
 	left: 0;
 	right: 0;
 	height: 2px;
@@ -137,13 +172,78 @@
 		left: 0;
 		height: 100%;
 		width: var(--NToc__toc-progress-width);
-		background: linear-gradient(
-			90deg,
-			var(--interactive-accent) 0%,
-			var(--interactive-accent-hover) 100%
-		);
+		background: linear-gradient(90deg,
+				var(--interactive-accent) 0%,
+				var(--interactive-accent-hover) 100%);
 		box-shadow: 0 0 8px var(--interactive-accent-hover);
 		border-radius: 0 2px 2px 0;
 		transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+}
+
+@media(max-width:768px) {
+	.NToc__toc-items {
+		max-height: 20dvh;
+		max-width: 60dvw;
+		font-size: medium;
+	}
+
+	.NToc__toc-item-level {
+		display: none;
+	}
+
+	.NToc__toc-item-container {
+		&[data-actual-depth="0"] {
+			padding-left: 0px;
+			font-weight: 600;
+		}
+
+		&[data-actual-depth="1"] {
+			padding-left: 1px;
+			font-weight: 500;
+		}
+
+		&[data-actual-depth="2"] {
+			padding-left: 2px;
+			font-weight: 400;
+		}
+
+		&[data-actual-depth="3"] {
+			padding-left: 3px;
+			font-weight: 400;
+		}
+
+		&[data-actual-depth="4"] {
+			padding-left: 4px;
+			font-weight: 400;
+		}
+
+		&[data-actual-depth="5"] {
+			padding-left: 5px;
+			font-weight: 400;
+		}
+	}
+
+	.NToc__container.NToc__container-left .NToc__group-content {
+		display: flex;
+		flex-direction: row;
+	}
+
+	.NToc__container.NToc__container-right .NToc__group-content {
+		display: flex;
+		flex-direction: row-reverse;
+	}
+
+	.NToc__toc-toolbar {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.NToc__toc-item-container {
+		min-height: auto;
+	}
+
+	.NToc__toc-item-content {
+		max-width: auto;
 	}
 }

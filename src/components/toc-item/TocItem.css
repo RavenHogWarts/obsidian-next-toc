@@ -13,33 +13,48 @@
 
 	&[data-actual-depth="0"] {
 		padding-left: 14px;
+		font-weight: 600;
 	}
+
 	&[data-actual-depth="1"] {
 		padding-left: 30px;
+		font-weight: 500;
 	}
+
 	&[data-actual-depth="2"] {
 		padding-left: 46px;
+		font-weight: 400;
 	}
+
 	&[data-actual-depth="3"] {
 		padding-left: 62px;
+		font-weight: 400;
 	}
+
 	&[data-actual-depth="4"] {
 		padding-left: 78px;
+		font-weight: 400;
 	}
+
 	&[data-actual-depth="5"] {
 		padding-left: 94px;
+		font-weight: 400;
 	}
 
 	&:hover {
 		background: var(--background-modifier-hover);
+		border-radius: 5px;
+
 		.NToc__toc-item-collapse {
 			opacity: 1;
+			background: transparent;
 		}
 	}
 
 	&[data-active="true"] {
 		color: var(--interactive-accent);
 		background: var(--background-modifier-hover);
+		border-radius: 5px;
 
 		.NToc__toc-item-level {
 			background: var(--interactive-accent);
