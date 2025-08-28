@@ -1,10 +1,10 @@
 .NToc__toc-toolbar {
 	display: flex;
 	align-items: center;
-	justify-content: flex-start;
+	justify-content: center;
 	gap: 4px;
 	margin-bottom: 4px;
-	opacity: 1;
+	opacity: 0;
 }
 
 .NToc__toc-toolbar-button {
