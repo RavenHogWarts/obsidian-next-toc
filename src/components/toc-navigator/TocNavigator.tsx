@@ -185,34 +185,26 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 			let prevLevel = 0;
 
 			for (let i = 0; i <= index; i++) {
-				const heading = headings[i];
-				const level = heading.level;
+				const { level } = headings[i];
 
 				// 跳过 h1（如果配置了跳过）
 				if (settings.render.skipHeading1 && level === 1) {
 					continue;
 				}
 
-				if (numberStack.length === 0) {
-					numberStack.push(1);
-				} else if (level > prevLevel) {
+				if (level > prevLevel) {
+					// 新的更深层级，补 1
 					numberStack.push(1);
 				} else if (level === prevLevel) {
+					// 同级，递增
 					numberStack[numberStack.length - 1]++;
 				} else {
-					// 回退到当前层级
-					while (
-						numberStack.length > 0 &&
-						numberStack.length >
-							level - (settings.render.skipHeading1 ? 2 : 1)
-					) {
+					// 回到上层，弹出多余层级，递增
+					const diff = prevLevel - level;
+					for (let d = 0; d < diff; d++) {
 						numberStack.pop();
 					}
-					if (numberStack.length === 0) {
-						numberStack.push(1);
-					} else {
-						numberStack[numberStack.length - 1]++;
-					}
+					numberStack[numberStack.length - 1]++;
 				}
 				prevLevel = level;
 			}
