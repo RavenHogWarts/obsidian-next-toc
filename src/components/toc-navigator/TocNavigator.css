@@ -121,9 +121,7 @@
 	overflow-y: auto;
 	overscroll-behavior: contain;
 
-	display: grid;
-	gap: 3px;
-	padding: 0.3vh 1vh 0.3vh 0.6vh;
+	padding: 0.3dvh 1dvh 0.3dvh 0.6dvh;
 }
 
 /* 滚动条 */
@@ -184,13 +182,10 @@
 @media(max-width:768px) {
 	.NToc__toc-items {
 		max-height: 20dvh;
-		max-width: 60dvw;
+		max-width: 70dvw;
 		font-size: medium;
 	}
 
-	.NToc__toc-item-level {
-		display: none;
-	}
 
 	.NToc__toc-item-container {
 		&[data-actual-depth="0"] {
@@ -199,27 +194,27 @@
 		}
 
 		&[data-actual-depth="1"] {
-			padding-left: 1px;
+			padding-left: 5px;
 			font-weight: 500;
 		}
 
 		&[data-actual-depth="2"] {
-			padding-left: 2px;
+			padding-left: 10px;
 			font-weight: 400;
 		}
 
 		&[data-actual-depth="3"] {
-			padding-left: 3px;
+			padding-left: 15px;
 			font-weight: 400;
 		}
 
 		&[data-actual-depth="4"] {
-			padding-left: 4px;
+			padding-left: 20px;
 			font-weight: 400;
 		}
 
 		&[data-actual-depth="5"] {
-			padding-left: 5px;
+			padding-left: 25px;
 			font-weight: 400;
 		}
 	}

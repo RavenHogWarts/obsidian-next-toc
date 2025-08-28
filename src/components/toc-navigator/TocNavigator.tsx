@@ -204,7 +204,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 					while (
 						numberStack.length > 0 &&
 						numberStack.length >
-							level - (settings.render.skipHeading1 ? 2 : 1)
+						level - (settings.render.skipHeading1 ? 2 : 1)
 					) {
 						numberStack.pop();
 					}
