@@ -11,7 +11,7 @@ import {
 	Pin,
 } from "lucide-react";
 import { HeadingCache, Notice } from "obsidian";
-import { FC, useCallback } from "react";
+import { FC, useCallback, useRef } from "react";
 import "./TocToolbar.css";
 
 interface TocToolbarProps {
@@ -29,6 +29,8 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 }) => {
 	const settingsStore = useSettingsStore();
 	const settings = usePluginSettings(settingsStore);
+
+	const copyButtonRef = useRef<HTMLButtonElement>(null);
 
 	const handleOffsetChange = useCallback(
 		(direction: "left" | "right") => {
@@ -57,10 +59,8 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 
 		try {
 			await navigator.clipboard.writeText(toc);
-			const btn = document.querySelector(
-				".NToc__toc-toolbar-button[data-action='copy-toc-to-clipboard']"
-			);
-			if (btn) {
+			if (copyButtonRef.current) {
+				const btn = copyButtonRef.current;
 				btn.classList.add("success");
 				setTimeout(() => {
 					btn.classList.remove("success");
@@ -78,7 +78,6 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 				className={`NToc__toc-toolbar-button  ${
 					settings.toc.alwaysExpand ? "active" : ""
 				}`}
-				data-action="pin-toc-group"
 				aria-label="Pin TOC group"
 				onClick={() => {
 					settingsStore.updateSettingByPath(
@@ -93,7 +92,6 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"
-				data-action="position-toc-group"
 				aria-label="Change TOC group position"
 				onClick={() => {
 					settingsStore.updateSettingByPath(
@@ -108,9 +106,6 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"
-				data-action={
-					hasAnyCollapsed ? "expand-toc-items" : "collapse-toc-items"
-				}
 				aria-label="Expand/Collapse TOC items"
 				onClick={hasAnyCollapsed ? onExpandAll : onCollapseAll}
 			>
@@ -124,7 +119,6 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"
-				data-action="offset-move-left"
 				aria-label="Add offset to the left"
 				onClick={() => handleOffsetChange("left")}
 			>
@@ -134,7 +128,6 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"
-				data-action="offset-move-right"
 				aria-label="Add offset to the right"
 				onClick={() => handleOffsetChange("right")}
 			>
@@ -143,8 +136,8 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 				</i>
 			</button>
 			<button
+				ref={copyButtonRef}
 				className="NToc__toc-toolbar-button"
-				data-action="copy-toc-to-clipboard"
 				aria-label="Copy TOC to clipboard"
 				onClick={handleCopyToClipboard}
 			>

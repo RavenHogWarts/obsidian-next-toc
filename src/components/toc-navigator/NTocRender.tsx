@@ -38,7 +38,7 @@ export class NTocRender {
 		if (!this.view) return false;
 		const activeMarkdownView =
 			this.view.app.workspace.getActiveViewOfType(MarkdownView);
-		console.debug("Active markdown view:", activeMarkdownView);
+		// console.debug("Active markdown view:", activeMarkdownView);
 		return !!activeMarkdownView && activeMarkdownView === this.view;
 	}
 
