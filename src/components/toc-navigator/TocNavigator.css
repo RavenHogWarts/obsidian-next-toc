@@ -111,7 +111,7 @@
 
 .NToc__toc-items {
 	position: relative;
-	background: color-mix(in srgb, var(--background-primary)90%, transparent);
+	background: color-mix(in srgb, var(--background-primary) 90%, transparent);
 	border-radius: 4px;
 	box-shadow: var(--shadow-s);
 	min-width: 10dvw;
@@ -120,9 +120,6 @@
 	min-height: max(100px, 10dvh);
 	overflow-y: auto;
 	overscroll-behavior: contain;
-
-	display: grid;
-	gap: 3px;
 	padding: 0.3vh 1vh 0.3vh 0.6vh;
 }
 
@@ -154,7 +151,6 @@
 	transition: all 0.2s ease;
 }
 
-
 .NToc__toc-progress-bar {
 	position: sticky;
 	top: -0.31vh;
@@ -172,16 +168,18 @@
 		left: 0;
 		height: 100%;
 		width: var(--NToc__toc-progress-width);
-		background: linear-gradient(90deg,
-				var(--interactive-accent) 0%,
-				var(--interactive-accent-hover) 100%);
+		background: linear-gradient(
+			90deg,
+			var(--interactive-accent) 0%,
+			var(--interactive-accent-hover) 100%
+		);
 		box-shadow: 0 0 8px var(--interactive-accent-hover);
 		border-radius: 0 2px 2px 0;
 		transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 }
 
-@media(max-width:768px) {
+@media (max-width: 768px) {
 	.NToc__toc-items {
 		max-height: 20dvh;
 		max-width: 60dvw;
