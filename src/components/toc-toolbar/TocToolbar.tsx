@@ -11,7 +11,7 @@ import {
 	Pin,
 } from "lucide-react";
 import { HeadingCache, Notice } from "obsidian";
-import { FC, useCallback, useRef } from "react";
+import { FC, useCallback } from "react";
 import "./TocToolbar.css";
 
 interface TocToolbarProps {
@@ -29,8 +29,6 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 }) => {
 	const settingsStore = useSettingsStore();
 	const settings = usePluginSettings(settingsStore);
-
-	const copyButtonRef = useRef<HTMLButtonElement>(null);
 
 	const handleOffsetChange = useCallback(
 		(direction: "left" | "right") => {
@@ -59,13 +57,6 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 
 		try {
 			await navigator.clipboard.writeText(toc);
-			if (copyButtonRef.current) {
-				const btn = copyButtonRef.current;
-				btn.classList.add("success");
-				setTimeout(() => {
-					btn.classList.remove("success");
-				}, 1000);
-			}
 			new Notice("Successfully copied Toc");
 		} catch (error) {
 			console.error("Failed to copy Toc:", error);
@@ -136,7 +127,6 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 				</i>
 			</button>
 			<button
-				ref={copyButtonRef}
 				className="NToc__toc-toolbar-button"
 				aria-label="Copy TOC to clipboard"
 				onClick={handleCopyToClipboard}

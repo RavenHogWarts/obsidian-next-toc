@@ -23,8 +23,7 @@
 	user-select: none;
 	outline: none;
 
-	&.active,
-	&[data-action="copy-toc-to-clipboard"].success {
+	&.active {
 		color: var(--interactive-accent);
 	}
 
