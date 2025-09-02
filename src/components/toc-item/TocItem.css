@@ -4,7 +4,6 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: 0px;
-	padding: 4px 8px;
 	font-size: 13px;
 	color: var(--text-normal);
 	cursor: pointer;
@@ -115,4 +114,8 @@
 	justify-content: center;
 	opacity: 0;
 	transition: opacity 0.2s ease;
+}
+
+.NToc__toc-item-text.markdown-rendered {
+	line-height: 0;
 }
