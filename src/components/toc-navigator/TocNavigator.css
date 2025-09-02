@@ -246,6 +246,11 @@
 	}
 }
 
+/* Modal 特殊处理 */
+.modal .NToc__view {
+	display: none;
+}
+
 /* 特定页面控制样式 */
 .NToc__SHOW-TOC ~ .NToc__view .NToc__group {
 	opacity: 1 !important;
