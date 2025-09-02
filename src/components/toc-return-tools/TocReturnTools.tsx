@@ -2,7 +2,7 @@ import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
 import scrollToHeading from "@src/utils/scrollToHeading";
 import { HeadingCache, MarkdownView } from "obsidian";
-import { FC, useCallback, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import "./TocReturnTools.css";
 
 interface TocReturnToolsProps {
@@ -18,6 +18,32 @@ export const TocReturnTools: FC<TocReturnToolsProps> = ({
 	const settings = usePluginSettings(settingsStore);
 	const [isExpanded, setIsExpanded] = useState(false);
 	const savedCursorRef = useRef<{ line: number; ch: number } | null>(null);
+	const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+	// 鼠标进入时展开
+	const handleMouseEnter = useCallback(() => {
+		if (hoverTimeoutRef.current) {
+			clearTimeout(hoverTimeoutRef.current);
+			hoverTimeoutRef.current = null;
+		}
+		setIsExpanded(true);
+	}, []);
+
+	// 鼠标离开时延迟收起
+	const handleMouseLeave = useCallback(() => {
+		hoverTimeoutRef.current = setTimeout(() => {
+			setIsExpanded(false);
+		}, 300); // 300ms延迟
+	}, []);
+
+	// 清理定时器
+	useEffect(() => {
+		return () => {
+			if (hoverTimeoutRef.current) {
+				clearTimeout(hoverTimeoutRef.current);
+			}
+		};
+	}, []);
 
 	// 保存当前光标位置
 	const saveCursorPosition = useCallback(() => {
@@ -142,8 +168,8 @@ export const TocReturnTools: FC<TocReturnToolsProps> = ({
 			className={`NToc__return-tools ${
 				isExpanded ? "NToc__return-tools--expanded" : ""
 			}`}
-			onMouseEnter={() => setIsExpanded(true)}
-			onMouseLeave={() => setIsExpanded(false)}
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
 		>
 			{/* 主按钮 */}
 			<div className="NToc__return-tools-main-button">

@@ -1,8 +1,8 @@
 /* 返回工具主容器 */
 .NToc__return-tools {
-	position: fixed;
-	bottom: 20px;
-	right: 20px;
+	position: absolute;
+	bottom: -60px; /* 位置在目录下方 */
+	right: 0;
 	z-index: 1000;
 	pointer-events: all;
 	transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -50,6 +50,9 @@
 	bottom: 0;
 	right: 0;
 	pointer-events: none;
+	/* 防止鼠标离开时按钮立即消失 */
+	padding: 10px;
+	margin: -10px;
 }
 
 .NToc__return-tools--expanded .NToc__return-tools-expanded-buttons {
@@ -71,9 +74,9 @@
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 	transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 	opacity: 0;
-	transform: scale(0.3) translate(0, 0);
-	bottom: 4px;
-	right: 4px;
+	transform: scale(0.3);
+	bottom: 10px; /* 相对于展开容器的位置 */
+	right: 10px; /* 相对于展开容器的位置 */
 	z-index: 1000;
 }
 
@@ -82,114 +85,25 @@
 	transition-delay: calc(var(--tool-index, 0) * 0.08s);
 }
 
-/* 圆形排列的位置计算 */
+/* 圆形排列的位置计算 - 基于主按钮中心点 */
 .NToc__return-tools--expanded .NToc__return-tools-button:nth-child(1) {
-	transform: scale(1) translate(0, -70px);
+	transform: scale(1) translate(-24px, -70px); /* 正上方 */
 }
 
 .NToc__return-tools--expanded .NToc__return-tools-button:nth-child(2) {
-	transform: scale(1) translate(49.5px, -49.5px);
+	transform: scale(1) translate(25px, -70px); /* 右上方 */
 }
 
 .NToc__return-tools--expanded .NToc__return-tools-button:nth-child(3) {
-	transform: scale(1) translate(70px, 0);
+	transform: scale(1) translate(50px, -24px); /* 右方 */
 }
 
 .NToc__return-tools--expanded .NToc__return-tools-button:nth-child(4) {
-	transform: scale(1) translate(49.5px, 49.5px);
+	transform: scale(1) translate(25px, 25px); /* 右下方 */
 }
 
 .NToc__return-tools--expanded .NToc__return-tools-button:nth-child(5) {
-	transform: scale(1) translate(0, 70px);
-}
-
-/* 当只有2个工具时的特殊布局 */
-.NToc__return-tools-expanded-buttons:has(
-		.NToc__return-tools-button:nth-child(2):last-child
-	)
-	.NToc__return-tools-button:nth-child(1) {
-	transform: scale(0.3) translate(-50px, -50px);
-}
-
-.NToc__return-tools-expanded-buttons:has(
-		.NToc__return-tools-button:nth-child(2):last-child
-	)
-	.NToc__return-tools--expanded
-	.NToc__return-tools-button:nth-child(1) {
-	transform: scale(1) translate(-50px, -50px);
-}
-
-.NToc__return-tools-expanded-buttons:has(
-		.NToc__return-tools-button:nth-child(2):last-child
-	)
-	.NToc__return-tools-button:nth-child(2) {
-	transform: scale(0.3) translate(50px, -50px);
-}
-
-.NToc__return-tools-expanded-buttons:has(
-		.NToc__return-tools-button:nth-child(2):last-child
-	)
-	.NToc__return-tools--expanded
-	.NToc__return-tools-button:nth-child(2) {
-	transform: scale(1) translate(50px, -50px);
-}
-
-/* 当只有3个工具时的特殊布局 */
-.NToc__return-tools-expanded-buttons:has(
-		.NToc__return-tools-button:nth-child(3):last-child
-	)
-	.NToc__return-tools--expanded
-	.NToc__return-tools-button:nth-child(1) {
-	transform: scale(1) translate(0, -70px);
-}
-
-.NToc__return-tools-expanded-buttons:has(
-		.NToc__return-tools-button:nth-child(3):last-child
-	)
-	.NToc__return-tools--expanded
-	.NToc__return-tools-button:nth-child(2) {
-	transform: scale(1) translate(-60px, 35px);
-}
-
-.NToc__return-tools-expanded-buttons:has(
-		.NToc__return-tools-button:nth-child(3):last-child
-	)
-	.NToc__return-tools--expanded
-	.NToc__return-tools-button:nth-child(3) {
-	transform: scale(1) translate(60px, 35px);
-}
-
-/* 当只有4个工具时的特殊布局 */
-.NToc__return-tools-expanded-buttons:has(
-		.NToc__return-tools-button:nth-child(4):last-child
-	)
-	.NToc__return-tools--expanded
-	.NToc__return-tools-button:nth-child(1) {
-	transform: scale(1) translate(0, -70px);
-}
-
-.NToc__return-tools-expanded-buttons:has(
-		.NToc__return-tools-button:nth-child(4):last-child
-	)
-	.NToc__return-tools--expanded
-	.NToc__return-tools-button:nth-child(2) {
-	transform: scale(1) translate(70px, 0);
-}
-
-.NToc__return-tools-expanded-buttons:has(
-		.NToc__return-tools-button:nth-child(4):last-child
-	)
-	.NToc__return-tools--expanded
-	.NToc__return-tools-button:nth-child(3) {
-	transform: scale(1) translate(0, 70px);
-}
-
-.NToc__return-tools-expanded-buttons:has(
-		.NToc__return-tools-button:nth-child(4):last-child
-	)
-	.NToc__return-tools--expanded
-	.NToc__return-tools-button:nth-child(4) {
-	transform: scale(1) translate(-70px, 0);
+	transform: scale(1) translate(-74px, -24px); /* 左方 */
 }
 
 /* 悬停效果 */
@@ -198,32 +112,6 @@
 	transform: scale(1.15) translate(var(--hover-x, 0), var(--hover-y, 0));
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 	z-index: 1002;
-}
-
-/* 为每个位置设置悬停时的变换值 */
-.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(1):hover {
-	--hover-x: 0;
-	--hover-y: -70px;
-}
-
-.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(2):hover {
-	--hover-x: 49.5px;
-	--hover-y: -49.5px;
-}
-
-.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(3):hover {
-	--hover-x: 70px;
-	--hover-y: 0;
-}
-
-.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(4):hover {
-	--hover-x: 49.5px;
-	--hover-y: 49.5px;
-}
-
-.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(5):hover {
-	--hover-x: 0;
-	--hover-y: 70px;
 }
 
 .NToc__return-tools-button svg {
@@ -274,39 +162,38 @@
 /* 响应式调整 */
 @media (max-width: 768px) {
 	.NToc__return-tools {
-		bottom: 16px;
-		right: 16px;
+		bottom: -50px; /* 移动端调整位置 */
 	}
 
 	.NToc__return-tools-main-button {
-		width: 44px;
-		height: 44px;
+		width: 40px;
+		height: 40px;
 	}
 
 	.NToc__return-tools-button {
-		width: 36px;
-		height: 36px;
+		width: 32px;
+		height: 32px;
 	}
 
 	/* 调整小屏幕上的位置 */
 	.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(1) {
-		transform: scale(1) translate(0, -60px);
+		transform: scale(1) translate(-20px, -60px);
 	}
 
 	.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(2) {
-		transform: scale(1) translate(42px, -42px);
+		transform: scale(1) translate(20px, -60px);
 	}
 
 	.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(3) {
-		transform: scale(1) translate(60px, 0);
+		transform: scale(1) translate(45px, -20px);
 	}
 
 	.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(4) {
-		transform: scale(1) translate(42px, 42px);
+		transform: scale(1) translate(20px, 20px);
 	}
 
 	.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(5) {
-		transform: scale(1) translate(0, 60px);
+		transform: scale(1) translate(-65px, -20px);
 	}
 }
 
