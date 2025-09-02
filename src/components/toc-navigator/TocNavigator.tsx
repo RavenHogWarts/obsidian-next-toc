@@ -15,6 +15,7 @@ import {
 	useState,
 } from "react";
 import { TocItem } from "../toc-item/TocItem";
+import { TocReturnTools } from "../toc-return-tools/TocReturnTools";
 import { TocToolbar } from "../toc-toolbar/TocToolbar";
 import "./TocNavigator.css";
 
@@ -285,6 +286,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 
 	return (
 		<div ref={NTocContainerRef} className="NToc__container">
+			{<TocReturnTools currentView={currentView} headings={headings} />}
 			<div
 				ref={NTocGroupRef}
 				className="NToc__group"

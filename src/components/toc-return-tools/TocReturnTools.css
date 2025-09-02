@@ -1,0 +1,339 @@
+/* 返回工具主容器 */
+.NToc__return-tools {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	z-index: 1000;
+	pointer-events: all;
+	transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* 主按钮 */
+.NToc__return-tools-main-button {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	background: var(--background-primary);
+	border: 1px solid var(--background-modifier-border);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	transition: all 0.3s ease;
+	position: relative;
+	z-index: 1001;
+}
+
+.NToc__return-tools-main-button:hover {
+	background: var(--background-modifier-hover);
+	transform: scale(1.1);
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.NToc__return-tools-main-button svg {
+	color: var(--text-normal);
+	transition: transform 0.3s ease;
+}
+
+.NToc__return-tools--expanded .NToc__return-tools-main-button {
+	transform: scale(1.1);
+}
+
+.NToc__return-tools--expanded .NToc__return-tools-main-button svg {
+	transform: rotate(180deg);
+}
+
+/* 展开的按钮容器 */
+.NToc__return-tools-expanded-buttons {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	pointer-events: none;
+}
+
+.NToc__return-tools--expanded .NToc__return-tools-expanded-buttons {
+	pointer-events: all;
+}
+
+/* 单个工具按钮 */
+.NToc__return-tools-button {
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: var(--background-primary);
+	border: 1px solid var(--background-modifier-border);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+	opacity: 0;
+	transform: scale(0.3) translate(0, 0);
+	bottom: 4px;
+	right: 4px;
+	z-index: 1000;
+}
+
+.NToc__return-tools--expanded .NToc__return-tools-button {
+	opacity: 1;
+	transition-delay: calc(var(--tool-index, 0) * 0.08s);
+}
+
+/* 圆形排列的位置计算 */
+.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(1) {
+	transform: scale(1) translate(0, -70px);
+}
+
+.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(2) {
+	transform: scale(1) translate(49.5px, -49.5px);
+}
+
+.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(3) {
+	transform: scale(1) translate(70px, 0);
+}
+
+.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(4) {
+	transform: scale(1) translate(49.5px, 49.5px);
+}
+
+.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(5) {
+	transform: scale(1) translate(0, 70px);
+}
+
+/* 当只有2个工具时的特殊布局 */
+.NToc__return-tools-expanded-buttons:has(
+		.NToc__return-tools-button:nth-child(2):last-child
+	)
+	.NToc__return-tools-button:nth-child(1) {
+	transform: scale(0.3) translate(-50px, -50px);
+}
+
+.NToc__return-tools-expanded-buttons:has(
+		.NToc__return-tools-button:nth-child(2):last-child
+	)
+	.NToc__return-tools--expanded
+	.NToc__return-tools-button:nth-child(1) {
+	transform: scale(1) translate(-50px, -50px);
+}
+
+.NToc__return-tools-expanded-buttons:has(
+		.NToc__return-tools-button:nth-child(2):last-child
+	)
+	.NToc__return-tools-button:nth-child(2) {
+	transform: scale(0.3) translate(50px, -50px);
+}
+
+.NToc__return-tools-expanded-buttons:has(
+		.NToc__return-tools-button:nth-child(2):last-child
+	)
+	.NToc__return-tools--expanded
+	.NToc__return-tools-button:nth-child(2) {
+	transform: scale(1) translate(50px, -50px);
+}
+
+/* 当只有3个工具时的特殊布局 */
+.NToc__return-tools-expanded-buttons:has(
+		.NToc__return-tools-button:nth-child(3):last-child
+	)
+	.NToc__return-tools--expanded
+	.NToc__return-tools-button:nth-child(1) {
+	transform: scale(1) translate(0, -70px);
+}
+
+.NToc__return-tools-expanded-buttons:has(
+		.NToc__return-tools-button:nth-child(3):last-child
+	)
+	.NToc__return-tools--expanded
+	.NToc__return-tools-button:nth-child(2) {
+	transform: scale(1) translate(-60px, 35px);
+}
+
+.NToc__return-tools-expanded-buttons:has(
+		.NToc__return-tools-button:nth-child(3):last-child
+	)
+	.NToc__return-tools--expanded
+	.NToc__return-tools-button:nth-child(3) {
+	transform: scale(1) translate(60px, 35px);
+}
+
+/* 当只有4个工具时的特殊布局 */
+.NToc__return-tools-expanded-buttons:has(
+		.NToc__return-tools-button:nth-child(4):last-child
+	)
+	.NToc__return-tools--expanded
+	.NToc__return-tools-button:nth-child(1) {
+	transform: scale(1) translate(0, -70px);
+}
+
+.NToc__return-tools-expanded-buttons:has(
+		.NToc__return-tools-button:nth-child(4):last-child
+	)
+	.NToc__return-tools--expanded
+	.NToc__return-tools-button:nth-child(2) {
+	transform: scale(1) translate(70px, 0);
+}
+
+.NToc__return-tools-expanded-buttons:has(
+		.NToc__return-tools-button:nth-child(4):last-child
+	)
+	.NToc__return-tools--expanded
+	.NToc__return-tools-button:nth-child(3) {
+	transform: scale(1) translate(0, 70px);
+}
+
+.NToc__return-tools-expanded-buttons:has(
+		.NToc__return-tools-button:nth-child(4):last-child
+	)
+	.NToc__return-tools--expanded
+	.NToc__return-tools-button:nth-child(4) {
+	transform: scale(1) translate(-70px, 0);
+}
+
+/* 悬停效果 */
+.NToc__return-tools-button:hover {
+	background: var(--background-modifier-hover);
+	transform: scale(1.15) translate(var(--hover-x, 0), var(--hover-y, 0));
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	z-index: 1002;
+}
+
+/* 为每个位置设置悬停时的变换值 */
+.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(1):hover {
+	--hover-x: 0;
+	--hover-y: -70px;
+}
+
+.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(2):hover {
+	--hover-x: 49.5px;
+	--hover-y: -49.5px;
+}
+
+.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(3):hover {
+	--hover-x: 70px;
+	--hover-y: 0;
+}
+
+.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(4):hover {
+	--hover-x: 49.5px;
+	--hover-y: 49.5px;
+}
+
+.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(5):hover {
+	--hover-x: 0;
+	--hover-y: 70px;
+}
+
+.NToc__return-tools-button svg {
+	color: var(--text-normal);
+	transition: color 0.2s ease;
+}
+
+.NToc__return-tools-button:hover svg {
+	color: var(--text-accent);
+}
+
+/* 工具提示样式 */
+.NToc__return-tools-button {
+	position: relative;
+}
+
+.NToc__return-tools-button:hover::after {
+	content: attr(title);
+	position: absolute;
+	bottom: calc(100% + 8px);
+	left: 50%;
+	transform: translateX(-50%);
+	background: var(--background-primary);
+	color: var(--text-normal);
+	padding: 6px 10px;
+	border-radius: 6px;
+	font-size: 12px;
+	white-space: nowrap;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	border: 1px solid var(--background-modifier-border);
+	z-index: 1003;
+	pointer-events: none;
+	opacity: 0;
+	animation: tooltipFadeIn 0.2s ease-out 0.3s forwards;
+}
+
+@keyframes tooltipFadeIn {
+	from {
+		opacity: 0;
+		transform: translateX(-50%) translateY(4px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(-50%) translateY(0);
+	}
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+	.NToc__return-tools {
+		bottom: 16px;
+		right: 16px;
+	}
+
+	.NToc__return-tools-main-button {
+		width: 44px;
+		height: 44px;
+	}
+
+	.NToc__return-tools-button {
+		width: 36px;
+		height: 36px;
+	}
+
+	/* 调整小屏幕上的位置 */
+	.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(1) {
+		transform: scale(1) translate(0, -60px);
+	}
+
+	.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(2) {
+		transform: scale(1) translate(42px, -42px);
+	}
+
+	.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(3) {
+		transform: scale(1) translate(60px, 0);
+	}
+
+	.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(4) {
+		transform: scale(1) translate(42px, 42px);
+	}
+
+	.NToc__return-tools--expanded .NToc__return-tools-button:nth-child(5) {
+		transform: scale(1) translate(0, 60px);
+	}
+}
+
+/* 深色主题适配 */
+.theme-dark .NToc__return-tools-main-button,
+.theme-dark .NToc__return-tools-button {
+	background: var(--background-primary);
+	border-color: var(--background-modifier-border);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.theme-dark .NToc__return-tools-main-button:hover,
+.theme-dark .NToc__return-tools-button:hover {
+	background: var(--background-modifier-hover);
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* 动画性能优化 */
+.NToc__return-tools,
+.NToc__return-tools-main-button,
+.NToc__return-tools-button {
+	will-change: transform;
+}
+
+/* 确保在不同状态下的平滑过渡 */
+.NToc__return-tools-button {
+	transition: opacity 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+		transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+		background-color 0.2s ease, box-shadow 0.2s ease;
+}
