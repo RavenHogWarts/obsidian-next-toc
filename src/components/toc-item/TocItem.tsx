@@ -2,8 +2,8 @@ import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
 import scrollToHeading from "@src/utils/scrollToHeading";
 import { ChevronDown, ChevronRight } from "lucide-react";
-import { HeadingCache, MarkdownView } from "obsidian";
-import { FC } from "react";
+import { HeadingCache, MarkdownRenderer, MarkdownView } from "obsidian";
+import { FC, useEffect, useRef } from "react";
 import "./TocItem.css";
 
 interface TocItemProps {
@@ -31,6 +31,26 @@ export const TocItem: FC<TocItemProps> = ({
 }) => {
 	const settingsStore = useSettingsStore();
 	const settings = usePluginSettings(settingsStore);
+
+	const NTocItemTextRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (NTocItemTextRef.current) {
+			NTocItemTextRef.current.classList.remove("markdown-rendered");
+
+			if (settings.render.renderMarkdown) {
+				NTocItemTextRef.current.classList.add("markdown-rendered");
+
+				MarkdownRenderer.render(
+					settingsStore.app,
+					heading.heading,
+					NTocItemTextRef.current,
+					"",
+					settingsStore.plugin
+				);
+			}
+		}
+	}, [settings.render.renderMarkdown, heading.heading]);
 
 	return (
 		<div
@@ -67,7 +87,9 @@ export const TocItem: FC<TocItemProps> = ({
 							{headingNumber}
 						</div>
 					)}
-					<div className="NToc__toc-item-text">{heading.heading}</div>
+					<div ref={NTocItemTextRef} className="NToc__toc-item-text">
+						{!settings.render.renderMarkdown && heading.heading}
+					</div>
 				</div>
 			</div>
 			<div className="NToc__toc-item-level">H{heading.level}</div>
