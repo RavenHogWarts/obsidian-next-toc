@@ -245,3 +245,13 @@
 		max-width: auto;
 	}
 }
+
+/* 特定页面控制样式 */
+.NToc__SHOW ~ .NToc__view .NToc__group {
+	opacity: 1 !important;
+	visibility: visible !important;
+}
+.NToc__HIDE ~ .NToc__view .NToc__group {
+	opacity: 0 !important;
+	visibility: hidden !important;
+}
