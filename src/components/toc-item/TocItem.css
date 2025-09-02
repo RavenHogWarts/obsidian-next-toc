@@ -119,3 +119,32 @@
 .NToc__toc-item-text.markdown-rendered {
 	line-height: 0;
 }
+
+.NToc__toc-item-text.markdown-rendered > * {
+	display: inline;
+	margin: 0;
+	line-height: 1.2;
+	vertical-align: baseline;
+}
+
+.NToc__toc-item-text.markdown-rendered p,
+.NToc__toc-item-text.markdown-rendered span,
+.NToc__toc-item-text.markdown-rendered em,
+.NToc__toc-item-text.markdown-rendered strong,
+.NToc__toc-item-text.markdown-rendered a,
+.NToc__toc-item-text.markdown-rendered code {
+	display: inline;
+	margin: 0;
+	line-height: 1.2;
+}
+
+/* 媒体与公式等特殊元素的紧凑高度与对齐处理（如存在） */
+.NToc__toc-item-text.markdown-rendered img,
+.NToc__toc-item-text.markdown-rendered svg,
+.NToc__toc-item-text.markdown-rendered .katex,
+.NToc__toc-item-text.markdown-rendered .math,
+.NToc__toc-item-text.markdown-rendered .math-inline {
+	height: 1em;
+	max-height: 1.2em;
+	vertical-align: -0.1em;
+}
