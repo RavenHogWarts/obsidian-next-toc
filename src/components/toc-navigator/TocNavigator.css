@@ -247,11 +247,18 @@
 }
 
 /* 特定页面控制样式 */
-.NToc__SHOW ~ .NToc__view .NToc__group {
+.NToc__SHOW-TOC ~ .NToc__view .NToc__group {
 	opacity: 1 !important;
 	visibility: visible !important;
 }
-.NToc__HIDE ~ .NToc__view .NToc__group {
+.NToc__HIDE-TOC ~ .NToc__view .NToc__group {
 	opacity: 0 !important;
 	visibility: hidden !important;
+}
+
+.NToc__SHOW-TOC-NUMBER ~ .NToc__view .NToc__toc-item-number {
+	display: block !important;
+}
+.NToc__HIDE-TOC-NUMBER ~ .NToc__view .NToc__toc-item-number {
+	display: none !important;
 }
