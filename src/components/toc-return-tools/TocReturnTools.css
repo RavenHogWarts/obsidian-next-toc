@@ -4,6 +4,15 @@
 	margin: 4px;
 	position: relative;
 	gap: 8px;
+
+	&:has(.NToc__tool-expand-right) {
+		flex-direction: row;
+	}
+
+	&:has(.NToc__tool-expand-left) {
+		flex-direction: row-reverse;
+		justify-content: unset !important;
+	}
 }
 
 .NToc__return-button-master {
@@ -38,12 +47,10 @@
 
 .NToc__tool-buttons.NToc__tool-expand-right {
 	margin-right: 8px;
-	flex-direction: row;
 }
 
 .NToc__tool-buttons.NToc__tool-expand-left {
 	margin-left: 8px;
-	flex-direction: row-reverse;
 }
 
 .NToc__tool-button {
