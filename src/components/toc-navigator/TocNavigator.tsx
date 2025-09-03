@@ -286,6 +286,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 
 	return (
 		<div ref={NTocContainerRef} className="NToc__container">
+			{<TocReturnTools currentView={currentView} headings={headings} />}
 			<div
 				ref={NTocGroupRef}
 				className="NToc__group"
@@ -354,7 +355,6 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 					)}
 				</div>
 			</div>
-			{<TocReturnTools currentView={currentView} headings={headings} />}
 		</div>
 	);
 };
