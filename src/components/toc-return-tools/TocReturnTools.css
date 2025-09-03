@@ -1,0 +1,80 @@
+.NToc__return-tools {
+	display: flex;
+	align-items: center;
+	margin: 4px;
+	position: relative;
+	gap: 8px;
+}
+
+.NToc__return-button-master {
+	width: 2.5rem;
+	height: 2.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: var(--background-primary);
+	border: 1px solid var(--background-modifier-border);
+	cursor: pointer;
+	position: relative;
+	z-index: 1002;
+	outline: none;
+	backdrop-filter: blur(10px);
+	transition: all 0.2s ease;
+
+	&:hover {
+		background: var(--background-modifier-hover);
+		transform: scale(1.05);
+	}
+}
+
+.NToc__tool-buttons {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	z-index: 1001;
+	animation: slideIn 0.3s ease;
+}
+
+.NToc__tool-buttons.NToc__tool-expand-right {
+	margin-right: 8px;
+	flex-direction: row;
+}
+
+.NToc__tool-buttons.NToc__tool-expand-left {
+	margin-left: 8px;
+	flex-direction: row-reverse;
+}
+
+.NToc__tool-button {
+	width: 2.5rem;
+	height: 2.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: var(--background-primary);
+	border: 1px solid var(--background-modifier-border);
+	cursor: pointer;
+	outline: none;
+	backdrop-filter: blur(10px);
+	transition: all 0.2s ease;
+	opacity: 0.8;
+
+	&:hover {
+		background: var(--background-modifier-hover);
+		transform: scale(1.1);
+		opacity: 1;
+	}
+}
+
+@keyframes slideIn {
+	from {
+		opacity: 0;
+		transform: scale(0.8);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}

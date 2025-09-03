@@ -1,13 +1,15 @@
+import { IconPicker } from "@src/components/icon-picker/IconPicker";
 import { Tab, TabItem } from "@src/components/tab/Tab";
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
-import { NTocPosition } from "@src/types/types";
+import { DEFAULT_SETTINGS, NTocPosition } from "@src/types/types";
 import { FC } from "react";
 import ObsidianSetting from "./ObsidianSetting";
 
 export const NTocSettings: FC = () => {
 	const settingsStore = useSettingsStore();
 	const settings = usePluginSettings(settingsStore);
+	const app = settingsStore.app;
 
 	const tabItems: TabItem[] = [
 		{
@@ -218,15 +220,41 @@ export const NTocSettings: FC = () => {
 							name: "Return to cursor",
 							desc: "Button to return to the last cursor position",
 							control: (
-								<ObsidianSetting.Toggle
-									value={settings.tool.returnToCursor.enabled}
-									onChange={(value) => {
-										settingsStore.updateSettingByPath(
-											"tool.returnToCursor.enabled",
-											value
-										);
-									}}
-								/>
+								<>
+									<ObsidianSetting.Toggle
+										value={
+											settings.tool.returnToCursor.enabled
+										}
+										onChange={(value) => {
+											settingsStore.updateSettingByPath(
+												"tool.returnToCursor.enabled",
+												value
+											);
+										}}
+									/>
+									<ObsidianSetting.ExtraButton
+										icon="reset"
+										onClick={() => {
+											settingsStore.updateSettingByPath(
+												"tool.returnToCursor.icon",
+												DEFAULT_SETTINGS.tool
+													.returnToCursor.icon
+											);
+										}}
+									/>
+									<IconPicker
+										app={app}
+										value={
+											settings.tool.returnToCursor.icon
+										}
+										onChange={(icon) => {
+											settingsStore.updateSettingByPath(
+												"tool.returnToCursor.icon",
+												icon
+											);
+										}}
+									/>
+								</>
 							),
 						}}
 					/>
@@ -236,15 +264,39 @@ export const NTocSettings: FC = () => {
 							name: "Return to top",
 							desc: "Button to return to the top of the document",
 							control: (
-								<ObsidianSetting.Toggle
-									value={settings.tool.returnToTop.enabled}
-									onChange={(value) => {
-										settingsStore.updateSettingByPath(
-											"tool.returnToTop.enabled",
-											value
-										);
-									}}
-								/>
+								<>
+									<ObsidianSetting.Toggle
+										value={
+											settings.tool.returnToTop.enabled
+										}
+										onChange={(value) => {
+											settingsStore.updateSettingByPath(
+												"tool.returnToTop.enabled",
+												value
+											);
+										}}
+									/>
+									<ObsidianSetting.ExtraButton
+										icon="reset"
+										onClick={() => {
+											settingsStore.updateSettingByPath(
+												"tool.returnToTop.icon",
+												DEFAULT_SETTINGS.tool
+													.returnToTop.icon
+											);
+										}}
+									/>
+									<IconPicker
+										app={app}
+										value={settings.tool.returnToTop.icon}
+										onChange={(icon) => {
+											settingsStore.updateSettingByPath(
+												"tool.returnToTop.icon",
+												icon
+											);
+										}}
+									/>
+								</>
 							),
 						}}
 					/>
@@ -254,15 +306,41 @@ export const NTocSettings: FC = () => {
 							name: "Return to bottom",
 							desc: "Button to return to the bottom of the document",
 							control: (
-								<ObsidianSetting.Toggle
-									value={settings.tool.returnToBottom.enabled}
-									onChange={(value) => {
-										settingsStore.updateSettingByPath(
-											"tool.returnToBottom.enabled",
-											value
-										);
-									}}
-								/>
+								<>
+									<ObsidianSetting.Toggle
+										value={
+											settings.tool.returnToBottom.enabled
+										}
+										onChange={(value) => {
+											settingsStore.updateSettingByPath(
+												"tool.returnToBottom.enabled",
+												value
+											);
+										}}
+									/>
+									<ObsidianSetting.ExtraButton
+										icon="reset"
+										onClick={() => {
+											settingsStore.updateSettingByPath(
+												"tool.returnToBottom.icon",
+												DEFAULT_SETTINGS.tool
+													.returnToBottom.icon
+											);
+										}}
+									/>
+									<IconPicker
+										app={app}
+										value={
+											settings.tool.returnToBottom.icon
+										}
+										onChange={(icon) => {
+											settingsStore.updateSettingByPath(
+												"tool.returnToBottom.icon",
+												icon
+											);
+										}}
+									/>
+								</>
 							),
 						}}
 					/>
@@ -272,17 +350,42 @@ export const NTocSettings: FC = () => {
 							name: "Jump to next heading",
 							desc: "Button to jump to the next heading",
 							control: (
-								<ObsidianSetting.Toggle
-									value={
-										settings.tool.jumpToNextHeading.enabled
-									}
-									onChange={(value) => {
-										settingsStore.updateSettingByPath(
-											"tool.jumpToNextHeading.enabled",
-											value
-										);
-									}}
-								/>
+								<>
+									<ObsidianSetting.Toggle
+										value={
+											settings.tool.jumpToNextHeading
+												.enabled
+										}
+										onChange={(value) => {
+											settingsStore.updateSettingByPath(
+												"tool.jumpToNextHeading.enabled",
+												value
+											);
+										}}
+									/>
+									<ObsidianSetting.ExtraButton
+										icon="reset"
+										onClick={() => {
+											settingsStore.updateSettingByPath(
+												"tool.jumpToNextHeading.icon",
+												DEFAULT_SETTINGS.tool
+													.jumpToNextHeading.icon
+											);
+										}}
+									/>
+									<IconPicker
+										app={app}
+										value={
+											settings.tool.jumpToNextHeading.icon
+										}
+										onChange={(icon) => {
+											settingsStore.updateSettingByPath(
+												"tool.jumpToNextHeading.icon",
+												icon
+											);
+										}}
+									/>
+								</>
 							),
 						}}
 					/>
@@ -292,17 +395,42 @@ export const NTocSettings: FC = () => {
 							name: "Jump to previous heading",
 							desc: "Button to jump to the previous heading",
 							control: (
-								<ObsidianSetting.Toggle
-									value={
-										settings.tool.jumpToPrevHeading.enabled
-									}
-									onChange={(value) => {
-										settingsStore.updateSettingByPath(
-											"tool.jumpToPrevHeading.enabled",
-											value
-										);
-									}}
-								/>
+								<>
+									<ObsidianSetting.Toggle
+										value={
+											settings.tool.jumpToPrevHeading
+												.enabled
+										}
+										onChange={(value) => {
+											settingsStore.updateSettingByPath(
+												"tool.jumpToPrevHeading.enabled",
+												value
+											);
+										}}
+									/>
+									<ObsidianSetting.ExtraButton
+										icon="reset"
+										onClick={() => {
+											settingsStore.updateSettingByPath(
+												"tool.jumpToPrevHeading.icon",
+												DEFAULT_SETTINGS.tool
+													.jumpToPrevHeading.icon
+											);
+										}}
+									/>
+									<IconPicker
+										app={app}
+										value={
+											settings.tool.jumpToPrevHeading.icon
+										}
+										onChange={(icon) => {
+											settingsStore.updateSettingByPath(
+												"tool.jumpToPrevHeading.icon",
+												icon
+											);
+										}}
+									/>
+								</>
 							),
 						}}
 					/>
