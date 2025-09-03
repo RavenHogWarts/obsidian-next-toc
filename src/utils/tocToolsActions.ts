@@ -22,26 +22,42 @@ export const returnToCursor = (view: MarkdownView): void => {
 };
 
 export const scrollTopBottom = (view: MarkdownView, to: "top" | "bottom") => {
-	const scroll = view.currentMode.getScroll();
-	const targetScroll = to === "top" ? 0 : Number.MAX_SAFE_INTEGER;
+	if (to === "top") {
+		// 滚动到顶部
+		view.currentMode.applyScroll(0);
+		return;
+	}
 
-	const startTime = performance.now();
-	const distance = targetScroll - scroll;
-	const duration = 300; // 动画持续时间，单位毫秒
+	// 滚动到底部
+	if (view.getMode() === "source") {
+		// 源码模式：滚动到最后一行
+		const editor = view.editor;
+		const lastLine = editor.lastLine();
+		editor.scrollIntoView(
+			{ from: { line: lastLine, ch: 0 }, to: { line: lastLine, ch: 0 } },
+			true
+		);
+	} else {
+		// 阅读模式：使用最可靠的方法
+		const scrollToBottomReading = () => {
+			// 获取阅读模式的滚动容器
+			const previewContainer = view.contentEl.querySelector(
+				".markdown-preview-view"
+			) as HTMLElement;
 
-	const animateScroll = () => {
-		const elapsed = performance.now() - startTime;
-		const progress = Math.min(elapsed / duration, 1);
+			setTimeout(() => {
+				const finalMaxScroll = Math.max(
+					0,
+					previewContainer.scrollHeight -
+						previewContainer.clientHeight
+				);
+				view.currentMode.applyScroll(finalMaxScroll);
+				previewContainer.scrollTop = finalMaxScroll;
+			}, 50);
+		};
 
-		if (progress < 1) {
-			const easeProgress = 1 - Math.pow(1 - progress, 3); // 使用ease-out效果
-			view.currentMode.applyScroll(scroll + distance * easeProgress);
-			requestAnimationFrame(animateScroll);
-		} else {
-			view.currentMode.applyScroll(targetScroll);
-		}
-	};
-	requestAnimationFrame(animateScroll);
+		scrollToBottomReading();
+	}
 };
 
 export const navigateHeading = (
@@ -88,7 +104,7 @@ export const navigateHeading = (
 		}
 	}
 
-	console.log("Target Index:", targetIndex);
+	// console.log("Target Index:", targetIndex);
 
 	if (targetIndex >= 0 && targetIndex < headings.length) {
 		scrollToHeading(view, headings[targetIndex]);

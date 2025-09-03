@@ -85,7 +85,7 @@ export const TocReturnTools: FC<TocReturnToolsProps> = ({
 				navigateHeading(currentView, headings, "prev");
 				break;
 			default:
-				console.log(`Unknown tool: ${toolKey}`);
+				throw new Error(`Unknown tool: ${toolKey}`);
 		}
 	};
 
