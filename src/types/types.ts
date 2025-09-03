@@ -40,7 +40,7 @@ export const DEFAULT_SETTINGS: NTocPluginSettings = {
 	render: {
 		useHeadingNumber: false,
 		skipHeading1: false,
-		renderMarkdown: false,
+		renderMarkdown: true,
 	},
 	tool: {
 		useToolbar: true,
@@ -50,7 +50,7 @@ export const DEFAULT_SETTINGS: NTocPluginSettings = {
 			icon: "text-cursor-input",
 		},
 		returnToTop: {
-			enabled: false,
+			enabled: true,
 			icon: "arrow-up-to-line",
 		},
 		returnToBottom: {
