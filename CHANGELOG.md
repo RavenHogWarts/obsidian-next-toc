@@ -1,3 +1,12 @@
+## [1.1.1](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.0...1.1.1) (2025-09-03)
+
+
+### ✨ Features
+
+* 添加导航与滚动命令并导入对应工具 (#24) ([01081b9](https://github.com/RavenHogWarts/obsidian-next-toc/commit/01081b942921bae919628f9e2bdfea5d4fcde2f1)), closes [#24](https://github.com/RavenHogWarts/obsidian-next-toc/issues/24)
+
+
+
 # [1.1.0](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.0.1...1.1.0) (2025-09-03)
 
 
