@@ -1,5 +1,11 @@
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
+import {
+	isSourceMode,
+	navigateHeading,
+	returnToCursor,
+	scrollTopBottom,
+} from "@src/utils/tocToolsActions";
 import { Component } from "lucide-react";
 import { HeadingCache, MarkdownView, setIcon } from "obsidian";
 import { FC, useEffect, useRef, useState } from "react";
@@ -28,17 +34,13 @@ export const TocReturnTools: FC<TocReturnToolsProps> = ({
 		{ key: "returnToBottom", config: settings.tool.returnToBottom },
 		{ key: "jumpToNextHeading", config: settings.tool.jumpToNextHeading },
 		{ key: "jumpToPrevHeading", config: settings.tool.jumpToPrevHeading },
-	].filter((tool) => tool.config.enabled);
-
-	useEffect(() => {
-		if (NTocReturnToolsRef.current) {
-			if (settings.toc.position === "left") {
-				NTocReturnToolsRef.current.style.justifyContent = "flex-start";
-			} else {
-				NTocReturnToolsRef.current.style.justifyContent = "flex-end";
-			}
+	].filter((tool) => {
+		// returnToCursor 只在编辑模式下显示
+		if (tool.key === "returnToCursor" && !isSourceMode(currentView)) {
+			return false;
 		}
-	}, [settings.toc.position]);
+		return tool.config.enabled;
+	});
 
 	// 监听点击外部区域关闭展开状态
 	useEffect(() => {
@@ -66,8 +68,25 @@ export const TocReturnTools: FC<TocReturnToolsProps> = ({
 	};
 
 	const handleToolClick = (toolKey: string) => {
-		// TODO: 实现具体的工具功能
-		console.log(`Clicked tool: ${toolKey}`);
+		switch (toolKey) {
+			case "returnToCursor":
+				returnToCursor(currentView);
+				break;
+			case "returnToTop":
+				scrollTopBottom(currentView, "top");
+				break;
+			case "returnToBottom":
+				scrollTopBottom(currentView, "bottom");
+				break;
+			case "jumpToNextHeading":
+				navigateHeading(currentView, headings, "next");
+				break;
+			case "jumpToPrevHeading":
+				navigateHeading(currentView, headings, "prev");
+				break;
+			default:
+				console.log(`Unknown tool: ${toolKey}`);
+		}
 	};
 
 	return (

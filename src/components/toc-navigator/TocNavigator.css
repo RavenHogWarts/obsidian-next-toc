@@ -25,6 +25,10 @@
 		.NToc__group-resize {
 			right: 0;
 		}
+
+		.NToc__return-tools {
+			justify-content: flex-start;
+		}
 	}
 
 	&.NToc__container-right {
@@ -44,6 +48,10 @@
 
 		.NToc__group-resize {
 			left: 0;
+		}
+
+		.NToc__return-tools {
+			justify-content: flex-end;
 		}
 	}
 }
