@@ -218,7 +218,7 @@ export const NTocSettings: FC = () => {
 					<ObsidianSetting
 						slots={{
 							name: "Return to cursor",
-							desc: "Button to return to the last cursor position",
+							desc: "Button to return to the last cursor position (available only in edit mode)",
 							control: (
 								<>
 									<ObsidianSetting.Toggle
