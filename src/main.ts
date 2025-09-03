@@ -1,6 +1,6 @@
 import { EditorView } from "@codemirror/view";
 import "@styles/styles";
-import { MarkdownView, Plugin } from "obsidian";
+import { Editor, MarkdownView, Plugin } from "obsidian";
 import {
 	NTocRenderProps,
 	updateNTocRender,
@@ -11,6 +11,11 @@ import SettingsStore from "./settings/SettingsStore";
 import { NTocPluginSettings } from "./types/types";
 import { createScrollListener } from "./utils/eventListenerManager";
 import getFileHeadings from "./utils/getFileHeadings";
+import {
+	navigateHeading,
+	returnToCursor,
+	scrollTopBottom,
+} from "./utils/tocToolsActions";
 import updateActiveHeading from "./utils/updateActiveHeading";
 
 export default class NTocPlugin extends Plugin {
@@ -45,7 +50,62 @@ export default class NTocPlugin extends Plugin {
 	}
 
 	private registerCommands() {
-		// Register commands here
+		this.addCommand({
+			id: "ntoc-return-to-cursor",
+			name: "Return to Cursor",
+			hotkeys: [],
+			editorCallback: (editor: Editor) => {
+				if (this.currentView && editor === this.currentView.editor) {
+					returnToCursor(this.currentView);
+				}
+			},
+		});
+
+		this.addCommand({
+			id: "ntoc-scroll-to-top",
+			name: "Scroll to Top",
+			hotkeys: [],
+			callback: () => {
+				if (this.currentView) {
+					scrollTopBottom(this.currentView, "top");
+				}
+			},
+		});
+
+		this.addCommand({
+			id: "ntoc-scroll-to-bottom",
+			name: "Scroll to Bottom",
+			hotkeys: [],
+			callback: () => {
+				if (this.currentView) {
+					scrollTopBottom(this.currentView, "bottom");
+				}
+			},
+		});
+
+		this.addCommand({
+			id: "ntoc-navigate-previous-heading",
+			name: "Navigate to Previous Heading",
+			hotkeys: [],
+			callback: async () => {
+				if (this.currentView) {
+					const headings = await getFileHeadings(this.currentView);
+					navigateHeading(this.currentView, headings, "prev");
+				}
+			},
+		});
+
+		this.addCommand({
+			id: "ntoc-navigate-next-heading",
+			name: "Navigate to Next Heading",
+			hotkeys: [],
+			callback: async () => {
+				if (this.currentView) {
+					const headings = await getFileHeadings(this.currentView);
+					navigateHeading(this.currentView, headings, "next");
+				}
+			},
+		});
 	}
 
 	private registerEvents() {
