@@ -7,9 +7,10 @@
 	font-size: 13px;
 	color: var(--text-normal);
 	cursor: pointer;
-	line-height: 1.4;
+	line-height: 1.5;
 	min-height: 28px;
 	margin: 3px 0;
+	transition: all 0.2s ease;
 
 	&[data-actual-depth="0"] {
 		padding-left: 14px;
@@ -44,6 +45,7 @@
 	&:hover {
 		background: var(--background-modifier-hover);
 		border-radius: 5px;
+		transform: translateX(5px);
 
 		.NToc__toc-item-collapse {
 			opacity: 1;
@@ -53,7 +55,7 @@
 
 	&[data-active="true"] {
 		color: var(--interactive-accent);
-		background: var(--background-modifier-hover);
+		/* background: var(--background-modifier-hover); */
 		border-radius: 5px;
 
 		.NToc__toc-item-level {
@@ -123,7 +125,7 @@
 .NToc__toc-item-text.markdown-rendered > * {
 	display: inline;
 	margin: 0;
-	line-height: 1.2;
+	line-height: 1.5;
 	vertical-align: baseline;
 }
 
@@ -135,7 +137,7 @@
 .NToc__toc-item-text.markdown-rendered code {
 	display: inline;
 	margin: 0;
-	line-height: 1.2;
+	line-height: 1.5;
 }
 
 /* 媒体与公式等特殊元素的紧凑高度与对齐处理（如存在） */
