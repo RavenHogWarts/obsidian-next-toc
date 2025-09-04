@@ -127,7 +127,7 @@
 	min-height: max(100px, 10dvh);
 	overflow-y: auto;
 	overscroll-behavior: contain;
-	padding: 0.3vh 1vh 0.3vh 0.6vh;
+	/* padding: 0.3vh 1vh 0.3vh 0.6vh; */
 
 	/* 滚动条 */
 	scrollbar-width: auto;
@@ -146,7 +146,7 @@
 
 .NToc__toc-progress-bar {
 	position: sticky;
-	top: -0.31vh;
+	top: 0;
 	left: 0;
 	right: 0;
 	height: 2px;
