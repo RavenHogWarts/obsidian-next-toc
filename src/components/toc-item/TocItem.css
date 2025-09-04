@@ -7,9 +7,11 @@
 	font-size: 13px;
 	color: var(--text-normal);
 	cursor: pointer;
-	line-height: 1.4;
+	line-height: 1.5;
 	min-height: 28px;
 	margin: 3px 0;
+	transition: all 0.2s ease;
+	padding: 0.3vh 1vh 0.3vh 0.6vh;
 
 	&[data-actual-depth="0"] {
 		padding-left: 14px;
@@ -18,32 +20,33 @@
 
 	&[data-actual-depth="1"] {
 		padding-left: 30px;
-		font-weight: 500;
+		font-weight: normal;
 	}
 
 	&[data-actual-depth="2"] {
 		padding-left: 46px;
-		font-weight: 400;
+		font-weight: normal;
 	}
 
 	&[data-actual-depth="3"] {
 		padding-left: 62px;
-		font-weight: 400;
+		font-weight: normal;
 	}
 
 	&[data-actual-depth="4"] {
 		padding-left: 78px;
-		font-weight: 400;
+		font-weight: normal;
 	}
 
 	&[data-actual-depth="5"] {
 		padding-left: 94px;
-		font-weight: 400;
+		font-weight: normal;
 	}
 
 	&:hover {
 		background: var(--background-modifier-hover);
 		border-radius: 5px;
+		transform: translateX(5px);
 
 		.NToc__toc-item-collapse {
 			opacity: 1;
@@ -53,7 +56,6 @@
 
 	&[data-active="true"] {
 		color: var(--interactive-accent);
-		background: var(--background-modifier-hover);
 		border-radius: 5px;
 
 		.NToc__toc-item-level {
@@ -123,7 +125,7 @@
 .NToc__toc-item-text.markdown-rendered > * {
 	display: inline;
 	margin: 0;
-	line-height: 1.2;
+	line-height: 1.5;
 	vertical-align: baseline;
 }
 
@@ -135,7 +137,7 @@
 .NToc__toc-item-text.markdown-rendered code {
 	display: inline;
 	margin: 0;
-	line-height: 1.2;
+	line-height: 1.5;
 }
 
 /* 媒体与公式等特殊元素的紧凑高度与对齐处理（如存在） */
