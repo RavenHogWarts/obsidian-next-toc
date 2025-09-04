@@ -36,6 +36,8 @@ export const TocItem: FC<TocItemProps> = ({
 
 	useEffect(() => {
 		if (NTocItemTextRef.current) {
+			// 使用 replaceChildren() 清空所有子节点
+			NTocItemTextRef.current.replaceChildren();
 			NTocItemTextRef.current.classList.remove("markdown-rendered");
 
 			if (settings.render.renderMarkdown) {
