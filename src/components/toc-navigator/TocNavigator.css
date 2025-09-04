@@ -153,6 +153,7 @@
 	z-index: 1;
 	background: var(--background-modifier-border);
 	transition: all 0.3s ease;
+	border-radius: var(--radius-m) var(--radius-m) 0 0;
 
 	&::after {
 		content: "";
@@ -166,7 +167,6 @@
 			var(--interactive-accent) 0%,
 			var(--interactive-accent-hover) 100%
 		);
-		box-shadow: 0 0 8px var(--interactive-accent-hover);
 		border-radius: 0 2px 2px 0;
 		transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	}
