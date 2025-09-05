@@ -96,7 +96,7 @@ export const TocReturnTools: FC<TocReturnToolsProps> = ({
 				className="NToc__return-button-master"
 				onClick={handleMasterClick}
 			>
-				<Component size={16} />
+				<Component size={24} />
 			</button>
 
 			{/* 展开的工具按钮 */}
