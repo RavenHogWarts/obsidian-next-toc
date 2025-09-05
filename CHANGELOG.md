@@ -1,3 +1,24 @@
+## [1.1.2](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.1...1.1.2) (2025-09-05)
+
+
+### ✨ Features
+
+* ui样式优化 (#30) ([6c7523e](https://github.com/RavenHogWarts/obsidian-next-toc/commit/6c7523e5c922904ebcf715f0ba57bcd446d8fb08)), closes [#30](https://github.com/RavenHogWarts/obsidian-next-toc/issues/30)
+
+
+### 🐛 Bug Fixes
+
+* 调整返回按钮图标尺寸与对齐 (#32) ([d836cb4](https://github.com/RavenHogWarts/obsidian-next-toc/commit/d836cb4c0a9dcfd0a61066e1b99e7900f106c438)), closes [#32](https://github.com/RavenHogWarts/obsidian-next-toc/issues/32)
+* **css:** 修正目录组件的选择器以匹配容器类名 (#31) ([cc4fa6d](https://github.com/RavenHogWarts/obsidian-next-toc/commit/cc4fa6d0353441315ed29096b9dd34c8686c101d)), closes [#31](https://github.com/RavenHogWarts/obsidian-next-toc/issues/31)
+* **toc:** 修复重复的markdown渲染 (#29) ([b828373](https://github.com/RavenHogWarts/obsidian-next-toc/commit/b8283739b341212d6b37a21b48b6e0ae65b4bc7c)), closes [#29](https://github.com/RavenHogWarts/obsidian-next-toc/issues/29)
+
+
+### 🔧 CI
+
+* 在 PR 合并后自动清理构建产物并更新权限 (#33) ([0a06f75](https://github.com/RavenHogWarts/obsidian-next-toc/commit/0a06f757410cfb3d10eb43c79d938d39a8438336)), closes [#33](https://github.com/RavenHogWarts/obsidian-next-toc/issues/33)
+
+
+
 ## [1.1.1](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.0...1.1.1) (2025-09-03)
 
 
