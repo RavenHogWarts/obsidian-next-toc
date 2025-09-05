@@ -245,11 +245,11 @@
 }
 
 /* 特定页面控制样式 */
-.NToc__SHOW-TOC ~ .NToc__view .NToc__group {
+.NToc__SHOW-TOC ~ .NToc__view .NToc__container {
 	opacity: 1 !important;
 	visibility: visible !important;
 }
-.NToc__HIDE-TOC ~ .NToc__view .NToc__group {
+.NToc__HIDE-TOC ~ .NToc__view .NToc__container {
 	opacity: 0 !important;
 	visibility: hidden !important;
 }
