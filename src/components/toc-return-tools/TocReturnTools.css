@@ -13,6 +13,10 @@
 		flex-direction: row-reverse;
 		justify-content: unset !important;
 	}
+
+	svg {
+		margin: -2px;
+	}
 }
 
 .NToc__return-button-master {
