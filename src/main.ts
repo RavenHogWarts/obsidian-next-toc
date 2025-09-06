@@ -5,12 +5,14 @@ import {
 	NTocRenderProps,
 	updateNTocRender,
 } from "./components/toc-navigator/NTocRender";
+import { CardProcessor } from "./services/CardProcessor";
 import { createCursorListenerExtension } from "./services/cursorListenerExtension";
 import { PluginSettingTab } from "./settings/PluginSettingTab";
 import SettingsStore from "./settings/SettingsStore";
 import { NTocPluginSettings } from "./types/types";
 import { createScrollListener } from "./utils/eventListenerManager";
 import getFileHeadings from "./utils/getFileHeadings";
+import mountEditButtonToCodeblock from "./utils/mountEditButtonToCodeblock";
 import {
 	navigateHeading,
 	returnToCursor,
@@ -31,6 +33,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.registerCommands();
 		this.registerEvents();
+		this.registerCodeblockProcessor();
 
 		// Register CM6 cursor listener extension
 		this.registerEditorExtension(createCursorListenerExtension(this));
@@ -149,6 +152,23 @@ export default class NTocPlugin extends Plugin {
 					await this.updateNToc();
 				}
 			})
+		);
+	}
+
+	private registerCodeblockProcessor() {
+		this.registerMarkdownCodeBlockProcessor(
+			"ntoc-card",
+			async (code, el, ctx) => {
+				const processor = new CardProcessor();
+				processor.renderFormCodeBlock(code, el, ctx, this.app);
+				if (el.parentElement) {
+					mountEditButtonToCodeblock(
+						this.app,
+						code,
+						el.parentElement
+					);
+				}
+			}
 		);
 	}
 
