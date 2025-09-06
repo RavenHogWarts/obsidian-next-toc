@@ -1,0 +1,84 @@
+.NToc__inline-card-edit-btn {
+	padding: var(--size-2-2) var(--size-2-3);
+	position: absolute;
+	top: var(--size-2-2);
+	right: calc(var(--size-2-2) + 40px);
+	display: flex;
+	opacity: 0;
+	color: var(--text-muted);
+	border-radius: var(--radius-s);
+	cursor: var(--cursor);
+}
+
+.NToc__inline-card-reading-time {
+	display: flex;
+	flex-direction: column;
+}
+
+.NToc__inline-card-reading-time-title {
+	font-weight: 600;
+	margin-bottom: 12px;
+	border-bottom: 1px solid var(--background-modifier-border);
+	display: flex;
+	align-items: center;
+}
+
+.NToc__inline-card-reading-time-content {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.NToc__inline-card-reading-time-prediction {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 8px;
+	background: var(--background-primary-alt);
+	border-radius: 6px;
+	border-left: 3px solid var(--interactive-accent);
+}
+
+.NToc__inline-card-reading-time-icon {
+	display: inline-flex;
+	align-items: center;
+	color: var(--text-muted);
+}
+
+.NToc__inline-card-reading-time-text {
+	font-size: 14px;
+	color: var(--text-normal);
+	font-weight: normal;
+	line-height: 1.5;
+}
+
+.NToc__inline-card-reading-time-stats {
+	display: flex;
+	gap: 16px;
+	flex-wrap: wrap;
+}
+
+.NToc__inline-card-reading-time-stat-item {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	background: var(--background-primary);
+	border-radius: 6px;
+	border: 1px solid var(--background-modifier-border);
+	padding: 0 4px;
+	transition: background-color 0.2s ease;
+}
+
+.NToc__inline-card-reading-time-stat-label {
+	font-size: 12px;
+	color: var(--text-muted);
+	font-weight: normal;
+	text-transform: uppercase;
+}
+
+.NToc__inline-card-reading-time-stat-value {
+	font-size: 12px;
+	color: var(--text-normal);
+	font-weight: bold;
+}

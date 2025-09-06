@@ -1,1 +1,1 @@
-import "./style.css";
+import "@src/components/cards/cards.css";
