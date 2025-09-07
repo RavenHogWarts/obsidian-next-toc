@@ -1,4 +1,5 @@
 import { ReadingTimeCard } from "@src/components/cards/ReadingTimeCard";
+import { TocCard } from "@src/components/cards/TocCard";
 import {
 	CardConfig,
 	ReadingTimeCardConfig,
@@ -60,9 +61,17 @@ export class CardProcessor {
 			);
 		} else if (config.type === "toc-card") {
 			const tocConfig = config as TocCardConfig;
+			const headings =
+				file instanceof TFile
+					? await app.metadataCache.getFileCache(file)?.headings
+					: undefined;
 			root.render(
 				<StrictMode>
-					<></>
+					<TocCard
+						config={tocConfig}
+						headings={headings}
+						currentView={markdownView}
+					/>
 				</StrictMode>
 			);
 		}

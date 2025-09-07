@@ -8,8 +8,13 @@
 	color: var(--text-muted);
 	border-radius: var(--radius-s);
 	cursor: var(--cursor);
+
+	&:hover {
+		background-color: var(--background-modifier-hover);
+	}
 }
 
+/* ----- Reading Time Card ----- */
 .NToc__inline-card-reading-time {
 	display: flex;
 	flex-direction: column;
@@ -81,4 +86,161 @@
 	font-size: 12px;
 	color: var(--text-normal);
 	font-weight: bold;
+}
+
+/* ----- TOC Card ----- */
+.NToc__inline-card-toc {
+	display: flex;
+	flex-direction: column;
+}
+
+.NToc__inline-card-toc-title {
+	font-weight: 600;
+	margin-bottom: 12px;
+	border-bottom: 2px solid var(--background-modifier-border);
+	display: flex;
+	align-items: center;
+}
+
+.NToc__inline-card-toc-content {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	overflow-y: auto;
+	max-height: 400px;
+	padding-left: 0;
+}
+
+.NToc__inline-card-toc-empty {
+	color: var(--text-muted);
+	font-style: italic;
+	text-align: center;
+	padding: 24px 16px;
+	font-size: 14px;
+}
+
+.NToc__inline-card-toc-item {
+	display: flex;
+	align-items: flex-start;
+	border-radius: 4px;
+	margin: 2px 0;
+}
+
+.NToc__inline-card-toc-item-collapse {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	min-width: 20px;
+	border: none;
+	background: transparent;
+	color: var(--text-muted);
+	border-radius: 3px;
+	margin-right: 4px;
+	margin-top: 2px;
+	transition: all 0.2s ease;
+}
+
+.NToc__inline-card-toc-item-collapse:hover {
+	background-color: var(--background-modifier-hover);
+	color: var(--text-normal);
+}
+
+.NToc__inline-card-toc-item-collapse-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.NToc__inline-card-toc-item-content {
+	display: flex;
+	align-items: center;
+	flex: 1;
+	min-width: 0;
+	padding: 4px 0;
+}
+
+.NToc__inline-card-toc-item-number {
+	color: var(--text-accent);
+	font-weight: 600;
+	font-size: 12px;
+	min-width: fit-content;
+	font-family: var(--font-monospace);
+	opacity: 0.8;
+}
+
+.NToc__inline-card-toc-item-text {
+	flex: 1;
+	font-size: 14px;
+	line-height: 1.4;
+	color: var(--text-normal);
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	padding: 2px 6px;
+	border-radius: 3px;
+
+	&.NToc__clickable-btn {
+		cursor: pointer;
+
+		&:hover {
+			background-color: var(--background-modifier-hover);
+			color: var(--text-accent);
+		}
+	}
+}
+
+/* Hierarchical indentation styles */
+.NToc__inline-card-toc-item[data-level="1"] {
+	--indent: 0px;
+}
+
+.NToc__inline-card-toc-item[data-level="2"] {
+	--indent: 16px;
+}
+
+.NToc__inline-card-toc-item[data-level="3"] {
+	--indent: 32px;
+}
+
+.NToc__inline-card-toc-item[data-level="4"] {
+	--indent: 48px;
+}
+
+.NToc__inline-card-toc-item[data-level="5"] {
+	--indent: 64px;
+}
+
+.NToc__inline-card-toc-item[data-level="6"] {
+	--indent: 80px;
+}
+
+.NToc__inline-card-toc-item-content {
+	margin-left: var(--indent, 0px);
+}
+
+/* Level-specific styling */
+.NToc__inline-card-toc-item[data-level="1"] .NToc__inline-card-toc-item-text {
+	font-weight: 600;
+	font-size: 15px;
+}
+
+.NToc__inline-card-toc-item[data-level="2"] .NToc__inline-card-toc-item-text {
+	font-weight: 500;
+	font-size: 14px;
+}
+
+.NToc__inline-card-toc-item[data-level="3"] .NToc__inline-card-toc-item-text {
+	font-weight: 400;
+	font-size: 13px;
+}
+
+.NToc__inline-card-toc-item[data-level="4"],
+.NToc__inline-card-toc-item[data-level="5"],
+.NToc__inline-card-toc-item[data-level="6"] {
+	.NToc__inline-card-toc-item-text {
+		font-weight: 400;
+		font-size: 12px;
+		opacity: 0.9;
+	}
 }
