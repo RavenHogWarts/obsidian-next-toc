@@ -1,6 +1,6 @@
 import { CardConfig } from "@src/types/cards";
 import getFileHeadings from "@src/utils/getFileHeadings";
-import { App, MarkdownView, Modal, stringifyYaml } from "obsidian";
+import { App, MarkdownView, Modal } from "obsidian";
 import { StrictMode } from "react";
 import { createRoot, Root } from "react-dom/client";
 import { CardModal } from "./CardModal";
@@ -54,7 +54,7 @@ export class CardCreateModal extends Modal {
 			// 更新现有卡片
 			onSubmit = (cardConfig: CardConfig) => {
 				this.close();
-				this.onSave!(stringifyYaml(cardConfig));
+				this.onSave!(JSON.stringify(cardConfig, null, 2));
 			};
 		} else {
 			// 创建新卡片
@@ -68,10 +68,14 @@ export class CardCreateModal extends Modal {
 				this.close();
 
 				if (ignoreLanguagePrefix) {
-					editor.replaceSelection(stringifyYaml(cardConfig));
+					editor.replaceSelection(
+						JSON.stringify(cardConfig, null, 2)
+					);
 				} else {
-					const codeblock = `\`\`\`ntoc-card\n${stringifyYaml(
-						cardConfig
+					const codeblock = `\`\`\`ntoc-card\n${JSON.stringify(
+						cardConfig,
+						null,
+						2
 					)}\n\`\`\`\n`;
 					editor.replaceSelection(codeblock);
 				}
@@ -102,7 +106,14 @@ export class CardCreateModal extends Modal {
 	}
 
 	async onClose() {
-		this.root?.unmount();
+		if (this.root) {
+			try {
+				this.root.unmount();
+			} catch (e) {
+				console.warn("Modal unmount error:", e);
+			}
+			this.root = null;
+		}
 		const { contentEl } = this;
 		contentEl.empty();
 	}

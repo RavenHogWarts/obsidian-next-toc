@@ -38,19 +38,30 @@ export const CardModal: FC<CardModalProps> = ({
 		setFormData(newConfig);
 	};
 
+	// 组件卸载时清理预览
+	useEffect(() => {
+		return () => {
+			if (previewRootRef.current) {
+				try {
+					previewRootRef.current.unmount();
+				} catch (e) {
+					console.warn("Component unmount error:", e);
+				}
+				previewRootRef.current = null;
+			}
+		};
+	}, []);
+
 	// 更新预览
 	useEffect(() => {
 		if (!previewContainerRef.current) return;
 
-		// 清理之前的预览
-		if (previewRootRef.current) {
-			previewRootRef.current.unmount();
+		// 如果还没有 root，创建一个
+		if (!previewRootRef.current) {
+			const container = previewContainerRef.current;
+			container.innerHTML = "";
+			previewRootRef.current = createRoot(container);
 		}
-
-		// 创建新的预览
-		const container = previewContainerRef.current;
-		container.innerHTML = "";
-		previewRootRef.current = createRoot(container);
 
 		const renderPreview = () => {
 			if (formData.type === "toc-card") {
@@ -67,14 +78,18 @@ export const CardModal: FC<CardModalProps> = ({
 			return null;
 		};
 
-		previewRootRef.current.render(renderPreview());
-
-		return () => {
-			if (previewRootRef.current) {
-				previewRootRef.current.unmount();
-				previewRootRef.current = null;
+		try {
+			previewRootRef.current.render(renderPreview());
+		} catch (e) {
+			console.error("Preview render error:", e);
+			// 如果渲染失败，重新创建 root
+			const container = previewContainerRef.current;
+			if (container) {
+				container.innerHTML = "";
+				previewRootRef.current = createRoot(container);
+				previewRootRef.current.render(renderPreview());
 			}
-		};
+		}
 	}, [formData, headings, content, currentView]);
 
 	const tabItems: TabItem[] = [
