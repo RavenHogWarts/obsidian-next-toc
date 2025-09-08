@@ -1,0 +1,375 @@
+.NToc__inline-card-modal {
+	width: 80dvw;
+	max-width: 1200px;
+	height: 70vh;
+	max-height: 800px;
+}
+
+/* Card Manager Layout */
+.NToc__inline-card-manager {
+	display: flex;
+	gap: 1rem;
+	height: 100%;
+	min-height: 500px;
+}
+
+.NToc__inline-card-preview-section {
+	flex: 1;
+	min-width: 300px;
+	border-right: 1px solid var(--background-modifier-border);
+	padding-right: 1rem;
+}
+
+.NToc__inline-card-preview-section h3 {
+	margin: 0 0 1rem 0;
+	font-size: 1.1em;
+	font-weight: 600;
+	color: var(--text-normal);
+}
+
+.NToc__inline-card-preview {
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 6px;
+	padding: 1rem;
+	background: var(--background-primary);
+	min-height: 200px;
+}
+
+.NToc__inline-card-configure {
+	flex: 1;
+	min-width: 400px;
+	display: flex;
+	flex-direction: column;
+}
+
+.NToc__card-config-tabs {
+	flex: 1;
+}
+
+.NToc__card-modal-actions {
+	padding: 1rem 0;
+	border-top: 1px solid var(--background-modifier-border);
+	display: flex;
+	justify-content: flex-end;
+}
+
+.NToc__card-modal-submit {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+	border: none;
+	border-radius: 4px;
+	padding: 0.5rem 1rem;
+	cursor: pointer;
+	font-weight: 500;
+}
+
+.NToc__card-modal-submit:hover {
+	background: var(--interactive-accent-hover);
+}
+
+/* Basic Settings Styles */
+.NToc__basic-settings {
+	padding: 1rem;
+	overflow-y: auto;
+}
+
+.NToc__basic-settings-section h3 {
+	margin: 0 0 1rem 0;
+	font-size: 1.1em;
+	font-weight: 600;
+	color: var(--text-normal);
+}
+
+.NToc__setting-item {
+	margin-bottom: 1rem;
+}
+
+.NToc__setting-item label {
+	display: block;
+	margin-bottom: 0.5rem;
+	font-weight: 500;
+	color: var(--text-normal);
+	font-size: 0.9em;
+}
+
+.NToc__setting-item input,
+.NToc__setting-item select {
+	width: 100%;
+	padding: 0.5rem;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background: var(--background-primary);
+	color: var(--text-normal);
+	font-size: 0.9em;
+}
+
+.NToc__setting-item input:focus,
+.NToc__setting-item select:focus {
+	outline: none;
+	border-color: var(--interactive-accent);
+}
+
+.NToc__setting-checkboxes {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin-top: 1rem;
+}
+
+.NToc__checkbox-item {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.NToc__checkbox-item input[type="checkbox"] {
+	width: auto;
+	margin: 0;
+}
+
+.NToc__checkbox-item label {
+	margin: 0;
+	font-weight: normal;
+	font-size: 0.9em;
+	cursor: pointer;
+}
+
+/* Style Settings Styles */
+.NToc__style-settings {
+	padding: 1rem;
+	overflow-y: auto;
+}
+
+.NToc__style-target-selector {
+	margin-bottom: 1.5rem;
+}
+
+.NToc__style-target-tabs {
+	display: flex;
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.NToc__style-target-tab {
+	background: none;
+	border: none;
+	padding: 0.75rem 1rem;
+	cursor: pointer;
+	color: var(--text-muted);
+	font-weight: 500;
+	border-bottom: 2px solid transparent;
+	transition: all 0.2s ease;
+}
+
+.NToc__style-target-tab:hover {
+	color: var(--text-normal);
+	background: var(--background-modifier-hover);
+}
+
+.NToc__style-target-tab.active {
+	color: var(--interactive-accent);
+	border-bottom-color: var(--interactive-accent);
+}
+
+.NToc__style-content h3 {
+	margin: 0 0 1.5rem 0;
+	font-size: 1.1em;
+	font-weight: 600;
+	color: var(--text-normal);
+}
+
+.NToc__style-controls {
+	margin-bottom: 2rem;
+}
+
+.NToc__style-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 1rem;
+}
+
+.NToc__style-item {
+	display: flex;
+	flex-direction: column;
+}
+
+.NToc__style-item label {
+	margin-bottom: 0.5rem;
+	font-weight: 500;
+	color: var(--text-normal);
+	font-size: 0.9em;
+}
+
+.NToc__style-item input,
+.NToc__style-item select {
+	padding: 0.5rem;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background: var(--background-primary);
+	color: var(--text-normal);
+	font-size: 0.9em;
+}
+
+.NToc__style-item input:focus,
+.NToc__style-item select:focus {
+	outline: none;
+	border-color: var(--interactive-accent);
+}
+
+.NToc__color-input-group {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.NToc__color-input-group input[type="color"] {
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	border: 1px solid var(--background-modifier-border);
+	cursor: pointer;
+}
+
+.NToc__color-input-group input[type="text"] {
+	flex: 1;
+}
+
+/* Advanced Controls */
+.NToc__advanced-toggle {
+	margin: 1.5rem 0;
+	text-align: center;
+}
+
+.NToc__toggle-advanced {
+	background: none;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	padding: 0.5rem 1rem;
+	cursor: pointer;
+	color: var(--text-normal);
+	font-size: 0.9em;
+}
+
+.NToc__toggle-advanced:hover {
+	background: var(--background-modifier-hover);
+}
+
+.NToc__advanced-controls {
+	border-top: 1px solid var(--background-modifier-border);
+	padding-top: 1.5rem;
+}
+
+.NToc__advanced-controls h4 {
+	margin: 0 0 1rem 0;
+	font-size: 1em;
+	font-weight: 600;
+	color: var(--text-normal);
+}
+
+.NToc__custom-property-list {
+	margin-bottom: 1rem;
+}
+
+.NToc__custom-property-item {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.5rem;
+	background: var(--background-secondary);
+	border-radius: 4px;
+	margin-bottom: 0.5rem;
+}
+
+.NToc__property-name {
+	font-weight: 500;
+	color: var(--text-normal);
+	min-width: 120px;
+}
+
+.NToc__property-value {
+	flex: 1;
+	color: var(--text-muted);
+	font-family: var(--font-monospace);
+	font-size: 0.85em;
+}
+
+.NToc__remove-property {
+	background: var(--background-modifier-error);
+	color: var(--text-error);
+	border: none;
+	border-radius: 2px;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	font-size: 14px;
+	line-height: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.NToc__remove-property:hover {
+	background: var(--background-modifier-error-hover);
+}
+
+.NToc__add-custom-property {
+	display: flex;
+	gap: 0.5rem;
+	align-items: flex-end;
+}
+
+.NToc__add-custom-property input {
+	flex: 1;
+	padding: 0.5rem;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background: var(--background-primary);
+	color: var(--text-normal);
+	font-size: 0.9em;
+}
+
+.NToc__add-custom-property input:focus {
+	outline: none;
+	border-color: var(--interactive-accent);
+}
+
+.NToc__add-custom-property button {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+	border: none;
+	border-radius: 4px;
+	padding: 0.5rem 1rem;
+	cursor: pointer;
+	font-size: 0.9em;
+	white-space: nowrap;
+}
+
+.NToc__add-custom-property button:hover:not(:disabled) {
+	background: var(--interactive-accent-hover);
+}
+
+.NToc__add-custom-property button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+	.NToc__inline-card-manager {
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.NToc__inline-card-preview-section {
+		border-right: none;
+		border-bottom: 1px solid var(--background-modifier-border);
+		padding-right: 0;
+		padding-bottom: 1rem;
+	}
+
+	.NToc__inline-card-configure {
+		min-width: auto;
+	}
+
+	.NToc__style-grid {
+		grid-template-columns: 1fr;
+	}
+}

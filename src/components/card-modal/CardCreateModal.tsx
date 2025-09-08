@@ -1,8 +1,10 @@
 import { CardConfig } from "@src/types/cards";
-import { App, MarkdownView, Modal, parseYaml, stringifyYaml } from "obsidian";
+import getFileHeadings from "@src/utils/getFileHeadings";
+import { App, MarkdownView, Modal, stringifyYaml } from "obsidian";
 import { StrictMode } from "react";
 import { createRoot, Root } from "react-dom/client";
-import { CardForm } from "./CardForm";
+import { CardModal } from "./CardModal";
+import "./CardModal.css";
 
 export class CardCreateModal extends Modal {
 	root: Root | null = null;
@@ -20,10 +22,11 @@ export class CardCreateModal extends Modal {
 	}
 
 	async onOpen() {
-		const { contentEl } = this;
+		const { contentEl, modalEl } = this;
 		const rootContainer = createDiv({
 			parent: contentEl,
 		});
+		modalEl.addClass("NToc__inline-card-modal");
 
 		let cardConfig: CardConfig;
 		let ignoreLanguagePrefix = false;
@@ -75,13 +78,24 @@ export class CardCreateModal extends Modal {
 			};
 		}
 
+		// 获取当前文件的标题和内容用于预览
+		const markdownView =
+			this.app.workspace.getActiveViewOfType(MarkdownView);
+		const headings = markdownView
+			? await getFileHeadings(markdownView)
+			: undefined;
+		const content = markdownView ? markdownView.editor.getValue() : "";
+
 		this.root = createRoot(rootContainer);
 		this.root.render(
 			<StrictMode>
-				<CardForm
+				<CardModal
 					app={this.app}
 					cardConfig={cardConfig}
 					onSubmit={onSubmit}
+					headings={headings}
+					content={content}
+					currentView={markdownView}
 				/>
 			</StrictMode>
 		);
@@ -99,7 +113,7 @@ export class CardCreateModal extends Modal {
 			this.originalConfigContent.trim() !== ""
 		) {
 			try {
-				return parseYaml(this.originalConfigContent) as CardConfig;
+				return JSON.parse(this.originalConfigContent) as CardConfig;
 			} catch (e) {
 				console.error(e);
 				return null;
@@ -119,7 +133,7 @@ export class CardCreateModal extends Modal {
 		const selection = editor.getSelection();
 		if (selection && selection.trim() !== "") {
 			try {
-				return parseYaml(selection) as CardConfig;
+				return JSON.parse(selection) as CardConfig;
 			} catch (e) {
 				console.error(e);
 				return null;
