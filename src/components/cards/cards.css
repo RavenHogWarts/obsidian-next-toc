@@ -111,136 +111,106 @@
 	padding-left: 0;
 }
 
-.NToc__inline-card-toc-empty {
-	color: var(--text-muted);
-	font-style: italic;
-	text-align: center;
-	padding: 24px 16px;
-	font-size: 14px;
-}
-
-.NToc__inline-card-toc-item {
-	display: flex;
-	align-items: flex-start;
-	border-radius: 4px;
-	margin: 2px 0;
-}
-
-.NToc__inline-card-toc-item-collapse {
+.NToc__inline-card-toc-item-container {
+	position: relative;
 	display: flex;
 	align-items: center;
-	justify-content: center;
-	width: 20px;
-	height: 20px;
-	min-width: 20px;
-	border: none;
-	background: transparent;
-	color: var(--text-muted);
-	border-radius: 3px;
-	margin-right: 4px;
-	margin-top: 2px;
-	transition: all 0.2s ease;
-}
-
-.NToc__inline-card-toc-item-collapse:hover {
-	background-color: var(--background-modifier-hover);
+	justify-content: space-between;
+	gap: 0px;
+	font-size: 13px;
 	color: var(--text-normal);
-}
+	line-height: 1.5;
+	min-height: 28px;
+	margin: 3px 0;
+	padding: 0.3vh 1vh 0.3vh 0.6vh;
 
-.NToc__inline-card-toc-item-collapse-icon {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
+	&[data-actual-depth="0"] {
+		padding-left: 14px;
+		font-weight: 600;
+	}
 
-.NToc__inline-card-toc-item-content {
-	display: flex;
-	align-items: center;
-	flex: 1;
-	min-width: 0;
-	padding: 4px 0;
-}
+	&[data-actual-depth="1"] {
+		padding-left: 30px;
+		font-weight: normal;
+	}
 
-.NToc__inline-card-toc-item-number {
-	color: var(--text-accent);
-	font-weight: 600;
-	font-size: 12px;
-	min-width: fit-content;
-	font-family: var(--font-monospace);
-	opacity: 0.8;
-}
+	&[data-actual-depth="2"] {
+		padding-left: 46px;
+		font-weight: normal;
+	}
 
-.NToc__inline-card-toc-item-text {
-	flex: 1;
-	font-size: 14px;
-	line-height: 1.4;
-	color: var(--text-normal);
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	padding: 2px 6px;
-	border-radius: 3px;
+	&[data-actual-depth="3"] {
+		padding-left: 62px;
+		font-weight: normal;
+	}
 
-	&.NToc__clickable-btn {
-		cursor: pointer;
+	&[data-actual-depth="4"] {
+		padding-left: 78px;
+		font-weight: normal;
+	}
 
-		&:hover {
-			background-color: var(--background-modifier-hover);
-			color: var(--text-accent);
+	&[data-actual-depth="5"] {
+		padding-left: 94px;
+		font-weight: normal;
+	}
+
+	&:hover {
+		background: var(--background-modifier-hover);
+		border-radius: 5px;
+
+		.NToc__inline-card-toc-item-collapse {
+			opacity: 1;
+			background: transparent;
 		}
 	}
 }
 
-/* Hierarchical indentation styles */
-.NToc__inline-card-toc-item[data-level="1"] {
-	--indent: 0px;
-}
-
-.NToc__inline-card-toc-item[data-level="2"] {
-	--indent: 16px;
-}
-
-.NToc__inline-card-toc-item[data-level="3"] {
-	--indent: 32px;
-}
-
-.NToc__inline-card-toc-item[data-level="4"] {
-	--indent: 48px;
-}
-
-.NToc__inline-card-toc-item[data-level="5"] {
-	--indent: 64px;
-}
-
-.NToc__inline-card-toc-item[data-level="6"] {
-	--indent: 80px;
+.NToc__inline-card-toc-item {
+	display: flex;
+	align-items: center;
+	flex: 1;
+	min-width: 0;
 }
 
 .NToc__inline-card-toc-item-content {
-	margin-left: var(--indent, 0px);
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+	flex: 1;
+	overflow-wrap: break-word;
+	word-break: break-word;
+	white-space: normal;
+	text-align: left;
+	margin-right: 8px;
+	max-width: calc(100% - 40px);
+	padding-left: 5px;
 }
 
-/* Level-specific styling */
-.NToc__inline-card-toc-item[data-level="1"] .NToc__inline-card-toc-item-text {
-	font-weight: 600;
-	font-size: 15px;
-}
-
-.NToc__inline-card-toc-item[data-level="2"] .NToc__inline-card-toc-item-text {
+.NToc__inline-card-toc-item-number {
+	color: var(--text-muted);
+	margin-right: 4px;
 	font-weight: 500;
-	font-size: 14px;
+	font-size: 0.9em;
 }
 
-.NToc__inline-card-toc-item[data-level="3"] .NToc__inline-card-toc-item-text {
-	font-weight: 400;
-	font-size: 13px;
+.NToc__inline-card-toc-item-collapse {
+	position: absolute;
+	left: 0;
+	top: 4px;
+	padding: 2px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	color: var(--text-muted);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	transition: opacity 0.2s ease;
 }
 
-.NToc__inline-card-toc-item[data-level="4"],
-.NToc__inline-card-toc-item[data-level="5"],
-.NToc__inline-card-toc-item[data-level="6"] {
-	.NToc__inline-card-toc-item-text {
-		font-weight: 400;
-		font-size: 12px;
-		opacity: 0.9;
+.NToc__inline-card-toc-item-text {
+	&.NToc__clickable-btn {
+		cursor: pointer;
 	}
 }

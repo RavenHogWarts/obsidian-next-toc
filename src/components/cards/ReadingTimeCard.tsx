@@ -14,6 +14,7 @@ export const ReadingTimeCard: React.FC<ReadingTimeCardProps> = ({
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const titleRef = useRef<HTMLDivElement>(null);
+	const contentRef = useRef<HTMLDivElement>(null);
 	const iconRef = useRef<HTMLDivElement>(null);
 
 	const [prediction, setPrediction] = useState<string>("");
@@ -112,6 +113,17 @@ export const ReadingTimeCard: React.FC<ReadingTimeCardProps> = ({
 	}, [config.titleStyle]);
 
 	useEffect(() => {
+		if (config.contentStyle && contentRef.current) {
+			Object.entries(config.contentStyle).forEach(([key, value]) => {
+				contentRef.current?.style.setProperty(
+					key,
+					value != null ? String(value) : ""
+				);
+			});
+		}
+	}, [config.contentStyle]);
+
+	useEffect(() => {
 		if (config.iconName && iconRef.current) {
 			setIcon(iconRef.current, config.iconName);
 		}
@@ -128,7 +140,10 @@ export const ReadingTimeCard: React.FC<ReadingTimeCardProps> = ({
 				</div>
 			)}
 
-			<div className="NToc__inline-card-reading-time-content">
+			<div
+				ref={contentRef}
+				className="NToc__inline-card-reading-time-content"
+			>
 				<div className="NToc__inline-card-reading-time-prediction">
 					<div
 						ref={iconRef}

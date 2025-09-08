@@ -106,6 +106,7 @@
 .NToc__toc-item-collapse {
 	position: absolute;
 	left: 0;
+	top: 4px;
 	padding: 2px;
 	background: transparent;
 	border: none;

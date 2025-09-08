@@ -4,8 +4,9 @@ export interface BaseCardConfig {
 	id: string;
 	type: CardType;
 	title?: string;
-	titleStyle?: Partial<CSSStyleDeclaration>;
 	containerStyle?: Partial<CSSStyleDeclaration>;
+	titleStyle?: Partial<CSSStyleDeclaration>;
+	contentStyle?: Partial<CSSStyleDeclaration>;
 }
 
 export interface ReadingTimeCardConfig extends BaseCardConfig {

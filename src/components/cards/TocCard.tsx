@@ -1,4 +1,5 @@
 import { TocCardConfig } from "@src/types/cards";
+import calculateActualDepth from "@src/utils/calculateActualDepth";
 import hasChildren from "@src/utils/hasChildren";
 import scrollToHeading from "@src/utils/scrollToHeading";
 import { ChevronDown, ChevronRight } from "lucide-react";
@@ -18,6 +19,7 @@ export const TocCard: React.FC<TocCardProps> = ({
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const titleRef = useRef<HTMLDivElement>(null);
+	const contentRef = useRef<HTMLDivElement>(null);
 	const itemTextRefs = useRef<HTMLDivElement[]>([]);
 
 	const [filteredHeadings, setFilteredHeadings] = useState<HeadingCache[]>(
@@ -140,6 +142,17 @@ export const TocCard: React.FC<TocCardProps> = ({
 	}, [config.titleStyle]);
 
 	useEffect(() => {
+		if (config.contentStyle && contentRef.current) {
+			Object.entries(config.contentStyle).forEach(([key, value]) => {
+				contentRef.current?.style.setProperty(
+					key,
+					value != null ? String(value) : ""
+				);
+			});
+		}
+	}, [config.contentStyle]);
+
+	useEffect(() => {
 		itemTextRefs.current.forEach((element) => {
 			if (element) {
 				element.classList.remove("NToc__clickable-btn");
@@ -158,14 +171,13 @@ export const TocCard: React.FC<TocCardProps> = ({
 				</div>
 			)}
 
-			<div className="NToc__inline-card-toc-content">
-				{filteredHeadings.length === 0 && (
-					<div className="NToc__inline-card-toc-empty">
-						No headings found.
-					</div>
-				)}
+			<div ref={contentRef} className="NToc__inline-card-toc-content">
 				{filteredHeadings.map((heading, index) => {
 					const hasChildHeadings = hasChildren(
+						index,
+						filteredHeadings
+					);
+					const headingActualDepth = calculateActualDepth(
 						index,
 						filteredHeadings
 					);
@@ -177,43 +189,47 @@ export const TocCard: React.FC<TocCardProps> = ({
 					return (
 						<div
 							key={index}
-							className="NToc__inline-card-toc-item"
+							className="NToc__inline-card-toc-item-container"
 							data-level={heading.level}
+							data-actual-depth={headingActualDepth}
+							onClick={(e) => {
+								e.stopPropagation();
+								toggleCollapse(index);
+							}}
 						>
-							{config.collapsible && hasChildHeadings && (
-								<button
-									className="NToc__inline-card-toc-item-collapse clickable-icon"
-									onClick={(e) => {
-										e.stopPropagation();
-										toggleCollapse(index);
-									}}
-									aria-expanded={!isCollapsed}
-								>
-									<i className="NToc__inline-card-toc-item-collapse-icon">
-										{isCollapsed ? (
-											<ChevronRight size={16} />
-										) : (
-											<ChevronDown size={16} />
-										)}
-									</i>
-								</button>
-							)}
-							<div className="NToc__inline-card-toc-item-content">
-								{config.showNumbers && (
-									<div className="NToc__inline-card-toc-item-number">
-										{generateHeadingNumber(index)}
-									</div>
+							<div className="NToc__inline-card-toc-item">
+								{config.collapsible && hasChildHeadings && (
+									<button
+										className="NToc__inline-card-toc-item-collapse clickable-icon"
+										aria-expanded={!isCollapsed}
+									>
+										<i className="NToc__inline-card-toc-item-collapse-icon">
+											{isCollapsed ? (
+												<ChevronRight size={16} />
+											) : (
+												<ChevronDown size={16} />
+											)}
+										</i>
+									</button>
 								)}
-								<div
-									ref={(el) => {
-										if (el) {
-											itemTextRefs.current[index] = el;
-										}
-									}}
-									className="NToc__inline-card-toc-item-text"
-									onClick={(e) => handelClick(e, heading)}
-								>
-									{heading.heading}
+								<div className="NToc__inline-card-toc-item-content">
+									{config.showNumbers && (
+										<div className="NToc__inline-card-toc-item-number">
+											{generateHeadingNumber(index)}
+										</div>
+									)}
+									<div
+										ref={(el) => {
+											if (el) {
+												itemTextRefs.current[index] =
+													el;
+											}
+										}}
+										className="NToc__inline-card-toc-item-text"
+										onClick={(e) => handelClick(e, heading)}
+									>
+										{heading.heading}
+									</div>
 								</div>
 							</div>
 						</div>
