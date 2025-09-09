@@ -1,14 +1,15 @@
 import { CardConfig } from "@src/types/cards";
 import { FC, useState } from "react";
+import "./CardStyleSettings.css";
 
-interface StyleSettingsProps {
+interface CardStyleSettingsProps {
 	cardConfig: CardConfig;
 	onChange: (config: CardConfig) => void;
 }
 
 type StyleTarget = "containerStyle" | "titleStyle" | "contentStyle";
 
-export const StyleSettings: FC<StyleSettingsProps> = ({
+export const CardStyleSettings: FC<CardStyleSettingsProps> = ({
 	cardConfig,
 	onChange,
 }) => {
@@ -77,11 +78,11 @@ export const StyleSettings: FC<StyleSettingsProps> = ({
 		const currentStyle = getCurrentStyle(target);
 
 		return (
-			<div className="NToc__style-controls">
-				<div className="NToc__style-grid">
-					<div className="NToc__style-item">
+			<div className="NToc__inline-card-style-controls">
+				<div className="NToc__inline-card-style-grid">
+					<div className="NToc__inline-card-style-item">
 						<label>Background Color</label>
-						<div className="NToc__color-input-group">
+						<div className="NToc__inline-card-color-input-group">
 							<input
 								type="color"
 								value={
@@ -114,9 +115,9 @@ export const StyleSettings: FC<StyleSettingsProps> = ({
 						</div>
 					</div>
 
-					<div className="NToc__style-item">
+					<div className="NToc__inline-card-style-item">
 						<label>Text Color</label>
-						<div className="NToc__color-input-group">
+						<div className="NToc__inline-card-color-input-group">
 							<input
 								type="color"
 								value={
@@ -137,7 +138,7 @@ export const StyleSettings: FC<StyleSettingsProps> = ({
 						</div>
 					</div>
 
-					<div className="NToc__style-item">
+					<div className="NToc__inline-card-style-item">
 						<label>Font Size</label>
 						<input
 							type="text"
@@ -149,7 +150,7 @@ export const StyleSettings: FC<StyleSettingsProps> = ({
 						/>
 					</div>
 
-					<div className="NToc__style-item">
+					<div className="NToc__inline-card-style-item">
 						<label>Font Weight</label>
 						<select
 							value={(currentStyle.fontWeight as string) || ""}
@@ -178,7 +179,7 @@ export const StyleSettings: FC<StyleSettingsProps> = ({
 						</select>
 					</div>
 
-					<div className="NToc__style-item">
+					<div className="NToc__inline-card-style-item">
 						<label>Padding</label>
 						<input
 							type="text"
@@ -190,7 +191,7 @@ export const StyleSettings: FC<StyleSettingsProps> = ({
 						/>
 					</div>
 
-					<div className="NToc__style-item">
+					<div className="NToc__inline-card-style-item">
 						<label>Margin</label>
 						<input
 							type="text"
@@ -202,7 +203,7 @@ export const StyleSettings: FC<StyleSettingsProps> = ({
 						/>
 					</div>
 
-					<div className="NToc__style-item">
+					<div className="NToc__inline-card-style-item">
 						<label>Border</label>
 						<input
 							type="text"
@@ -214,7 +215,7 @@ export const StyleSettings: FC<StyleSettingsProps> = ({
 						/>
 					</div>
 
-					<div className="NToc__style-item">
+					<div className="NToc__inline-card-style-item">
 						<label>Border Radius</label>
 						<input
 							type="text"
@@ -230,7 +231,7 @@ export const StyleSettings: FC<StyleSettingsProps> = ({
 						/>
 					</div>
 
-					<div className="NToc__style-item">
+					<div className="NToc__inline-card-style-item">
 						<label>Box Shadow</label>
 						<input
 							type="text"
@@ -242,7 +243,7 @@ export const StyleSettings: FC<StyleSettingsProps> = ({
 						/>
 					</div>
 
-					<div className="NToc__style-item">
+					<div className="NToc__inline-card-style-item">
 						<label>Text Align</label>
 						<select
 							value={(currentStyle.textAlign as string) || ""}
@@ -281,24 +282,24 @@ export const StyleSettings: FC<StyleSettingsProps> = ({
 		);
 
 		return (
-			<div className="NToc__advanced-controls">
+			<div className="NToc__inline-card-advanced-controls">
 				<h4>Custom Properties</h4>
 
-				<div className="NToc__custom-property-list">
+				<div className="NToc__inline-card-custom-property-list">
 					{customProperties.map(([property, value]) => (
 						<div
 							key={property}
-							className="NToc__custom-property-item"
+							className="NToc__inline-card-custom-property-item"
 						>
-							<span className="NToc__property-name">
+							<span className="NToc__inline-card-property-name">
 								{property}
 							</span>
-							<span className="NToc__property-value">
+							<span className="NToc__inline-card-property-value">
 								{value as string}
 							</span>
 							<button
 								type="button"
-								className="NToc__remove-property"
+								className="NToc__inline-card-remove-property"
 								onClick={() =>
 									removeStyleProperty(target, property)
 								}
@@ -309,7 +310,7 @@ export const StyleSettings: FC<StyleSettingsProps> = ({
 					))}
 				</div>
 
-				<div className="NToc__add-custom-property">
+				<div className="NToc__inline-card-add-custom-property">
 					<input
 						type="text"
 						placeholder="Property name (e.g., display)"
@@ -335,12 +336,12 @@ export const StyleSettings: FC<StyleSettingsProps> = ({
 	};
 
 	return (
-		<div className="NToc__style-settings">
-			<div className="NToc__style-target-selector">
-				<div className="NToc__style-target-tabs">
+		<div className="NToc__inline-card-style-settings">
+			<div className="NToc__inline-card-style-target-selector">
+				<div className="NToc__inline-card-style-target-tabs">
 					<button
 						type="button"
-						className={`NToc__style-target-tab ${
+						className={`NToc__inline-card-style-target-tab ${
 							activeStyleTarget === "containerStyle"
 								? "active"
 								: ""
@@ -351,7 +352,7 @@ export const StyleSettings: FC<StyleSettingsProps> = ({
 					</button>
 					<button
 						type="button"
-						className={`NToc__style-target-tab ${
+						className={`NToc__inline-card-style-target-tab ${
 							activeStyleTarget === "titleStyle" ? "active" : ""
 						}`}
 						onClick={() => setActiveStyleTarget("titleStyle")}
@@ -360,7 +361,7 @@ export const StyleSettings: FC<StyleSettingsProps> = ({
 					</button>
 					<button
 						type="button"
-						className={`NToc__style-target-tab ${
+						className={`NToc__inline-card-style-target-tab ${
 							activeStyleTarget === "contentStyle" ? "active" : ""
 						}`}
 						onClick={() => setActiveStyleTarget("contentStyle")}
@@ -370,17 +371,17 @@ export const StyleSettings: FC<StyleSettingsProps> = ({
 				</div>
 			</div>
 
-			<div className="NToc__style-content">
+			<div className="NToc__inline-card-style-content">
 				<h3>
 					Style {activeStyleTarget.replace("Style", "").toUpperCase()}
 				</h3>
 
 				{renderCommonStyleControls(activeStyleTarget)}
 
-				<div className="NToc__advanced-toggle">
+				<div className="NToc__inline-card-advanced-toggle">
 					<button
 						type="button"
-						className="NToc__toggle-advanced"
+						className="NToc__inline-card-toggle-advanced"
 						onClick={() => setShowAdvanced(!showAdvanced)}
 					>
 						{showAdvanced ? "Hide" : "Show"} Advanced Settings

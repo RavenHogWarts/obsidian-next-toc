@@ -1,0 +1,65 @@
+/* Basic Settings Styles */
+.NToc__inline-card-basic-settings {
+	padding: 1rem;
+	overflow-y: auto;
+}
+
+.NToc__inline-card-basic-settings-section h3 {
+	margin: 0 0 1rem 0;
+	font-size: 1.1em;
+	font-weight: 600;
+	color: var(--text-normal);
+}
+
+.NToc__inline-card-setting-item {
+	margin-bottom: 1rem;
+}
+
+.NToc__inline-card-setting-item label {
+	display: block;
+	margin-bottom: 0.5rem;
+	font-weight: 500;
+	color: var(--text-normal);
+	font-size: 0.9em;
+}
+
+.NToc__inline-card-setting-item input,
+.NToc__inline-card-setting-item select {
+	width: 100%;
+	padding: 0.5rem;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background: var(--background-primary);
+	color: var(--text-normal);
+	font-size: 0.9em;
+}
+
+.NToc__inline-card-setting-item input:focus,
+.NToc__inline-card-setting-item select:focus {
+	outline: none;
+	border-color: var(--interactive-accent);
+}
+
+.NToc__inline-card-setting-checkboxes {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin-top: 1rem;
+}
+
+.NToc__inline-card-checkbox-item {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.NToc__inline-card-checkbox-item input[type="checkbox"] {
+	margin: 0;
+}
+
+.NToc__inline-card-checkbox-item label {
+	margin: 0;
+	font-weight: normal;
+	font-size: 0.9em;
+	cursor: pointer;
+}

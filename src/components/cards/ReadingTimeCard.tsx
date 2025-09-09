@@ -155,24 +155,26 @@ export const ReadingTimeCard: React.FC<ReadingTimeCardProps> = ({
 						{config.textAfter}
 					</span>
 				</div>
-				<div className="NToc__inline-card-reading-time-stats">
-					<div className="NToc__inline-card-reading-time-stat-item">
-						<span className="NToc__inline-card-reading-time-stat-label">
-							Chinese:
-						</span>
-						<span className="NToc__inline-card-reading-time-stat-value">
-							{chineseCount}
-						</span>
+				{config.showWordCount && (
+					<div className="NToc__inline-card-reading-time-stats">
+						<div className="NToc__inline-card-reading-time-stat-item">
+							<span className="NToc__inline-card-reading-time-stat-label">
+								Chinese:
+							</span>
+							<span className="NToc__inline-card-reading-time-stat-value">
+								{chineseCount}
+							</span>
+						</div>
+						<div className="NToc__inline-card-reading-time-stat-item">
+							<span className="NToc__inline-card-reading-time-stat-label">
+								English:
+							</span>
+							<span className="NToc__inline-card-reading-time-stat-value">
+								{englishCount}
+							</span>
+						</div>
 					</div>
-					<div className="NToc__inline-card-reading-time-stat-item">
-						<span className="NToc__inline-card-reading-time-stat-label">
-							English:
-						</span>
-						<span className="NToc__inline-card-reading-time-stat-value">
-							{englishCount}
-						</span>
-					</div>
-				</div>
+				)}
 			</div>
 		</div>
 	);

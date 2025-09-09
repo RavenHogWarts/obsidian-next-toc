@@ -1,0 +1,216 @@
+/* Style Settings Styles */
+.NToc__inline-card-style-settings {
+	padding: 1rem;
+	overflow-y: auto;
+}
+
+.NToc__inline-card-style-target-selector {
+	margin-bottom: 1.5rem;
+}
+
+.NToc__inline-card-style-target-tabs {
+	display: flex;
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.NToc__inline-card-style-target-tab {
+	background: none;
+	border: none;
+	padding: 0.75rem 1rem;
+	cursor: pointer;
+	color: var(--text-muted);
+	font-weight: 500;
+	border-bottom: 2px solid transparent;
+	transition: all 0.2s ease;
+}
+
+.NToc__inline-card-style-target-tab:hover {
+	color: var(--text-normal);
+	background: var(--background-modifier-hover);
+}
+
+.NToc__inline-card-style-target-tab.active {
+	color: var(--interactive-accent);
+	border-bottom-color: var(--interactive-accent);
+}
+
+.NToc__inline-card-style-content h3 {
+	margin: 0 0 1.5rem 0;
+	font-size: 1.1em;
+	font-weight: 600;
+	color: var(--text-normal);
+}
+
+.NToc__inline-card-style-controls {
+	margin-bottom: 2rem;
+}
+
+.NToc__inline-card-style-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 1rem;
+}
+
+.NToc__inline-card-style-item {
+	display: flex;
+	flex-direction: column;
+}
+
+.NToc__inline-card-style-item label {
+	margin-bottom: 0.5rem;
+	font-weight: 500;
+	color: var(--text-normal);
+	font-size: 0.9em;
+}
+
+.NToc__inline-card-style-item input,
+.NToc__inline-card-style-item select {
+	padding: 0.5rem;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background: var(--background-primary);
+	color: var(--text-normal);
+	font-size: 0.9em;
+}
+
+.NToc__inline-card-style-item input:focus,
+.NToc__inline-card-style-item select:focus {
+	outline: none;
+	border-color: var(--interactive-accent);
+}
+
+.NToc__inline-card-color-input-group {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.NToc__inline-card-color-input-group input[type="color"] {
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	border: 1px solid var(--background-modifier-border);
+	cursor: pointer;
+}
+
+.NToc__inline-card-color-input-group input[type="text"] {
+	flex: 1;
+}
+
+/* Advanced Controls */
+.NToc__inline-card-advanced-toggle {
+	margin: 1.5rem 0;
+	text-align: center;
+}
+
+.NToc__inline-card-toggle-advanced {
+	background: none;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	padding: 0.5rem 1rem;
+	cursor: pointer;
+	color: var(--text-normal);
+	font-size: 0.9em;
+}
+
+.NToc__inline-card-toggle-advanced:hover {
+	background: var(--background-modifier-hover);
+}
+
+.NToc__inline-card-advanced-controls {
+	border-top: 1px solid var(--background-modifier-border);
+	padding-top: 1.5rem;
+}
+
+.NToc__inline-card-advanced-controls h4 {
+	margin: 0 0 1rem 0;
+	font-size: 1em;
+	font-weight: 600;
+	color: var(--text-normal);
+}
+
+.NToc__inline-card-custom-property-list {
+	margin-bottom: 1rem;
+}
+
+.NToc__inline-card-custom-property-item {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.5rem;
+	background: var(--background-secondary);
+	border-radius: 4px;
+	margin-bottom: 0.5rem;
+}
+
+.NToc__inline-card-property-name {
+	font-weight: 500;
+	color: var(--text-normal);
+	min-width: 120px;
+}
+
+.NToc__inline-card-property-value {
+	flex: 1;
+	color: var(--text-muted);
+	font-family: var(--font-monospace);
+	font-size: 0.85em;
+}
+
+.NToc__inline-card-remove-property {
+	background: var(--background-modifier-error);
+	color: var(--text-error);
+	border: none;
+	border-radius: 2px;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	font-size: 14px;
+	line-height: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.NToc__inline-card-remove-property:hover {
+	background: var(--background-modifier-error-hover);
+}
+
+.NToc__inline-card-add-custom-property {
+	display: flex;
+	gap: 0.5rem;
+	align-items: flex-end;
+}
+
+.NToc__inline-card-add-custom-property input {
+	flex: 1;
+	padding: 0.5rem;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background: var(--background-primary);
+	color: var(--text-normal);
+	font-size: 0.9em;
+}
+
+.NToc__inline-card-add-custom-property input:focus {
+	outline: none;
+	border-color: var(--interactive-accent);
+}
+
+.NToc__inline-card-add-custom-property button {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+	border: none;
+	border-radius: 4px;
+	padding: 0.5rem 1rem;
+	cursor: pointer;
+	font-size: 0.9em;
+	white-space: nowrap;
+}
+
+.NToc__inline-card-add-custom-property button:hover:not(:disabled) {
+	background: var(--interactive-accent-hover);
+}
+
+.NToc__inline-card-add-custom-property button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}

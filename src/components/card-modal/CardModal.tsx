@@ -5,9 +5,9 @@ import { CardConfig } from "@src/types/cards";
 import { App, HeadingCache, MarkdownView } from "obsidian";
 import { FC, useEffect, useRef, useState } from "react";
 import { createRoot, Root } from "react-dom/client";
-import { BasicSettings } from "./BasicSettings";
+import { CardBasicSettings } from "./CardBasicSettings";
 import "./CardModal.css";
-import { StyleSettings } from "./StyleSettings";
+import { CardStyleSettings } from "./CardStyleSettings";
 
 interface CardModalProps {
 	app: App;
@@ -97,7 +97,7 @@ export const CardModal: FC<CardModalProps> = ({
 			id: "basic",
 			title: "Basic Settings",
 			content: (
-				<BasicSettings
+				<CardBasicSettings
 					cardConfig={formData}
 					onChange={handleConfigChange}
 				/>
@@ -107,7 +107,7 @@ export const CardModal: FC<CardModalProps> = ({
 			id: "style",
 			title: "Style Design",
 			content: (
-				<StyleSettings
+				<CardStyleSettings
 					cardConfig={formData}
 					onChange={handleConfigChange}
 				/>
@@ -130,13 +130,13 @@ export const CardModal: FC<CardModalProps> = ({
 					items={tabItems}
 					defaultValue="basic"
 					orientation="horizontal"
-					className="NToc__card-config-tabs"
+					className="NToc__inline-card-config-tabs"
 				/>
 
-				<div className="NToc__card-modal-actions">
+				<div className="NToc__inline-card-modal-actions">
 					<button
 						type="button"
-						className="NToc__card-modal-submit"
+						className="NToc__inline-card-modal-submit"
 						onClick={handleSubmit}
 					>
 						Apply Changes

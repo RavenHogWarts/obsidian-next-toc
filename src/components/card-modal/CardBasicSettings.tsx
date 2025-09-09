@@ -4,13 +4,14 @@ import {
 	TocCardConfig,
 } from "@src/types/cards";
 import { FC } from "react";
+import "./CardBasicSettings.css";
 
-interface BasicSettingsProps {
+interface CardBasicSettingsProps {
 	cardConfig: CardConfig;
 	onChange: (config: CardConfig) => void;
 }
 
-export const BasicSettings: FC<BasicSettingsProps> = ({
+export const CardBasicSettings: FC<CardBasicSettingsProps> = ({
 	cardConfig,
 	onChange,
 }) => {
@@ -25,10 +26,10 @@ export const BasicSettings: FC<BasicSettingsProps> = ({
 	};
 
 	const renderReadingTimeSettings = (config: ReadingTimeCardConfig) => (
-		<div className="NToc__basic-settings-section">
+		<div className="NToc__inline-card-basic-settings-section">
 			<h3>Reading Time Settings</h3>
 
-			<div className="NToc__setting-item">
+			<div className="NToc__inline-card-setting-item">
 				<label>Title</label>
 				<input
 					type="text"
@@ -38,7 +39,7 @@ export const BasicSettings: FC<BasicSettingsProps> = ({
 				/>
 			</div>
 
-			<div className="NToc__setting-item">
+			<div className="NToc__inline-card-setting-item">
 				<label>Chinese Words Per Minute</label>
 				<input
 					type="number"
@@ -53,7 +54,7 @@ export const BasicSettings: FC<BasicSettingsProps> = ({
 				/>
 			</div>
 
-			<div className="NToc__setting-item">
+			<div className="NToc__inline-card-setting-item">
 				<label>English Words Per Minute</label>
 				<input
 					type="number"
@@ -68,7 +69,7 @@ export const BasicSettings: FC<BasicSettingsProps> = ({
 				/>
 			</div>
 
-			<div className="NToc__setting-item">
+			<div className="NToc__inline-card-setting-item">
 				<label>Text Before</label>
 				<input
 					type="text"
@@ -80,7 +81,7 @@ export const BasicSettings: FC<BasicSettingsProps> = ({
 				/>
 			</div>
 
-			<div className="NToc__setting-item">
+			<div className="NToc__inline-card-setting-item">
 				<label>Text After</label>
 				<input
 					type="text"
@@ -92,7 +93,7 @@ export const BasicSettings: FC<BasicSettingsProps> = ({
 				/>
 			</div>
 
-			<div className="NToc__setting-item">
+			<div className="NToc__inline-card-setting-item">
 				<label>Icon Name</label>
 				<input
 					type="text"
@@ -104,8 +105,8 @@ export const BasicSettings: FC<BasicSettingsProps> = ({
 				/>
 			</div>
 
-			<div className="NToc__setting-checkboxes">
-				<div className="NToc__checkbox-item">
+			<div className="NToc__inline-card-setting-checkboxes">
+				<div className="NToc__inline-card-checkbox-item">
 					<input
 						type="checkbox"
 						id="removeCodeBlocks"
@@ -120,7 +121,7 @@ export const BasicSettings: FC<BasicSettingsProps> = ({
 					<label htmlFor="removeCodeBlocks">Remove Code Blocks</label>
 				</div>
 
-				<div className="NToc__checkbox-item">
+				<div className="NToc__inline-card-checkbox-item">
 					<input
 						type="checkbox"
 						id="removeWikiLinks"
@@ -135,7 +136,7 @@ export const BasicSettings: FC<BasicSettingsProps> = ({
 					<label htmlFor="removeWikiLinks">Remove Wiki Links</label>
 				</div>
 
-				<div className="NToc__checkbox-item">
+				<div className="NToc__inline-card-checkbox-item">
 					<input
 						type="checkbox"
 						id="removeImageLinks"
@@ -150,7 +151,7 @@ export const BasicSettings: FC<BasicSettingsProps> = ({
 					<label htmlFor="removeImageLinks">Remove Image Links</label>
 				</div>
 
-				<div className="NToc__checkbox-item">
+				<div className="NToc__inline-card-checkbox-item">
 					<input
 						type="checkbox"
 						id="removeNormalLinks"
@@ -167,7 +168,7 @@ export const BasicSettings: FC<BasicSettingsProps> = ({
 					</label>
 				</div>
 
-				<div className="NToc__checkbox-item">
+				<div className="NToc__inline-card-checkbox-item">
 					<input
 						type="checkbox"
 						id="showWordCount"
@@ -183,10 +184,10 @@ export const BasicSettings: FC<BasicSettingsProps> = ({
 	);
 
 	const renderTocSettings = (config: TocCardConfig) => (
-		<div className="NToc__basic-settings-section">
+		<div className="NToc__inline-card-basic-settings-section">
 			<h3>Table of Contents Settings</h3>
 
-			<div className="NToc__setting-item">
+			<div className="NToc__inline-card-setting-item">
 				<label>Title</label>
 				<input
 					type="text"
@@ -196,7 +197,7 @@ export const BasicSettings: FC<BasicSettingsProps> = ({
 				/>
 			</div>
 
-			<div className="NToc__setting-item">
+			<div className="NToc__inline-card-setting-item">
 				<label>Min Depth</label>
 				<input
 					type="number"
@@ -209,7 +210,7 @@ export const BasicSettings: FC<BasicSettingsProps> = ({
 				/>
 			</div>
 
-			<div className="NToc__setting-item">
+			<div className="NToc__inline-card-setting-item">
 				<label>Max Depth</label>
 				<input
 					type="number"
@@ -222,8 +223,8 @@ export const BasicSettings: FC<BasicSettingsProps> = ({
 				/>
 			</div>
 
-			<div className="NToc__setting-checkboxes">
-				<div className="NToc__checkbox-item">
+			<div className="NToc__inline-card-setting-checkboxes">
+				<div className="NToc__inline-card-checkbox-item">
 					<input
 						type="checkbox"
 						id="redirect"
@@ -235,7 +236,7 @@ export const BasicSettings: FC<BasicSettingsProps> = ({
 					<label htmlFor="redirect">Enable Click to Navigate</label>
 				</div>
 
-				<div className="NToc__checkbox-item">
+				<div className="NToc__inline-card-checkbox-item">
 					<input
 						type="checkbox"
 						id="showNumbers"
@@ -247,7 +248,7 @@ export const BasicSettings: FC<BasicSettingsProps> = ({
 					<label htmlFor="showNumbers">Show Numbers</label>
 				</div>
 
-				<div className="NToc__checkbox-item">
+				<div className="NToc__inline-card-checkbox-item">
 					<input
 						type="checkbox"
 						id="collapsible"
@@ -263,7 +264,7 @@ export const BasicSettings: FC<BasicSettingsProps> = ({
 	);
 
 	return (
-		<div className="NToc__basic-settings">
+		<div className="NToc__inline-card-basic-settings">
 			{cardConfig.type === "reading-time"
 				? renderReadingTimeSettings(cardConfig as ReadingTimeCardConfig)
 				: renderTocSettings(cardConfig as TocCardConfig)}
