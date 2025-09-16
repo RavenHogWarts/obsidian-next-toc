@@ -5,9 +5,9 @@ import { CardConfig } from "@src/types/cards";
 import { App, HeadingCache, MarkdownView } from "obsidian";
 import { FC, useEffect, useRef, useState } from "react";
 import { createRoot, Root } from "react-dom/client";
-import { CardBasicSettings } from "./CardBasicSettings";
+import { CardBasicSettings } from "../card-settings/CardBasicSettings";
+import { CardStyleSettings } from "../card-settings/CardStyleSettings";
 import "./CardModal.css";
-import { CardStyleSettings } from "./CardStyleSettings";
 
 interface CardModalProps {
 	app: App;

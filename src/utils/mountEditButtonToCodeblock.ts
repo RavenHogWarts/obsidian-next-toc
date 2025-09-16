@@ -1,4 +1,4 @@
-import { CardCreateModal } from "@src/components/card-modal/CardCreateModal";
+import { CardCreateModal } from "@src/components/modal/card-modal/CardCreateModal";
 import { App, MarkdownView, setIcon } from "obsidian";
 
 export default function (app: App, code: string, codeblockDom: HTMLElement) {
