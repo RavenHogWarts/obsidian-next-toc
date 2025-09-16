@@ -1,3 +1,12 @@
+## [1.1.2-beta.1](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.2...1.1.2-beta.1) (2025-09-16)
+
+
+### ✨ Features
+
+* **cards:** 添加阅读时长与目录卡片类型及组件 (#36) ([ea2783d](https://github.com/RavenHogWarts/obsidian-next-toc/commit/ea2783dd62221efc07f68db8a23553f5ed39f3f9)), closes [#36](https://github.com/RavenHogWarts/obsidian-next-toc/issues/36)
+
+
+
 ## [1.1.2](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.1...1.1.2) (2025-09-05)
 
 
