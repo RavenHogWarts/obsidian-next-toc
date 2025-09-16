@@ -1,0 +1,158 @@
+/* Style Settings Styles */
+.NToc__inline-card-style-settings {
+	overflow-y: auto; /* 保持垂直滚动 */
+	height: 100%; /* 占满父容器高度 */
+	padding-right: 0.5rem; /* 为滚动条留出空间 */
+}
+
+.NToc__inline-card-style-tabs {
+	width: 100%;
+}
+
+/* Style Editor */
+.NToc__inline-card-style-editor {
+	padding: 1rem 0;
+}
+
+.NToc__inline-card-existing-properties,
+.NToc__inline-card-add-property {
+	margin-bottom: 2rem;
+}
+
+.NToc__inline-card-existing-properties h4,
+.NToc__inline-card-add-property h4 {
+	margin: 0 0 1rem 0;
+	font-size: 1em;
+	font-weight: 600;
+	color: var(--text-normal);
+}
+
+.NToc__inline-card-no-properties {
+	color: var(--text-muted);
+	font-style: italic;
+	margin: 0;
+	padding: 1rem;
+	background: var(--background-secondary);
+	border-radius: 4px;
+	text-align: center;
+}
+
+/* Property List */
+.NToc__inline-card-property-list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+.NToc__inline-card-property-item {
+	display: grid;
+	grid-template-columns: 150px 1fr auto;
+	gap: 0.75rem;
+	align-items: center;
+	padding: 0.75rem;
+	background: var(--background-secondary);
+	border-radius: 4px;
+	border: 1px solid var(--background-modifier-border);
+}
+
+.NToc__inline-card-property-name {
+	font-weight: 500;
+	color: var(--text-normal);
+	font-family: var(--font-monospace);
+	font-size: 0.9em;
+}
+
+.NToc__inline-card-property-value-input {
+	padding: 0.5rem;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background: var(--background-primary);
+	color: var(--text-normal);
+	font-size: 0.9em;
+	font-family: var(--font-monospace);
+}
+
+.NToc__inline-card-property-value-input:focus {
+	outline: none;
+	border-color: var(--interactive-accent);
+}
+
+.NToc__inline-card-remove-property {
+	background: var(--background-modifier-error);
+	color: var(--text-error);
+	border: none;
+	border-radius: 4px;
+	width: 28px;
+	height: 28px;
+	cursor: pointer;
+	font-size: 14px;
+	line-height: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background-color 0.2s ease;
+}
+
+.NToc__inline-card-remove-property:hover {
+	background: var(--background-modifier-error-hover);
+}
+
+/* Add Property Form */
+.NToc__inline-card-add-property-form {
+	display: grid;
+	grid-template-columns: 1fr 1fr auto;
+	gap: 0.75rem;
+	align-items: end;
+}
+
+.NToc__inline-card-property-name-input {
+	padding: 0.5rem;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background: var(--background-primary);
+	color: var(--text-normal);
+	font-size: 0.9em;
+}
+
+.NToc__inline-card-property-name-input:focus {
+	outline: none;
+	border-color: var(--interactive-accent);
+}
+
+.NToc__inline-card-add-property-btn {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+	border: none;
+	border-radius: 4px;
+	padding: 0.5rem 1rem;
+	cursor: pointer;
+	font-size: 0.9em;
+	white-space: nowrap;
+	transition: background-color 0.2s ease;
+}
+
+.NToc__inline-card-add-property-btn:hover:not(:disabled) {
+	background: var(--interactive-accent-hover);
+}
+
+.NToc__inline-card-add-property-btn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+	.NToc__inline-card-property-item {
+		grid-template-columns: 1fr;
+		gap: 0.5rem;
+	}
+
+	.NToc__inline-card-property-name {
+		font-size: 0.8em;
+	}
+
+	.NToc__inline-card-add-property-form {
+		grid-template-columns: 1fr;
+		gap: 0.5rem;
+	}
+}

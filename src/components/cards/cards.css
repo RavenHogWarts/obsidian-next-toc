@@ -1,0 +1,216 @@
+.NToc__inline-card-edit-btn {
+	padding: var(--size-2-2) var(--size-2-3);
+	position: absolute;
+	top: var(--size-2-2);
+	right: calc(var(--size-2-2) + 40px);
+	display: flex;
+	opacity: 0;
+	color: var(--text-muted);
+	border-radius: var(--radius-s);
+	cursor: var(--cursor);
+
+	&:hover {
+		background-color: var(--background-modifier-hover);
+	}
+}
+
+/* ----- Reading Time Card ----- */
+.NToc__inline-card-reading-time {
+	display: flex;
+	flex-direction: column;
+}
+
+.NToc__inline-card-reading-time-title {
+	font-weight: 600;
+	margin-bottom: 12px;
+	border-bottom: 1px solid var(--background-modifier-border);
+	display: flex;
+	align-items: center;
+}
+
+.NToc__inline-card-reading-time-content {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.NToc__inline-card-reading-time-prediction {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 8px;
+	background: var(--background-primary-alt);
+	border-radius: 6px;
+	border-left: 3px solid var(--interactive-accent);
+}
+
+.NToc__inline-card-reading-time-icon {
+	display: inline-flex;
+	align-items: center;
+	color: var(--text-muted);
+}
+
+.NToc__inline-card-reading-time-text {
+	font-size: 14px;
+	color: var(--text-normal);
+	font-weight: normal;
+	line-height: 1.5;
+}
+
+.NToc__inline-card-reading-time-stats {
+	display: flex;
+	gap: 16px;
+	flex-wrap: wrap;
+}
+
+.NToc__inline-card-reading-time-stat-item {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	background: var(--background-primary);
+	border-radius: 6px;
+	border: 1px solid var(--background-modifier-border);
+	padding: 0 4px;
+	transition: background-color 0.2s ease;
+}
+
+.NToc__inline-card-reading-time-stat-label {
+	font-size: 12px;
+	color: var(--text-muted);
+	font-weight: normal;
+	text-transform: uppercase;
+}
+
+.NToc__inline-card-reading-time-stat-value {
+	font-size: 12px;
+	color: var(--text-normal);
+	font-weight: bold;
+}
+
+/* ----- TOC Card ----- */
+.NToc__inline-card-toc {
+	display: flex;
+	flex-direction: column;
+}
+
+.NToc__inline-card-toc-title {
+	font-weight: 600;
+	margin-bottom: 12px;
+	border-bottom: 2px solid var(--background-modifier-border);
+	display: flex;
+	align-items: center;
+}
+
+.NToc__inline-card-toc-content {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	overflow-y: auto;
+	max-height: 400px;
+	padding-left: 0;
+}
+
+.NToc__inline-card-toc-item-container {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0px;
+	font-size: 13px;
+	color: var(--text-normal);
+	line-height: 1.5;
+	min-height: 28px;
+	margin: 3px 0;
+	padding: 0.3vh 1vh 0.3vh 0.6vh;
+
+	&[data-actual-depth="0"] {
+		padding-left: 14px;
+		font-weight: 600;
+	}
+
+	&[data-actual-depth="1"] {
+		padding-left: 30px;
+		font-weight: normal;
+	}
+
+	&[data-actual-depth="2"] {
+		padding-left: 46px;
+		font-weight: normal;
+	}
+
+	&[data-actual-depth="3"] {
+		padding-left: 62px;
+		font-weight: normal;
+	}
+
+	&[data-actual-depth="4"] {
+		padding-left: 78px;
+		font-weight: normal;
+	}
+
+	&[data-actual-depth="5"] {
+		padding-left: 94px;
+		font-weight: normal;
+	}
+
+	&:hover {
+		background: var(--background-modifier-hover);
+		border-radius: 5px;
+
+		.NToc__inline-card-toc-item-collapse {
+			opacity: 1;
+			background: transparent;
+		}
+	}
+}
+
+.NToc__inline-card-toc-item {
+	display: flex;
+	align-items: center;
+	flex: 1;
+	min-width: 0;
+}
+
+.NToc__inline-card-toc-item-content {
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+	flex: 1;
+	overflow-wrap: break-word;
+	word-break: break-word;
+	white-space: normal;
+	text-align: left;
+	margin-right: 8px;
+	max-width: calc(100% - 40px);
+	padding-left: 5px;
+}
+
+.NToc__inline-card-toc-item-number {
+	color: var(--text-muted);
+	margin-right: 4px;
+	font-weight: 500;
+	font-size: 0.9em;
+}
+
+.NToc__inline-card-toc-item-collapse {
+	position: absolute;
+	left: 0;
+	top: 4px;
+	padding: 2px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	color: var(--text-muted);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	transition: opacity 0.2s ease;
+}
+
+.NToc__inline-card-toc-item-text {
+	&.NToc__clickable-btn {
+		cursor: pointer;
+	}
+}

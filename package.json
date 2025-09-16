@@ -15,7 +15,8 @@
 		"lint": "eslint . --ext .ts,.tsx",
 		"lint:fix": "eslint . --ext .ts,.tsx --fix",
 		"test": "jest",
-		"test:watch": "jest --watch"
+		"test:watch": "jest --watch",
+		"link:data": "node scripts/link-data.mjs"
 	},
 	"keywords": [
 		"Obsidian Plugin",
