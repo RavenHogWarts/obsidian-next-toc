@@ -1,7 +1,8 @@
 /* Basic Settings Styles */
 .NToc__inline-card-basic-settings {
-	padding: 1rem;
-	overflow-y: auto;
+	overflow-y: auto; /* 保持垂直滚动 */
+	height: 100%; /* 占满父容器高度 */
+	padding-right: 0.5rem; /* 为滚动条留出空间 */
 }
 
 .NToc__inline-card-basic-settings-section h3 {
