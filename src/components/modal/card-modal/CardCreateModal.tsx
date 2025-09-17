@@ -1,4 +1,4 @@
-import { CardConfig } from "@src/types/cards";
+import { CardConfig, DEFAULT_READING_TIME_CARD } from "@src/types/cards";
 import getFileHeadings from "@src/utils/getFileHeadings";
 import { App, MarkdownView, Modal } from "obsidian";
 import { StrictMode } from "react";
@@ -42,11 +42,7 @@ export class CardCreateModal extends Modal {
 
 		if (!cardConfig) {
 			// 默认创建阅读时间卡片
-			cardConfig = {
-				id: `card-${Date.now()}`,
-				type: "reading-time",
-				title: "Reading Time",
-			};
+			cardConfig = { ...DEFAULT_READING_TIME_CARD };
 		}
 
 		let onSubmit: (cardConfig: CardConfig) => void;

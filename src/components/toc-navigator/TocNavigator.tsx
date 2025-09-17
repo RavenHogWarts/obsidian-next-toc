@@ -332,7 +332,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 				</div>
 
 				<div ref={NTocGroupContentRef} className="NToc__group-content">
-					{settings.tool.useToolbar && (
+					{settings.tool.useToolbar && shouldShowToc && (
 						<TocToolbar
 							headings={headings}
 							onCollapseAll={onCollapseAll}

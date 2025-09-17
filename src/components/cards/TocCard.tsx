@@ -1,5 +1,6 @@
 import { TocCardConfig } from "@src/types/cards";
 import calculateActualDepth from "@src/utils/calculateActualDepth";
+import { applyCSSStyles } from "@src/utils/convertCamelCaseToKebab";
 import hasChildren from "@src/utils/hasChildren";
 import scrollToHeading from "@src/utils/scrollToHeading";
 import { ChevronDown, ChevronRight } from "lucide-react";
@@ -121,34 +122,19 @@ export const TocCard: React.FC<TocCardProps> = ({
 
 	useEffect(() => {
 		if (config.containerStyle && containerRef.current) {
-			Object.entries(config.containerStyle).forEach(([key, value]) => {
-				containerRef.current?.style.setProperty(
-					key,
-					value != null ? String(value) : ""
-				);
-			});
+			applyCSSStyles(containerRef.current, config.containerStyle);
 		}
 	}, [config.containerStyle]);
 
 	useEffect(() => {
 		if (config.titleStyle && titleRef.current) {
-			Object.entries(config.titleStyle).forEach(([key, value]) => {
-				titleRef.current?.style.setProperty(
-					key,
-					value != null ? String(value) : ""
-				);
-			});
+			applyCSSStyles(titleRef.current, config.titleStyle);
 		}
 	}, [config.titleStyle]);
 
 	useEffect(() => {
 		if (config.contentStyle && contentRef.current) {
-			Object.entries(config.contentStyle).forEach(([key, value]) => {
-				contentRef.current?.style.setProperty(
-					key,
-					value != null ? String(value) : ""
-				);
-			});
+			applyCSSStyles(contentRef.current, config.contentStyle);
 		}
 	}, [config.contentStyle]);
 
