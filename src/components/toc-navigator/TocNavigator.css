@@ -8,6 +8,7 @@
 
 	&.NToc__container-left {
 		right: auto;
+		align-items: flex-start;
 
 		.NToc__group {
 			padding-right: 16px;
@@ -46,6 +47,7 @@
 
 	&.NToc__container-right {
 		left: auto;
+		align-items: flex-end;
 
 		.NToc__group {
 			padding-left: 16px;
