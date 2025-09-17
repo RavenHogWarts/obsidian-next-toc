@@ -1,3 +1,17 @@
+## [1.1.2-beta.2](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.2-beta.1...1.1.2-beta.2) (2025-09-17)
+
+
+### ✨ Features
+
+* 增加导航指示器 (#43) ([3701381](https://github.com/RavenHogWarts/obsidian-next-toc/commit/3701381a4aacbc1dd7c2e17f91e04bea978462dd)), closes [#43](https://github.com/RavenHogWarts/obsidian-next-toc/issues/43)
+
+
+### 🔧 CI
+
+* **pr:** 在 PR 关闭时清理构建产物 (#41) ([9e845bd](https://github.com/RavenHogWarts/obsidian-next-toc/commit/9e845bd1b7f14e9eb92ef66f919ca00346accc17)), closes [#41](https://github.com/RavenHogWarts/obsidian-next-toc/issues/41)
+
+
+
 ## [1.1.2-beta.1](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.2...1.1.2-beta.1) (2025-09-16)
 
 
