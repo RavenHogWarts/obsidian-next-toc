@@ -1,6 +1,7 @@
 import { EditorView } from "@codemirror/view";
 import "@styles/styles";
 import { Editor, MarkdownView, Plugin } from "obsidian";
+import { CardCreateModal } from "./components/modal/card-modal/CardCreateModal";
 import {
 	NTocRenderProps,
 	updateNTocRender,
@@ -9,6 +10,7 @@ import { CardProcessor } from "./services/CardProcessor";
 import { createCursorListenerExtension } from "./services/cursorListenerExtension";
 import { PluginSettingTab } from "./settings/PluginSettingTab";
 import SettingsStore from "./settings/SettingsStore";
+import { DEFAULT_READING_TIME_CARD, DEFAULT_TOC_CARD } from "./types/cards";
 import { NTocPluginSettings } from "./types/types";
 import { createScrollListener } from "./utils/eventListenerManager";
 import getFileHeadings from "./utils/getFileHeadings";
@@ -33,6 +35,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.registerCommands();
 		this.registerEvents();
+		this.registerContextMenu();
 		this.registerCodeblockProcessor();
 
 		// Register CM6 cursor listener extension
@@ -109,6 +112,55 @@ export default class NTocPlugin extends Plugin {
 				}
 			},
 		});
+
+		this.addCommand({
+			id: "ntoc-insert-reading-time-card",
+			name: "Insert Reading Time Card",
+			editorCallback: (editor: Editor) => {
+				new CardCreateModal(
+					this.app,
+					JSON.stringify(DEFAULT_READING_TIME_CARD)
+				).open();
+			},
+		});
+
+		this.addCommand({
+			id: "ntoc-insert-table-of-contents-card",
+			name: "Insert Table of Contents Card",
+			editorCallback: (editor: Editor) => {
+				new CardCreateModal(
+					this.app,
+					JSON.stringify(DEFAULT_TOC_CARD)
+				).open();
+			},
+		});
+	}
+
+	private registerContextMenu() {
+		this.registerEvent(
+			this.app.workspace.on("editor-menu", (menu, editor, view) => {
+				if (view instanceof MarkdownView) {
+					menu.addItem((item) => {
+						item.setTitle("Insert Reading Time Card");
+						item.onClick(() => {
+							new CardCreateModal(
+								this.app,
+								JSON.stringify(DEFAULT_READING_TIME_CARD)
+							).open();
+						});
+					});
+					menu.addItem((item) => {
+						item.setTitle("Insert Table of Contents Card");
+						item.onClick(() => {
+							new CardCreateModal(
+								this.app,
+								JSON.stringify(DEFAULT_TOC_CARD)
+							).open();
+						});
+					});
+				}
+			})
+		);
 	}
 
 	private registerEvents() {
