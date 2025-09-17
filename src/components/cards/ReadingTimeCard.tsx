@@ -1,4 +1,5 @@
 import { ReadingTimeCardConfig } from "@src/types/cards";
+import { applyCSSStyles } from "@src/utils/convertCamelCaseToKebab";
 import getWordCounts from "@src/utils/getWordCounts";
 import { setIcon } from "obsidian";
 import { useEffect, useRef, useState } from "react";
@@ -92,34 +93,19 @@ export const ReadingTimeCard: React.FC<ReadingTimeCardProps> = ({
 
 	useEffect(() => {
 		if (config.containerStyle && containerRef.current) {
-			Object.entries(config.containerStyle).forEach(([key, value]) => {
-				containerRef.current?.style.setProperty(
-					key,
-					value != null ? String(value) : ""
-				);
-			});
+			applyCSSStyles(containerRef.current, config.containerStyle);
 		}
 	}, [config.containerStyle]);
 
 	useEffect(() => {
 		if (config.titleStyle && titleRef.current) {
-			Object.entries(config.titleStyle).forEach(([key, value]) => {
-				titleRef.current?.style.setProperty(
-					key,
-					value != null ? String(value) : ""
-				);
-			});
+			applyCSSStyles(titleRef.current, config.titleStyle);
 		}
 	}, [config.titleStyle]);
 
 	useEffect(() => {
 		if (config.contentStyle && contentRef.current) {
-			Object.entries(config.contentStyle).forEach(([key, value]) => {
-				contentRef.current?.style.setProperty(
-					key,
-					value != null ? String(value) : ""
-				);
-			});
+			applyCSSStyles(contentRef.current, config.contentStyle);
 		}
 	}, [config.contentStyle]);
 
