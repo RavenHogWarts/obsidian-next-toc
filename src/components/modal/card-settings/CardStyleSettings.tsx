@@ -1,3 +1,4 @@
+import { CSSPropertyEditor } from "@src/components/css-autocomplete";
 import { Tab, TabItem } from "@src/components/tab/Tab";
 import { CardConfig } from "@src/types/cards";
 import { FC, useState } from "react";
@@ -80,39 +81,50 @@ export const CardStyleSettings: FC<CardStyleSettingsProps> = ({
 							<h4>Current Properties</h4>
 							<div className="NToc__inline-card-property-list">
 								{styleEntries.map(([property, value]) => (
-									<div
+									<CSSPropertyEditor
 										key={property}
-										className="NToc__inline-card-property-item"
-									>
-										<span className="NToc__inline-card-property-name">
-											{property}
-										</span>
-										<input
-											type="text"
-											className="NToc__inline-card-property-value-input"
-											value={value as string}
-											onChange={(e) =>
-												updateStyle(
-													target,
-													property,
-													e.target.value
-												)
+										property={property}
+										value={value as string}
+										onPropertyChange={(newProperty) => {
+											if (newProperty !== property) {
+												// 如果属性名改变，需要删除旧属性，添加新属性
+												const currentStyle =
+													cardConfig[target] || {};
+												const updatedStyle = {
+													...currentStyle,
+												};
+												delete updatedStyle[
+													property as keyof typeof updatedStyle
+												];
+												updatedStyle[
+													newProperty as keyof typeof updatedStyle
+												] = value as any;
+
+												onChange({
+													...cardConfig,
+													[target]:
+														Object.keys(
+															updatedStyle
+														).length > 0
+															? updatedStyle
+															: undefined,
+												});
 											}
-											placeholder="Enter value"
-										/>
-										<button
-											type="button"
-											className="NToc__inline-card-remove-property"
-											onClick={() =>
-												removeStyleProperty(
-													target,
-													property
-												)
-											}
-										>
-											×
-										</button>
-									</div>
+										}}
+										onValueChange={(newValue) =>
+											updateStyle(
+												target,
+												property,
+												newValue
+											)
+										}
+										onRemove={() =>
+											removeStyleProperty(
+												target,
+												property
+											)
+										}
+									/>
 								))}
 							</div>
 						</>
@@ -127,19 +139,15 @@ export const CardStyleSettings: FC<CardStyleSettingsProps> = ({
 				<div className="NToc__inline-card-add-property">
 					<h4>Add New Property</h4>
 					<div className="NToc__inline-card-add-property-form">
-						<input
-							type="text"
-							placeholder="Property name (e.g., backgroundColor, fontSize)"
-							value={customProperty}
-							onChange={(e) => setCustomProperty(e.target.value)}
-							className="NToc__inline-card-property-name-input"
-						/>
-						<input
-							type="text"
-							placeholder="Property value (e.g., #ffffff, 16px)"
+						<CSSPropertyEditor
+							property={customProperty}
 							value={customValue}
-							onChange={(e) => setCustomValue(e.target.value)}
-							className="NToc__inline-card-property-value-input"
+							onPropertyChange={setCustomProperty}
+							onValueChange={setCustomValue}
+							onRemove={() => {
+								setCustomProperty("");
+								setCustomValue("");
+							}}
 						/>
 						<button
 							type="button"

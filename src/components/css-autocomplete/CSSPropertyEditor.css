@@ -1,0 +1,139 @@
+.css-property-editor {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 0;
+	border-bottom: 1px solid var(--background-modifier-border-hover);
+	transition: background-color 0.2s ease;
+}
+
+.css-property-editor:last-child {
+	border-bottom: none;
+}
+
+.css-property-editor:hover {
+	background-color: var(--background-modifier-hover);
+	border-radius: 4px;
+	margin: 0 -8px;
+	padding: 8px;
+}
+
+.css-property-editor-property {
+	flex: 1;
+	min-width: 120px;
+}
+
+.css-property-editor-separator {
+	color: var(--text-muted);
+	font-weight: bold;
+	user-select: none;
+	margin: 0 4px;
+}
+
+.css-property-editor-value {
+	flex: 2;
+	min-width: 150px;
+}
+
+.css-property-editor-remove {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	background: none;
+	border: none;
+	color: var(--text-muted);
+	cursor: pointer;
+	border-radius: 4px;
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 1;
+	transition: all 0.2s ease;
+	opacity: 0.6;
+}
+
+.css-property-editor-remove:hover {
+	background-color: var(--background-modifier-error);
+	color: var(--text-error);
+	opacity: 1;
+	transform: scale(1.1);
+}
+
+.css-property-editor-remove:focus {
+	outline: 2px solid var(--interactive-accent);
+	outline-offset: 2px;
+}
+
+.css-property-input,
+.css-value-input {
+	transition: all 0.2s ease;
+}
+
+.css-property-input.focused,
+.css-value-input.focused {
+	transform: scale(1.02);
+}
+
+/* 针对不同屏幕尺寸的响应式设计 */
+@media (max-width: 768px) {
+	.css-property-editor {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 12px;
+		padding: 12px 0;
+	}
+
+	.css-property-editor-property,
+	.css-property-editor-value {
+		flex: none;
+		min-width: auto;
+	}
+
+	.css-property-editor-separator {
+		display: none;
+	}
+
+	.css-property-editor-remove {
+		align-self: flex-end;
+		width: 32px;
+		height: 32px;
+		font-size: 20px;
+	}
+}
+
+/* 动画效果 */
+.css-property-editor {
+	animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+	from {
+		opacity: 0;
+		transform: translateX(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+/* 焦点状态增强 */
+.css-property-editor:focus-within {
+	background-color: var(--background-modifier-hover);
+	border-radius: 4px;
+	margin: 0 -8px;
+	padding: 8px;
+	box-shadow: 0 0 0 2px var(--interactive-accent-rgb) transparent;
+}
+
+/* 错误状态 */
+.css-property-editor.error {
+	border-color: var(--text-error);
+	background-color: var(--background-modifier-error-hover);
+}
+
+.css-property-editor.error .css-property-input,
+.css-property-editor.error .css-value-input {
+	border-color: var(--text-error);
+}
