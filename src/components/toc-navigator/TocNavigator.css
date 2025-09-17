@@ -163,7 +163,7 @@
 	min-width: 10dvw;
 	max-width: 80dvw;
 	max-height: 75dvh;
-	min-height: max(100px, 10dvh);
+	min-height: fit-content;
 	overflow-y: auto;
 	overflow-x: hidden;
 	overscroll-behavior: contain;
