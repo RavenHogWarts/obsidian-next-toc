@@ -1,3 +1,12 @@
+## [1.1.2-beta.4](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.2-beta.3...1.1.2-beta.4) (2025-09-17)
+
+
+### ✨ Features
+
+* 卡片样式设置增加css联想补全 (#47) ([874bcf7](https://github.com/RavenHogWarts/obsidian-next-toc/commit/874bcf7356e7f40107be40258f00a4c82329944d)), closes [#47](https://github.com/RavenHogWarts/obsidian-next-toc/issues/47)
+
+
+
 ## [1.1.2-beta.3](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.2-beta.2...1.1.2-beta.3) (2025-09-17)
 
 
