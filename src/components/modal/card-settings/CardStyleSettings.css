@@ -99,10 +99,14 @@
 
 /* Add Property Form */
 .NToc__inline-card-add-property-form {
-	display: grid;
-	grid-template-columns: 1fr 1fr auto;
-	gap: 0.75rem;
-	align-items: end;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	align-items: stretch;
+}
+
+.NToc__inline-card-add-property-form .css-property-editor {
+	margin-bottom: 0.5rem;
 }
 
 .NToc__inline-card-property-name-input {
