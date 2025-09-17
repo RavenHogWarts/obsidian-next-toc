@@ -77,9 +77,9 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 					);
 				}}
 			>
-				<i className="NToc__toc-toolbar-button-icon">
+				<span className="NToc__toc-toolbar-button-icon">
 					<Pin size={16} />
-				</i>
+				</span>
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"
@@ -91,49 +91,49 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 					);
 				}}
 			>
-				<i className="NToc__toc-toolbar-button-icon">
+				<span className="NToc__toc-toolbar-button-icon">
 					<ArrowLeftRight size={16} />
-				</i>
+				</span>
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"
 				aria-label="Expand/Collapse TOC items"
 				onClick={hasAnyCollapsed ? onExpandAll : onCollapseAll}
 			>
-				<i className="NToc__toc-toolbar-button-icon">
+				<span className="NToc__toc-toolbar-button-icon">
 					{hasAnyCollapsed ? (
 						<ChevronsUpDown size={16} />
 					) : (
 						<ChevronsDownUp size={16} />
 					)}
-				</i>
+				</span>
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"
 				aria-label="Add offset to the left"
 				onClick={() => handleOffsetChange("left")}
 			>
-				<i className="NToc__toc-toolbar-button-icon">
+				<span className="NToc__toc-toolbar-button-icon">
 					<ChevronLeft size={16} />
-				</i>
+				</span>
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"
 				aria-label="Add offset to the right"
 				onClick={() => handleOffsetChange("right")}
 			>
-				<i className="NToc__toc-toolbar-button-icon">
+				<span className="NToc__toc-toolbar-button-icon">
 					<ChevronRight size={16} />
-				</i>
+				</span>
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"
 				aria-label="Copy TOC to clipboard"
 				onClick={handleCopyToClipboard}
 			>
-				<i className="NToc__toc-toolbar-button-icon">
+				<span className="NToc__toc-toolbar-button-icon">
 					<ClipboardCopy size={16} />
-				</i>
+				</span>
 			</button>
 		</div>
 	);
