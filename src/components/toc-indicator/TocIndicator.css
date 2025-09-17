@@ -1,33 +1,33 @@
 .NToc__group-indicator {
-	height: 2px;
-	border-radius: 1px;
+	height: 4px;
+	border-radius: 4px;
 	background: var(--background-modifier-border);
 	transition: background-color 0.2s ease, width 0.2s ease;
 	margin: 8px 0;
 	flex-shrink: 0;
 
 	/* 基础宽度 */
-	width: 12px;
+	width: 16px;
 
 	/* 根据实际深度设置不同的宽度 */
 	&[data-actual-depth="0"] {
-		width: 24px;
+		width: 36px;
 	}
 
 	&[data-actual-depth="1"] {
-		width: 20px;
+		width: 28px;
 	}
 
 	&[data-actual-depth="2"] {
-		width: 16px;
+		width: 20px;
 	}
 
 	&[data-actual-depth="3"] {
-		width: 12px;
+		width: 16px;
 	}
 
 	&[data-actual-depth="4"] {
-		width: 10px;
+		width: 12px;
 	}
 
 	&[data-actual-depth="5"] {
@@ -35,10 +35,7 @@
 	}
 
 	/* 对于更深的层级，使用最小宽度 */
-	&[data-actual-depth^="6"],
-	&[data-actual-depth^="7"],
-	&[data-actual-depth^="8"],
-	&[data-actual-depth^="9"] {
+	&[data-actual-depth^="6"] {
 		width: 6px;
 	}
 
