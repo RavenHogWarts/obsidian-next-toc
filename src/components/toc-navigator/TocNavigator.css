@@ -10,8 +10,8 @@
 		right: auto;
 
 		.NToc__group {
-			padding-left: 16px;
-			margin-left: -16px;
+			padding-right: 16px;
+			margin-right: -16px;
 		}
 
 		.NToc__group-content {
@@ -23,7 +23,7 @@
 		}
 
 		.NToc__group-resize {
-			right: 0;
+			right: -2px; /* 调整到容器右边缘外侧 */
 		}
 
 		.NToc__return-tools {
@@ -48,8 +48,8 @@
 		left: auto;
 
 		.NToc__group {
-			padding-right: 16px;
-			margin-right: -16px;
+			padding-left: 16px;
+			margin-left: -16px;
 		}
 
 		.NToc__group-content {
@@ -60,7 +60,7 @@
 		}
 
 		.NToc__group-resize {
-			left: 0;
+			left: -2px; /* 调整到容器左边缘外侧 */
 		}
 
 		.NToc__return-tools {
@@ -139,7 +139,8 @@
 .NToc__group-resize {
 	position: absolute;
 	top: 0;
-	height: 100%;
+	bottom: 0;
+	height: auto;
 	width: 4px;
 	cursor: ew-resize;
 	background: transparent;
