@@ -4,14 +4,16 @@
 	height: fit-content;
 	display: flex;
 	flex-direction: column;
+	gap: 2rem;
 	z-index: var(--layer-popover);
 
 	&.NToc__container-left {
 		right: auto;
+		align-items: flex-start;
 
 		.NToc__group {
-			padding-left: 16px;
-			margin-left: -16px;
+			padding-right: 16px;
+			margin-right: -16px;
 		}
 
 		.NToc__group-content {
@@ -23,20 +25,34 @@
 		}
 
 		.NToc__group-resize {
-			right: 0;
+			right: -2px; /* 调整到容器右边缘外侧 */
 		}
 
 		.NToc__return-tools {
 			justify-content: flex-start;
 		}
+
+		.NToc__toc-items {
+			direction: rtl;
+
+			&::-webkit-scrollbar {
+				direction: ltr;
+			}
+
+			/* 滚动条内容需要重置方向 */
+			> * {
+				direction: ltr;
+			}
+		}
 	}
 
 	&.NToc__container-right {
 		left: auto;
+		align-items: flex-end;
 
 		.NToc__group {
-			padding-right: 16px;
-			margin-right: -16px;
+			padding-left: 16px;
+			margin-left: -16px;
 		}
 
 		.NToc__group-content {
@@ -47,7 +63,7 @@
 		}
 
 		.NToc__group-resize {
-			left: 0;
+			left: -2px; /* 调整到容器左边缘外侧 */
 		}
 
 		.NToc__return-tools {
@@ -66,15 +82,31 @@
 		display: none;
 	}
 
-	&:hover {
-		.NToc__toc-toolbar {
-			opacity: 1;
+	&:has(.NToc__group-content.NToc__group-content-expanded) {
+		.NToc__group-indicators {
+			visibility: hidden;
+			transition: visibility 0.2s ease;
 		}
 	}
 }
 
-.NToc__group-content {
+.NToc__group-indicators {
 	position: relative;
+	display: flex;
+	flex-direction: column;
+	padding: 4px 14px;
+	background: transparent;
+	border-radius: 4px;
+	height: var(--toc-height);
+	max-height: 55vh;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+
+.NToc__group-content {
+	position: absolute;
 	top: 0;
 	visibility: hidden;
 	opacity: 0;
@@ -85,6 +117,12 @@
 	&.NToc__group-content-expanded {
 		opacity: 1;
 		visibility: visible;
+	}
+
+	&:hover {
+		.NToc__toc-toolbar {
+			opacity: 1;
+		}
 	}
 
 	&::-webkit-scrollbar {
@@ -104,7 +142,8 @@
 .NToc__group-resize {
 	position: absolute;
 	top: 0;
-	height: 100%;
+	bottom: 0;
+	height: auto;
 	width: 4px;
 	cursor: ew-resize;
 	background: transparent;
@@ -126,6 +165,7 @@
 	max-height: 75dvh;
 	min-height: max(100px, 10dvh);
 	overflow-y: auto;
+	overflow-x: hidden;
 	overscroll-behavior: contain;
 	/* padding: 0.3vh 1vh 0.3vh 0.6vh; */
 
