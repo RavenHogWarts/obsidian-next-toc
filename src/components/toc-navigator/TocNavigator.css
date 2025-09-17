@@ -4,6 +4,7 @@
 	height: fit-content;
 	display: flex;
 	flex-direction: column;
+	gap: 2rem;
 	z-index: var(--layer-popover);
 
 	&.NToc__container-left {
