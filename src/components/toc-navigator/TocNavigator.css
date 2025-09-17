@@ -165,6 +165,7 @@
 	max-height: 75dvh;
 	min-height: max(100px, 10dvh);
 	overflow-y: auto;
+	overflow-x: hidden;
 	overscroll-behavior: contain;
 	/* padding: 0.3vh 1vh 0.3vh 0.6vh; */
 
