@@ -14,6 +14,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { TocIndicator } from "../toc-indicator/TocIndicator";
 import { TocItem } from "../toc-item/TocItem";
 import { TocReturnTools } from "../toc-return-tools/TocReturnTools";
 import { TocToolbar } from "../toc-toolbar/TocToolbar";
@@ -34,6 +35,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	const settings = usePluginSettings(settingsStore);
 	const NTocContainerRef = useRef<HTMLDivElement>(null);
 	const NTocGroupRef = useRef<HTMLDivElement>(null);
+	const NTocGroupIndicatorsRef = useRef<HTMLDivElement>(null);
 	const NTocGroupContentRef = useRef<HTMLDivElement>(null);
 	const NTocGroupTocItemsRef = useRef<HTMLDivElement>(null);
 	const NTocProgressBarRef = useRef<HTMLDivElement>(null);
@@ -94,14 +96,25 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	}, [settings.toc.alwaysExpand, isHovered]);
 
 	useEffect(() => {
-		if (NTocGroupTocItemsRef.current) {
+		if (activeHeadingIndex !== -1) {
 			const tocItems = NTocGroupTocItemsRef.current;
-			if (activeHeadingIndex !== -1) {
+			const indicator = NTocGroupIndicatorsRef.current;
+
+			if (tocItems) {
 				const activeHeadingEl = tocItems.querySelector(
 					`[data-index="${activeHeadingIndex}"]`
 				) as HTMLElement;
 				if (activeHeadingEl) {
 					smoothScroll(tocItems, activeHeadingEl);
+				}
+			}
+
+			if (indicator) {
+				const activeIndicatorEl = indicator.querySelector(
+					`[data-index="${activeHeadingIndex}"]`
+				) as HTMLElement;
+				if (activeIndicatorEl) {
+					smoothScroll(indicator, activeIndicatorEl);
 				}
 			}
 		}
@@ -298,9 +311,26 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 				}
 			>
 				<div
-					className="NToc__group-resize"
-					onMouseDown={handleMouseDragStart}
-				/>
+					ref={NTocGroupIndicatorsRef}
+					className="NToc__group-indicators"
+				>
+					{headings.map((heading, index) => {
+						if (!visibilityMap[index]) return null;
+						return (
+							<TocIndicator
+								key={`indicator-${index}-${heading.position.start.line}`}
+								heading={heading}
+								headingIndex={index}
+								headingActualDepth={calculateActualDepth(
+									index,
+									headings
+								)}
+								headingActive={index === activeHeadingIndex}
+							/>
+						);
+					})}
+				</div>
+
 				<div ref={NTocGroupContentRef} className="NToc__group-content">
 					{settings.tool.useToolbar && (
 						<TocToolbar
@@ -316,6 +346,10 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 							ref={NTocGroupTocItemsRef}
 							className="NToc__toc-items"
 						>
+							<div
+								className="NToc__group-resize"
+								onMouseDown={handleMouseDragStart}
+							/>
 							{settings.tool.showProgress && (
 								<div
 									ref={NTocProgressBarRef}

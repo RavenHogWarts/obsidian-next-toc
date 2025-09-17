@@ -1,0 +1,13 @@
+.NToc__group-indicator {
+	width: 4px;
+	height: 4px;
+	border-radius: 50%;
+	background: var(--background-modifier-border);
+	transition: background-color 0.2s ease;
+	margin: 8px 0;
+	flex-shrink: 0;
+
+	&[data-active="true"] {
+		background: var(--interactive-accent);
+	}
+}

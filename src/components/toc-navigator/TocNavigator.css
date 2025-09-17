@@ -29,6 +29,19 @@
 		.NToc__return-tools {
 			justify-content: flex-start;
 		}
+
+		.NToc__toc-items {
+			direction: rtl;
+
+			&::-webkit-scrollbar {
+				direction: ltr;
+			}
+
+			/* 滚动条内容需要重置方向 */
+			> * {
+				direction: ltr;
+			}
+		}
 	}
 
 	&.NToc__container-right {
@@ -66,15 +79,31 @@
 		display: none;
 	}
 
-	&:hover {
-		.NToc__toc-toolbar {
-			opacity: 1;
+	&:has(.NToc__group-content.NToc__group-content-expanded) {
+		.NToc__group-indicators {
+			visibility: hidden;
+			transition: visibility 0.2s ease;
 		}
 	}
 }
 
-.NToc__group-content {
+.NToc__group-indicators {
 	position: relative;
+	display: flex;
+	flex-direction: column;
+	padding: 4px 14px;
+	background: transparent;
+	border-radius: 4px;
+	height: var(--toc-height);
+	max-height: 55vh;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+
+.NToc__group-content {
+	position: absolute;
 	top: 0;
 	visibility: hidden;
 	opacity: 0;
@@ -85,6 +114,12 @@
 	&.NToc__group-content-expanded {
 		opacity: 1;
 		visibility: visible;
+	}
+
+	&:hover {
+		.NToc__toc-toolbar {
+			opacity: 1;
+		}
 	}
 
 	&::-webkit-scrollbar {
