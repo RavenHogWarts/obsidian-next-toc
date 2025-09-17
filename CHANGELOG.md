@@ -1,3 +1,12 @@
+## [1.1.2-beta.3](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.2-beta.2...1.1.2-beta.3) (2025-09-17)
+
+
+### ✨ Features
+
+* 完善卡片插入功能，优化目录部分功能 (#45) ([c7dcfed](https://github.com/RavenHogWarts/obsidian-next-toc/commit/c7dcfed7d335f157037ac1e451ef7e4ba55b2eb0)), closes [#45](https://github.com/RavenHogWarts/obsidian-next-toc/issues/45)
+
+
+
 ## [1.1.2-beta.2](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.2-beta.1...1.1.2-beta.2) (2025-09-17)
 
 
