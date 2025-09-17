@@ -1,6 +1,7 @@
 import { TocCardConfig } from "@src/types/cards";
+import applyCSSStyles from "@src/utils/applyCSSStyles";
 import calculateActualDepth from "@src/utils/calculateActualDepth";
-import { applyCSSStyles } from "@src/utils/convertCamelCaseToKebab";
+
 import hasChildren from "@src/utils/hasChildren";
 import scrollToHeading from "@src/utils/scrollToHeading";
 import { ChevronDown, ChevronRight } from "lucide-react";

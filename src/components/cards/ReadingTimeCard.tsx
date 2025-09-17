@@ -1,5 +1,6 @@
 import { ReadingTimeCardConfig } from "@src/types/cards";
-import { applyCSSStyles } from "@src/utils/convertCamelCaseToKebab";
+import applyCSSStyles from "@src/utils/applyCSSStyles";
+
 import getWordCounts from "@src/utils/getWordCounts";
 import { setIcon } from "obsidian";
 import { useEffect, useRef, useState } from "react";
