@@ -1,9 +1,6 @@
 .NToc__inline-card-modal {
-	width: 85dvw;
-	max-width: 90dvw;
-	height: 80dvh;
-	max-height: 90dvh;
-	/* overflow: hidden; */
+	max-width: 65dvw;
+	max-height: 85dvh;
 }
 
 /* Card Manager Layout */
