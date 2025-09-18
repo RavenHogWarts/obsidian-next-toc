@@ -78,6 +78,8 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 			const group = NTocGroupRef.current;
 			if (settings.toc.show === false) {
 				group.classList.add("NToc__group-hidden");
+				// 当隐藏TOC时，重置悬停状态
+				setIsHovered(false);
 			} else {
 				group.classList.remove("NToc__group-hidden");
 			}
@@ -304,10 +306,14 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 				ref={NTocGroupRef}
 				className="NToc__group"
 				onMouseEnter={() =>
-					!settings.toc.alwaysExpand && setIsHovered(true)
+					settings.toc.show &&
+					!settings.toc.alwaysExpand &&
+					setIsHovered(true)
 				}
 				onMouseLeave={() =>
-					!settings.toc.alwaysExpand && setIsHovered(false)
+					settings.toc.show &&
+					!settings.toc.alwaysExpand &&
+					setIsHovered(false)
 				}
 			>
 				<div
