@@ -1,3 +1,12 @@
+## [1.1.2-beta.6](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.2-beta.5...1.1.2-beta.6) (2025-09-18)
+
+
+### 🐛 Bug Fixes
+
+* **toc:** 扩展 TOC 工具栏 hover 区域防止闪烁 (#52) ([b21ba60](https://github.com/RavenHogWarts/obsidian-next-toc/commit/b21ba60fbaa3b1e256fe7f949a1a97602c1ae63b)), closes [#52](https://github.com/RavenHogWarts/obsidian-next-toc/issues/52)
+
+
+
 ## [1.1.2-beta.5](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.2-beta.4...1.1.2-beta.5) (2025-09-18)
 
 
