@@ -96,14 +96,20 @@ export const TocCard: React.FC<TocCardProps> = ({
 			if (!config.collapsible) return false;
 
 			const currentLevel = filteredHeadings[index].level;
+			let checkLevel = currentLevel;
 
-			// 向前查找是否有被折叠的父级
+			// 向前查找所有可能的父级标题
 			for (let i = index - 1; i >= 0; i--) {
 				const parentLevel = filteredHeadings[i].level;
-				if (parentLevel < currentLevel) {
+
+				// 只有当父级的级别小于我们当前检查的级别时，它才是真正的父级
+				if (parentLevel < checkLevel) {
+					// 如果这个父级被折叠了，当前项目应该被隐藏
 					if (collapsedSet.has(i)) {
 						return true;
 					}
+					// 更新检查级别为父级级别，继续向上查找
+					checkLevel = parentLevel;
 				}
 			}
 			return false;
@@ -111,7 +117,7 @@ export const TocCard: React.FC<TocCardProps> = ({
 		[filteredHeadings, collapsedSet, config.collapsible]
 	);
 
-	const handelClick = useCallback(
+	const handleClick = useCallback(
 		(e: React.MouseEvent, heading: HeadingCache) => {
 			e.preventDefault();
 			if (currentView && config.redirect) {
@@ -179,16 +185,16 @@ export const TocCard: React.FC<TocCardProps> = ({
 							className="NToc__inline-card-toc-item-container"
 							data-level={heading.level}
 							data-actual-depth={headingActualDepth}
-							onClick={(e) => {
-								e.stopPropagation();
-								toggleCollapse(index);
-							}}
 						>
 							<div className="NToc__inline-card-toc-item">
 								{config.collapsible && hasChildHeadings && (
 									<button
 										className="NToc__inline-card-toc-item-collapse clickable-icon"
 										aria-expanded={!isCollapsed}
+										onClick={(e) => {
+											e.stopPropagation();
+											toggleCollapse(index);
+										}}
 									>
 										<i className="NToc__inline-card-toc-item-collapse-icon">
 											{isCollapsed ? (
@@ -213,7 +219,10 @@ export const TocCard: React.FC<TocCardProps> = ({
 											}
 										}}
 										className="NToc__inline-card-toc-item-text"
-										onClick={(e) => handelClick(e, heading)}
+										onClick={(e) => {
+											e.stopPropagation();
+											handleClick(e, heading);
+										}}
 									>
 										{heading.heading}
 									</div>
