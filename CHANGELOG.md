@@ -1,3 +1,17 @@
+## [1.1.2-beta.5](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.2-beta.4...1.1.2-beta.5) (2025-09-18)
+
+
+### ✨ Features
+
+* 优化目录指示器布局 (#49) ([45b6874](https://github.com/RavenHogWarts/obsidian-next-toc/commit/45b6874174d847ccb347396e1b642b39cfb5f329)), closes [#49](https://github.com/RavenHogWarts/obsidian-next-toc/issues/49)
+
+
+### 🐛 Bug Fixes
+
+* 修复折叠逻辑，调整设置框尺寸 (#50) ([24b7e07](https://github.com/RavenHogWarts/obsidian-next-toc/commit/24b7e07a1148b9380e156da8ab4896f31e5c8d9e)), closes [#50](https://github.com/RavenHogWarts/obsidian-next-toc/issues/50)
+
+
+
 ## [1.1.2-beta.4](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.2-beta.3...1.1.2-beta.4) (2025-09-17)
 
 
