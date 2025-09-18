@@ -9,6 +9,25 @@
 	gap: 4px;
 	margin-bottom: 4px;
 	opacity: 0;
+	pointer-events: auto;
+	z-index: 10;
+	transition: opacity 150ms ease;
+
+	/* 扩展可交互区域，防止闪烁 */
+	&:before {
+		content: "";
+		position: absolute;
+		top: -5px;
+		left: -10px;
+		right: -10px;
+		bottom: -5px;
+		z-index: -1;
+	}
+
+	/* 当 toolbar 自身被 hover 时保持显示 */
+	&:hover {
+		opacity: 1;
+	}
 }
 
 .NToc__toc-toolbar-button {

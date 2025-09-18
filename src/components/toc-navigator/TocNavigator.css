@@ -120,9 +120,22 @@
 		pointer-events: auto; /* 展开时恢复鼠标事件 */
 	}
 
-	&:hover {
+	/* 使用扩展的 hover 区域来防止闪烁 */
+	&:before {
+		content: "";
+		position: absolute;
+		top: -35px;
+		left: -10px;
+		right: -10px;
+		height: 35px;
+		z-index: -1;
+	}
+
+	&:hover,
+	&:before:hover {
 		.NToc__toc-toolbar {
 			opacity: 1;
+			pointer-events: auto;
 		}
 	}
 
