@@ -94,11 +94,11 @@
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	padding: 4px 14px;
+	padding: 0px 14px;
 	background: transparent;
 	border-radius: 4px;
-	height: var(--toc-height);
-	max-height: 55vh;
+	max-height: 75dvh;
+	min-height: 70dvh;
 	overflow-y: auto;
 	overscroll-behavior: contain;
 	-ms-overflow-style: none;
@@ -163,11 +163,10 @@
 	min-width: 10dvw;
 	max-width: 80dvw;
 	max-height: 75dvh;
-	min-height: fit-content;
+	min-height: min(5dvh, 36px);
 	overflow-y: auto;
 	overflow-x: hidden;
 	overscroll-behavior: contain;
-	/* padding: 0.3vh 1vh 0.3vh 0.6vh; */
 
 	/* 滚动条 */
 	scrollbar-width: auto;

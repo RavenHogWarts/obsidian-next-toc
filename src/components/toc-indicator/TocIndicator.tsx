@@ -17,12 +17,14 @@ export const TocIndicator: FC<TocIndicatorProps> = ({
 }) => {
 	return (
 		<div
-			className={"NToc__group-indicator"}
+			className={"NToc__group-indicator-container"}
 			data-index={headingIndex}
 			data-level={heading.level}
 			data-actual-depth={headingActualDepth}
 			data-start-line={heading.position.start.line}
 			data-active={headingActive}
-		></div>
+		>
+			<span className="NToc__group-indicator" />
+		</div>
 	);
 };
