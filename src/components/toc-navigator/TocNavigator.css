@@ -94,7 +94,6 @@
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	padding: 0px 14px;
 	background: transparent;
 	border-radius: 4px;
 	max-height: 75dvh;
@@ -113,10 +112,12 @@
 	transition: all 0.2s ease;
 	display: flex;
 	flex-direction: column;
+	pointer-events: none; /* 防止内容区域触发父元素的鼠标事件 */
 
 	&.NToc__group-content-expanded {
 		opacity: 1;
 		visibility: visible;
+		pointer-events: auto; /* 展开时恢复鼠标事件 */
 	}
 
 	&:hover {
