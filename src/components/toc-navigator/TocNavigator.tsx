@@ -301,7 +301,9 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 
 	return (
 		<div ref={NTocContainerRef} className="NToc__container">
-			{<TocReturnTools currentView={currentView} headings={headings} />}
+			{settings.tool.useToolbar && (
+				<TocReturnTools currentView={currentView} headings={headings} />
+			)}
 			<div
 				ref={NTocGroupRef}
 				className="NToc__group"
@@ -338,7 +340,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 				</div>
 
 				<div ref={NTocGroupContentRef} className="NToc__group-content">
-					{settings.tool.useToolbar && shouldShowToc && (
+					{shouldShowToc && (
 						<TocToolbar
 							headings={headings}
 							onCollapseAll={onCollapseAll}
