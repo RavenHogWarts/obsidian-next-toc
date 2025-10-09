@@ -1,3 +1,13 @@
+## [1.1.2-beta.7](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.2-beta.6...1.1.2-beta.7) (2025-10-09)
+
+
+### ✨ Features
+
+* beta版本允许在移动端使用 (#56) ([bf57664](https://github.com/RavenHogWarts/obsidian-next-toc/commit/bf5766441556c6d4170168211607cc8224a4fdb8)), closes [#56](https://github.com/RavenHogWarts/obsidian-next-toc/issues/56)
+* **toc:** 根据设置条件渲染目录工具栏 (#55) ([8e6734c](https://github.com/RavenHogWarts/obsidian-next-toc/commit/8e6734c160c8d7d3ec13739513a718266ceabcb0)), closes [#55](https://github.com/RavenHogWarts/obsidian-next-toc/issues/55)
+
+
+
 ## [1.1.2-beta.6](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.2-beta.5...1.1.2-beta.6) (2025-09-18)
 
 
