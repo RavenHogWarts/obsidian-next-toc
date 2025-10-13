@@ -114,7 +114,19 @@ export default class NTocPlugin extends Plugin {
 		});
 
 		this.addCommand({
-			id: "ntoc-insert-reading-time-card",
+			id: "toc-expand",
+			name: "Expand Table of Contents",
+			hotkeys: [],
+			callback: () => {
+				this.settingsStore.updateSettingByPath(
+					"toc.alwaysExpand",
+					!this.settingsStore.settings.toc.alwaysExpand
+				);
+			},
+		});
+
+		this.addCommand({
+			id: "insert-reading-time-card",
 			name: "Insert Reading Time Card",
 			editorCallback: (editor: Editor) => {
 				new CardCreateModal(
