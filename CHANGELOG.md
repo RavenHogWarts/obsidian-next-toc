@@ -1,3 +1,13 @@
+## [1.1.2-beta.8](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.2-beta.7...1.1.2-beta.8) (2025-10-13)
+
+
+### ✨ Features
+
+* 添加换展开目录的命令 (#58) ([b88916a](https://github.com/RavenHogWarts/obsidian-next-toc/commit/b88916a172dfe24fc5a520e42583e55efd30409e)), closes [#58](https://github.com/RavenHogWarts/obsidian-next-toc/issues/58)
+* 完成翻译支持 (#59) ([f856b6b](https://github.com/RavenHogWarts/obsidian-next-toc/commit/f856b6bce817eb60cbf413dba923be139a1c89fc)), closes [#59](https://github.com/RavenHogWarts/obsidian-next-toc/issues/59)
+
+
+
 ## [1.1.2-beta.7](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.2-beta.6...1.1.2-beta.7) (2025-10-09)
 
 
