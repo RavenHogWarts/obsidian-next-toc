@@ -58,7 +58,7 @@ export default class NTocPlugin extends Plugin {
 
 	private registerCommands() {
 		this.addCommand({
-			id: "ntoc-return-to-cursor",
+			id: "return-to-cursor",
 			name: t("commands.return-to-cursor"),
 			hotkeys: [],
 			editorCallback: (editor: Editor) => {
@@ -69,7 +69,7 @@ export default class NTocPlugin extends Plugin {
 		});
 
 		this.addCommand({
-			id: "ntoc-scroll-to-top",
+			id: "scroll-to-top",
 			name: t("commands.scroll-to-top"),
 			hotkeys: [],
 			callback: () => {
@@ -80,7 +80,7 @@ export default class NTocPlugin extends Plugin {
 		});
 
 		this.addCommand({
-			id: "ntoc-scroll-to-bottom",
+			id: "scroll-to-bottom",
 			name: t("commands.scroll-to-bottom"),
 			hotkeys: [],
 			callback: () => {
@@ -91,7 +91,7 @@ export default class NTocPlugin extends Plugin {
 		});
 
 		this.addCommand({
-			id: "ntoc-navigate-previous-heading",
+			id: "navigate-previous-heading",
 			name: t("commands.navigate-previous-heading"),
 			hotkeys: [],
 			callback: async () => {
@@ -103,7 +103,7 @@ export default class NTocPlugin extends Plugin {
 		});
 
 		this.addCommand({
-			id: "ntoc-navigate-next-heading",
+			id: "navigate-next-heading",
 			name: t("commands.navigate-next-heading"),
 			hotkeys: [],
 			callback: async () => {
@@ -138,7 +138,7 @@ export default class NTocPlugin extends Plugin {
 		});
 
 		this.addCommand({
-			id: "ntoc-insert-table-of-contents-card",
+			id: "insert-table-of-contents-card",
 			name: t("commands.insert-table-of-contents-card"),
 			editorCallback: (editor: Editor) => {
 				new CardCreateModal(
