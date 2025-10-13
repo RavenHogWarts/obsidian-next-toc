@@ -2,6 +2,7 @@ import { IconPicker } from "@src/components/icon-picker/IconPicker";
 import { Tab, TabItem } from "@src/components/tab/Tab";
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
+import { t } from "@src/i18n/i18n";
 import { DEFAULT_SETTINGS, NTocPosition } from "@src/types/types";
 import { FC } from "react";
 import ObsidianSetting from "./ObsidianSetting";
@@ -14,13 +15,13 @@ export const NTocSettings: FC = () => {
 	const tabItems: TabItem[] = [
 		{
 			id: "toc",
-			title: "TOC",
+			title: t("settings.toc.name"),
 			content: (
 				<ObsidianSetting.Container>
 					<ObsidianSetting
 						slots={{
-							name: "TOC show",
-							desc: "Enable or disable the table of contents",
+							name: t("settings.toc.show.name"),
+							desc: t("settings.toc.show.desc"),
 							control: (
 								<ObsidianSetting.Toggle
 									value={settings.toc.show}
@@ -37,8 +38,8 @@ export const NTocSettings: FC = () => {
 
 					<ObsidianSetting
 						slots={{
-							name: "TOC always expand",
-							desc: "Always expand the table of contents",
+							name: t("settings.toc.alwaysExpand.name"),
+							desc: t("settings.toc.alwaysExpand.desc"),
 							control: (
 								<ObsidianSetting.Toggle
 									value={settings.toc.alwaysExpand}
@@ -55,8 +56,8 @@ export const NTocSettings: FC = () => {
 
 					<ObsidianSetting
 						slots={{
-							name: "TOC width",
-							desc: "Width of the table of contents panel",
+							name: t("settings.toc.width.name"),
+							desc: t("settings.toc.width.desc"),
 							control: (
 								<ObsidianSetting.Text
 									value={settings.toc.width.toString()}
@@ -73,14 +74,18 @@ export const NTocSettings: FC = () => {
 
 					<ObsidianSetting
 						slots={{
-							name: "TOC position",
-							desc: "Position of the table of contents panel",
+							name: t("settings.toc.position.name"),
+							desc: t("settings.toc.position.desc"),
 							control: (
 								<ObsidianSetting.Dropdown
 									value={settings.toc.position}
 									options={{
-										left: "Left",
-										right: "Right",
+										left: t(
+											"settings.toc.position.options.left"
+										),
+										right: t(
+											"settings.toc.position.options.right"
+										),
 									}}
 									onChange={(value) => {
 										settingsStore.updateSettingByPath(
@@ -95,8 +100,8 @@ export const NTocSettings: FC = () => {
 
 					<ObsidianSetting
 						slots={{
-							name: "TOC offset",
-							desc: "Offset of the table of contents panel",
+							name: t("settings.toc.offset.name"),
+							desc: t("settings.toc.offset.desc"),
 							control: (
 								<ObsidianSetting.Text
 									value={settings.toc.offset.toString()}
@@ -115,13 +120,13 @@ export const NTocSettings: FC = () => {
 		},
 		{
 			id: "render",
-			title: "Render",
+			title: t("settings.render.name"),
 			content: (
 				<ObsidianSetting.Container>
 					<ObsidianSetting
 						slots={{
-							name: "Use heading number",
-							desc: "Show heading numbers in the table of contents",
+							name: t("settings.render.useHeadingNumber.name"),
+							desc: t("settings.render.useHeadingNumber.desc"),
 							control: (
 								<ObsidianSetting.Toggle
 									value={settings.render.useHeadingNumber}
@@ -138,8 +143,8 @@ export const NTocSettings: FC = () => {
 
 					<ObsidianSetting
 						slots={{
-							name: "Skip heading 1",
-							desc: "Skip the first heading (H1) in the table of contents",
+							name: t("settings.render.skipHeading1.name"),
+							desc: t("settings.render.skipHeading1.desc"),
 							control: (
 								<ObsidianSetting.Toggle
 									value={settings.render.skipHeading1}
@@ -156,8 +161,8 @@ export const NTocSettings: FC = () => {
 
 					<ObsidianSetting
 						slots={{
-							name: "Render markdown",
-							desc: "Render markdown formatting in headings",
+							name: t("settings.render.renderMarkdown.name"),
+							desc: t("settings.render.renderMarkdown.desc"),
 							control: (
 								<ObsidianSetting.Toggle
 									value={settings.render.renderMarkdown}
@@ -176,13 +181,13 @@ export const NTocSettings: FC = () => {
 		},
 		{
 			id: "tool",
-			title: "Tool",
+			title: t("settings.tool.name"),
 			content: (
 				<ObsidianSetting.Container>
 					<ObsidianSetting
 						slots={{
-							name: "Use toolbar",
-							desc: "Show the toolbar with navigation buttons",
+							name: t("settings.tool.useToolbar.name"),
+							desc: t("settings.tool.useToolbar.desc"),
 							control: (
 								<ObsidianSetting.Toggle
 									value={settings.tool.useToolbar}
@@ -199,8 +204,8 @@ export const NTocSettings: FC = () => {
 
 					<ObsidianSetting
 						slots={{
-							name: "Use progress",
-							desc: "Show the reading progress indicator",
+							name: t("settings.tool.showProgress.name"),
+							desc: t("settings.tool.showProgress.desc"),
 							control: (
 								<ObsidianSetting.Toggle
 									value={settings.tool.showProgress}
@@ -217,8 +222,8 @@ export const NTocSettings: FC = () => {
 
 					<ObsidianSetting
 						slots={{
-							name: "Return to cursor",
-							desc: "Button to return to the last cursor position (available only in edit mode)",
+							name: t("settings.tool.returnToCursor.name"),
+							desc: t("settings.tool.returnToCursor.desc"),
 							control: (
 								<>
 									<ObsidianSetting.Toggle
@@ -261,8 +266,8 @@ export const NTocSettings: FC = () => {
 
 					<ObsidianSetting
 						slots={{
-							name: "Return to top",
-							desc: "Button to return to the top of the document",
+							name: t("settings.tool.returnToTop.name"),
+							desc: t("settings.tool.returnToTop.desc"),
 							control: (
 								<>
 									<ObsidianSetting.Toggle
@@ -303,8 +308,8 @@ export const NTocSettings: FC = () => {
 
 					<ObsidianSetting
 						slots={{
-							name: "Return to bottom",
-							desc: "Button to return to the bottom of the document",
+							name: t("settings.tool.returnToBottom.name"),
+							desc: t("settings.tool.returnToBottom.desc"),
 							control: (
 								<>
 									<ObsidianSetting.Toggle
@@ -347,8 +352,8 @@ export const NTocSettings: FC = () => {
 
 					<ObsidianSetting
 						slots={{
-							name: "Jump to next heading",
-							desc: "Button to jump to the next heading",
+							name: t("settings.tool.jumpToNextHeading.name"),
+							desc: t("settings.tool.jumpToNextHeading.desc"),
 							control: (
 								<>
 									<ObsidianSetting.Toggle
@@ -392,8 +397,8 @@ export const NTocSettings: FC = () => {
 
 					<ObsidianSetting
 						slots={{
-							name: "Jump to previous heading",
-							desc: "Button to jump to the previous heading",
+							name: t("settings.tool.jumpToPrevHeading.name"),
+							desc: t("settings.tool.jumpToPrevHeading.desc"),
 							control: (
 								<>
 									<ObsidianSetting.Toggle

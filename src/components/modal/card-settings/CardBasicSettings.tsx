@@ -1,3 +1,4 @@
+import { t } from "@src/i18n/i18n";
 import {
 	CardConfig,
 	ReadingTimeCardConfig,
@@ -27,10 +28,10 @@ export const CardBasicSettings: FC<CardBasicSettingsProps> = ({
 
 	const renderReadingTimeSettings = (config: ReadingTimeCardConfig) => (
 		<div className="NToc__inline-card-basic-settings-section">
-			<h3>Reading Time Settings</h3>
+			<h3>{t("cards.readingTimeCard.heading")}</h3>
 
 			<div className="NToc__inline-card-setting-item">
-				<label>Title</label>
+				<label>{t("cards.readingTimeCard.title")}</label>
 				<input
 					type="text"
 					value={config.title || ""}
@@ -40,7 +41,9 @@ export const CardBasicSettings: FC<CardBasicSettingsProps> = ({
 			</div>
 
 			<div className="NToc__inline-card-setting-item">
-				<label>Chinese Words Per Minute</label>
+				<label>
+					{t("cards.readingTimeCard.chineseWordsPerMinute")}
+				</label>
 				<input
 					type="number"
 					value={config.chineseWordsPerMinute || 300}
@@ -55,7 +58,9 @@ export const CardBasicSettings: FC<CardBasicSettingsProps> = ({
 			</div>
 
 			<div className="NToc__inline-card-setting-item">
-				<label>English Words Per Minute</label>
+				<label>
+					{t("cards.readingTimeCard.englishWordsPerMinute")}
+				</label>
 				<input
 					type="number"
 					value={config.englishWordsPerMinute || 200}
@@ -70,7 +75,7 @@ export const CardBasicSettings: FC<CardBasicSettingsProps> = ({
 			</div>
 
 			<div className="NToc__inline-card-setting-item">
-				<label>Text Before</label>
+				<label>{t("cards.readingTimeCard.textBefore")}</label>
 				<input
 					type="text"
 					value={config.textBefore || ""}
@@ -82,7 +87,7 @@ export const CardBasicSettings: FC<CardBasicSettingsProps> = ({
 			</div>
 
 			<div className="NToc__inline-card-setting-item">
-				<label>Text After</label>
+				<label>{t("cards.readingTimeCard.textAfter")}</label>
 				<input
 					type="text"
 					value={config.textAfter || ""}
@@ -94,7 +99,7 @@ export const CardBasicSettings: FC<CardBasicSettingsProps> = ({
 			</div>
 
 			<div className="NToc__inline-card-setting-item">
-				<label>Icon Name</label>
+				<label>{t("cards.readingTimeCard.iconName")}</label>
 				<input
 					type="text"
 					value={config.iconName || ""}
@@ -118,7 +123,9 @@ export const CardBasicSettings: FC<CardBasicSettingsProps> = ({
 							)
 						}
 					/>
-					<label htmlFor="removeCodeBlocks">Remove Code Blocks</label>
+					<label htmlFor="removeCodeBlocks">
+						{t("cards.readingTimeCard.removeCodeBlocks")}
+					</label>
 				</div>
 
 				<div className="NToc__inline-card-checkbox-item">
@@ -133,7 +140,9 @@ export const CardBasicSettings: FC<CardBasicSettingsProps> = ({
 							)
 						}
 					/>
-					<label htmlFor="removeWikiLinks">Remove Wiki Links</label>
+					<label htmlFor="removeWikiLinks">
+						{t("cards.readingTimeCard.removeWikiLinks")}
+					</label>
 				</div>
 
 				<div className="NToc__inline-card-checkbox-item">
@@ -148,7 +157,9 @@ export const CardBasicSettings: FC<CardBasicSettingsProps> = ({
 							)
 						}
 					/>
-					<label htmlFor="removeImageLinks">Remove Image Links</label>
+					<label htmlFor="removeImageLinks">
+						{t("cards.readingTimeCard.removeImageLinks")}
+					</label>
 				</div>
 
 				<div className="NToc__inline-card-checkbox-item">
@@ -164,7 +175,7 @@ export const CardBasicSettings: FC<CardBasicSettingsProps> = ({
 						}
 					/>
 					<label htmlFor="removeNormalLinks">
-						Remove Normal Links
+						{t("cards.readingTimeCard.removeNormalLinks")}
 					</label>
 				</div>
 
@@ -177,7 +188,9 @@ export const CardBasicSettings: FC<CardBasicSettingsProps> = ({
 							handleInputChange("showWordCount", e.target.checked)
 						}
 					/>
-					<label htmlFor="showWordCount">Show Word Count</label>
+					<label htmlFor="showWordCount">
+						{t("cards.readingTimeCard.showWordCount")}
+					</label>
 				</div>
 			</div>
 		</div>
@@ -185,10 +198,10 @@ export const CardBasicSettings: FC<CardBasicSettingsProps> = ({
 
 	const renderTocSettings = (config: TocCardConfig) => (
 		<div className="NToc__inline-card-basic-settings-section">
-			<h3>Table of Contents Settings</h3>
+			<h3>{t("cards.tableOfContentsCard.heading")}</h3>
 
 			<div className="NToc__inline-card-setting-item">
-				<label>Title</label>
+				<label>{t("cards.tableOfContentsCard.title")}</label>
 				<input
 					type="text"
 					value={config.title || ""}
@@ -198,7 +211,7 @@ export const CardBasicSettings: FC<CardBasicSettingsProps> = ({
 			</div>
 
 			<div className="NToc__inline-card-setting-item">
-				<label>Min Depth</label>
+				<label>{t("cards.tableOfContentsCard.minDepth")}</label>
 				<input
 					type="number"
 					value={config.minDepth || 1}
@@ -211,7 +224,7 @@ export const CardBasicSettings: FC<CardBasicSettingsProps> = ({
 			</div>
 
 			<div className="NToc__inline-card-setting-item">
-				<label>Max Depth</label>
+				<label>{t("cards.tableOfContentsCard.maxDepth")}</label>
 				<input
 					type="number"
 					value={config.maxDepth || 6}
@@ -233,7 +246,9 @@ export const CardBasicSettings: FC<CardBasicSettingsProps> = ({
 							handleInputChange("redirect", e.target.checked)
 						}
 					/>
-					<label htmlFor="redirect">Enable Click to Navigate</label>
+					<label htmlFor="redirect">
+						{t("cards.tableOfContentsCard.redirect")}
+					</label>
 				</div>
 
 				<div className="NToc__inline-card-checkbox-item">
@@ -245,7 +260,9 @@ export const CardBasicSettings: FC<CardBasicSettingsProps> = ({
 							handleInputChange("showNumbers", e.target.checked)
 						}
 					/>
-					<label htmlFor="showNumbers">Show Numbers</label>
+					<label htmlFor="showNumbers">
+						{t("cards.tableOfContentsCard.showNumbers")}
+					</label>
 				</div>
 
 				<div className="NToc__inline-card-checkbox-item">
@@ -257,7 +274,9 @@ export const CardBasicSettings: FC<CardBasicSettingsProps> = ({
 							handleInputChange("collapsible", e.target.checked)
 						}
 					/>
-					<label htmlFor="collapsible">Collapsible</label>
+					<label htmlFor="collapsible">
+						{t("cards.tableOfContentsCard.collapsible")}
+					</label>
 				</div>
 			</div>
 		</div>

@@ -1,7 +1,9 @@
 import { ReadingTimeCard } from "@src/components/cards/ReadingTimeCard";
 import { TocCard } from "@src/components/cards/TocCard";
 import { Tab, TabItem } from "@src/components/tab/Tab";
+import { t } from "@src/i18n/i18n";
 import { CardConfig } from "@src/types/cards";
+import { Check } from "lucide-react";
 import { App, HeadingCache, MarkdownView } from "obsidian";
 import { FC, useEffect, useRef, useState } from "react";
 import { createRoot, Root } from "react-dom/client";
@@ -95,7 +97,7 @@ export const CardModal: FC<CardModalProps> = ({
 	const tabItems: TabItem[] = [
 		{
 			id: "basic",
-			title: "Basic Settings",
+			title: t("cards.basicSetting"),
 			content: (
 				<CardBasicSettings
 					cardConfig={formData}
@@ -105,7 +107,7 @@ export const CardModal: FC<CardModalProps> = ({
 		},
 		{
 			id: "style",
-			title: "Style Design",
+			title: t("cards.styleSetting"),
 			content: (
 				<CardStyleSettings
 					cardConfig={formData}
@@ -118,7 +120,7 @@ export const CardModal: FC<CardModalProps> = ({
 	return (
 		<div className="NToc__inline-card-manager">
 			<div className="NToc__inline-card-preview-section">
-				<h3>Preview</h3>
+				<h3>{t("cards.preview")}</h3>
 				<div
 					ref={previewContainerRef}
 					className="NToc__inline-card-preview"
@@ -139,7 +141,7 @@ export const CardModal: FC<CardModalProps> = ({
 						className="NToc__inline-card-modal-submit"
 						onClick={handleSubmit}
 					>
-						Apply Changes
+						<Check size={16} />
 					</button>
 				</div>
 			</div>
