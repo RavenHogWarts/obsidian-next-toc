@@ -1,5 +1,6 @@
 import { CSSPropertyEditor } from "@src/components/css-autocomplete";
 import { Tab, TabItem } from "@src/components/tab/Tab";
+import { t } from "@src/i18n/i18n";
 import { CardConfig } from "@src/types/cards";
 import { FC, useState } from "react";
 import "./CardStyleSettings.css";
@@ -78,7 +79,7 @@ export const CardStyleSettings: FC<CardStyleSettingsProps> = ({
 				<div className="NToc__inline-card-existing-properties">
 					{styleEntries.length > 0 ? (
 						<>
-							<h4>Current Properties</h4>
+							<h4>{t("cards.styles.currentProperties")}</h4>
 							<div className="NToc__inline-card-property-list">
 								{styleEntries.map(([property, value]) => (
 									<CSSPropertyEditor
@@ -130,14 +131,14 @@ export const CardStyleSettings: FC<CardStyleSettingsProps> = ({
 						</>
 					) : (
 						<p className="NToc__inline-card-no-properties">
-							No custom properties defined for{" "}
+							{t("cards.styles.noneCustomProperty")}
 							{target.replace("Style", "").toLowerCase()}.
 						</p>
 					)}
 				</div>
 
 				<div className="NToc__inline-card-add-property">
-					<h4>Add New Property</h4>
+					<h4>{t("cards.styles.addNewProperty")}</h4>
 					<div className="NToc__inline-card-add-property-form">
 						<CSSPropertyEditor
 							property={customProperty}
@@ -157,7 +158,7 @@ export const CardStyleSettings: FC<CardStyleSettingsProps> = ({
 							}
 							className="NToc__inline-card-add-property-btn"
 						>
-							Add Property
+							+
 						</button>
 					</div>
 				</div>

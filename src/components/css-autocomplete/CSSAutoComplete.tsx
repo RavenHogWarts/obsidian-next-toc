@@ -1,3 +1,4 @@
+import { t } from "@src/i18n/i18n";
 import {
 	filterCSSProperties,
 	getAllCSSProperties,
@@ -150,7 +151,7 @@ export const CSSAutoComplete: FC<CSSAutoCompleteProps> = ({
 							</span>
 							{type === "property" && (
 								<span className="suggestion-type">
-									property
+									{t("cards.property")}
 								</span>
 							)}
 						</div>

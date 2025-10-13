@@ -17,7 +17,81 @@ type SettingsItem<T = Record<string, never>> = IBaseSettingsItem & T;
 
 // 定义翻译结构类型
 export type BaseMessage = {
-	"obsidian-plugin-starter": string;
+	commands: {
+		"return-to-cursor": string;
+		"scroll-to-top": string;
+		"scroll-to-bottom": string;
+		"navigate-previous-heading": string;
+		"navigate-next-heading": string;
+		"toc-expand": string;
+		"insert-reading-time-card": string;
+		"insert-table-of-contents-card": string;
+	};
+	settings: {
+		toc: {
+			name: string;
+			show: IBaseSettingsItem;
+			alwaysExpand: IBaseSettingsItem;
+			width: IBaseSettingsItem;
+			position: SettingsItem<{
+				options: {
+					left: string;
+					right: string;
+				};
+			}>;
+			offset: IBaseSettingsItem;
+		};
+		render: {
+			name: string;
+			useHeadingNumber: IBaseSettingsItem;
+			skipHeading1: IBaseSettingsItem;
+			renderMarkdown: IBaseSettingsItem;
+		};
+		tool: {
+			name: string;
+			useToolbar: IBaseSettingsItem;
+			showProgress: IBaseSettingsItem;
+			returnToCursor: IBaseSettingsItem;
+			returnToTop: IBaseSettingsItem;
+			returnToBottom: IBaseSettingsItem;
+			jumpToNextHeading: IBaseSettingsItem;
+			jumpToPrevHeading: IBaseSettingsItem;
+		};
+	};
+	cards: {
+		preview: string;
+		property: string;
+		basicSetting: string;
+		styleSetting: string;
+		readingTimeCard: {
+			heading: string;
+			title: string;
+			chineseWordsPerMinute: string;
+			englishWordsPerMinute: string;
+			textBefore: string;
+			textAfter: string;
+			iconName: string;
+			removeCodeBlocks: string;
+			removeWikiLinks: string;
+			removeImageLinks: string;
+			removeNormalLinks: string;
+			showWordCount: string;
+		};
+		tableOfContentsCard: {
+			heading: string;
+			title: string;
+			minDepth: string;
+			maxDepth: string;
+			redirect: string;
+			showNumbers: string;
+			collapsible: string;
+		};
+		styles: {
+			currentProperties: string;
+			addNewProperty: string;
+			noneCustomProperty: string;
+		};
+	};
 };
 
 // 生成所有可能的翻译键路径类型

@@ -6,6 +6,7 @@ import {
 	NTocRenderProps,
 	updateNTocRender,
 } from "./components/toc-navigator/NTocRender";
+import { t } from "./i18n/i18n";
 import { CardProcessor } from "./services/CardProcessor";
 import { createCursorListenerExtension } from "./services/cursorListenerExtension";
 import { PluginSettingTab } from "./settings/PluginSettingTab";
@@ -58,7 +59,7 @@ export default class NTocPlugin extends Plugin {
 	private registerCommands() {
 		this.addCommand({
 			id: "ntoc-return-to-cursor",
-			name: "Return to Cursor",
+			name: t("commands.return-to-cursor"),
 			hotkeys: [],
 			editorCallback: (editor: Editor) => {
 				if (this.currentView && editor === this.currentView.editor) {
@@ -69,7 +70,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.addCommand({
 			id: "ntoc-scroll-to-top",
-			name: "Scroll to Top",
+			name: t("commands.scroll-to-top"),
 			hotkeys: [],
 			callback: () => {
 				if (this.currentView) {
@@ -80,7 +81,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.addCommand({
 			id: "ntoc-scroll-to-bottom",
-			name: "Scroll to Bottom",
+			name: t("commands.scroll-to-bottom"),
 			hotkeys: [],
 			callback: () => {
 				if (this.currentView) {
@@ -91,7 +92,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.addCommand({
 			id: "ntoc-navigate-previous-heading",
-			name: "Navigate to Previous Heading",
+			name: t("commands.navigate-previous-heading"),
 			hotkeys: [],
 			callback: async () => {
 				if (this.currentView) {
@@ -103,7 +104,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.addCommand({
 			id: "ntoc-navigate-next-heading",
-			name: "Navigate to Next Heading",
+			name: t("commands.navigate-next-heading"),
 			hotkeys: [],
 			callback: async () => {
 				if (this.currentView) {
@@ -115,7 +116,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.addCommand({
 			id: "toc-expand",
-			name: "Expand Table of Contents",
+			name: t("commands.toc-expand"),
 			hotkeys: [],
 			callback: () => {
 				this.settingsStore.updateSettingByPath(
@@ -127,7 +128,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.addCommand({
 			id: "insert-reading-time-card",
-			name: "Insert Reading Time Card",
+			name: t("commands.insert-reading-time-card"),
 			editorCallback: (editor: Editor) => {
 				new CardCreateModal(
 					this.app,
@@ -138,7 +139,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.addCommand({
 			id: "ntoc-insert-table-of-contents-card",
-			name: "Insert Table of Contents Card",
+			name: t("commands.insert-table-of-contents-card"),
 			editorCallback: (editor: Editor) => {
 				new CardCreateModal(
 					this.app,
@@ -153,7 +154,7 @@ export default class NTocPlugin extends Plugin {
 			this.app.workspace.on("editor-menu", (menu, editor, view) => {
 				if (view instanceof MarkdownView) {
 					menu.addItem((item) => {
-						item.setTitle("Insert Reading Time Card");
+						item.setTitle(t("commands.insert-reading-time-card"));
 						item.onClick(() => {
 							new CardCreateModal(
 								this.app,
@@ -162,7 +163,9 @@ export default class NTocPlugin extends Plugin {
 						});
 					});
 					menu.addItem((item) => {
-						item.setTitle("Insert Table of Contents Card");
+						item.setTitle(
+							t("commands.insert-table-of-contents-card")
+						);
 						item.onClick(() => {
 							new CardCreateModal(
 								this.app,
