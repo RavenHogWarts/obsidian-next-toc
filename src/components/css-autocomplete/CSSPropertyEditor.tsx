@@ -1,3 +1,4 @@
+import { Trash2 } from "lucide-react";
 import { FC, useState } from "react";
 import { CSSAutoComplete } from "./CSSAutoComplete";
 import "./CSSPropertyEditor.css";
@@ -58,7 +59,7 @@ export const CSSPropertyEditor: FC<CSSPropertyEditorProps> = ({
 				title="Remove property"
 				aria-label="Remove CSS property"
 			>
-				×
+				<Trash2 size={16} />
 			</button>
 		</div>
 	);

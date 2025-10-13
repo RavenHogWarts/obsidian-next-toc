@@ -3,6 +3,7 @@ import { TocCard } from "@src/components/cards/TocCard";
 import { Tab, TabItem } from "@src/components/tab/Tab";
 import { t } from "@src/i18n/i18n";
 import { CardConfig } from "@src/types/cards";
+import { Check } from "lucide-react";
 import { App, HeadingCache, MarkdownView } from "obsidian";
 import { FC, useEffect, useRef, useState } from "react";
 import { createRoot, Root } from "react-dom/client";
@@ -140,7 +141,7 @@ export const CardModal: FC<CardModalProps> = ({
 						className="NToc__inline-card-modal-submit"
 						onClick={handleSubmit}
 					>
-						✔
+						<Check size={16} />
 					</button>
 				</div>
 			</div>

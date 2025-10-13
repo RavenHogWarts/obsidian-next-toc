@@ -2,6 +2,7 @@ import { CSSPropertyEditor } from "@src/components/css-autocomplete";
 import { Tab, TabItem } from "@src/components/tab/Tab";
 import { t } from "@src/i18n/i18n";
 import { CardConfig } from "@src/types/cards";
+import { Plus } from "lucide-react";
 import { FC, useState } from "react";
 import "./CardStyleSettings.css";
 
@@ -158,7 +159,7 @@ export const CardStyleSettings: FC<CardStyleSettingsProps> = ({
 							}
 							className="NToc__inline-card-add-property-btn"
 						>
-							+
+							<Plus size={16} />
 						</button>
 					</div>
 				</div>
