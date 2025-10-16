@@ -4,42 +4,42 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: 0px;
-	font-size: 13px;
+	font-size: 0.8125rem; /* 13px -> rem */
 	color: var(--text-normal);
 	cursor: pointer;
 	line-height: 1.5;
-	min-height: 28px;
-	margin: 3px 0;
+	min-height: 1.75rem; /* 28px -> rem */
+	margin: 0.1875rem 0; /* 3px -> rem */
 	transition: all 0.2s ease;
 	padding: 0.3vh 1vh 0.3vh 0.6vh;
 
 	&[data-actual-depth="0"] {
-		padding-left: 14px;
+		padding-left: 0.875rem; /* 14px -> rem */
 		font-weight: 600;
 	}
 
 	&[data-actual-depth="1"] {
-		padding-left: 30px;
+		padding-left: 1.875rem; /* 30px -> rem */
 		font-weight: normal;
 	}
 
 	&[data-actual-depth="2"] {
-		padding-left: 46px;
+		padding-left: 2.875rem; /* 46px -> rem */
 		font-weight: normal;
 	}
 
 	&[data-actual-depth="3"] {
-		padding-left: 62px;
+		padding-left: 3.875rem; /* 62px -> rem */
 		font-weight: normal;
 	}
 
 	&[data-actual-depth="4"] {
-		padding-left: 78px;
+		padding-left: 4.875rem; /* 78px -> rem */
 		font-weight: normal;
 	}
 
 	&[data-actual-depth="5"] {
-		padding-left: 94px;
+		padding-left: 5.875rem; /* 94px -> rem */
 		font-weight: normal;
 	}
 

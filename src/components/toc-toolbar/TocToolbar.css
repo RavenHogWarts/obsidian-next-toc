@@ -34,8 +34,8 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 28px;
-	height: 28px;
+	width: 1.75rem;
+	height: 1.75rem;
 	padding: 0;
 	border: none;
 	border-radius: 4px;
@@ -66,4 +66,11 @@
 	justify-content: center;
 	width: 16px;
 	height: 16px;
+}
+
+@media (max-width: 768px) {
+	.NToc__toc-toolbar-button {
+		width: 1.5rem;
+		height: 1.5rem;
+	}
 }

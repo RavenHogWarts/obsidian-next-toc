@@ -14,32 +14,32 @@
 
 	/* 根据实际深度设置不同的宽度 */
 	&[data-actual-depth="0"] {
-		width: 36px;
+		width: 2.25rem;
 	}
 
 	&[data-actual-depth="1"] {
-		width: 28px;
+		width: 1.75rem;
 	}
 
 	&[data-actual-depth="2"] {
-		width: 20px;
+		width: 1.25rem;
 	}
 
 	&[data-actual-depth="3"] {
-		width: 16px;
+		width: 1rem;
 	}
 
 	&[data-actual-depth="4"] {
-		width: 12px;
+		width: 0.75rem;
 	}
 
 	&[data-actual-depth="5"] {
-		width: 8px;
+		width: 0.5rem;
 	}
 
 	/* 对于更深的层级，使用最小宽度 */
 	&[data-actual-depth^="6"] {
-		width: 6px;
+		width: 0.375rem;
 	}
 
 	&[data-active="true"] .NToc__group-indicator {
@@ -54,4 +54,37 @@
 	background: var(--background-modifier-border);
 	transition: background-color 0.2s ease, width 0.2s ease;
 	flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+	.NToc__group-indicator-container {
+		&[data-actual-depth="0"] {
+			width: 1.75rem;
+		}
+
+		&[data-actual-depth="1"] {
+			width: 1.5rem;
+		}
+
+		&[data-actual-depth="2"] {
+			width: 1.25rem;
+		}
+
+		&[data-actual-depth="3"] {
+			width: 1rem;
+		}
+
+		&[data-actual-depth="4"] {
+			width: 0.75rem;
+		}
+
+		&[data-actual-depth="5"] {
+			width: 0.5rem;
+		}
+
+		/* 对于更深的层级，使用最小宽度 */
+		&[data-actual-depth^="6"] {
+			width: 0.375rem;
+		}
+	}
 }

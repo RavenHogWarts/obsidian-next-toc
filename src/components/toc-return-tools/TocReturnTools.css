@@ -89,3 +89,16 @@
 		transform: scale(1);
 	}
 }
+
+@media (max-width: 768px) {
+	.NToc__return-tools {
+		gap: 4px;
+		margin: 2px;
+	}
+
+	.NToc__tool-button,
+	.NToc__return-button-master {
+		width: 2rem;
+		height: 2rem;
+	}
+}
