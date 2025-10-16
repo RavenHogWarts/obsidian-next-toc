@@ -14,6 +14,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { ProgressCircle } from "../progress-circle/ProgressCircle";
 import { TocIndicator } from "../toc-indicator/TocIndicator";
 import { TocItem } from "../toc-item/TocItem";
 import { TocReturnTools } from "../toc-return-tools/TocReturnTools";
@@ -318,6 +319,14 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 					setIsHovered(false)
 				}
 			>
+				{settings.tool.showProgress && (
+					<div className="NToc__progress-circle-container">
+						<ProgressCircle
+							percentage={scrollProgress}
+							showText={true}
+						/>
+					</div>
+				)}
 				<div
 					ref={NTocGroupIndicatorsRef}
 					className="NToc__group-indicators"
