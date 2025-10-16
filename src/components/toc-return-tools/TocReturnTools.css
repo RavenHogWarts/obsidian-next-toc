@@ -93,12 +93,12 @@
 @media (max-width: 768px) {
 	.NToc__return-tools {
 		gap: 4px;
-		margin: 2px;
+		margin: 0px;
 	}
 
 	.NToc__tool-button,
 	.NToc__return-button-master {
-		width: 2rem;
-		height: 2rem;
+		width: 1.875rem;
+		height: 1.875rem;
 	}
 }
