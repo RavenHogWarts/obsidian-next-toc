@@ -1,6 +1,6 @@
 {
 	"name": "next-toc",
-	"version": "1.1.2-beta.8",
+	"version": "1.1.2-beta.9",
 	"description": "Floating panel displaying the current document's reading progress, table of contents, and navigation aids.",
 	"main": "main.js",
 	"scripts": {
@@ -10,7 +10,7 @@
 		"version": "node scripts/version-bump.mjs",
 		"changelog:u": "conventional-changelog -p angular -i CHANGELOG.md -s -u -n ./scripts/changelog-option.js",
 		"changelog:all": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 -n ./scripts/changelog-option.js",
-		"release:pre": "npm run build && npm run version && npm run changelog:u",
+		"release:pre": "npm run build && npm run version && npm run changelog:u && npm i",
 		"release:tag": "node scripts/release-tag.mjs",
 		"lint": "eslint . --ext .ts,.tsx",
 		"lint:fix": "eslint . --ext .ts,.tsx --fix",

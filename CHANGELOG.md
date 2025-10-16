@@ -1,3 +1,12 @@
+## [1.1.2-beta.9](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.2-beta.8...1.1.2-beta.9) (2025-10-16)
+
+
+### ✨ Features
+
+* 增加进度圆环，优化移动端部分显示 (#61) ([6db91c2](https://github.com/RavenHogWarts/obsidian-next-toc/commit/6db91c2f97aea48977229e5f432f854260abaeb3)), closes [#61](https://github.com/RavenHogWarts/obsidian-next-toc/issues/61)
+
+
+
 ## [1.1.2-beta.8](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.2-beta.7...1.1.2-beta.8) (2025-10-13)
 
 
