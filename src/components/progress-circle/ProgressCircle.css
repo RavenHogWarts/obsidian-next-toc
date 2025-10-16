@@ -1,0 +1,18 @@
+.NToc__progress-circle-wrapper {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: var(--background-primary);
+	border-radius: 50%;
+	width: 2.5rem;
+	height: 2.5rem;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+	.NToc__progress-circle-wrapper {
+		width: 2rem;
+		height: 2rem;
+	}
+}

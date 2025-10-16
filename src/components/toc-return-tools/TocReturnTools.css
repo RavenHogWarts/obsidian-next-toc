@@ -1,7 +1,7 @@
 .NToc__return-tools {
 	display: flex;
 	align-items: center;
-	margin: 4px;
+	/* margin: 4px; */
 	position: relative;
 	gap: 8px;
 
@@ -87,5 +87,18 @@
 	to {
 		opacity: 1;
 		transform: scale(1);
+	}
+}
+
+@media (max-width: 768px) {
+	.NToc__return-tools {
+		gap: 4px;
+		margin: 0px;
+	}
+
+	.NToc__tool-button,
+	.NToc__return-button-master {
+		width: 1.875rem;
+		height: 1.875rem;
 	}
 }
