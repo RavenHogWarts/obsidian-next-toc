@@ -57,10 +57,6 @@
 }
 
 @media (max-width: 768px) {
-	.NToc__group-indicators {
-		padding: 0.5rem;
-	}
-
 	.NToc__group-indicator-container,
 	.NToc__group-indicator-container[data-actual-depth="0"],
 	.NToc__group-indicator-container[data-actual-depth="1"],

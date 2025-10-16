@@ -4,7 +4,7 @@
 	height: fit-content;
 	display: flex;
 	flex-direction: column;
-	gap: 2rem;
+	gap: 1.25rem;
 	z-index: var(--layer-popover);
 
 	&.NToc__container-left {
@@ -83,9 +83,10 @@
 	}
 
 	&:has(.NToc__group-content.NToc__group-content-expanded) {
+		.NToc__progress-circle-container,
 		.NToc__group-indicators {
 			visibility: hidden;
-			transition: visibility 0.2s ease;
+			/* transition: visibility 0.2s ease; */
 		}
 	}
 }
@@ -102,6 +103,15 @@
 	overscroll-behavior: contain;
 	-ms-overflow-style: none;
 	scrollbar-width: none;
+}
+
+.NToc__progress-circle-container {
+	position: absolute;
+	top: 0;
+	z-index: 2;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .NToc__group-content {
@@ -289,6 +299,12 @@
 
 	.NToc__toc-item-content {
 		max-width: auto;
+	}
+
+	.NToc__group-indicators {
+		padding: 0.5rem;
+		max-height: 20dvh;
+		min-height: 20dvh;
 	}
 }
 
