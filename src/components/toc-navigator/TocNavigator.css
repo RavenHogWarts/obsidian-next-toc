@@ -9,6 +9,7 @@
 
 	&.NToc__container-left {
 		right: auto;
+		left: var(--ntoc-offset);
 		align-items: flex-start;
 
 		.NToc__group {
@@ -48,6 +49,7 @@
 
 	&.NToc__container-right {
 		left: auto;
+		right: var(--ntoc-offset);
 		align-items: flex-end;
 
 		.NToc__group {

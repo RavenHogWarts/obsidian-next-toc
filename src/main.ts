@@ -180,8 +180,12 @@ export default class NTocPlugin extends Plugin {
 
 				if (leaf?.view instanceof MarkdownView) {
 					this.currentView = leaf.view;
-					this.setupScrollListener();
-					await this.updateNToc();
+
+					// 使用 requestAnimationFrame 延迟初始化，避免闪烁
+					requestAnimationFrame(async () => {
+						this.setupScrollListener();
+						await this.updateNToc();
+					});
 				} else {
 					// 切换到非MarkdownView，清理当前TOC
 					this.currentView = null;
