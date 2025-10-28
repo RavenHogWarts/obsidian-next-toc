@@ -61,9 +61,13 @@ const translations: BaseMessage = {
 				name: "Use toolbar",
 				desc: "Show the toolbar with navigation buttons",
 			},
-			showProgress: {
-				name: "Use progress",
-				desc: "Show the reading progress indicator",
+			showProgressBar: {
+				name: "Use progress bar",
+				desc: "Show the reading progress bar above the table of contents",
+			},
+			showProgressCircle: {
+				name: "Use progress circle",
+				desc: "Show the circular reading progress indicator above the toggle button, when the TOC is collapsed",
 			},
 			returnToCursor: {
 				name: "Return to cursor",
