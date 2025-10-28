@@ -1,3 +1,27 @@
+## [1.1.3](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.2-beta.9...1.1.3) (2025-10-28)
+
+
+### ♻️ Refactor
+
+* 注释掉卡片相关功能并移除部分导入 (#66) ([999e776](https://github.com/RavenHogWarts/obsidian-next-toc/commit/999e77657d803b1c695fef765da71a60cc93c862)), closes [#66](https://github.com/RavenHogWarts/obsidian-next-toc/issues/66)
+
+
+### ✨ Features
+
+* 统一命名为驼峰命令键 (#65) ([2a7f081](https://github.com/RavenHogWarts/obsidian-next-toc/commit/2a7f081e400b166025bd3dfb98211ee69fc993de)), closes [#65](https://github.com/RavenHogWarts/obsidian-next-toc/issues/65)
+
+
+### 🎨 Styles
+
+* 注释浮动进度圆的位置样式 (#63) ([453e59d](https://github.com/RavenHogWarts/obsidian-next-toc/commit/453e59dffe8e5b3538a40a248b73c43cfecf012d)), closes [#63](https://github.com/RavenHogWarts/obsidian-next-toc/issues/63)
+
+
+### 🐛 Bug Fixes
+
+* 在渲染 Markdown 时正确设置标题文本 (#64) ([0f49744](https://github.com/RavenHogWarts/obsidian-next-toc/commit/0f49744bdc8eec1753bd78c4a941a680b716d798)), closes [#64](https://github.com/RavenHogWarts/obsidian-next-toc/issues/64)
+
+
+
 ## [1.1.2-beta.9](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.2-beta.8...1.1.2-beta.9) (2025-10-16)
 
 
