@@ -1,3 +1,18 @@
+## [1.1.4](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.3...1.1.4) (2025-10-28)
+
+
+### ✨ Features
+
+* 拆分并支持两种进度显示方式 (#69) ([d880956](https://github.com/RavenHogWarts/obsidian-next-toc/commit/d880956f9fc996df393ab15e7c7d7d00af80af0f)), closes [#69](https://github.com/RavenHogWarts/obsidian-next-toc/issues/69)
+* **toc:** 优化目录定位与渲染以避免闪烁 (#71) ([f484e81](https://github.com/RavenHogWarts/obsidian-next-toc/commit/f484e81834f9d94f89f18590535679363ad627b3)), closes [#71](https://github.com/RavenHogWarts/obsidian-next-toc/issues/71)
+
+
+### 🎨 Styles
+
+* **css:** 移除多余的 z-index 以简化层级 (#70) ([a54338a](https://github.com/RavenHogWarts/obsidian-next-toc/commit/a54338ada4beb03b5f193f74c6dd0a952d89f0a0)), closes [#70](https://github.com/RavenHogWarts/obsidian-next-toc/issues/70)
+
+
+
 ## [1.1.3](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.2-beta.9...1.1.3) (2025-10-28)
 
 
