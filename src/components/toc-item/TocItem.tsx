@@ -50,6 +50,8 @@ export const TocItem: FC<TocItemProps> = ({
 					"",
 					settingsStore.plugin
 				);
+			} else {
+				NTocItemTextRef.current.textContent = heading.heading;
 			}
 		}
 	}, [settings.render.renderMarkdown, heading.heading]);
@@ -89,9 +91,10 @@ export const TocItem: FC<TocItemProps> = ({
 							{headingNumber}
 						</div>
 					)}
-					<div ref={NTocItemTextRef} className="NToc__toc-item-text">
-						{!settings.render.renderMarkdown && heading.heading}
-					</div>
+					<div
+						ref={NTocItemTextRef}
+						className="NToc__toc-item-text"
+					></div>
 				</div>
 			</div>
 			<div className="NToc__toc-item-level">H{heading.level}</div>
