@@ -2,14 +2,14 @@ import { BaseMessage } from "../types";
 
 const translations: BaseMessage = {
 	commands: {
-		"return-to-cursor": "返回光标位置",
-		"scroll-to-top": "滚动到顶部",
-		"scroll-to-bottom": "滚动到底部",
-		"navigate-previous-heading": "导航到上一个标题",
-		"navigate-next-heading": "导航到下一个标题",
-		"toc-expand": "展开/收起目录",
-		"insert-reading-time-card": "插入阅读时间卡片",
-		"insert-table-of-contents-card": "插入目录卡片",
+		returnToCursor: "返回光标位置",
+		scrollToTop: "滚动到顶部",
+		scrollToBottom: "滚动到底部",
+		navigatePreviousHeading: "导航到上一个标题",
+		navigateNextHeading: "导航到下一个标题",
+		tocExpand: "展开/收起目录",
+		insertReadingTimeCard: "插入阅读时间卡片",
+		insertTableOfContentsCard: "插入目录卡片",
 	},
 	settings: {
 		toc: {

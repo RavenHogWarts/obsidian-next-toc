@@ -59,7 +59,7 @@ export default class NTocPlugin extends Plugin {
 	private registerCommands() {
 		this.addCommand({
 			id: "return-to-cursor",
-			name: t("commands.return-to-cursor"),
+			name: t("commands.returnToCursor"),
 			hotkeys: [],
 			editorCallback: (editor: Editor) => {
 				if (this.currentView && editor === this.currentView.editor) {
@@ -70,7 +70,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.addCommand({
 			id: "scroll-to-top",
-			name: t("commands.scroll-to-top"),
+			name: t("commands.scrollToTop"),
 			hotkeys: [],
 			callback: () => {
 				if (this.currentView) {
@@ -81,7 +81,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.addCommand({
 			id: "scroll-to-bottom",
-			name: t("commands.scroll-to-bottom"),
+			name: t("commands.scrollToBottom"),
 			hotkeys: [],
 			callback: () => {
 				if (this.currentView) {
@@ -92,7 +92,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.addCommand({
 			id: "navigate-previous-heading",
-			name: t("commands.navigate-previous-heading"),
+			name: t("commands.navigatePreviousHeading"),
 			hotkeys: [],
 			callback: async () => {
 				if (this.currentView) {
@@ -104,7 +104,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.addCommand({
 			id: "navigate-next-heading",
-			name: t("commands.navigate-next-heading"),
+			name: t("commands.navigateNextHeading"),
 			hotkeys: [],
 			callback: async () => {
 				if (this.currentView) {
@@ -116,7 +116,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.addCommand({
 			id: "toc-expand",
-			name: t("commands.toc-expand"),
+			name: t("commands.tocExpand"),
 			hotkeys: [],
 			callback: () => {
 				this.settingsStore.updateSettingByPath(
@@ -128,7 +128,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.addCommand({
 			id: "insert-reading-time-card",
-			name: t("commands.insert-reading-time-card"),
+			name: t("commands.insertReadingTimeCard"),
 			editorCallback: (editor: Editor) => {
 				new CardCreateModal(
 					this.app,
@@ -139,7 +139,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.addCommand({
 			id: "insert-table-of-contents-card",
-			name: t("commands.insert-table-of-contents-card"),
+			name: t("commands.insertTableOfContentsCard"),
 			editorCallback: (editor: Editor) => {
 				new CardCreateModal(
 					this.app,
@@ -154,7 +154,7 @@ export default class NTocPlugin extends Plugin {
 			this.app.workspace.on("editor-menu", (menu, editor, view) => {
 				if (view instanceof MarkdownView) {
 					menu.addItem((item) => {
-						item.setTitle(t("commands.insert-reading-time-card"));
+						item.setTitle(t("commands.insertReadingTimeCard"));
 						item.onClick(() => {
 							new CardCreateModal(
 								this.app,
@@ -163,9 +163,7 @@ export default class NTocPlugin extends Plugin {
 						});
 					});
 					menu.addItem((item) => {
-						item.setTitle(
-							t("commands.insert-table-of-contents-card")
-						);
+						item.setTitle(t("commands.insertTableOfContentsCard"));
 						item.onClick(() => {
 							new CardCreateModal(
 								this.app,
