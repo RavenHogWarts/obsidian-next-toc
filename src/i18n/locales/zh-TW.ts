@@ -60,9 +60,13 @@ const translations: BaseMessage = {
 				name: "使用工具列",
 				desc: "顯示帶有導覽按鈕的工具列",
 			},
-			showProgress: {
-				name: "顯示進度",
-				desc: "顯示閱讀進度指示器",
+			showProgressBar: {
+				name: "顯示進度條",
+				desc: "在目錄上方顯示閱讀進度",
+			},
+			showProgressCircle: {
+				name: "顯示進度圓環",
+				desc: "在指示器上方顯示閱讀進度，即收縮目錄後",
 			},
 			returnToCursor: {
 				name: "返回游標",

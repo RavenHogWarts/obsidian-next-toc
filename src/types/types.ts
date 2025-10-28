@@ -20,7 +20,8 @@ export interface NTocPluginSettings {
 	};
 	tool: {
 		useToolbar: boolean;
-		showProgress: boolean;
+		showProgressBar: boolean;
+		showProgressCircle: boolean;
 		returnToCursor: IButtonTool;
 		returnToTop: IButtonTool;
 		returnToBottom: IButtonTool;
@@ -44,7 +45,8 @@ export const DEFAULT_SETTINGS: NTocPluginSettings = {
 	},
 	tool: {
 		useToolbar: true,
-		showProgress: true,
+		showProgressBar: true,
+		showProgressCircle: true,
 		returnToCursor: {
 			enabled: true,
 			icon: "text-cursor-input",

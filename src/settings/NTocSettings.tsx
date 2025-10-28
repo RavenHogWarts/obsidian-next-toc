@@ -204,14 +204,32 @@ export const NTocSettings: FC = () => {
 
 					<ObsidianSetting
 						slots={{
-							name: t("settings.tool.showProgress.name"),
-							desc: t("settings.tool.showProgress.desc"),
+							name: t("settings.tool.showProgressBar.name"),
+							desc: t("settings.tool.showProgressBar.desc"),
 							control: (
 								<ObsidianSetting.Toggle
-									value={settings.tool.showProgress}
+									value={settings.tool.showProgressBar}
 									onChange={(value) => {
 										settingsStore.updateSettingByPath(
-											"tool.showProgress",
+											"tool.showProgressBar",
+											value
+										);
+									}}
+								/>
+							),
+						}}
+					/>
+
+					<ObsidianSetting
+						slots={{
+							name: t("settings.tool.showProgressCircle.name"),
+							desc: t("settings.tool.showProgressCircle.desc"),
+							control: (
+								<ObsidianSetting.Toggle
+									value={settings.tool.showProgressCircle}
+									onChange={(value) => {
+										settingsStore.updateSettingByPath(
+											"tool.showProgressCircle",
 											value
 										);
 									}}

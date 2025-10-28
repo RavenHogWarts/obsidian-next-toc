@@ -50,7 +50,8 @@ export type BaseMessage = {
 		tool: {
 			name: string;
 			useToolbar: IBaseSettingsItem;
-			showProgress: IBaseSettingsItem;
+			showProgressBar: IBaseSettingsItem;
+			showProgressCircle: IBaseSettingsItem;
 			returnToCursor: IBaseSettingsItem;
 			returnToTop: IBaseSettingsItem;
 			returnToBottom: IBaseSettingsItem;

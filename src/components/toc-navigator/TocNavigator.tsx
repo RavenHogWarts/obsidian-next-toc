@@ -52,13 +52,13 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 
 	// 更新进度条宽度
 	useEffect(() => {
-		if (NTocProgressBarRef.current && settings.tool.showProgress) {
+		if (NTocProgressBarRef.current && settings.tool.showProgressBar) {
 			NTocProgressBarRef.current.style.setProperty(
 				"--NToc__toc-progress-width",
 				`${scrollProgress}%`
 			);
 		}
-	}, [scrollProgress, settings.tool.showProgress]);
+	}, [scrollProgress, settings.tool.showProgressBar]);
 
 	useEffect(() => {
 		if (NTocContainerRef.current) {
@@ -319,7 +319,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 					setIsHovered(false)
 				}
 			>
-				{settings.tool.showProgress && (
+				{settings.tool.showProgressCircle && (
 					<div className="NToc__progress-circle-container">
 						<ProgressCircle
 							percentage={scrollProgress}
@@ -367,7 +367,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 								className="NToc__group-resize"
 								onMouseDown={handleMouseDragStart}
 							/>
-							{settings.tool.showProgress && (
+							{settings.tool.showProgressBar && (
 								<div
 									ref={NTocProgressBarRef}
 									className="NToc__toc-progress-bar"
