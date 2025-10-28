@@ -1,21 +1,16 @@
 import { EditorView } from "@codemirror/view";
 import "@styles/styles";
 import { Editor, MarkdownView, Plugin } from "obsidian";
-import { CardCreateModal } from "./components/modal/card-modal/CardCreateModal";
 import {
 	NTocRenderProps,
 	updateNTocRender,
 } from "./components/toc-navigator/NTocRender";
 import { t } from "./i18n/i18n";
-import { CardProcessor } from "./services/CardProcessor";
-import { createCursorListenerExtension } from "./services/cursorListenerExtension";
 import { PluginSettingTab } from "./settings/PluginSettingTab";
 import SettingsStore from "./settings/SettingsStore";
-import { DEFAULT_READING_TIME_CARD, DEFAULT_TOC_CARD } from "./types/cards";
 import { NTocPluginSettings } from "./types/types";
 import { createScrollListener } from "./utils/eventListenerManager";
 import getFileHeadings from "./utils/getFileHeadings";
-import mountEditButtonToCodeblock from "./utils/mountEditButtonToCodeblock";
 import {
 	navigateHeading,
 	returnToCursor,
@@ -40,7 +35,7 @@ export default class NTocPlugin extends Plugin {
 		this.registerCodeblockProcessor();
 
 		// Register CM6 cursor listener extension
-		this.registerEditorExtension(createCursorListenerExtension(this));
+		// this.registerEditorExtension(createCursorListenerExtension(this));
 
 		// Setup initial scroll listener
 		this.setupScrollListener();
@@ -126,54 +121,56 @@ export default class NTocPlugin extends Plugin {
 			},
 		});
 
-		this.addCommand({
-			id: "insert-reading-time-card",
-			name: t("commands.insertReadingTimeCard"),
-			editorCallback: (editor: Editor) => {
-				new CardCreateModal(
-					this.app,
-					JSON.stringify(DEFAULT_READING_TIME_CARD)
-				).open();
-			},
-		});
+		// this.addCommand({
+		// 	id: "insert-reading-time-card",
+		// 	name: t("commands.insertReadingTimeCard"),
+		// 	editorCallback: (editor: Editor) => {
+		// 		new CardCreateModal(
+		// 			this.app,
+		// 			JSON.stringify(DEFAULT_READING_TIME_CARD)
+		// 		).open();
+		// 	},
+		// });
 
-		this.addCommand({
-			id: "insert-table-of-contents-card",
-			name: t("commands.insertTableOfContentsCard"),
-			editorCallback: (editor: Editor) => {
-				new CardCreateModal(
-					this.app,
-					JSON.stringify(DEFAULT_TOC_CARD)
-				).open();
-			},
-		});
+		// this.addCommand({
+		// 	id: "insert-table-of-contents-card",
+		// 	name: t("commands.insertTableOfContentsCard"),
+		// 	editorCallback: (editor: Editor) => {
+		// 		new CardCreateModal(
+		// 			this.app,
+		// 			JSON.stringify(DEFAULT_TOC_CARD)
+		// 		).open();
+		// 	},
+		// });
 	}
 
 	private registerContextMenu() {
-		this.registerEvent(
-			this.app.workspace.on("editor-menu", (menu, editor, view) => {
-				if (view instanceof MarkdownView) {
-					menu.addItem((item) => {
-						item.setTitle(t("commands.insertReadingTimeCard"));
-						item.onClick(() => {
-							new CardCreateModal(
-								this.app,
-								JSON.stringify(DEFAULT_READING_TIME_CARD)
-							).open();
-						});
-					});
-					menu.addItem((item) => {
-						item.setTitle(t("commands.insertTableOfContentsCard"));
-						item.onClick(() => {
-							new CardCreateModal(
-								this.app,
-								JSON.stringify(DEFAULT_TOC_CARD)
-							).open();
-						});
-					});
-				}
-			})
-		);
+		// this.registerEvent(
+		// 	this.app.workspace.on("editor-menu", (menu, editor, view) => {
+		// 		if (view instanceof MarkdownView) {
+		// 			menu.addItem((item) => {
+		// 				item.setTitle(t("commands.insertReadingTimeCard"));
+		// 				item.setIcon("clock");
+		// 				item.onClick(() => {
+		// 					new CardCreateModal(
+		// 						this.app,
+		// 						JSON.stringify(DEFAULT_READING_TIME_CARD)
+		// 					).open();
+		// 				});
+		// 			});
+		// 			menu.addItem((item) => {
+		// 				item.setTitle(t("commands.insertTableOfContentsCard"));
+		// 				item.setIcon("table-of-contents");
+		// 				item.onClick(() => {
+		// 					new CardCreateModal(
+		// 						this.app,
+		// 						JSON.stringify(DEFAULT_TOC_CARD)
+		// 					).open();
+		// 				});
+		// 			});
+		// 		}
+		// 	})
+		// );
 	}
 
 	private registerEvents() {
@@ -221,20 +218,20 @@ export default class NTocPlugin extends Plugin {
 	}
 
 	private registerCodeblockProcessor() {
-		this.registerMarkdownCodeBlockProcessor(
-			"ntoc-card",
-			async (code, el, ctx) => {
-				const processor = new CardProcessor();
-				processor.renderFormCodeBlock(code, el, ctx, this.app);
-				if (el.parentElement) {
-					mountEditButtonToCodeblock(
-						this.app,
-						code,
-						el.parentElement
-					);
-				}
-			}
-		);
+		// this.registerMarkdownCodeBlockProcessor(
+		// 	"ntoc-card",
+		// 	async (code, el, ctx) => {
+		// 		const processor = new CardProcessor();
+		// 		processor.renderFormCodeBlock(code, el, ctx, this.app);
+		// 		if (el.parentElement) {
+		// 			mountEditButtonToCodeblock(
+		// 				this.app,
+		// 				code,
+		// 				el.parentElement
+		// 			);
+		// 		}
+		// 	}
+		// );
 	}
 
 	private setupScrollListener() {
