@@ -3,14 +3,14 @@ import { BaseMessage } from "../types";
 // Remember [use sentence case in UI](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Use+sentence+case+in+UI)
 const translations: BaseMessage = {
 	commands: {
-		"return-to-cursor": "Return to cursor",
-		"scroll-to-top": "Scroll to top",
-		"scroll-to-bottom": "Scroll to bottom",
-		"navigate-previous-heading": "Navigate to previous heading",
-		"navigate-next-heading": "Navigate to next heading",
-		"toc-expand": "Expand/Collapse TOC",
-		"insert-reading-time-card": "Insert reading time card",
-		"insert-table-of-contents-card": "Insert table of contents card",
+		returnToCursor: "Return to cursor",
+		scrollToTop: "Scroll to top",
+		scrollToBottom: "Scroll to bottom",
+		navigatePreviousHeading: "Navigate to previous heading",
+		navigateNextHeading: "Navigate to next heading",
+		tocExpand: "Expand/Collapse TOC",
+		insertReadingTimeCard: "Insert reading time card",
+		insertTableOfContentsCard: "Insert table of contents card",
 	},
 	settings: {
 		toc: {

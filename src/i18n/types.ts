@@ -18,14 +18,14 @@ type SettingsItem<T = Record<string, never>> = IBaseSettingsItem & T;
 // 定义翻译结构类型
 export type BaseMessage = {
 	commands: {
-		"return-to-cursor": string;
-		"scroll-to-top": string;
-		"scroll-to-bottom": string;
-		"navigate-previous-heading": string;
-		"navigate-next-heading": string;
-		"toc-expand": string;
-		"insert-reading-time-card": string;
-		"insert-table-of-contents-card": string;
+		returnToCursor: string;
+		scrollToTop: string;
+		scrollToBottom: string;
+		navigatePreviousHeading: string;
+		navigateNextHeading: string;
+		tocExpand: string;
+		insertReadingTimeCard: string;
+		insertTableOfContentsCard: string;
 	};
 	settings: {
 		toc: {
