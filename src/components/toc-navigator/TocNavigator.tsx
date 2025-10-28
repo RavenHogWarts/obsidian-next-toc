@@ -50,6 +50,21 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	// 获取滚动进度
 	const scrollProgress = useScrollProgress(currentView);
 
+	// 计算容器的初始类名，避免闪烁
+	const containerClassName = useMemo(() => {
+		return `NToc__container NToc__container-${settings.toc.position}`;
+	}, [settings.toc.position]);
+
+	// 使用useEffect来设置CSS变量，避免内联样式
+	useEffect(() => {
+		if (NTocContainerRef.current) {
+			NTocContainerRef.current.style.setProperty(
+				"--ntoc-offset",
+				`${settings.toc.offset}px`
+			);
+		}
+	}, [settings.toc.offset]);
+
 	// 更新进度条宽度
 	useEffect(() => {
 		if (NTocProgressBarRef.current && settings.tool.showProgressBar) {
@@ -61,20 +76,6 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	}, [scrollProgress, settings.tool.showProgressBar]);
 
 	useEffect(() => {
-		if (NTocContainerRef.current) {
-			const container = NTocContainerRef.current;
-			// 移除所有可能的位置类
-			container.classList.remove(
-				"NToc__container-left",
-				"NToc__container-right"
-			);
-			// 清除之前位置的样式
-			container.style.left = "";
-			container.style.right = "";
-			// 设置新位置
-			container.classList.add(`NToc__container-${settings.toc.position}`);
-			container.style[settings.toc.position] = `${settings.toc.offset}px`;
-		}
 		if (NTocGroupRef.current) {
 			const group = NTocGroupRef.current;
 			if (settings.toc.show === false) {
@@ -85,7 +86,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 				group.classList.remove("NToc__group-hidden");
 			}
 		}
-	}, [settings.toc.position, settings.toc.offset, settings.toc.show]);
+	}, [settings.toc.show]);
 
 	useEffect(() => {
 		if (NTocGroupContentRef.current) {
@@ -301,7 +302,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	}, [shouldShowToc, settings.toc.width]);
 
 	return (
-		<div ref={NTocContainerRef} className="NToc__container">
+		<div ref={NTocContainerRef} className={containerClassName}>
 			{settings.tool.useToolbar && (
 				<TocReturnTools currentView={currentView} headings={headings} />
 			)}
