@@ -29,8 +29,5 @@ Thumbs.db
 *.bat
 *.zip
 .env
-dist
-
-# Exclude env files
-.env
 .ENV
+dist
