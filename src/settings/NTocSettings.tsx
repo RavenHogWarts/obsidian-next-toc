@@ -256,7 +256,7 @@ export const NTocSettings: FC = () => {
 										}}
 									/>
 									<ObsidianSetting.ExtraButton
-										icon="reset"
+										icon={"reset"}
 										onClick={() => {
 											settingsStore.updateSettingByPath(
 												"tool.returnToCursor.icon",
@@ -300,7 +300,7 @@ export const NTocSettings: FC = () => {
 										}}
 									/>
 									<ObsidianSetting.ExtraButton
-										icon="reset"
+										icon={"reset"}
 										onClick={() => {
 											settingsStore.updateSettingByPath(
 												"tool.returnToTop.icon",
@@ -342,7 +342,7 @@ export const NTocSettings: FC = () => {
 										}}
 									/>
 									<ObsidianSetting.ExtraButton
-										icon="reset"
+										icon={"reset"}
 										onClick={() => {
 											settingsStore.updateSettingByPath(
 												"tool.returnToBottom.icon",
@@ -387,7 +387,7 @@ export const NTocSettings: FC = () => {
 										}}
 									/>
 									<ObsidianSetting.ExtraButton
-										icon="reset"
+										icon={"reset"}
 										onClick={() => {
 											settingsStore.updateSettingByPath(
 												"tool.jumpToNextHeading.icon",
@@ -432,7 +432,7 @@ export const NTocSettings: FC = () => {
 										}}
 									/>
 									<ObsidianSetting.ExtraButton
-										icon="reset"
+										icon={"reset"}
 										onClick={() => {
 											settingsStore.updateSettingByPath(
 												"tool.jumpToPrevHeading.icon",
