@@ -3,7 +3,7 @@ name: PR Build
 on:
     pull_request_target:
         branches: [master]
-        types: [opened, synchronize, reopened, labeled, closed]
+        types: [synchronize, reopened, labeled]
 
 permissions:
     contents: read
@@ -16,11 +16,10 @@ env:
     PLUGIN_ID: next-toc
 
 jobs:
-    # 安全检查作业 - 验证 PR 来源和标签事件
+    # 安全检查作业 - 验证是否有 safe-to-build 标签
     security-check:
         runs-on: ubuntu-latest
         outputs:
-            is-safe: ${{ steps.check.outputs.is-safe }}
             should-build: ${{ steps.check.outputs.should-build }}
         steps:
             - name: Check PR safety and build conditions
@@ -32,38 +31,29 @@ jobs:
 
                   # 检查是否应该构建
                   should_build="false"
-                  is_safe="false"
 
                   # 如果是 labeled 事件，只处理 safe-to-build 标签
                   if [[ "${{ github.event.action }}" == "labeled" ]]; then
                     echo "Label added: ${{ github.event.label.name }}"
                     if [[ "${{ github.event.label.name }}" == "safe-to-build" ]]; then
                       echo "Safe-to-build label added, will proceed with build"
-                      is_safe="true"
                       should_build="true"
                     else
                       echo "Other label added, skipping build"
-                      is_safe="false"
                       should_build="false"
                     fi
                   else
-                    # 其他事件（opened, synchronize, reopened）的安全检查
-                    if [[ "${{ github.event.pull_request.head.repo.full_name }}" == "${{ github.repository }}" ]]; then
-                      echo "Internal PR detected, safe to build"
-                      is_safe="true"
-                      should_build="true"
-                    elif [[ "${{ contains(github.event.pull_request.labels.*.name, 'safe-to-build') }}" == "true" ]]; then
-                      echo "External PR with safe-to-build label, safe to build"
-                      is_safe="true"
+                    # 其他事件（synchronize, reopened）的安全检查
+                    # 无论内部还是外部PR，都要求有 safe-to-build 标签
+                    if [[ "${{ contains(github.event.pull_request.labels.*.name, 'safe-to-build') }}" == "true" ]]; then
+                      echo "PR with safe-to-build label detected, safe to build"
                       should_build="true"
                     else
-                      echo "External PR without safe-to-build label, skipping build"
-                      is_safe="false"
+                      echo "PR without safe-to-build label, skipping build"
                       should_build="false"
                     fi
                   fi
 
-                  echo "is-safe=$is_safe" >> $GITHUB_OUTPUT
                   echo "should-build=$should_build" >> $GITHUB_OUTPUT
 
     build:
@@ -197,27 +187,26 @@ jobs:
                         target_url: `https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}`
                       });
 
-    # 可选：为外部 PR 提供说明
-    external-pr-info:
+    # 为没有 safe-to-build 标签的 PR 提供说明
+    pr-info:
         runs-on: ubuntu-latest
         needs: security-check
         if: |
-            needs.security-check.outputs.is-safe == 'false' && 
-            github.event.action != 'labeled' &&
-            github.event.pull_request.head.repo.full_name != github.repository
+            needs.security-check.outputs.should-build == 'false' && 
+            (github.event.action == 'synchronize' || github.event.action == 'reopened')
         steps:
-            - name: Comment on external PR
+            - name: Comment on PR without safe-to-build label
               uses: actions/github-script@v7
               with:
                   script: |
                       const prNumber = context.payload.pull_request.number;
 
-                      const commentBody = `## 🔒 外部 PR 安全检查
+                      const commentBody = `## 🔒 PR 安全检查
 
-                      感谢您的贡献！由于这是来自外部仓库的 PR，出于安全考虑，自动构建已被暂停。
+                      感谢您的贡献！为了确保代码安全，所有 PR 都需要 \`safe-to-build\` 标签才能触发构建。
 
                       **下一步：**
-                      维护者将审查您的代码，如果安全无问题，会添加 \`safe-to-build\` 标签来触发构建。
+                      维护者将审查您的代码，如果确认安全无问题，会添加 \`safe-to-build\` 标签来触发构建。
 
                       **请耐心等待维护者审查。** 🙏`;
 
@@ -230,7 +219,7 @@ jobs:
 
                       const existingComment = comments.data.find(comment => 
                         comment.user.login === 'github-actions[bot]' && 
-                        comment.body.includes('🔒 外部 PR 安全检查')
+                        comment.body.includes('🔒 PR 安全检查')
                       );
 
                       if (!existingComment) {
@@ -239,105 +228,5 @@ jobs:
                           repo: context.repo.repo,
                           issue_number: prNumber,
                           body: commentBody
-                        });
-                      }
-
-    # PR 关闭后清理构建产物（包括合并和未合并的情况）
-    cleanup-artifacts:
-        runs-on: ubuntu-latest
-        if: github.event.action == 'closed'
-        steps:
-            - name: Delete PR build artifacts
-              uses: actions/github-script@v7
-              env:
-                  PLUGIN_ID: ${{ env.PLUGIN_ID }}
-              with:
-                  script: |
-                      const prNumber = context.payload.pull_request.number;
-                      const pluginId = process.env.PLUGIN_ID
-                      const isMerged = context.payload.pull_request.merged;
-
-                      console.log(`Starting cleanup for PR #${prNumber} (${isMerged ? 'merged' : 'closed without merge'}) with plugin ID: ${pluginId}`);
-
-                      // 获取工作流运行列表
-                      const workflowRuns = await github.rest.actions.listWorkflowRuns({
-                        owner: context.repo.owner,
-                        repo: context.repo.repo,
-                        workflow_id: 'pr-build.yml',
-                        head_sha: context.payload.pull_request.head.sha
-                      });
-
-                      console.log(`Found ${workflowRuns.data.workflow_runs.length} workflow runs for PR #${prNumber}`);
-
-                      let deletedCount = 0;
-                      let errorCount = 0;
-
-                      // 遍历工作流运行，删除相关的构建产物
-                      for (const run of workflowRuns.data.workflow_runs) {
-                        try {
-                          const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
-                            owner: context.repo.owner,
-                            repo: context.repo.repo,
-                            run_id: run.id
-                          });
-                          
-                          console.log(`Run ${run.id}: Found ${artifacts.data.artifacts.length} artifacts`);
-                          
-                          for (const artifact of artifacts.data.artifacts) {
-                            // 只删除 PR 构建产物（以 plugin-id-pr- 开头的）
-                            if (artifact.name.includes(`${pluginId}-pr-`)) {
-                              console.log(`Deleting artifact: ${artifact.name} (ID: ${artifact.id})`);
-                              await github.rest.actions.deleteArtifact({
-                                owner: context.repo.owner,
-                                repo: context.repo.repo,
-                                artifact_id: artifact.id
-                              });
-                              deletedCount++;
-                            }
-                          }
-                        } catch (error) {
-                          console.log(`Error processing run ${run.id}: ${error.message}`);
-                          errorCount++;
-                          // 继续处理其他运行，不因单个错误而停止
-                        }
-                      }
-
-                      console.log(`Cleanup completed: ${deletedCount} artifacts deleted, ${errorCount} errors occurred`);
-
-                      // 设置输出供后续步骤使用
-                      core.setOutput('deleted-count', deletedCount);
-                      core.setOutput('error-count', errorCount);
-                      core.setOutput('is-merged', isMerged);
-
-            - name: Update PR comment
-              uses: actions/github-script@v7
-              with:
-                  script: |
-                      const prNumber = context.payload.pull_request.number;
-                      const isMerged = context.payload.pull_request.merged;
-
-                      // 查找现有的构建评论
-                      const comments = await github.rest.issues.listComments({
-                        owner: context.repo.owner,
-                        repo: context.repo.repo,
-                        issue_number: prNumber
-                      });
-
-                      const existingComment = comments.data.find(comment => 
-                        comment.user.login === 'github-actions[bot]' && 
-                        comment.body.includes('🔧 PR 构建完成')
-                      );
-
-                      if (existingComment) {
-                        const statusMessage = isMerged 
-                          ? '✅ **PR 已合并，构建产物已自动清理**'
-                          : '🗑️ **PR 已关闭，构建产物已自动清理**';
-                        const updatedBody = existingComment.body + `\n\n---\n\n${statusMessage}`;
-                        
-                        await github.rest.issues.updateComment({
-                          owner: context.repo.owner,
-                          repo: context.repo.repo,
-                          comment_id: existingComment.id,
-                          body: updatedBody
                         });
                       }
