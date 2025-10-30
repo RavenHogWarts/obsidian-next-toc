@@ -46,14 +46,6 @@ export type BaseMessage = {
 			useHeadingNumber: IBaseSettingsItem;
 			skipHeading1: IBaseSettingsItem;
 			renderMarkdown: IBaseSettingsItem;
-			customClassNames: {
-				name: string;
-				desc: string;
-				showToc: IBaseSettingsItem;
-				hideToc: IBaseSettingsItem;
-				showTocNumber: IBaseSettingsItem;
-				hideTocNumber: IBaseSettingsItem;
-			};
 		};
 		tool: {
 			name: string;
