@@ -53,26 +53,6 @@ const translations: BaseMessage = {
 				name: "渲染 Markdown",
 				desc: "啟用或停用在目錄中渲染 Markdown",
 			},
-			customClassNames: {
-				name: "自訂類別名稱",
-				desc: "自訂用於頁面特定TOC控制的CSS類別名稱",
-				showToc: {
-					name: "顯示TOC類別名稱",
-					desc: "強制顯示TOC的類別名稱（預設：NToc__SHOW-TOC）",
-				},
-				hideToc: {
-					name: "隱藏TOC類別名稱", 
-					desc: "強制隱藏TOC的類別名稱（預設：NToc__HIDE-TOC）",
-				},
-				showTocNumber: {
-					name: "顯示TOC編號類別名稱",
-					desc: "強制顯示TOC標題編號的類別名稱（預設：NToc__SHOW-TOC-NUMBER）",
-				},
-				hideTocNumber: {
-					name: "隱藏TOC編號類別名稱",
-					desc: "強制隱藏TOC標題編號的類別名稱（預設：NToc__HIDE-TOC-NUMBER）",
-				},
-			},
 		},
 		tool: {
 			name: "工具",
