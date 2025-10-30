@@ -12,7 +12,6 @@ export const NTocSettings: FC = () => {
 	const settings = usePluginSettings(settingsStore);
 	const app = settingsStore.app;
 
-
 	const tabItems: TabItem[] = [
 		{
 			id: "toc",
@@ -174,130 +173,6 @@ export const NTocSettings: FC = () => {
 										);
 									}}
 								/>
-							),
-						}}
-					/>
-
-					<ObsidianSetting
-						slots={{
-							name: t("settings.render.customClassNames.name"),
-							desc: t("settings.render.customClassNames.desc"),
-						}}
-						heading={true}
-					/>
-
-					<ObsidianSetting
-						slots={{
-							name: t("settings.render.customClassNames.showToc.name"),
-							desc: t("settings.render.customClassNames.showToc.desc"),
-							control: (
-								<>
-									<ObsidianSetting.Text
-										value={settings.render.customClassNames.showToc}
-										onChange={(value) => {
-											settingsStore.updateSettingByPath(
-												"render.customClassNames.showToc",
-												value
-											);
-										}}
-									/>
-									<ObsidianSetting.ExtraButton
-										icon="reset"
-										onClick={() => {
-											settingsStore.updateSettingByPath(
-												"render.customClassNames.showToc",
-												DEFAULT_SETTINGS.render.customClassNames.showToc
-											);
-										}}
-									/>
-								</>
-							),
-						}}
-					/>
-
-					<ObsidianSetting
-						slots={{
-							name: t("settings.render.customClassNames.hideToc.name"),
-							desc: t("settings.render.customClassNames.hideToc.desc"),
-							control: (
-								<>
-									<ObsidianSetting.Text
-										value={settings.render.customClassNames.hideToc}
-										onChange={(value) => {
-											settingsStore.updateSettingByPath(
-												"render.customClassNames.hideToc",
-												value
-											);
-										}}
-									/>
-									<ObsidianSetting.ExtraButton
-										icon="reset"
-										onClick={() => {
-											settingsStore.updateSettingByPath(
-												"render.customClassNames.hideToc",
-												DEFAULT_SETTINGS.render.customClassNames.hideToc
-											);
-										}}
-									/>
-								</>
-							),
-						}}
-					/>
-
-					<ObsidianSetting
-						slots={{
-							name: t("settings.render.customClassNames.showTocNumber.name"),
-							desc: t("settings.render.customClassNames.showTocNumber.desc"),
-							control: (
-								<>
-									<ObsidianSetting.Text
-										value={settings.render.customClassNames.showTocNumber}
-										onChange={(value) => {
-											settingsStore.updateSettingByPath(
-												"render.customClassNames.showTocNumber",
-												value
-											);
-										}}
-									/>
-									<ObsidianSetting.ExtraButton
-										icon="reset"
-										onClick={() => {
-											settingsStore.updateSettingByPath(
-												"render.customClassNames.showTocNumber",
-												DEFAULT_SETTINGS.render.customClassNames.showTocNumber
-											);
-										}}
-									/>
-								</>
-							),
-						}}
-					/>
-
-					<ObsidianSetting
-						slots={{
-							name: t("settings.render.customClassNames.hideTocNumber.name"),
-							desc: t("settings.render.customClassNames.hideTocNumber.desc"),
-							control: (
-								<>
-									<ObsidianSetting.Text
-										value={settings.render.customClassNames.hideTocNumber}
-										onChange={(value) => {
-											settingsStore.updateSettingByPath(
-												"render.customClassNames.hideTocNumber",
-												value
-											);
-										}}
-									/>
-									<ObsidianSetting.ExtraButton
-										icon="reset"
-										onClick={() => {
-											settingsStore.updateSettingByPath(
-												"render.customClassNames.hideTocNumber",
-												DEFAULT_SETTINGS.render.customClassNames.hideTocNumber
-											);
-										}}
-									/>
-								</>
 							),
 						}}
 					/>
