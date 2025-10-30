@@ -6,18 +6,12 @@
 	flex-direction: column;
 	gap: 1.25rem;
 	z-index: var(--layer-popover);
-	/* 默认透明，避免位置闪烁 */
-	opacity: 0;
-	/* 添加淡入动画 */
-	/* transition: opacity 0.2s ease-in-out; */
-	animation: ntoc-fadeIn 0.2s ease-in-out;
-
+	--NToc__toc-offset: 0px;
 
 	&.NToc__container-left {
 		right: auto;
-		left: var(--ntoc-offset);
+		left: var(--NToc__toc-offset);
 		align-items: flex-start;
-		opacity: 1;
 
 		.NToc__group {
 			padding-right: 16px;
@@ -56,9 +50,8 @@
 
 	&.NToc__container-right {
 		left: auto;
-		right: var(--ntoc-offset);
+		right: var(--NToc__toc-offset);
 		align-items: flex-end;
-		opacity: 1;
 
 		.NToc__group {
 			padding-left: 16px;
@@ -80,15 +73,6 @@
 			justify-content: flex-end;
 		}
 	}
-}
-
-@keyframes ntoc-fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 .NToc__group {
@@ -338,22 +322,19 @@
 	display: none;
 }
 
-/* 特定页面控制样式 - 已移至动态CSS生成 */
-/* 这些规则现在通过 dynamicCSS.ts 动态生成，以支持自定义类名 */
-/*
-.NToc__SHOW-TOC ~ .NToc__view .NToc__container {
+/* 特定页面控制样式 */
+.show-ntoc ~ .NToc__view .NToc__container {
 	opacity: 1 !important;
 	visibility: visible !important;
 }
-.NToc__HIDE-TOC ~ .NToc__view .NToc__container {
+.hide-ntoc ~ .NToc__view .NToc__container {
 	opacity: 0 !important;
 	visibility: hidden !important;
 }
 
-.NToc__SHOW-TOC-NUMBER ~ .NToc__view .NToc__toc-item-number {
+.show-ntoc-number ~ .NToc__view .NToc__toc-item-number {
 	display: block !important;
 }
-.NToc__HIDE-TOC-NUMBER ~ .NToc__view .NToc__toc-item-number {
+.hide-ntoc-number ~ .NToc__view .NToc__toc-item-number {
 	display: none !important;
 }
-*/
