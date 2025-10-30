@@ -29,4 +29,5 @@ Thumbs.db
 *.bat
 *.zip
 .env
+.ENV
 dist

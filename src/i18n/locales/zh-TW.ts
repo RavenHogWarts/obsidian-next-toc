@@ -46,12 +46,12 @@ const translations: BaseMessage = {
 				desc: "啟用或停用在目錄中使用標題編號",
 			},
 			skipHeading1: {
-				name: "略過第一級標題",
-				desc: "啟用或停用在目錄中略過第一級標題",
+				name: "跳過一級標題",
+				desc: "啟用或停用在目錄中跳過一級標題",
 			},
 			renderMarkdown: {
-				name: "渲染Markdown",
-				desc: "啟用或停用在目錄中渲染Markdown",
+				name: "渲染 Markdown",
+				desc: "啟用或停用在目錄中渲染 Markdown",
 			},
 		},
 		tool: {

@@ -50,8 +50,8 @@ const translations: BaseMessage = {
 				desc: "启用或禁用在目录中跳过一级标题",
 			},
 			renderMarkdown: {
-				name: "渲染Markdown",
-				desc: "启用或禁用在目录中渲染Markdown",
+				name: "渲染 Markdown",
+				desc: "启用或禁用在目录中渲染 Markdown",
 			},
 		},
 		tool: {
