@@ -58,6 +58,17 @@ export type BaseMessage = {
 			jumpToNextHeading: IBaseSettingsItem;
 			jumpToPrevHeading: IBaseSettingsItem;
 		};
+		advanced: {
+			name: string;
+			customClassNames: {
+				name: string;
+				desc: string;
+				showToc: IBaseSettingsItem;
+				hideToc: IBaseSettingsItem;
+				showTocNumber: IBaseSettingsItem;
+				hideTocNumber: IBaseSettingsItem;
+			};
+		};
 	};
 	cards: {
 		preview: string;

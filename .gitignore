@@ -30,3 +30,7 @@ Thumbs.db
 *.zip
 .env
 dist
+
+# Exclude env files
+.env
+.ENV

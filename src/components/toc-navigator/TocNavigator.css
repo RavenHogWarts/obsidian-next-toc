@@ -321,7 +321,9 @@
 	display: none;
 }
 
-/* 特定页面控制样式 */
+/* 特定页面控制样式 - 已移至动态CSS生成 */
+/* 这些规则现在通过 dynamicCSS.ts 动态生成，以支持自定义类名 */
+/*
 .NToc__SHOW-TOC ~ .NToc__view .NToc__container {
 	opacity: 1 !important;
 	visibility: visible !important;
@@ -337,3 +339,4 @@
 .NToc__HIDE-TOC-NUMBER ~ .NToc__view .NToc__toc-item-number {
 	display: none !important;
 }
+*/

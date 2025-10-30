@@ -460,6 +460,92 @@ export const NTocSettings: FC = () => {
 				</ObsidianSetting.Container>
 			),
 		},
+		{
+			id: "advanced",
+			title: t("settings.advanced.name"),
+			content: (
+				<ObsidianSetting.Container>
+					<ObsidianSetting
+						slots={{
+							name: t("settings.advanced.customClassNames.name"),
+							desc: t("settings.advanced.customClassNames.desc"),
+						}}
+					/>
+
+					<ObsidianSetting
+						slots={{
+							name: t("settings.advanced.customClassNames.showToc.name"),
+							desc: t("settings.advanced.customClassNames.showToc.desc"),
+							control: (
+								<ObsidianSetting.Text
+									value={settings.advanced.customClassNames.showToc}
+									onChange={(value) => {
+										settingsStore.updateSettingByPath(
+											"advanced.customClassNames.showToc",
+											value
+										);
+									}}
+								/>
+							),
+						}}
+					/>
+
+					<ObsidianSetting
+						slots={{
+							name: t("settings.advanced.customClassNames.hideToc.name"),
+							desc: t("settings.advanced.customClassNames.hideToc.desc"),
+							control: (
+								<ObsidianSetting.Text
+									value={settings.advanced.customClassNames.hideToc}
+									onChange={(value) => {
+										settingsStore.updateSettingByPath(
+											"advanced.customClassNames.hideToc",
+											value
+										);
+									}}
+								/>
+							),
+						}}
+					/>
+
+					<ObsidianSetting
+						slots={{
+							name: t("settings.advanced.customClassNames.showTocNumber.name"),
+							desc: t("settings.advanced.customClassNames.showTocNumber.desc"),
+							control: (
+								<ObsidianSetting.Text
+									value={settings.advanced.customClassNames.showTocNumber}
+									onChange={(value) => {
+										settingsStore.updateSettingByPath(
+											"advanced.customClassNames.showTocNumber",
+											value
+										);
+									}}
+								/>
+							),
+						}}
+					/>
+
+					<ObsidianSetting
+						slots={{
+							name: t("settings.advanced.customClassNames.hideTocNumber.name"),
+							desc: t("settings.advanced.customClassNames.hideTocNumber.desc"),
+							control: (
+								<ObsidianSetting.Text
+									value={settings.advanced.customClassNames.hideTocNumber}
+									onChange={(value) => {
+										settingsStore.updateSettingByPath(
+											"advanced.customClassNames.hideTocNumber",
+											value
+										);
+									}}
+								/>
+							),
+						}}
+					/>
+				</ObsidianSetting.Container>
+			),
+		},
 	];
 
 	return (

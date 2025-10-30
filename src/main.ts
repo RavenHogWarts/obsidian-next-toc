@@ -9,6 +9,7 @@ import { t } from "./i18n/i18n";
 import { PluginSettingTab } from "./settings/PluginSettingTab";
 import SettingsStore from "./settings/SettingsStore";
 import { NTocPluginSettings } from "./types/types";
+import { updateDynamicCSS, removeDynamicCSS } from "./utils/dynamicCSS";
 import { createScrollListener } from "./utils/eventListenerManager";
 import getFileHeadings from "./utils/getFileHeadings";
 import {
@@ -26,6 +27,9 @@ export default class NTocPlugin extends Plugin {
 
 	async onload() {
 		await this.settingsStore.loadSettings();
+
+		// 初始化动态CSS
+		updateDynamicCSS(this.settings);
 
 		this.addSettingTab(new PluginSettingTab(this));
 
@@ -45,6 +49,8 @@ export default class NTocPlugin extends Plugin {
 
 	onunload() {
 		this.cleanupScrollListener();
+		// 清理动态CSS
+		removeDynamicCSS();
 	}
 
 	async saveSettings() {

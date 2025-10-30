@@ -90,6 +90,29 @@ const translations: BaseMessage = {
 				desc: "Button to jump to the previous heading",
 			},
 		},
+		advanced: {
+			name: "Advanced",
+			customClassNames: {
+				name: "Custom class names",
+				desc: "Customize the CSS class names used for page-specific TOC control",
+				showToc: {
+					name: "Show TOC class",
+					desc: "Class name to force show the TOC (default: NToc__SHOW-TOC)",
+				},
+				hideToc: {
+					name: "Hide TOC class", 
+					desc: "Class name to force hide the TOC (default: NToc__HIDE-TOC)",
+				},
+				showTocNumber: {
+					name: "Show TOC number class",
+					desc: "Class name to force show TOC heading numbers (default: NToc__SHOW-TOC-NUMBER)",
+				},
+				hideTocNumber: {
+					name: "Hide TOC number class",
+					desc: "Class name to force hide TOC heading numbers (default: NToc__HIDE-TOC-NUMBER)",
+				},
+			},
+		},
 	},
 	cards: {
 		preview: "Preview",

@@ -28,6 +28,14 @@ export interface NTocPluginSettings {
 		jumpToNextHeading: IButtonTool;
 		jumpToPrevHeading: IButtonTool;
 	};
+	advanced: {
+		customClassNames: {
+			showToc: string;
+			hideToc: string;
+			showTocNumber: string;
+			hideTocNumber: string;
+		};
+	};
 }
 
 export const DEFAULT_SETTINGS: NTocPluginSettings = {
@@ -66,6 +74,14 @@ export const DEFAULT_SETTINGS: NTocPluginSettings = {
 		jumpToPrevHeading: {
 			enabled: false,
 			icon: "corner-left-up",
+		},
+	},
+	advanced: {
+		customClassNames: {
+			showToc: "NToc__SHOW-TOC",
+			hideToc: "NToc__HIDE-TOC",
+			showTocNumber: "NToc__SHOW-TOC-NUMBER",
+			hideTocNumber: "NToc__HIDE-TOC-NUMBER",
 		},
 	},
 };
