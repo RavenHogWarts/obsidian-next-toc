@@ -50,16 +50,12 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	// 获取滚动进度
 	const scrollProgress = useScrollProgress(currentView);
 
-	// 计算容器的初始类名，避免闪烁
-	const containerClassName = useMemo(() => {
-		return `NToc__container NToc__container-${settings.toc.position}`;
-	}, [settings.toc.position]);
-
 	// 使用useEffect来设置CSS变量，避免内联样式
 	useEffect(() => {
 		if (NTocContainerRef.current) {
-			NTocContainerRef.current.style.setProperty(
-				"--ntoc-offset",
+			const container = NTocContainerRef.current;
+			container.style.setProperty(
+				"--NToc__toc-offset",
 				`${settings.toc.offset}px`
 			);
 		}
@@ -302,7 +298,10 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	}, [shouldShowToc, settings.toc.width]);
 
 	return (
-		<div ref={NTocContainerRef} className={containerClassName}>
+		<div
+			ref={NTocContainerRef}
+			className={`NToc__container NToc__container-${settings.toc.position}`}
+		>
 			{settings.tool.useToolbar && (
 				<TocReturnTools currentView={currentView} headings={headings} />
 			)}
