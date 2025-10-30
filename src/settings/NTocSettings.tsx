@@ -240,6 +240,13 @@ export const NTocSettings: FC = () => {
 
 					<ObsidianSetting
 						slots={{
+							name: t("settings.tool.headings.returnButtons"),
+						}}
+						heading={true}
+					/>
+
+					<ObsidianSetting
+						slots={{
 							name: t("settings.tool.returnToCursor.name"),
 							desc: t("settings.tool.returnToCursor.desc"),
 							control: (
