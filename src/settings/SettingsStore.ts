@@ -1,6 +1,5 @@
 import NTocPlugin from "@src/main";
 import { DEFAULT_SETTINGS, NTocPluginSettings } from "@src/types/types";
-import { updateDynamicCSS } from "@src/utils/dynamicCSS";
 
 export default class SettingsStore {
 	#plugin: NTocPlugin;
@@ -86,8 +85,6 @@ export default class SettingsStore {
 	async updateSettings(settings: NTocPluginSettings) {
 		this.#plugin.settings = Object.assign({}, settings);
 		await this.#plugin.saveSettings();
-		// 更新动态CSS
-		updateDynamicCSS(settings);
 		this.#notifyStoreSubscribers();
 	}
 
