@@ -6,11 +6,18 @@
 	flex-direction: column;
 	gap: 1.25rem;
 	z-index: var(--layer-popover);
+	/* 默认透明，避免位置闪烁 */
+	opacity: 0;
+	/* 添加淡入动画 */
+	/* transition: opacity 0.2s ease-in-out; */
+	animation: ntoc-fadeIn 0.2s ease-in-out;
+
 
 	&.NToc__container-left {
 		right: auto;
 		left: var(--ntoc-offset);
 		align-items: flex-start;
+		opacity: 1;
 
 		.NToc__group {
 			padding-right: 16px;
@@ -51,6 +58,7 @@
 		left: auto;
 		right: var(--ntoc-offset);
 		align-items: flex-end;
+		opacity: 1;
 
 		.NToc__group {
 			padding-left: 16px;
@@ -72,6 +80,15 @@
 			justify-content: flex-end;
 		}
 	}
+}
+
+@keyframes ntoc-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .NToc__group {

@@ -14,17 +14,20 @@ export function updateDynamicCSS(settings: NTocPluginSettings) {
 	style.id = styleId;
 	
 	const { showToc, hideToc, showTocNumber, hideTocNumber } = settings.render.customClassNames;
-	
+    const defaultOffset = settings.toc.offset || 12;
+    // 设置CSS变量用于偏移量
+    document.documentElement.style.setProperty('--ntoc-offset', `${defaultOffset}px`);
+
 	// 生成动态CSS规则
 	style.textContent = `
 		/* 特定页面控制样式 - 动态生成 */
 		.${showToc} ~ .NToc__view .NToc__container {
-			opacity: 1 !important;
-			visibility: visible !important;
+			opacity: 1;
+			visibility: visible;
 		}
 		.${hideToc} ~ .NToc__view .NToc__container {
-			opacity: 0 !important;
-			visibility: hidden !important;
+			opacity: 0;
+			visibility: hidden;
 		}
 
 		.${showTocNumber} ~ .NToc__view .NToc__toc-item-number {
