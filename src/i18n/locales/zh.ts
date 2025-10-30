@@ -53,26 +53,6 @@ const translations: BaseMessage = {
 				name: "渲染 Markdown",
 				desc: "启用或禁用在目录中渲染 Markdown",
 			},
-			customClassNames: {
-				name: "自定义类名",
-				desc: "自定义用于页面特定TOC控制的CSS类名",
-				showToc: {
-					name: "显示TOC类名",
-					desc: "强制显示TOC的类名（默认：NToc__SHOW-TOC）",
-				},
-				hideToc: {
-					name: "隐藏TOC类名", 
-					desc: "强制隐藏TOC的类名（默认：NToc__HIDE-TOC）",
-				},
-				showTocNumber: {
-					name: "显示TOC编号类名",
-					desc: "强制显示TOC标题编号的类名（默认：NToc__SHOW-TOC-NUMBER）",
-				},
-				hideTocNumber: {
-					name: "隐藏TOC编号类名",
-					desc: "强制隐藏TOC标题编号的类名（默认：NToc__HIDE-TOC-NUMBER）",
-				},
-			},
 		},
 		tool: {
 			name: "工具",
