@@ -17,6 +17,12 @@ export interface NTocPluginSettings {
 		useHeadingNumber: boolean;
 		skipHeading1: boolean;
 		renderMarkdown: boolean;
+		customClassNames: {
+			showToc: string;
+			hideToc: string;
+			showTocNumber: string;
+			hideTocNumber: string;
+		};
 	};
 	tool: {
 		useToolbar: boolean;
@@ -27,14 +33,6 @@ export interface NTocPluginSettings {
 		returnToBottom: IButtonTool;
 		jumpToNextHeading: IButtonTool;
 		jumpToPrevHeading: IButtonTool;
-	};
-	advanced: {
-		customClassNames: {
-			showToc: string;
-			hideToc: string;
-			showTocNumber: string;
-			hideTocNumber: string;
-		};
 	};
 }
 
@@ -50,6 +48,12 @@ export const DEFAULT_SETTINGS: NTocPluginSettings = {
 		useHeadingNumber: false,
 		skipHeading1: false,
 		renderMarkdown: true,
+		customClassNames: {
+			showToc: "NToc__SHOW-TOC",
+			hideToc: "NToc__HIDE-TOC",
+			showTocNumber: "NToc__SHOW-TOC-NUMBER",
+			hideTocNumber: "NToc__HIDE-TOC-NUMBER",
+		},
 	},
 	tool: {
 		useToolbar: true,
@@ -74,14 +78,6 @@ export const DEFAULT_SETTINGS: NTocPluginSettings = {
 		jumpToPrevHeading: {
 			enabled: false,
 			icon: "corner-left-up",
-		},
-	},
-	advanced: {
-		customClassNames: {
-			showToc: "NToc__SHOW-TOC",
-			hideToc: "NToc__HIDE-TOC",
-			showTocNumber: "NToc__SHOW-TOC-NUMBER",
-			hideTocNumber: "NToc__HIDE-TOC-NUMBER",
 		},
 	},
 };

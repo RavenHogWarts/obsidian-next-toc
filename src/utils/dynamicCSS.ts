@@ -13,7 +13,7 @@ export function updateDynamicCSS(settings: NTocPluginSettings) {
 	const style = document.createElement("style");
 	style.id = styleId;
 	
-	const { showToc, hideToc, showTocNumber, hideTocNumber } = settings.advanced.customClassNames;
+	const { showToc, hideToc, showTocNumber, hideTocNumber } = settings.render.customClassNames;
 	
 	// 生成动态CSS规则
 	style.textContent = `

@@ -50,8 +50,28 @@ const translations: BaseMessage = {
 				desc: "启用或禁用在目录中跳过一级标题",
 			},
 			renderMarkdown: {
-				name: "渲染Markdown",
-				desc: "启用或禁用在目录中渲染Markdown",
+				name: "渲染 Markdown",
+				desc: "启用或禁用在目录中渲染 Markdown",
+			},
+			customClassNames: {
+				name: "自定义类名",
+				desc: "自定义用于页面特定TOC控制的CSS类名",
+				showToc: {
+					name: "显示TOC类名",
+					desc: "强制显示TOC的类名（默认：NToc__SHOW-TOC）",
+				},
+				hideToc: {
+					name: "隐藏TOC类名", 
+					desc: "强制隐藏TOC的类名（默认：NToc__HIDE-TOC）",
+				},
+				showTocNumber: {
+					name: "显示TOC编号类名",
+					desc: "强制显示TOC标题编号的类名（默认：NToc__SHOW-TOC-NUMBER）",
+				},
+				hideTocNumber: {
+					name: "隐藏TOC编号类名",
+					desc: "强制隐藏TOC标题编号的类名（默认：NToc__HIDE-TOC-NUMBER）",
+				},
 			},
 		},
 		tool: {
@@ -87,29 +107,6 @@ const translations: BaseMessage = {
 			jumpToPrevHeading: {
 				name: "跳转到上一个标题",
 				desc: "跳转到上一个标题的按钮",
-			},
-		},
-		advanced: {
-			name: "高级设置",
-			customClassNames: {
-				name: "自定义类名",
-				desc: "自定义用于页面特定TOC控制的CSS类名",
-				showToc: {
-					name: "显示TOC类名",
-					desc: "强制显示TOC的类名（默认：NToc__SHOW-TOC）",
-				},
-				hideToc: {
-					name: "隐藏TOC类名", 
-					desc: "强制隐藏TOC的类名（默认：NToc__HIDE-TOC）",
-				},
-				showTocNumber: {
-					name: "显示TOC编号类名",
-					desc: "强制显示TOC标题编号的类名（默认：NToc__SHOW-TOC-NUMBER）",
-				},
-				hideTocNumber: {
-					name: "隐藏TOC编号类名",
-					desc: "强制隐藏TOC标题编号的类名（默认：NToc__HIDE-TOC-NUMBER）",
-				},
 			},
 		},
 	},
