@@ -57,6 +57,9 @@ const translations: BaseMessage = {
 		},
 		tool: {
 			name: "Tool",
+			headings: {
+				returnButtons: "Navigation button group",
+			},
 			useToolbar: {
 				name: "Use toolbar",
 				desc: "Show the toolbar with navigation buttons",

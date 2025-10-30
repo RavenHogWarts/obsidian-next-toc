@@ -49,6 +49,9 @@ export type BaseMessage = {
 		};
 		tool: {
 			name: string;
+			headings: {
+				returnButtons: string;
+			};
 			useToolbar: IBaseSettingsItem;
 			showProgressBar: IBaseSettingsItem;
 			showProgressCircle: IBaseSettingsItem;

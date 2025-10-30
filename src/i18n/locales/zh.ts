@@ -56,6 +56,9 @@ const translations: BaseMessage = {
 		},
 		tool: {
 			name: "工具",
+			headings: {
+				returnButtons: "导航按钮组",
+			},
 			useToolbar: {
 				name: "使用工具栏",
 				desc: "显示带有导航按钮的工具栏",
