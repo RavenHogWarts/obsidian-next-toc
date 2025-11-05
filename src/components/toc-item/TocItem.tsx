@@ -2,8 +2,8 @@ import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
 import scrollToHeading from "@src/utils/scrollToHeading";
 import { ChevronDown, ChevronRight } from "lucide-react";
-import { HeadingCache, MarkdownRenderer, MarkdownView } from "obsidian";
-import { FC, useEffect, useRef } from "react";
+import { Component, HeadingCache, MarkdownView } from "obsidian";
+import { FC, useEffect, useMemo, useRef } from "react";
 import "./TocItem.css";
 
 interface TocItemProps {
@@ -34,27 +34,46 @@ export const TocItem: FC<TocItemProps> = ({
 
 	const NTocItemTextRef = useRef<HTMLDivElement>(null);
 
+	// 创建一个临时的 Component 实例用于 Markdown 渲染
+	const markdownComponent = useMemo(() => new Component(), []);
+
+	// 创建 Markdown 渲染服务
+	const markdownRenderService = useMemo(
+		() => settingsStore.createMarkdownRenderService(markdownComponent),
+		[settingsStore, markdownComponent]
+	);
+
 	useEffect(() => {
 		if (NTocItemTextRef.current) {
-			// 使用 replaceChildren() 清空所有子节点
-			NTocItemTextRef.current.replaceChildren();
-			NTocItemTextRef.current.classList.remove("markdown-rendered");
+			// 清空所有子节点
+			markdownRenderService.clearElement(NTocItemTextRef.current);
 
 			if (settings.render.renderMarkdown) {
 				NTocItemTextRef.current.classList.add("markdown-rendered");
-
-				MarkdownRenderer.render(
-					settingsStore.app,
+				markdownRenderService.renderMarkdown(
 					heading.heading,
 					NTocItemTextRef.current,
-					"",
-					settingsStore.plugin
+					""
 				);
 			} else {
-				NTocItemTextRef.current.textContent = heading.heading;
+				markdownRenderService.setTextContent(
+					heading.heading,
+					NTocItemTextRef.current
+				);
 			}
 		}
-	}, [settings.render.renderMarkdown, heading.heading]);
+	}, [
+		settings.render.renderMarkdown,
+		heading.heading,
+		markdownRenderService,
+	]);
+
+	// 清理组件时卸载临时的 Component
+	useEffect(() => {
+		return () => {
+			markdownComponent.unload();
+		};
+	}, [markdownComponent]);
 
 	return (
 		<div

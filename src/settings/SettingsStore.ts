@@ -1,5 +1,10 @@
 import NTocPlugin from "@src/main";
+import {
+	createMarkdownRenderService,
+	MarkdownRenderService,
+} from "@src/services/MarkdownRenderService";
 import { DEFAULT_SETTINGS, NTocPluginSettings } from "@src/types/types";
+import { Component } from "obsidian";
 
 export default class SettingsStore {
 	#plugin: NTocPlugin;
@@ -24,12 +29,17 @@ export default class SettingsStore {
 		return Object.assign({}, this.#store);
 	}
 
-	get plugin() {
-		return this.#plugin;
-	}
-
 	get app() {
 		return this.#plugin.app;
+	}
+
+	/**
+	 * 创建 Markdown 渲染服务
+	 * @param component - 组件实例，用于管理渲染生命周期
+	 * @returns MarkdownRenderService 实例
+	 */
+	createMarkdownRenderService(component: Component): MarkdownRenderService {
+		return createMarkdownRenderService(this.app, component);
 	}
 
 	#notifyStoreSubscribers() {
