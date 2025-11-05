@@ -6,7 +6,14 @@ import hasChildren from "@src/utils/hasChildren";
 import scrollToHeading from "@src/utils/scrollToHeading";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { HeadingCache, MarkdownView } from "obsidian";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+	FC,
+	MouseEvent,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 
 interface TocCardProps {
 	config: TocCardConfig;
@@ -14,7 +21,7 @@ interface TocCardProps {
 	currentView?: MarkdownView | null;
 }
 
-export const TocCard: React.FC<TocCardProps> = ({
+export const TocCard: FC<TocCardProps> = ({
 	config,
 	headings,
 	currentView,
@@ -118,7 +125,7 @@ export const TocCard: React.FC<TocCardProps> = ({
 	);
 
 	const handleClick = useCallback(
-		(e: React.MouseEvent, heading: HeadingCache) => {
+		(e: MouseEvent, heading: HeadingCache) => {
 			e.preventDefault();
 			if (currentView && config.redirect) {
 				scrollToHeading(currentView, heading);

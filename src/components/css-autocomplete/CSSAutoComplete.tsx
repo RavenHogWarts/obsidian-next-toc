@@ -4,7 +4,14 @@ import {
 	getAllCSSProperties,
 	getCSSPropertySuggestions,
 } from "@src/utils/cssProperties";
-import { FC, KeyboardEvent, useEffect, useRef, useState } from "react";
+import {
+	ChangeEvent,
+	FC,
+	KeyboardEvent,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import "./CSSAutoComplete.css";
 
 export interface CSSAutoCompleteProps {
@@ -42,7 +49,7 @@ export const CSSAutoComplete: FC<CSSAutoCompleteProps> = ({
 		}
 	}, [value, allProperties, type, property]);
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const newValue = e.target.value;
 		onChange(newValue);
 		setShowSuggestions(true);

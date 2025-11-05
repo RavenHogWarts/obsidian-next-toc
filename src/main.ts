@@ -55,7 +55,6 @@ export default class NTocPlugin extends Plugin {
 		this.addCommand({
 			id: "return-to-cursor",
 			name: t("commands.returnToCursor"),
-			hotkeys: [],
 			editorCallback: (editor: Editor) => {
 				if (this.currentView && editor === this.currentView.editor) {
 					returnToCursor(this.currentView);
@@ -66,7 +65,6 @@ export default class NTocPlugin extends Plugin {
 		this.addCommand({
 			id: "scroll-to-top",
 			name: t("commands.scrollToTop"),
-			hotkeys: [],
 			callback: () => {
 				if (this.currentView) {
 					scrollTopBottom(this.currentView, "top");
@@ -77,7 +75,6 @@ export default class NTocPlugin extends Plugin {
 		this.addCommand({
 			id: "scroll-to-bottom",
 			name: t("commands.scrollToBottom"),
-			hotkeys: [],
 			callback: () => {
 				if (this.currentView) {
 					scrollTopBottom(this.currentView, "bottom");
@@ -88,7 +85,6 @@ export default class NTocPlugin extends Plugin {
 		this.addCommand({
 			id: "navigate-previous-heading",
 			name: t("commands.navigatePreviousHeading"),
-			hotkeys: [],
 			callback: async () => {
 				if (this.currentView) {
 					const headings = await getFileHeadings(this.currentView);
@@ -100,7 +96,6 @@ export default class NTocPlugin extends Plugin {
 		this.addCommand({
 			id: "navigate-next-heading",
 			name: t("commands.navigateNextHeading"),
-			hotkeys: [],
 			callback: async () => {
 				if (this.currentView) {
 					const headings = await getFileHeadings(this.currentView);
@@ -112,7 +107,6 @@ export default class NTocPlugin extends Plugin {
 		this.addCommand({
 			id: "toc-expand",
 			name: t("commands.tocExpand"),
-			hotkeys: [],
 			callback: () => {
 				this.settingsStore.updateSettingByPath(
 					"toc.alwaysExpand",

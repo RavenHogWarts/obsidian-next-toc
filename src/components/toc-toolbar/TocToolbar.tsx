@@ -57,7 +57,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 
 		try {
 			await navigator.clipboard.writeText(toc);
-			new Notice("Successfully copied Toc");
+			new Notice("Successfully copied toc");
 		} catch (error) {
 			console.error("Failed to copy Toc:", error);
 		}
