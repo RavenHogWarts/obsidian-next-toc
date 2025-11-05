@@ -497,20 +497,20 @@ type ObsidianSettingWithComponents = FC<ObsidianSettingProps> & {
 };
 
 // 将ObsidianSetting转换为带有子组件的类型
-const ObsidianSettingWithComponents =
+const ObsidianSettingComponent =
 	ObsidianSetting as ObsidianSettingWithComponents;
 
 // 将子组件作为ObsidianSetting的静态属性
-ObsidianSettingWithComponents.Button = Button;
-ObsidianSettingWithComponents.Dropdown = Dropdown;
-ObsidianSettingWithComponents.ExtraButton = ExtraButton;
-ObsidianSettingWithComponents.Container = Container;
-ObsidianSettingWithComponents.MomentFormat = MomentFormat;
-ObsidianSettingWithComponents.Text = Text;
-ObsidianSettingWithComponents.Toggle = Toggle;
+ObsidianSettingComponent.Button = Button;
+ObsidianSettingComponent.Dropdown = Dropdown;
+ObsidianSettingComponent.ExtraButton = ExtraButton;
+ObsidianSettingComponent.Container = Container;
+ObsidianSettingComponent.MomentFormat = MomentFormat;
+ObsidianSettingComponent.Text = Text;
+ObsidianSettingComponent.Toggle = Toggle;
 
 // 重新导出ObsidianSetting（现在包含所有子组件作为静态属性）
-export default ObsidianSettingWithComponents;
+export default ObsidianSettingComponent;
 
 // 同时导出ObsidianSetting本身，以便可以直接使用
 export { ObsidianSetting };
