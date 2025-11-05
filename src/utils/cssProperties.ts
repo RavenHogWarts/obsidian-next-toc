@@ -4,11 +4,11 @@
  */
 
 // 通过TypeScript的类型系统获取CSSStyleDeclaration的所有属性名
-type CSSPropertyKeys = {
-	[K in keyof CSSStyleDeclaration]: CSSStyleDeclaration[K] extends string
-		? K
-		: never;
-}[keyof CSSStyleDeclaration];
+// type CSSPropertyKeys = {
+// 	[K in keyof CSSStyleDeclaration]: CSSStyleDeclaration[K] extends string
+// 		? K
+// 		: never;
+// }[keyof CSSStyleDeclaration];
 
 // 获取所有CSS属性名的函数
 export function getAllCSSProperties(): string[] {

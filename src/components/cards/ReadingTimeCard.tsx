@@ -3,14 +3,14 @@ import applyCSSStyles from "@src/utils/applyCSSStyles";
 
 import getWordCounts from "@src/utils/getWordCounts";
 import { setIcon } from "obsidian";
-import { useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 
 interface ReadingTimeCardProps {
 	config: ReadingTimeCardConfig;
 	content: string;
 }
 
-export const ReadingTimeCard: React.FC<ReadingTimeCardProps> = ({
+export const ReadingTimeCard: FC<ReadingTimeCardProps> = ({
 	config,
 	content,
 }) => {

@@ -1,3 +1,4 @@
+import { EditorView } from "@codemirror/view";
 import { CardCreateModal } from "@src/components/modal/card-modal/CardCreateModal";
 import { App, MarkdownView, setIcon } from "obsidian";
 
