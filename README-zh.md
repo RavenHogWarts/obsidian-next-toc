@@ -11,13 +11,13 @@
 [![GitHub Last Commit](https://img.shields.io/github/last-commit/RavenHogWarts/obsidian-next-toc?style=flat&label=最后提交)](https://github.com/RavenHogWarts/obsidian-next-toc/commits/master)
 
 ## 安装
-### 社区插件市场安装
+<!-- ### 社区插件市场安装
 
 [点击安装](obsidian://show-plugin?id=next-toc)，或按以下步骤操作：
 
 1. 打开 Obsidian 并前往 `设置 > 第三方插件`。
-2. 搜索 “Yet Another TOC”。
-3. 点击 “安装”。
+2. 搜索 “Next TOC”。
+3. 点击 “安装”。 -->
 
 ### 手动安装
 
@@ -55,7 +55,7 @@
 
 ## 许可证
 
-此项目基于 xxx LICENSE 许可 - 详情请参阅 [LICENSE](LICENSE) 文件。
+此项目基于 GPL-3.0 LICENSE 许可 - 详情请参阅 [LICENSE](LICENSE) 文件。
 
 ## Star 历史
 
