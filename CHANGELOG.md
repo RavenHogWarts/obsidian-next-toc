@@ -1,3 +1,37 @@
+## [1.1.5](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.4...1.1.5) (2025-11-07)
+
+
+### ♻️ Refactor
+
+* 重命名并统一 ObsidianSetting 组件变量 (#83) ([95b3767](https://github.com/RavenHogWarts/obsidian-next-toc/commit/95b37678411c55d665a1cb797af62e3b2137cbba)), closes [#83](https://github.com/RavenHogWarts/obsidian-next-toc/issues/83)
+* **settings:** 拆分设置页独立选项卡组件 (#80) ([b53bfa7](https://github.com/RavenHogWarts/obsidian-next-toc/commit/b53bfa742d6453ad899490d367e99989ecf0e7db)), closes [#80](https://github.com/RavenHogWarts/obsidian-next-toc/issues/80)
+
+
+### ✨ Features
+
+* 为 TOC 工具添加国际化文案 (#84) ([f2eb1ac](https://github.com/RavenHogWarts/obsidian-next-toc/commit/f2eb1ac560bd74d9a86f7dbd9c8dfc06585aeb9e)), closes [#84](https://github.com/RavenHogWarts/obsidian-next-toc/issues/84)
+* 引入 Markdown 渲染服务并在目录项中使用 (#82) ([6b9a358](https://github.com/RavenHogWarts/obsidian-next-toc/commit/6b9a358310fd5436395d6e676cc91e405d32baf0)), closes [#82](https://github.com/RavenHogWarts/obsidian-next-toc/issues/82)
+* **settings:** 添加“导航按钮组”设置分组 (#79) ([7887a4f](https://github.com/RavenHogWarts/obsidian-next-toc/commit/7887a4f3d0d16bb004504754a881f4146dd7dd83)), closes [#79](https://github.com/RavenHogWarts/obsidian-next-toc/issues/79)
+
+
+### 🐛 Bug Fixes
+
+* 样式相关修复和改进 (#75) ([9230cfc](https://github.com/RavenHogWarts/obsidian-next-toc/commit/9230cfcbd6dfcff1771d1527684776b4efb3feeb)), closes [#75](https://github.com/RavenHogWarts/obsidian-next-toc/issues/75)
+* 优化目录容器样式与偏移变量设置 (#77) ([6c6bc72](https://github.com/RavenHogWarts/obsidian-next-toc/commit/6c6bc72408eafcf3b836530c0e3e4de5e89d1165)), closes [#77](https://github.com/RavenHogWarts/obsidian-next-toc/issues/77)
+* 支持跳过一级标题并修正依赖 (#86) ([dd90897](https://github.com/RavenHogWarts/obsidian-next-toc/commit/dd90897b7a7066a66664b7595e2649e87bdb3b14)), closes [#86](https://github.com/RavenHogWarts/obsidian-next-toc/issues/86)
+
+
+### 🔧 CI
+
+* **security:** 强化 PR 构建安全检查逻辑 (#76) ([d53626f](https://github.com/RavenHogWarts/obsidian-next-toc/commit/d53626f7476486a7a5f5811aecbb21b6fc4311b6)), closes [#76](https://github.com/RavenHogWarts/obsidian-next-toc/issues/76)
+
+
+### 🔨 Chore
+
+* **deps:** 升级依赖并清理类型注释 (#81) ([1a291f4](https://github.com/RavenHogWarts/obsidian-next-toc/commit/1a291f4975a543092c943316a18a88b9f63ddba2)), closes [#81](https://github.com/RavenHogWarts/obsidian-next-toc/issues/81)
+
+
+
 ## [1.1.4](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.3...1.1.4) (2025-10-28)
 
 
