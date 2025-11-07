@@ -55,7 +55,7 @@ If you find this plugin helpful, you can support the development through:
 
 ## License
 
-This project is licensed under the xxx LICENSE - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GPL-3.0 LICENSE - see the [LICENSE](LICENSE) file for details.
 
 ## Star History
 
