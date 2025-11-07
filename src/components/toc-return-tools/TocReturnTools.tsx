@@ -1,5 +1,7 @@
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
+import { t } from "@src/i18n/i18n";
+import { TranslationKeys } from "@src/i18n/types";
 import {
 	isSourceMode,
 	navigateHeading,
@@ -107,6 +109,7 @@ export const TocReturnTools: FC<TocReturnToolsProps> = ({
 							? "NToc__tool-expand-right"
 							: "NToc__tool-expand-left"
 					}`}
+					aria-label={t("tools.returnNavigation")}
 				>
 					{enabledTools.map((tool) => {
 						return (
@@ -117,6 +120,9 @@ export const TocReturnTools: FC<TocReturnToolsProps> = ({
 								}}
 								className="NToc__tool-button"
 								onClick={() => handleToolClick(tool.key)}
+								aria-label={t(
+									`tools.${tool.key}` as TranslationKeys
+								)}
 							></button>
 						);
 					})}

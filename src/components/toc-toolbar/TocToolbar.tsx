@@ -1,5 +1,6 @@
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
+import { t } from "@src/i18n/i18n";
 import cleanHeading from "@src/utils/cleanHeading";
 import {
 	ArrowLeftRight,
@@ -69,7 +70,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 				className={`NToc__toc-toolbar-button  ${
 					settings.toc.alwaysExpand ? "active" : ""
 				}`}
-				aria-label="Pin TOC group"
+				aria-label={t("tools.pinTOC")}
 				onClick={() => {
 					settingsStore.updateSettingByPath(
 						"toc.alwaysExpand",
@@ -83,7 +84,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"
-				aria-label="Change TOC group position"
+				aria-label={t("tools.changePosition")}
 				onClick={() => {
 					settingsStore.updateSettingByPath(
 						"toc.position",
@@ -97,7 +98,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"
-				aria-label="Expand/Collapse TOC items"
+				aria-label={t("tools.expandCollapse")}
 				onClick={hasAnyCollapsed ? onExpandAll : onCollapseAll}
 			>
 				<span className="NToc__toc-toolbar-button-icon">
@@ -110,7 +111,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"
-				aria-label="Add offset to the left"
+				aria-label={t("tools.leftOffset")}
 				onClick={() => handleOffsetChange("left")}
 			>
 				<span className="NToc__toc-toolbar-button-icon">
@@ -119,7 +120,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"
-				aria-label="Add offset to the right"
+				aria-label={t("tools.rightOffset")}
 				onClick={() => handleOffsetChange("right")}
 			>
 				<span className="NToc__toc-toolbar-button-icon">
@@ -128,7 +129,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"
-				aria-label="Copy TOC to clipboard"
+				aria-label={t("tools.copyTOC")}
 				onClick={handleCopyToClipboard}
 			>
 				<span className="NToc__toc-toolbar-button-icon">

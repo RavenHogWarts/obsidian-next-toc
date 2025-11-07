@@ -96,6 +96,20 @@ export type BaseMessage = {
 			noneCustomProperty: string;
 		};
 	};
+	tools: {
+		pinTOC: string;
+		changePosition: string;
+		expandCollapse: string;
+		leftOffset: string;
+		rightOffset: string;
+		copyTOC: string;
+		returnNavigation: string;
+		returnToCursor: string;
+		returnToTop: string;
+		returnToBottom: string;
+		jumpToNextHeading: string;
+		jumpToPrevHeading: string;
+	};
 };
 
 // 生成所有可能的翻译键路径类型
