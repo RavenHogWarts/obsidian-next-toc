@@ -128,6 +128,20 @@ const translations: BaseMessage = {
 			noneCustomProperty: "No custom properties defined for ",
 		},
 	},
+	tools: {
+		pinTOC: "Pin/Unpin TOC",
+		changePosition: "Change TOC position",
+		expandCollapse: "Expand/Collapse TOC items",
+		leftOffset: "Add offset to the left",
+		rightOffset: "Add offset to the right",
+		copyTOC: "Copy TOC to clipboard",
+		returnNavigation: "Return navigation",
+		returnToCursor: "To cursor",
+		returnToTop: "To top",
+		returnToBottom: "To bottom",
+		jumpToNextHeading: "Next heading",
+		jumpToPrevHeading: "Previous heading",
+	},
 };
 
 export default translations;

@@ -127,6 +127,20 @@ const translations: BaseMessage = {
 			noneCustomProperty: "未定义自定义属性",
 		},
 	},
+	tools: {
+		pinTOC: "固定/取消固定目录",
+		changePosition: "更改目录位置",
+		expandCollapse: "展开/收起目录项",
+		leftOffset: "向左偏移",
+		rightOffset: "向右偏移",
+		copyTOC: "复制目录到剪贴板",
+		returnNavigation: "返回导航",
+		returnToCursor: "返回光标位置",
+		returnToTop: "返回顶部",
+		returnToBottom: "返回底部",
+		jumpToNextHeading: "下一个标题",
+		jumpToPrevHeading: "上一个标题",
+	},
 };
 
 export default translations;
