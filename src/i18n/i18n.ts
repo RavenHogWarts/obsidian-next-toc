@@ -65,17 +65,6 @@ export class I18n {
 		});
 	}
 
-	public setLocale(locale: string): void {
-		if (this.translations[locale]) {
-			this.currentLocale = locale;
-			window.localStorage.setItem("language", locale);
-		} else {
-			console.warn(`Locale not found: ${locale}, falling back to 'en'`);
-			this.currentLocale = "en";
-			window.localStorage.setItem("language", "en");
-		}
-	}
-
 	public getLocale(): string {
 		return this.currentLocale;
 	}
