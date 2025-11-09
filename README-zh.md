@@ -51,7 +51,7 @@
 - [加入讨论](https://github.com/RavenHogWarts/obsidian-next-toc/discussions) 提出问题或分享想法
 
 如果你觉得这个插件对你有帮助，可以通过以下方式支持开发：
-- 微信/支付宝：[二维码](https://s2.loli.net/2024/05/06/lWBj3ObszUXSV2f.png)
+- [爱发电](https://afdian.com/a/ravenhogwarts)
 
 ## 许可证
 
