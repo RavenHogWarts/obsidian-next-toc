@@ -53,7 +53,7 @@ export class CardProcessor {
 		if (config.type === "reading-time") {
 			const readingConfig = config as ReadingTimeCardConfig;
 			const content =
-				file instanceof TFile ? await app.vault.read(file) : "";
+				file instanceof TFile ? await app.vault.cachedRead(file) : "";
 			root.render(
 				<StrictMode>
 					<ReadingTimeCard config={readingConfig} content={content} />
