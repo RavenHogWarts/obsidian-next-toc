@@ -1,3 +1,5 @@
+import { debounce } from "obsidian";
+
 export interface ScrollListenerOptions {
 	debounceMs?: number;
 	onScroll: (event: Event) => void;
@@ -8,24 +10,13 @@ export function createScrollListener(
 	options: ScrollListenerOptions
 ): () => void {
 	const { debounceMs = 16, onScroll } = options;
-	let timeoutId: number | null = null;
 
-	const debouncedHandler = (event: Event) => {
-		if (timeoutId) {
-			clearTimeout(timeoutId);
-		}
-		timeoutId = window.setTimeout(() => {
-			onScroll(event);
-		}, debounceMs);
-	};
+	const debouncedHandler = debounce(onScroll, debounceMs, true);
 
 	element.addEventListener("scroll", debouncedHandler, true);
 
 	// 返回清理函数
 	return () => {
-		if (timeoutId) {
-			clearTimeout(timeoutId);
-		}
 		if (isElementValid(element)) {
 			element.removeEventListener("scroll", debouncedHandler, true);
 		}
