@@ -6,6 +6,7 @@ import {
 	updateNTocRender,
 } from "./components/toc-navigator/NTocRender";
 import { t } from "./i18n/i18n";
+import { createCursorListenerExtension } from "./services/cursorListenerExtension";
 import { PluginSettingTab } from "./settings/PluginSettingTab";
 import SettingsStore from "./settings/SettingsStore";
 import { NTocPluginSettings } from "./types/types";
@@ -35,7 +36,7 @@ export default class NTocPlugin extends Plugin {
 		this.registerCodeblockProcessor();
 
 		// Register CM6 cursor listener extension
-		// this.registerEditorExtension(createCursorListenerExtension(this));
+		this.registerEditorExtension(createCursorListenerExtension(this));
 
 		// Setup initial scroll listener
 		this.setupScrollListener();
