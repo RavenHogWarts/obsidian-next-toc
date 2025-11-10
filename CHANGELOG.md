@@ -1,3 +1,22 @@
+## [1.1.6](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.5...1.1.6) (2025-11-10)
+
+
+### ✨ Features
+
+* 启用 CM6 光标监听扩展 (#92) ([4333bc6](https://github.com/RavenHogWarts/obsidian-next-toc/commit/4333bc69e86a2aec21aaa98383e8d09b7f23d737)), closes [#92](https://github.com/RavenHogWarts/obsidian-next-toc/issues/92)
+
+
+### 🐛 Bug Fixes
+
+* 解决插件上架修改建议 (#91) ([d6b7401](https://github.com/RavenHogWarts/obsidian-next-toc/commit/d6b74017a46a2007b48f6f6cb60818570c8c1b1b)), closes [#91](https://github.com/RavenHogWarts/obsidian-next-toc/issues/91)
+
+
+### 📝 Documentation
+
+* 更新安装和许可 (#89) ([0ce9dcb](https://github.com/RavenHogWarts/obsidian-next-toc/commit/0ce9dcbfad567e99efe5ed941d4d742262b21b13)), closes [#89](https://github.com/RavenHogWarts/obsidian-next-toc/issues/89)
+
+
+
 ## [1.1.5](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.4...1.1.5) (2025-11-07)
 
 
