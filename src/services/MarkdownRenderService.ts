@@ -1,9 +1,5 @@
 import { App, Component, MarkdownRenderer } from "obsidian";
 
-/**
- * Markdown 渲染服务
- * 提供安全的 Markdown 渲染功能，避免在组件中直接使用插件实例
- */
 export class MarkdownRenderService {
 	private app: App;
 	private component: Component;
