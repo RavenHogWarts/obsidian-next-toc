@@ -312,8 +312,8 @@
 
 	.NToc__group-indicators {
 		padding: 0.5rem;
-		max-height: 20dvh;
-		min-height: 20dvh;
+		max-height: 30dvh;
+		min-height: fit-content;
 	}
 }
 
