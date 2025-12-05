@@ -53,6 +53,10 @@ const translations: BaseMessage = {
 				name: "渲染 Markdown",
 				desc: "启用或禁用在目录中渲染 Markdown",
 			},
+			showWhenSingleHeading: {
+				name: "单一标题时显示目录",
+				desc: "启用或禁用在文档仅有单一标题时显示目录",
+			},
 		},
 		tool: {
 			name: "工具",

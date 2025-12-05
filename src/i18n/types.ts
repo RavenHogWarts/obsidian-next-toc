@@ -46,6 +46,7 @@ export type BaseMessage = {
 			useHeadingNumber: IBaseSettingsItem;
 			skipHeading1: IBaseSettingsItem;
 			renderMarkdown: IBaseSettingsItem;
+			showWhenSingleHeading: IBaseSettingsItem;
 		};
 		tool: {
 			name: string;
