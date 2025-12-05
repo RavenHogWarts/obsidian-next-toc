@@ -61,6 +61,8 @@ export default class NTocPlugin extends Plugin {
 
 		this.app.workspace.onLayoutReady(() => {
 			this.initLeaf();
+			// 确保只有一个视图实例
+			this.ensureSingleView();
 		});
 
 		// Register CM6 cursor listener extension
@@ -74,19 +76,47 @@ export default class NTocPlugin extends Plugin {
 
 	onunload() {
 		this.cleanupScrollListener();
+		this.app.workspace
+			.getLeavesOfType(VIEW_TYPE_NTOC)
+			.forEach((leaf) => leaf.detach());
 	}
 
 	async saveSettings() {
 		await this.saveData(this.settings);
 	}
 
+	/**
+	 * 初始化 NTocView，确保只有一个实例
+	 */
 	initLeaf(): void {
-		if (this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC).length) {
+		const existingLeaves = this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC);
+		
+		// 如果已经存在视图，检查是否有多个
+		if (existingLeaves.length > 0) {
+			// 保留第一个，关闭其他的
+			if (existingLeaves.length > 1) {
+				console.warn(`Found ${existingLeaves.length} NTocView instances, keeping only one`);
+				existingLeaves.slice(1).forEach((leaf) => leaf.detach());
+			}
 			return;
 		}
+		
+		// 不存在则创建一个
 		this.app.workspace.getRightLeaf(false)?.setViewState({
 			type: VIEW_TYPE_NTOC,
 		});
+	}
+
+	/**
+	 * 确保只有一个 NTocView 实例
+	 */
+	private ensureSingleView(): void {
+		const existingLeaves = this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC);
+		if (existingLeaves.length > 1) {
+			console.warn(`Detected ${existingLeaves.length} NTocView instances, removing duplicates`);
+			// 保留第一个，关闭其他的
+			existingLeaves.slice(1).forEach((leaf) => leaf.detach());
+		}
 	}
 
 	private registerCommands() {
@@ -256,6 +286,8 @@ export default class NTocPlugin extends Plugin {
 
 		this.registerEvent(
 			this.app.workspace.on("layout-change", async () => {
+				// 确保只有一个 NTocView 实例
+				this.ensureSingleView();
 				await this.updateNToc();
 			})
 		);
