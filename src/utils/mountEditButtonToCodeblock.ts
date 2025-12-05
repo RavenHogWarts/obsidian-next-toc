@@ -1,5 +1,3 @@
-import { EditorView } from "@codemirror/view";
-import { CardCreateModal } from "@src/components/modal/card-modal/CardCreateModal";
 import { App, MarkdownView, setIcon } from "obsidian";
 
 export default function (app: App, code: string, codeblockDom: HTMLElement) {
@@ -17,26 +15,25 @@ export default function (app: App, code: string, codeblockDom: HTMLElement) {
 	});
 
 	cardEditBtn.onclick = () => {
-		new CardCreateModal(app, code, (content) => {
-			const markdownView =
-				app.workspace.getActiveViewOfType(MarkdownView);
-			if (!markdownView) {
-				return;
-			}
-			const editor = markdownView.editor;
-			// @ts-ignore
-			const editorView = editor.cm as EditorView;
-			const pos = editorView.posAtDOM(codeblockDom);
-			const start = pos + "```ntoc-card\n".length;
-
-			editorView.dispatch({
-				changes: {
-					from: start,
-					to: start + code.length,
-					insert: content,
-				},
-			});
-		}).open();
+		// new CardCreateModal(app, code, (content) => {
+		// 	const markdownView =
+		// 		app.workspace.getActiveViewOfType(MarkdownView);
+		// 	if (!markdownView) {
+		// 		return;
+		// 	}
+		// 	const editor = markdownView.editor;
+		// 	// @ts-ignore
+		// 	const editorView = editor.cm as EditorView;
+		// 	const pos = editorView.posAtDOM(codeblockDom);
+		// 	const start = pos + "```ntoc-card\n".length;
+		// 	editorView.dispatch({
+		// 		changes: {
+		// 			from: start,
+		// 			to: start + code.length,
+		// 			insert: content,
+		// 		},
+		// 	});
+		// }).open();
 	};
 	return cardEditBtn;
 }
