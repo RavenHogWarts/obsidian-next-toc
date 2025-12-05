@@ -1,3 +1,29 @@
+# [1.2.0](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.6...1.2.0) (2025-12-05)
+
+
+### ♻️ Refactor
+
+* 移除废弃组件与样式代码 (#101) ([ff2f0ee](https://github.com/RavenHogWarts/obsidian-next-toc/commit/ff2f0ee6f0317c3abe6c66490149153d4f634111)), closes [#101](https://github.com/RavenHogWarts/obsidian-next-toc/issues/101)
+* remove unnecessary service description comments ([d5d2d9c](https://github.com/RavenHogWarts/obsidian-next-toc/commit/d5d2d9c9c1133b8a41b83f726db516a6e6271ce4))
+
+
+### ✨ Features
+
+* 添加 Next TOC 视图 (#102) ([1dbdb7f](https://github.com/RavenHogWarts/obsidian-next-toc/commit/1dbdb7f3ea1d4fd68f7f38c1765c9c8af8858132)), closes [#102](https://github.com/RavenHogWarts/obsidian-next-toc/issues/102)
+* 添加“单一标题时显示目录”设置 (#100) ([9f36f63](https://github.com/RavenHogWarts/obsidian-next-toc/commit/9f36f639f5263d42ba18256eaae6d4dd9c610943)), closes [#100](https://github.com/RavenHogWarts/obsidian-next-toc/issues/100)
+
+
+### 🐛 Bug Fixes
+
+* **ui:** 优化目录导航与按钮的响应式行为 (#99) ([eee9ce9](https://github.com/RavenHogWarts/obsidian-next-toc/commit/eee9ce91311b42b265bf60624b0bc2190285a0ef)), closes [#99](https://github.com/RavenHogWarts/obsidian-next-toc/issues/99)
+
+
+### 🔨 Chore
+
+* **funding:** 添加自定义资助链接 (#97) ([985049e](https://github.com/RavenHogWarts/obsidian-next-toc/commit/985049e50dc4e69f90e108a12b5123481b03c13f)), closes [#97](https://github.com/RavenHogWarts/obsidian-next-toc/issues/97)
+
+
+
 ## [1.1.6](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.5...1.1.6) (2025-11-10)
 
 
