@@ -63,6 +63,24 @@ export const RenderTabContent: FC = () => {
 					),
 				}}
 			/>
+
+			<ObsidianSetting
+				slots={{
+					name: t("settings.render.showWhenSingleHeading.name"),
+					desc: t("settings.render.showWhenSingleHeading.desc"),
+					control: (
+						<ObsidianSetting.Toggle
+							value={settings.render.showWhenSingleHeading}
+							onChange={(value) => {
+								settingsStore.updateSettingByPath(
+									"render.showWhenSingleHeading",
+									value
+								);
+							}}
+						/>
+					),
+				}}
+			/>
 		</ObsidianSetting.Container>
 	);
 };

@@ -17,6 +17,7 @@ export interface NTocPluginSettings {
 		useHeadingNumber: boolean;
 		skipHeading1: boolean;
 		renderMarkdown: boolean;
+		showWhenSingleHeading: boolean;
 	};
 	tool: {
 		useToolbar: boolean;
@@ -42,6 +43,7 @@ export const DEFAULT_SETTINGS: NTocPluginSettings = {
 		useHeadingNumber: false,
 		skipHeading1: false,
 		renderMarkdown: true,
+		showWhenSingleHeading: true,
 	},
 	tool: {
 		useToolbar: true,

@@ -54,6 +54,10 @@ const translations: BaseMessage = {
 				name: "Render markdown",
 				desc: "Enable or disable rendering markdown in the table of contents",
 			},
+			showWhenSingleHeading: {
+				name: "Show when single heading",
+				desc: "Enable or disable showing the table of contents when the document has only a single heading",
+			},
 		},
 		tool: {
 			name: "Tool",

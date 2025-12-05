@@ -264,13 +264,13 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 		const collapsedLevels: number[] = [];
 		for (let i = 0; i < headings.length; i++) {
 			const level = headings[i].level;
-			
+
 			// 如果开启了 skipHeading1 且当前是一级标题，则隐藏
 			if (settings.render.skipHeading1 && level === 1) {
 				result[i] = false;
 				continue;
 			}
-			
+
 			// 离开较深的折叠子树：弹出所有 >= 当前层级的折叠层级
 			while (
 				collapsedLevels.length > 0 &&
@@ -291,11 +291,31 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	const shouldShowToc = useMemo(() => {
 		if (settings.render.skipHeading1) {
 			const hasOnlyH1 = headings.every((heading) => heading.level === 1);
-			return !hasOnlyH1;
+			if (hasOnlyH1) return false;
+		}
+
+		// 如果配置了不在单标题时显示，检查可见标题数量
+		if (!settings.render.showWhenSingleHeading) {
+			const visibleHeadingsCount = headings.filter((heading, index) => {
+				// 如果开启了 skipHeading1，排除 h1
+				if (settings.render.skipHeading1 && heading.level === 1) {
+					return false;
+				}
+				return true;
+			}).length;
+
+			// 只有一个或没有可见标题时不显示
+			if (visibleHeadingsCount <= 1) {
+				return false;
+			}
 		}
 
 		return headings.length > 0;
-	}, [headings, settings.render.skipHeading1]);
+	}, [
+		headings,
+		settings.render.skipHeading1,
+		settings.render.showWhenSingleHeading,
+	]);
 
 	// 当 TOC 显示状态变化时重新应用宽度样式
 	useEffect(() => {
