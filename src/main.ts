@@ -18,6 +18,7 @@ import {
 	scrollTopBottom,
 } from "./utils/tocToolsActions";
 import updateActiveHeading from "./utils/updateActiveHeading";
+import { NTocView, VIEW_TYPE_NTOC } from "./view/NTocView";
 
 export default class NTocPlugin extends Plugin {
 	settings: NTocPluginSettings;
@@ -25,15 +26,42 @@ export default class NTocPlugin extends Plugin {
 	readonly settingsStore = new SettingsStore(this);
 	private scrollListenerCleanup: (() => void) | null = null;
 
+	/**
+	 * 获取当前活跃的 MarkdownView，如果当前活跃的是 NTocView 则返回之前保存的 currentView
+	 */
+	private getActiveMarkdownView(): MarkdownView | null {
+		const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+
+		// 如果当前活跃视图是 MarkdownView，更新并返回
+		if (activeView) {
+			return activeView;
+		}
+
+		// 否则，检查当前活跃的是否是 NTocView
+		const activeLeaf = this.app.workspace.getMostRecentLeaf();
+		if (activeLeaf?.view.getViewType() === VIEW_TYPE_NTOC) {
+			// 如果是 NTocView，返回之前保存的 currentView
+			return this.currentView;
+		}
+
+		// 其他情况返回 null
+		return null;
+	}
+
 	async onload() {
 		await this.settingsStore.loadSettings();
 
 		this.addSettingTab(new PluginSettingTab(this));
+		this.registerView(VIEW_TYPE_NTOC, (leaf) => new NTocView(leaf, this));
 
 		this.registerCommands();
 		this.registerEvents();
 		this.registerContextMenu();
 		this.registerCodeblockProcessor();
+
+		this.app.workspace.onLayoutReady(() => {
+			this.initLeaf();
+		});
 
 		// Register CM6 cursor listener extension
 		this.registerEditorExtension(createCursorListenerExtension(this));
@@ -52,13 +80,23 @@ export default class NTocPlugin extends Plugin {
 		await this.saveData(this.settings);
 	}
 
+	initLeaf(): void {
+		if (this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC).length) {
+			return;
+		}
+		this.app.workspace.getRightLeaf(false)?.setViewState({
+			type: VIEW_TYPE_NTOC,
+		});
+	}
+
 	private registerCommands() {
 		this.addCommand({
 			id: "return-to-cursor",
 			name: t("commands.returnToCursor"),
 			editorCallback: (editor: Editor) => {
-				if (this.currentView && editor === this.currentView.editor) {
-					returnToCursor(this.currentView);
+				const view = this.getActiveMarkdownView();
+				if (view && editor === view.editor) {
+					returnToCursor(view);
 				}
 			},
 		});
@@ -67,8 +105,9 @@ export default class NTocPlugin extends Plugin {
 			id: "scroll-to-top",
 			name: t("commands.scrollToTop"),
 			callback: () => {
-				if (this.currentView) {
-					scrollTopBottom(this.currentView, "top");
+				const view = this.getActiveMarkdownView();
+				if (view) {
+					scrollTopBottom(view, "top");
 				}
 			},
 		});
@@ -77,8 +116,9 @@ export default class NTocPlugin extends Plugin {
 			id: "scroll-to-bottom",
 			name: t("commands.scrollToBottom"),
 			callback: () => {
-				if (this.currentView) {
-					scrollTopBottom(this.currentView, "bottom");
+				const view = this.getActiveMarkdownView();
+				if (view) {
+					scrollTopBottom(view, "bottom");
 				}
 			},
 		});
@@ -87,9 +127,10 @@ export default class NTocPlugin extends Plugin {
 			id: "navigate-previous-heading",
 			name: t("commands.navigatePreviousHeading"),
 			callback: async () => {
-				if (this.currentView) {
-					const headings = await getFileHeadings(this.currentView);
-					navigateHeading(this.currentView, headings, "prev");
+				const view = this.getActiveMarkdownView();
+				if (view) {
+					const headings = await getFileHeadings(view);
+					navigateHeading(view, headings, "prev");
 				}
 			},
 		});
@@ -98,9 +139,10 @@ export default class NTocPlugin extends Plugin {
 			id: "navigate-next-heading",
 			name: t("commands.navigateNextHeading"),
 			callback: async () => {
-				if (this.currentView) {
-					const headings = await getFileHeadings(this.currentView);
-					navigateHeading(this.currentView, headings, "next");
+				const view = this.getActiveMarkdownView();
+				if (view) {
+					const headings = await getFileHeadings(view);
+					navigateHeading(view, headings, "next");
 				}
 			},
 		});
@@ -171,6 +213,11 @@ export default class NTocPlugin extends Plugin {
 	private registerEvents() {
 		this.registerEvent(
 			this.app.workspace.on("active-leaf-change", async (leaf) => {
+				// 如果切换到 NTocView，不做任何操作，保持当前的 MarkdownView
+				if (leaf?.view.getViewType() === VIEW_TYPE_NTOC) {
+					return;
+				}
+
 				this.cleanupScrollListener();
 
 				if (leaf?.view instanceof MarkdownView) {
@@ -182,10 +229,10 @@ export default class NTocPlugin extends Plugin {
 						await this.updateNToc();
 					});
 				} else {
-					// 切换到非MarkdownView，清理当前TOC
+					// 切换到非MarkdownView（且非NTocView），清理当前TOC
 					this.currentView = null;
 					// 通知NTocRender销毁当前显示
-					updateNTocRender(this.settingsStore, null, {
+					this.renderNToc(null, {
 						headings: [],
 						activeHeadingIndex: -1,
 					});
@@ -277,7 +324,20 @@ export default class NTocPlugin extends Plugin {
 	}
 
 	private renderNToc(view: MarkdownView | null, props: NTocRenderProps) {
+		// 更新内联 TOC（页面内显示）
 		updateNTocRender(this.settingsStore, view, props);
+
+		// 更新侧边栏 TOC 视图
+		const ntocViews = this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC);
+		ntocViews.forEach((leaf) => {
+			if (leaf.view instanceof NTocView) {
+				leaf.view.updateTocData(
+					view,
+					props.headings,
+					props.activeHeadingIndex
+				);
+			}
+		});
 	}
 
 	onCursorMoved(_view: EditorView): void {
