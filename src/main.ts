@@ -213,8 +213,22 @@ export default class NTocPlugin extends Plugin {
 	private registerEvents() {
 		this.registerEvent(
 			this.app.workspace.on("active-leaf-change", async (leaf) => {
-				// 如果切换到 NTocView，不做任何操作，保持当前的 MarkdownView
+				// 如果切换到 NTocView，隐藏内联导航但保持 currentView
 				if (leaf?.view.getViewType() === VIEW_TYPE_NTOC) {
+					// 强制更新以触发内联导航的隐藏检查
+					if (this.currentView && this.currentView.file) {
+						const headings = await getFileHeadings(
+							this.currentView
+						);
+						const activeHeadingIndex = updateActiveHeading(
+							this.currentView,
+							headings
+						);
+						this.renderNToc(this.currentView, {
+							headings,
+							activeHeadingIndex,
+						});
+					}
 					return;
 				}
 

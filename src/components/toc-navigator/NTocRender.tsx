@@ -42,6 +42,19 @@ export class NTocRender {
 		return !!activeMarkdownView && activeMarkdownView === this.view;
 	}
 
+	private shouldShowInlineNav(): boolean {
+		if (!this.view) return false;
+
+		// 检查当前活跃的 leaf 是否是当前 view
+		const activeMdView =
+			this.view.app.workspace.getActiveViewOfType(MarkdownView);
+		if (!activeMdView || activeMdView !== this.view) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private findContainers(view: MarkdownView): HTMLElement[] {
 		const nodeList = view.contentEl.querySelectorAll(".NToc__view");
 		return Array.from(nodeList).filter(
@@ -133,7 +146,8 @@ export class NTocRender {
 	display() {
 		if (!this.view) return;
 
-		if (!this.isActiveLeaf()) {
+		// 检查是否应该显示内联导航
+		if (!this.shouldShowInlineNav()) {
 			this.destroy();
 			return;
 		}
