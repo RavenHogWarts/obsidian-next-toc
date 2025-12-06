@@ -38,6 +38,10 @@ const translations: BaseMessage = {
 				name: "目录偏移",
 				desc: "设置目录的偏移量",
 			},
+			hideBlacklist: {
+				name: "悬浮目录黑名单",
+				desc: "指定需要隐藏目录的文件（每行一个路径）。支持通配符：* (任意字符)，? (单个字符)。仅在「显示目录」开启时生效。示例：folder/file.md 或 *.md",
+			},
 		},
 		render: {
 			name: "渲染",
@@ -56,6 +60,10 @@ const translations: BaseMessage = {
 			showWhenSingleHeading: {
 				name: "单一标题时显示目录",
 				desc: "启用或禁用在文档仅有单一标题时显示目录",
+			},
+			hideHeadingNumberBlacklist: {
+				name: "标题编号黑名单",
+				desc: "指定需要隐藏标题编号的文件（每行一个路径）。支持通配符：* (任意字符)，? (单个字符)。仅在「使用标题编号」开启时生效。示例：folder/file.md 或 *.md",
 			},
 		},
 		tool: {

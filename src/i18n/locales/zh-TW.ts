@@ -38,6 +38,10 @@ const translations: BaseMessage = {
 				name: "目錄偏移",
 				desc: "設定目錄的偏移量",
 			},
+			hideBlacklist: {
+				name: "懸浮目錄黑名單",
+				desc: "指定需要隱藏目錄的檔案（每行一個路徑）。支援萬用字元：* (任意字元)，? (單一字元)。僅在「顯示目錄」開啟時生效。範例：folder/file.md 或 *.md",
+			},
 		},
 		render: {
 			name: "渲染",
@@ -56,6 +60,10 @@ const translations: BaseMessage = {
 			showWhenSingleHeading: {
 				name: "單一標題時顯示目錄",
 				desc: "啟用或停用在文件僅有單一標題時顯示目錄",
+			},
+			hideHeadingNumberBlacklist: {
+				name: "標題編號黑名單",
+				desc: "指定需要隱藏標題編號的檔案（每行一個路徑）。支援萬用字元：* (任意字元)，? (單一字元)。僅在「使用標題編號」開啟時生效。範例：folder/file.md 或 *.md",
 			},
 		},
 		tool: {

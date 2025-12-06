@@ -81,6 +81,31 @@ export const RenderTabContent: FC = () => {
 					),
 				}}
 			/>
+
+			<ObsidianSetting
+				visible={settings.render.useHeadingNumber}
+				slots={{
+					name: t("settings.render.hideHeadingNumberBlacklist.name"),
+					desc: t("settings.render.hideHeadingNumberBlacklist.desc"),
+					control: (
+						<ObsidianSetting.TextArea
+							value={settings.render.hideHeadingNumberBlacklist.join(
+								"\n"
+							)}
+							onChange={(value) => {
+								const list = value
+									.split("\n")
+									.map((line) => line.trim())
+									.filter((line) => line.length > 0);
+								settingsStore.updateSettingByPath(
+									"render.hideHeadingNumberBlacklist",
+									list
+								);
+							}}
+						/>
+					),
+				}}
+			/>
 		</ObsidianSetting.Container>
 	);
 };

@@ -40,6 +40,7 @@ export type BaseMessage = {
 				};
 			}>;
 			offset: IBaseSettingsItem;
+			hideBlacklist: IBaseSettingsItem;
 		};
 		render: {
 			name: string;
@@ -47,6 +48,7 @@ export type BaseMessage = {
 			skipHeading1: IBaseSettingsItem;
 			renderMarkdown: IBaseSettingsItem;
 			showWhenSingleHeading: IBaseSettingsItem;
+			hideHeadingNumberBlacklist: IBaseSettingsItem;
 		};
 		tool: {
 			name: string;

@@ -39,6 +39,10 @@ const translations: BaseMessage = {
 				name: "TOC offset",
 				desc: "Set the offset of the table of contents",
 			},
+			hideBlacklist: {
+				name: "TOC blacklist",
+				desc: "Specify files that should hide the TOC (one path per line). Supports wildcards: * (any characters), ? (single character). Only works when 'TOC show' is enabled. Example: folder/file.md or *.md",
+			},
 		},
 		render: {
 			name: "Render",
@@ -57,6 +61,10 @@ const translations: BaseMessage = {
 			showWhenSingleHeading: {
 				name: "Show when single heading",
 				desc: "Enable or disable showing the table of contents when the document has only a single heading",
+			},
+			hideHeadingNumberBlacklist: {
+				name: "Heading number blacklist",
+				desc: "Specify files that should hide heading numbers (one path per line). Supports wildcards: * (any characters), ? (single character). Only works when 'Use heading number' is enabled. Example: folder/file.md or *.md",
 			},
 		},
 		tool: {
