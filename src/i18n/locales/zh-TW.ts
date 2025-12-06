@@ -10,6 +10,13 @@ const translations: BaseMessage = {
 		tocExpand: "展開／收合目錄",
 		insertReadingTimeCard: "插入閱讀時間卡片",
 		insertTableOfContentsCard: "插入目錄卡片",
+		addCurrentFileToHideTocBlacklist: "將目前檔案新增至懸浮目錄黑名單",
+		addCurrentFolderToHideTocBlacklist:
+			"將目前資料夾下所有檔案新增至懸浮目錄黑名單",
+		addCurrentFileToHideHeadingNumberBlacklist:
+			"將目前檔案新增至標題編號黑名單",
+		addCurrentFolderToHideHeadingNumberBlacklist:
+			"將目前資料夾下所有檔案新增至標題編號黑名單",
 	},
 	settings: {
 		toc: {

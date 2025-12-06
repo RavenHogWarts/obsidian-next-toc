@@ -11,6 +11,13 @@ const translations: BaseMessage = {
 		tocExpand: "Expand/Collapse TOC",
 		insertReadingTimeCard: "Insert reading time card",
 		insertTableOfContentsCard: "Insert table of contents card",
+		addCurrentFileToHideTocBlacklist: "Add current file to TOC blacklist",
+		addCurrentFolderToHideTocBlacklist:
+			"Add all files in current folder to TOC blacklist",
+		addCurrentFileToHideHeadingNumberBlacklist:
+			"Add current file to heading number blacklist",
+		addCurrentFolderToHideHeadingNumberBlacklist:
+			"Add all files in current folder to heading number blacklist",
 	},
 	settings: {
 		toc: {
