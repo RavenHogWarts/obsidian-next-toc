@@ -323,7 +323,7 @@
 }
 
 /* 特定页面控制样式 */
-.show-ntoc ~ .NToc__view .NToc__container {
+/* .show-ntoc ~ .NToc__view .NToc__container {
 	opacity: 1 !important;
 	visibility: visible !important;
 }
@@ -337,4 +337,4 @@
 }
 .hide-ntoc-number ~ .NToc__view .NToc__toc-item-number {
 	display: none !important;
-}
+} */
