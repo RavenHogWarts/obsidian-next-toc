@@ -10,6 +10,21 @@ const translations: BaseMessage = {
 		tocExpand: "展开/收起目录",
 		insertReadingTimeCard: "插入阅读时间卡片",
 		insertTableOfContentsCard: "插入目录卡片",
+		addCurrentFileToHideTocBlacklist: "添加/移除当前文件到悬浮目录黑名单",
+		addCurrentFolderToHideTocBlacklist:
+			"添加/移除当前文件夹到悬浮目录黑名单",
+		addCurrentFileToHideHeadingNumberBlacklist:
+			"添加/移除当前文件到标题编号黑名单",
+		addCurrentFolderToHideHeadingNumberBlacklist:
+			"添加/移除当前文件夹到标题编号黑名单",
+	},
+	notices: {
+		alreadyCovered: "已被现有规则覆盖",
+		added: "已添加",
+		addedAndRemovedRedundant: "已添加，并移除了 {{count}} 个冗余规则",
+		notInBlacklist: "不在黑名单中",
+		removed: "已移除",
+		coveredByPattern: "已被某个规则覆盖，如需移除请手动删除该规则",
 	},
 	settings: {
 		toc: {
@@ -38,6 +53,10 @@ const translations: BaseMessage = {
 				name: "目录偏移",
 				desc: "设置目录的偏移量",
 			},
+			hideBlacklist: {
+				name: "悬浮目录黑名单",
+				desc: "指定需要隐藏目录的文件（每行一个路径）。支持通配符：* (任意字符)，? (单个字符)。仅在「显示目录」开启时生效。示例：folder/file.md 或 *.md",
+			},
 		},
 		render: {
 			name: "渲染",
@@ -56,6 +75,10 @@ const translations: BaseMessage = {
 			showWhenSingleHeading: {
 				name: "单一标题时显示目录",
 				desc: "启用或禁用在文档仅有单一标题时显示目录",
+			},
+			hideHeadingNumberBlacklist: {
+				name: "标题编号黑名单",
+				desc: "指定需要隐藏标题编号的文件（每行一个路径）。支持通配符：* (任意字符)，? (单个字符)。仅在「使用标题编号」开启时生效。示例：folder/file.md 或 *.md",
 			},
 		},
 		tool: {

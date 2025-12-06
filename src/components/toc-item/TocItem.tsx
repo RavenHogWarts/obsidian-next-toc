@@ -1,5 +1,6 @@
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
+import { shouldUseHeadingNumber as checkShouldUseHeadingNumber } from "@src/utils/checkBlacklist";
 import scrollToHeading from "@src/utils/scrollToHeading";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Component, HeadingCache, MarkdownView } from "obsidian";
@@ -31,6 +32,22 @@ export const TocItem: FC<TocItemProps> = ({
 }) => {
 	const settingsStore = useSettingsStore();
 	const settings = usePluginSettings(settingsStore);
+
+	// Calculate the effective useHeadingNumber based on blacklist
+	const currentFile = currentView.file;
+	const effectiveUseHeadingNumber = useMemo(
+		() =>
+			checkShouldUseHeadingNumber(
+				settings.render.useHeadingNumber,
+				currentFile,
+				settings.render.hideHeadingNumberBlacklist
+			),
+		[
+			settings.render.useHeadingNumber,
+			currentFile,
+			settings.render.hideHeadingNumberBlacklist,
+		]
+	);
 
 	const NTocItemTextRef = useRef<HTMLDivElement>(null);
 
@@ -105,7 +122,7 @@ export const TocItem: FC<TocItemProps> = ({
 					</button>
 				)}
 				<div className="NToc__toc-item-content">
-					{settings.render.useHeadingNumber && (
+					{effectiveUseHeadingNumber && (
 						<div className="NToc__toc-item-number">
 							{headingNumber}
 						</div>

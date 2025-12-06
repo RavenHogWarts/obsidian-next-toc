@@ -10,6 +10,10 @@ import { createCursorListenerExtension } from "./services/cursorListenerExtensio
 import { PluginSettingTab } from "./settings/PluginSettingTab";
 import SettingsStore from "./settings/SettingsStore";
 import { NTocPluginSettings } from "./types/types";
+import {
+	toggleFileInBlacklist,
+	toggleFolderInBlacklist,
+} from "./utils/blacklistManager";
 import { createScrollListener } from "./utils/eventListenerManager";
 import getFileHeadings from "./utils/getFileHeadings";
 import {
@@ -185,6 +189,104 @@ export default class NTocPlugin extends Plugin {
 					"toc.alwaysExpand",
 					!this.settingsStore.settings.toc.alwaysExpand
 				);
+			},
+		});
+
+		// Toggle current file in hide TOC blacklist
+		this.addCommand({
+			id: "add-current-file-to-hide-toc-blacklist",
+			name: t("commands.addCurrentFileToHideTocBlacklist"),
+			callback: () => {
+				const file = this.app.workspace.getActiveFile();
+				if (!file) {
+					return;
+				}
+
+				const newBlacklist = toggleFileInBlacklist(
+					file,
+					this.settingsStore.settings.toc.hideBlacklist
+				);
+
+				if (newBlacklist) {
+					this.settingsStore.updateSettingByPath(
+						"toc.hideBlacklist",
+						newBlacklist
+					);
+				}
+			},
+		});
+
+		// Toggle current folder in hide TOC blacklist
+		this.addCommand({
+			id: "add-current-folder-to-hide-toc-blacklist",
+			name: t("commands.addCurrentFolderToHideTocBlacklist"),
+			callback: () => {
+				const file = this.app.workspace.getActiveFile();
+				if (!file) {
+					return;
+				}
+
+				const newBlacklist = toggleFolderInBlacklist(
+					file,
+					this.settingsStore.settings.toc.hideBlacklist
+				);
+
+				if (newBlacklist) {
+					this.settingsStore.updateSettingByPath(
+						"toc.hideBlacklist",
+						newBlacklist
+					);
+				}
+			},
+		});
+
+		// Toggle current file in hide heading number blacklist
+		this.addCommand({
+			id: "add-current-file-to-hide-heading-number-blacklist",
+			name: t("commands.addCurrentFileToHideHeadingNumberBlacklist"),
+			callback: () => {
+				const file = this.app.workspace.getActiveFile();
+				if (!file) {
+					return;
+				}
+
+				const newBlacklist = toggleFileInBlacklist(
+					file,
+					this.settingsStore.settings.render
+						.hideHeadingNumberBlacklist
+				);
+
+				if (newBlacklist) {
+					this.settingsStore.updateSettingByPath(
+						"render.hideHeadingNumberBlacklist",
+						newBlacklist
+					);
+				}
+			},
+		});
+
+		// Toggle current folder in hide heading number blacklist
+		this.addCommand({
+			id: "add-current-folder-to-hide-heading-number-blacklist",
+			name: t("commands.addCurrentFolderToHideHeadingNumberBlacklist"),
+			callback: () => {
+				const file = this.app.workspace.getActiveFile();
+				if (!file) {
+					return;
+				}
+
+				const newBlacklist = toggleFolderInBlacklist(
+					file,
+					this.settingsStore.settings.render
+						.hideHeadingNumberBlacklist
+				);
+
+				if (newBlacklist) {
+					this.settingsStore.updateSettingByPath(
+						"render.hideHeadingNumberBlacklist",
+						newBlacklist
+					);
+				}
 			},
 		});
 

@@ -26,6 +26,18 @@ export type BaseMessage = {
 		tocExpand: string;
 		insertReadingTimeCard: string;
 		insertTableOfContentsCard: string;
+		addCurrentFileToHideTocBlacklist: string;
+		addCurrentFolderToHideTocBlacklist: string;
+		addCurrentFileToHideHeadingNumberBlacklist: string;
+		addCurrentFolderToHideHeadingNumberBlacklist: string;
+	};
+	notices: {
+		alreadyCovered: string;
+		added: string;
+		addedAndRemovedRedundant: string;
+		notInBlacklist: string;
+		removed: string;
+		coveredByPattern: string;
 	};
 	settings: {
 		toc: {
@@ -40,6 +52,7 @@ export type BaseMessage = {
 				};
 			}>;
 			offset: IBaseSettingsItem;
+			hideBlacklist: IBaseSettingsItem;
 		};
 		render: {
 			name: string;
@@ -47,6 +60,7 @@ export type BaseMessage = {
 			skipHeading1: IBaseSettingsItem;
 			renderMarkdown: IBaseSettingsItem;
 			showWhenSingleHeading: IBaseSettingsItem;
+			hideHeadingNumberBlacklist: IBaseSettingsItem;
 		};
 		tool: {
 			name: string;

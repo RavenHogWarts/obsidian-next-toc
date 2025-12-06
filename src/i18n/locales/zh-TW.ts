@@ -10,6 +10,21 @@ const translations: BaseMessage = {
 		tocExpand: "展開／收合目錄",
 		insertReadingTimeCard: "插入閱讀時間卡片",
 		insertTableOfContentsCard: "插入目錄卡片",
+		addCurrentFileToHideTocBlacklist: "新增/移除目前檔案至懸浮目錄黑名單",
+		addCurrentFolderToHideTocBlacklist:
+			"新增/移除目前資料夾至懸浮目錄黑名單",
+		addCurrentFileToHideHeadingNumberBlacklist:
+			"新增/移除目前檔案至標題編號黑名單",
+		addCurrentFolderToHideHeadingNumberBlacklist:
+			"新增/移除目前資料夾至標題編號黑名單",
+	},
+	notices: {
+		alreadyCovered: "已被現有規則覆蓋",
+		added: "已新增",
+		addedAndRemovedRedundant: "已新增，並移除了 {{count}} 個冗餘規則",
+		notInBlacklist: "不在黑名單中",
+		removed: "已移除",
+		coveredByPattern: "已被某個規則覆蓋，如需移除請手動刪除該規則",
 	},
 	settings: {
 		toc: {
@@ -38,6 +53,10 @@ const translations: BaseMessage = {
 				name: "目錄偏移",
 				desc: "設定目錄的偏移量",
 			},
+			hideBlacklist: {
+				name: "懸浮目錄黑名單",
+				desc: "指定需要隱藏目錄的檔案（每行一個路徑）。支援萬用字元：* (任意字元)，? (單一字元)。僅在「顯示目錄」開啟時生效。範例：folder/file.md 或 *.md",
+			},
 		},
 		render: {
 			name: "渲染",
@@ -56,6 +75,10 @@ const translations: BaseMessage = {
 			showWhenSingleHeading: {
 				name: "單一標題時顯示目錄",
 				desc: "啟用或停用在文件僅有單一標題時顯示目錄",
+			},
+			hideHeadingNumberBlacklist: {
+				name: "標題編號黑名單",
+				desc: "指定需要隱藏標題編號的檔案（每行一個路徑）。支援萬用字元：* (任意字元)，? (單一字元)。僅在「使用標題編號」開啟時生效。範例：folder/file.md 或 *.md",
 			},
 		},
 		tool: {

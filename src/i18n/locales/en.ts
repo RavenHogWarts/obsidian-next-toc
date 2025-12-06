@@ -11,6 +11,24 @@ const translations: BaseMessage = {
 		tocExpand: "Expand/Collapse TOC",
 		insertReadingTimeCard: "Insert reading time card",
 		insertTableOfContentsCard: "Insert table of contents card",
+		addCurrentFileToHideTocBlacklist:
+			"Toggle current file in TOC blacklist",
+		addCurrentFolderToHideTocBlacklist:
+			"Toggle current folder in TOC blacklist",
+		addCurrentFileToHideHeadingNumberBlacklist:
+			"Toggle current file in heading number blacklist",
+		addCurrentFolderToHideHeadingNumberBlacklist:
+			"Toggle current folder in heading number blacklist",
+	},
+	notices: {
+		alreadyCovered: "Already covered by existing patterns",
+		added: "Added",
+		addedAndRemovedRedundant:
+			"Added and removed {{count}} redundant pattern(s)",
+		notInBlacklist: "Not in blacklist",
+		removed: "Removed",
+		coveredByPattern:
+			"Covered by a pattern. Remove the pattern manually if needed",
 	},
 	settings: {
 		toc: {
@@ -39,6 +57,10 @@ const translations: BaseMessage = {
 				name: "TOC offset",
 				desc: "Set the offset of the table of contents",
 			},
+			hideBlacklist: {
+				name: "TOC blacklist",
+				desc: "Specify files that should hide the TOC (one path per line). Supports wildcards: * (any characters), ? (single character). Only works when 'TOC show' is enabled. Example: folder/file.md or *.md",
+			},
 		},
 		render: {
 			name: "Render",
@@ -57,6 +79,10 @@ const translations: BaseMessage = {
 			showWhenSingleHeading: {
 				name: "Show when single heading",
 				desc: "Enable or disable showing the table of contents when the document has only a single heading",
+			},
+			hideHeadingNumberBlacklist: {
+				name: "Heading number blacklist",
+				desc: "Specify files that should hide heading numbers (one path per line). Supports wildcards: * (any characters), ? (single character). Only works when 'Use heading number' is enabled. Example: folder/file.md or *.md",
 			},
 		},
 		tool: {

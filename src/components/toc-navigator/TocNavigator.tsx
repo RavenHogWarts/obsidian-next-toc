@@ -2,6 +2,10 @@ import usePluginSettings from "@src/hooks/usePluginSettings";
 import { useScrollProgress } from "@src/hooks/useScrollProgress";
 import useSettingsStore from "@src/hooks/useSettingsStore";
 import calculateActualDepth from "@src/utils/calculateActualDepth";
+import {
+	shouldShowToc as checkShouldShowToc,
+	shouldUseHeadingNumber as checkShouldUseHeadingNumber,
+} from "@src/utils/checkBlacklist";
 import hasChildren from "@src/utils/hasChildren";
 import smoothScroll from "@src/utils/smoothScroll";
 import { HeadingCache, MarkdownView } from "obsidian";
@@ -34,6 +38,32 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 }) => {
 	const settingsStore = useSettingsStore();
 	const settings = usePluginSettings(settingsStore);
+
+	// Calculate the effective settings based on blacklist
+	const currentFile = currentView.file;
+	const effectiveShowToc = useMemo(
+		() =>
+			checkShouldShowToc(
+				settings.toc.show,
+				currentFile,
+				settings.toc.hideBlacklist
+			),
+		[settings.toc.show, currentFile, settings.toc.hideBlacklist]
+	);
+
+	const effectiveUseHeadingNumber = useMemo(
+		() =>
+			checkShouldUseHeadingNumber(
+				settings.render.useHeadingNumber,
+				currentFile,
+				settings.render.hideHeadingNumberBlacklist
+			),
+		[
+			settings.render.useHeadingNumber,
+			currentFile,
+			settings.render.hideHeadingNumberBlacklist,
+		]
+	);
 	const NTocContainerRef = useRef<HTMLDivElement>(null);
 	const NTocGroupRef = useRef<HTMLDivElement>(null);
 	const NTocGroupIndicatorsRef = useRef<HTMLDivElement>(null);
@@ -74,7 +104,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	useEffect(() => {
 		if (NTocGroupRef.current) {
 			const group = NTocGroupRef.current;
-			if (settings.toc.show === false) {
+			if (effectiveShowToc === false) {
 				group.classList.add("NToc__group-hidden");
 				// 当隐藏TOC时，重置悬停状态
 				setIsHovered(false);
@@ -82,7 +112,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 				group.classList.remove("NToc__group-hidden");
 			}
 		}
-	}, [settings.toc.show]);
+	}, [effectiveShowToc]);
 
 	useEffect(() => {
 		if (NTocGroupContentRef.current) {
