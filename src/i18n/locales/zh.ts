@@ -10,13 +10,21 @@ const translations: BaseMessage = {
 		tocExpand: "展开/收起目录",
 		insertReadingTimeCard: "插入阅读时间卡片",
 		insertTableOfContentsCard: "插入目录卡片",
-		addCurrentFileToHideTocBlacklist: "将当前文件添加到隐藏目录黑名单",
+		addCurrentFileToHideTocBlacklist: "添加/移除当前文件到悬浮目录黑名单",
 		addCurrentFolderToHideTocBlacklist:
-			"将当前文件夹下所有文件添加到悬浮目录黑名单",
+			"添加/移除当前文件夹到悬浮目录黑名单",
 		addCurrentFileToHideHeadingNumberBlacklist:
-			"将当前文件添加到标题编号黑名单",
+			"添加/移除当前文件到标题编号黑名单",
 		addCurrentFolderToHideHeadingNumberBlacklist:
-			"将当前文件夹下所有文件添加到标题编号黑名单",
+			"添加/移除当前文件夹到标题编号黑名单",
+	},
+	notices: {
+		alreadyCovered: "已被现有规则覆盖",
+		added: "已添加",
+		addedAndRemovedRedundant: "已添加，并移除了 {{count}} 个冗余规则",
+		notInBlacklist: "不在黑名单中",
+		removed: "已移除",
+		coveredByPattern: "已被某个规则覆盖，如需移除请手动删除该规则",
 	},
 	settings: {
 		toc: {

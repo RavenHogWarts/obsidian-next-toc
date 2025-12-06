@@ -11,13 +11,24 @@ const translations: BaseMessage = {
 		tocExpand: "Expand/Collapse TOC",
 		insertReadingTimeCard: "Insert reading time card",
 		insertTableOfContentsCard: "Insert table of contents card",
-		addCurrentFileToHideTocBlacklist: "Add current file to TOC blacklist",
+		addCurrentFileToHideTocBlacklist:
+			"Toggle current file in TOC blacklist",
 		addCurrentFolderToHideTocBlacklist:
-			"Add all files in current folder to TOC blacklist",
+			"Toggle current folder in TOC blacklist",
 		addCurrentFileToHideHeadingNumberBlacklist:
-			"Add current file to heading number blacklist",
+			"Toggle current file in heading number blacklist",
 		addCurrentFolderToHideHeadingNumberBlacklist:
-			"Add all files in current folder to heading number blacklist",
+			"Toggle current folder in heading number blacklist",
+	},
+	notices: {
+		alreadyCovered: "Already covered by existing patterns",
+		added: "Added",
+		addedAndRemovedRedundant:
+			"Added and removed {{count}} redundant pattern(s)",
+		notInBlacklist: "Not in blacklist",
+		removed: "Removed",
+		coveredByPattern:
+			"Covered by a pattern. Remove the pattern manually if needed",
 	},
 	settings: {
 		toc: {

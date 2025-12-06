@@ -31,6 +31,14 @@ export type BaseMessage = {
 		addCurrentFileToHideHeadingNumberBlacklist: string;
 		addCurrentFolderToHideHeadingNumberBlacklist: string;
 	};
+	notices: {
+		alreadyCovered: string;
+		added: string;
+		addedAndRemovedRedundant: string;
+		notInBlacklist: string;
+		removed: string;
+		coveredByPattern: string;
+	};
 	settings: {
 		toc: {
 			name: string;
