@@ -1,3 +1,12 @@
+## [1.2.1](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.2.0...1.2.1) (2025-12-06)
+
+
+### ✨ Features
+
+* 增加黑名单管理，移除原有css控制个别文档的方式 (#104) ([6a3d040](https://github.com/RavenHogWarts/obsidian-next-toc/commit/6a3d040d0b3d23f31320d5dc7ddb64d5c5184c22)), closes [#104](https://github.com/RavenHogWarts/obsidian-next-toc/issues/104)
+
+
+
 # [1.2.0](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.1.6...1.2.0) (2025-12-05)
 
 
