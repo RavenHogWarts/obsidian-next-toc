@@ -26,8 +26,6 @@ export type BaseMessage = {
 		tocExpand: string;
 		insertReadingTimeCard: string;
 		insertTableOfContentsCard: string;
-		addCurrentFileToHideTocBlacklist: string;
-		addCurrentFolderToHideTocBlacklist: string;
 		addCurrentFileToHideHeadingNumberBlacklist: string;
 		addCurrentFolderToHideHeadingNumberBlacklist: string;
 	};
@@ -52,7 +50,6 @@ export type BaseMessage = {
 				};
 			}>;
 			offset: IBaseSettingsItem;
-			hideBlacklist: IBaseSettingsItem;
 		};
 		render: {
 			name: string;

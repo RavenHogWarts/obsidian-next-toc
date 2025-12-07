@@ -10,9 +10,6 @@ const translations: BaseMessage = {
 		tocExpand: "展开/收起目录",
 		insertReadingTimeCard: "插入阅读时间卡片",
 		insertTableOfContentsCard: "插入目录卡片",
-		addCurrentFileToHideTocBlacklist: "添加/移除当前文件到悬浮目录黑名单",
-		addCurrentFolderToHideTocBlacklist:
-			"添加/移除当前文件夹到悬浮目录黑名单",
 		addCurrentFileToHideHeadingNumberBlacklist:
 			"添加/移除当前文件到标题编号黑名单",
 		addCurrentFolderToHideHeadingNumberBlacklist:
@@ -52,10 +49,6 @@ const translations: BaseMessage = {
 			offset: {
 				name: "目录偏移",
 				desc: "设置目录的偏移量",
-			},
-			hideBlacklist: {
-				name: "悬浮目录黑名单",
-				desc: "指定需要隐藏目录的文件（每行一个路径）。支持通配符：* (任意字符)，? (单个字符)。仅在「显示目录」开启时生效。示例：folder/file.md 或 *.md",
 			},
 		},
 		render: {

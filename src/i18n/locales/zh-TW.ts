@@ -10,9 +10,6 @@ const translations: BaseMessage = {
 		tocExpand: "展開／收合目錄",
 		insertReadingTimeCard: "插入閱讀時間卡片",
 		insertTableOfContentsCard: "插入目錄卡片",
-		addCurrentFileToHideTocBlacklist: "新增/移除目前檔案至懸浮目錄黑名單",
-		addCurrentFolderToHideTocBlacklist:
-			"新增/移除目前資料夾至懸浮目錄黑名單",
 		addCurrentFileToHideHeadingNumberBlacklist:
 			"新增/移除目前檔案至標題編號黑名單",
 		addCurrentFolderToHideHeadingNumberBlacklist:
@@ -52,10 +49,6 @@ const translations: BaseMessage = {
 			offset: {
 				name: "目錄偏移",
 				desc: "設定目錄的偏移量",
-			},
-			hideBlacklist: {
-				name: "懸浮目錄黑名單",
-				desc: "指定需要隱藏目錄的檔案（每行一個路徑）。支援萬用字元：* (任意字元)，? (單一字元)。僅在「顯示目錄」開啟時生效。範例：folder/file.md 或 *.md",
 			},
 		},
 		render: {

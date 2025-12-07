@@ -36,33 +36,6 @@ export function isFileInBlacklist(
 }
 
 /**
- * Get the final value for whether to show TOC based on settings and blacklist
- * Only checks blacklist when show is true
- * @param defaultShow - The default show setting value
- * @param file - The current file
- * @param hideBlacklist - Files that should hide TOC
- * @returns true if TOC should be shown
- */
-export function shouldShowToc(
-	defaultShow: boolean,
-	file: TFile | null,
-	hideBlacklist: string[]
-): boolean {
-	// If show is disabled, always return false
-	if (!defaultShow) {
-		return false;
-	}
-
-	// If show is enabled, check if file is in blacklist
-	if (isFileInBlacklist(file, hideBlacklist)) {
-		return false;
-	}
-
-	// Otherwise show TOC
-	return true;
-}
-
-/**
  * Get the final value for whether to use heading numbers based on settings and blacklist
  * Only checks blacklist when useHeadingNumber is true
  * @param defaultUseHeadingNumber - The default useHeadingNumber setting value
