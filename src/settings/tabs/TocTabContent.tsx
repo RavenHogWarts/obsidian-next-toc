@@ -111,29 +111,6 @@ export const TocTabContent: FC = () => {
 					),
 				}}
 			/>
-
-			<ObsidianSetting
-				visible={settings.toc.show}
-				slots={{
-					name: t("settings.toc.hideBlacklist.name"),
-					desc: t("settings.toc.hideBlacklist.desc"),
-					control: (
-						<ObsidianSetting.TextArea
-							value={settings.toc.hideBlacklist.join("\n")}
-							onChange={(value) => {
-								const list = value
-									.split("\n")
-									.map((line) => line.trim())
-									.filter((line) => line.length > 0);
-								settingsStore.updateSettingByPath(
-									"toc.hideBlacklist",
-									list
-								);
-							}}
-						/>
-					),
-				}}
-			/>
 		</ObsidianSetting.Container>
 	);
 };

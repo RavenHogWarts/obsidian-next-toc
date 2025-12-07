@@ -2,10 +2,7 @@ import usePluginSettings from "@src/hooks/usePluginSettings";
 import { useScrollProgress } from "@src/hooks/useScrollProgress";
 import useSettingsStore from "@src/hooks/useSettingsStore";
 import calculateActualDepth from "@src/utils/calculateActualDepth";
-import {
-	shouldShowToc as checkShouldShowToc,
-	shouldUseHeadingNumber as checkShouldUseHeadingNumber,
-} from "@src/utils/checkBlacklist";
+import { shouldUseHeadingNumber as checkShouldUseHeadingNumber } from "@src/utils/checkBlacklist";
 import hasChildren from "@src/utils/hasChildren";
 import smoothScroll from "@src/utils/smoothScroll";
 import { HeadingCache, MarkdownView } from "obsidian";
@@ -41,15 +38,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 
 	// Calculate the effective settings based on blacklist
 	const currentFile = currentView.file;
-	const effectiveShowToc = useMemo(
-		() =>
-			checkShouldShowToc(
-				settings.toc.show,
-				currentFile,
-				settings.toc.hideBlacklist
-			),
-		[settings.toc.show, currentFile, settings.toc.hideBlacklist]
-	);
+	const effectiveShowToc = settings.toc.show;
 
 	const effectiveUseHeadingNumber = useMemo(
 		() =>

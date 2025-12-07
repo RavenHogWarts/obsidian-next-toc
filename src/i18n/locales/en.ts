@@ -11,10 +11,6 @@ const translations: BaseMessage = {
 		tocExpand: "Expand/Collapse TOC",
 		insertReadingTimeCard: "Insert reading time card",
 		insertTableOfContentsCard: "Insert table of contents card",
-		addCurrentFileToHideTocBlacklist:
-			"Toggle current file in TOC blacklist",
-		addCurrentFolderToHideTocBlacklist:
-			"Toggle current folder in TOC blacklist",
 		addCurrentFileToHideHeadingNumberBlacklist:
 			"Toggle current file in heading number blacklist",
 		addCurrentFolderToHideHeadingNumberBlacklist:
@@ -56,10 +52,6 @@ const translations: BaseMessage = {
 			offset: {
 				name: "TOC offset",
 				desc: "Set the offset of the table of contents",
-			},
-			hideBlacklist: {
-				name: "TOC blacklist",
-				desc: "Specify files that should hide the TOC (one path per line). Supports wildcards: * (any characters), ? (single character). Only works when 'TOC show' is enabled. Example: folder/file.md or *.md",
 			},
 		},
 		render: {

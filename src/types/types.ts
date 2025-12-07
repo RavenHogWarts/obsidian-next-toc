@@ -12,7 +12,6 @@ export interface NTocPluginSettings {
 		width: number;
 		position: NTocPosition;
 		offset: number;
-		hideBlacklist: string[]; // Files that should hide TOC (only works when show is true)
 	};
 	render: {
 		useHeadingNumber: boolean;
@@ -40,7 +39,6 @@ export const DEFAULT_SETTINGS: NTocPluginSettings = {
 		width: 240,
 		position: "right",
 		offset: 12,
-		hideBlacklist: [],
 	},
 	render: {
 		useHeadingNumber: false,
