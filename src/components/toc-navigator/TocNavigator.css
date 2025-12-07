@@ -323,11 +323,11 @@
 }
 
 /* 特定页面控制样式 */
-.pin-ntoc ~ .NToc__view .NToc__container {
+.pin-ntoc ~ .NToc__view .NToc__group-content {
 	opacity: 1 !important;
 	visibility: visible !important;
 }
-.unpin-ntoc ~ .NToc__view .NToc__container {
+.unpin-ntoc ~ .NToc__view .NToc__group-content {
 	opacity: 0 !important;
 	visibility: hidden !important;
 }
