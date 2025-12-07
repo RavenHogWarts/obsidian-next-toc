@@ -1,3 +1,35 @@
+## [1.2.2](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.2.1...1.2.2) (2025-12-07)
+
+
+### ♻️ Refactor
+
+* 移除悬浮目录的黑名单功能 (#109) ([203ad5f](https://github.com/RavenHogWarts/obsidian-next-toc/commit/203ad5fcf1033aece8d1f8786418a469f1c8c884)), closes [#109](https://github.com/RavenHogWarts/obsidian-next-toc/issues/109)
+* 移除重复的黑名单判断并直接使用设置值 (#110) ([c4e3a60](https://github.com/RavenHogWarts/obsidian-next-toc/commit/c4e3a60c8b4c2dc76388491a1fcc7eb11389d0b8)), closes [#110](https://github.com/RavenHogWarts/obsidian-next-toc/issues/110)
+
+
+### ✨ Features
+
+* 引入多个 Hook 重构目录组件逻辑 (#111) ([547329c](https://github.com/RavenHogWarts/obsidian-next-toc/commit/547329c4eff44f38c828be395f09c1b8ba0bb5e6)), closes [#111](https://github.com/RavenHogWarts/obsidian-next-toc/issues/111)
+* 优化 NToc 视图初始化与生命周期 (#106) ([d7260e4](https://github.com/RavenHogWarts/obsidian-next-toc/commit/d7260e4842cdc2c8bf5564c7165666a2b3daef4c)), closes [#106](https://github.com/RavenHogWarts/obsidian-next-toc/issues/106)
+* 优化侧边视图，添加阅读进度条 (#112) ([e2230c9](https://github.com/RavenHogWarts/obsidian-next-toc/commit/e2230c9e4a8f6e665ead77110e071b02cc005856)), closes [#112](https://github.com/RavenHogWarts/obsidian-next-toc/issues/112)
+
+
+### 🎨 Styles
+
+* **toc:** 添加固定/取消固定目录的显示控制样式 (#108) ([9a7a021](https://github.com/RavenHogWarts/obsidian-next-toc/commit/9a7a021c42e8ab74b4b609b07fc497c14905cd26)), closes [#108](https://github.com/RavenHogWarts/obsidian-next-toc/issues/108)
+
+
+### 🐛 Bug Fixes
+
+* 修正目录面板器以匹新结构 (#114) ([cbcdda4](https://github.com/RavenHogWarts/obsidian-next-toc/commit/cbcdda4dacc5eab1b63ae21477b9a7baa13201a1)), closes [#114](https://github.com/RavenHogWarts/obsidian-next-toc/issues/114)
+
+
+### 🔨 Chore
+
+* **release:** bump version to 1.2.2 (#113) ([2394015](https://github.com/RavenHogWarts/obsidian-next-toc/commit/239401571c49c1d2c2f415acff31a61528b6aad6)), closes [#113](https://github.com/RavenHogWarts/obsidian-next-toc/issues/113)
+
+
+
 ## [1.2.1](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.2.0...1.2.1) (2025-12-06)
 
 
