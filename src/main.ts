@@ -30,28 +30,6 @@ export default class NTocPlugin extends Plugin {
 	readonly settingsStore = new SettingsStore(this);
 	private scrollListenerCleanup: (() => void) | null = null;
 
-	/**
-	 * 获取当前活跃的 MarkdownView，如果当前活跃的是 NTocView 则返回之前保存的 currentView
-	 */
-	private getActiveMarkdownView(): MarkdownView | null {
-		const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
-
-		// 如果当前活跃视图是 MarkdownView，更新并返回
-		if (activeView) {
-			return activeView;
-		}
-
-		// 否则，检查当前活跃的是否是 NTocView
-		const activeLeaf = this.app.workspace.getMostRecentLeaf();
-		if (activeLeaf?.view.getViewType() === VIEW_TYPE_NTOC) {
-			// 如果是 NTocView，返回之前保存的 currentView
-			return this.currentView;
-		}
-
-		// 其他情况返回 null
-		return null;
-	}
-
 	async onload() {
 		await this.settingsStore.loadSettings();
 
@@ -65,8 +43,6 @@ export default class NTocPlugin extends Plugin {
 
 		this.app.workspace.onLayoutReady(() => {
 			this.initLeaf();
-			// 确保只有一个视图实例
-			this.ensureSingleView();
 		});
 
 		// Register CM6 cursor listener extension
@@ -92,35 +68,16 @@ export default class NTocPlugin extends Plugin {
 	/**
 	 * 初始化 NTocView，确保只有一个实例
 	 */
-	initLeaf(): void {
-		const existingLeaves =
-			this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC);
-
-		// 如果已经存在视图，检查是否有多个
-		if (existingLeaves.length > 0) {
-			// 保留第一个，关闭其他的
-			if (existingLeaves.length > 1) {
-				existingLeaves.slice(1).forEach((leaf) => leaf.detach());
-			}
-			return;
+	async initLeaf(): Promise<void> {
+		if (this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC).length === 0) {
+			await this.app.workspace.getRightLeaf(false)?.setViewState({
+				type: VIEW_TYPE_NTOC,
+				active: true,
+			});
 		}
-
-		// 不存在则创建一个
-		this.app.workspace.getRightLeaf(false)?.setViewState({
-			type: VIEW_TYPE_NTOC,
-		});
-	}
-
-	/**
-	 * 确保只有一个 NTocView 实例
-	 */
-	private ensureSingleView(): void {
-		const existingLeaves =
-			this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC);
-		if (existingLeaves.length > 1) {
-			// 保留第一个，关闭其他的
-			existingLeaves.slice(1).forEach((leaf) => leaf.detach());
-		}
+		this.app.workspace.revealLeaf(
+			this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC)[0]
+		);
 	}
 
 	private registerCommands() {
@@ -388,8 +345,6 @@ export default class NTocPlugin extends Plugin {
 
 		this.registerEvent(
 			this.app.workspace.on("layout-change", async () => {
-				// 确保只有一个 NTocView 实例
-				this.ensureSingleView();
 				await this.updateNToc();
 			})
 		);
@@ -453,6 +408,25 @@ export default class NTocPlugin extends Plugin {
 			this.scrollListenerCleanup();
 			this.scrollListenerCleanup = null;
 		}
+	}
+
+	private getActiveMarkdownView(): MarkdownView | null {
+		const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+
+		// 如果当前活跃视图是 MarkdownView，更新并返回
+		if (activeView) {
+			return activeView;
+		}
+
+		// 否则，检查当前活跃的是否是 NTocView
+		const activeLeaf = this.app.workspace.getMostRecentLeaf();
+		if (activeLeaf?.view.getViewType() === VIEW_TYPE_NTOC) {
+			// 如果是 NTocView，返回之前保存的 currentView
+			return this.currentView;
+		}
+
+		// 其他情况返回 null
+		return null;
 	}
 
 	private async updateNToc() {
