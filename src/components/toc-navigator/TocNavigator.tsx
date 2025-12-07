@@ -1,19 +1,15 @@
+import { useActiveHeadingScroll } from "@src/hooks/useActiveHeadingScroll";
+import { useHeadingNumbering } from "@src/hooks/useHeadingNumbering";
 import usePluginSettings from "@src/hooks/usePluginSettings";
+import { useResizableToc } from "@src/hooks/useResizableToc";
 import { useScrollProgress } from "@src/hooks/useScrollProgress";
 import useSettingsStore from "@src/hooks/useSettingsStore";
+import { useTocCollapse } from "@src/hooks/useTocCollapse";
+import { useTocVisibility } from "@src/hooks/useTocVisibility";
 import calculateActualDepth from "@src/utils/calculateActualDepth";
 import hasChildren from "@src/utils/hasChildren";
-import smoothScroll from "@src/utils/smoothScroll";
 import { HeadingCache, MarkdownView } from "obsidian";
-import {
-	FC,
-	MouseEvent,
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { ProgressCircle } from "../progress-circle/ProgressCircle";
 import { TocIndicator } from "../toc-indicator/TocIndicator";
 import { TocItem } from "../toc-item/TocItem";
@@ -43,13 +39,45 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	const NTocProgressBarRef = useRef<HTMLDivElement>(null);
 
 	const [isHovered, setIsHovered] = useState<boolean>(false);
-	const [isMouseDragging, setIsMouseDragging] = useState<boolean>(false);
-	const [startX, setStartX] = useState<number>(0);
-	const [startWidth, setStartWidth] = useState<number>(0);
-	const [collapsedSet, setCollapsedSet] = useState<Set<number>>(new Set());
 
 	// 获取滚动进度
 	const scrollProgress = useScrollProgress(currentView);
+
+	// 使用折叠管理 Hook
+	const { collapsedSet, toggleCollapsedAt, onCollapseAll, onExpandAll } =
+		useTocCollapse(currentView, headings);
+
+	// 使用标题编号 Hook
+	const generateHeadingNumber = useHeadingNumbering(
+		headings,
+		settings.render.skipHeading1
+	);
+
+	// 使用可见性计算 Hook
+	const { visibilityMap, shouldShowToc } = useTocVisibility({
+		headings,
+		collapsedSet,
+		skipHeading1: settings.render.skipHeading1,
+		showWhenSingleHeading: settings.render.showWhenSingleHeading,
+	});
+
+	// 使用自动滚动 Hook
+	useActiveHeadingScroll(
+		activeHeadingIndex,
+		NTocGroupTocItemsRef,
+		NTocGroupIndicatorsRef
+	);
+
+	// 使用可调整大小 Hook
+	const { handleMouseDragStart } = useResizableToc({
+		currentView,
+		tocItemsRef: NTocGroupTocItemsRef,
+		tocWidth: settings.toc.width,
+		tocPosition: settings.toc.position,
+		onWidthChange: (width) => {
+			settingsStore.updateSettingByPath("toc.width", width);
+		},
+	});
 
 	// 使用useEffect来设置CSS变量，避免内联样式
 	useEffect(() => {
@@ -95,228 +123,6 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 			}
 		}
 	}, [settings.toc.alwaysExpand, isHovered]);
-
-	useEffect(() => {
-		if (activeHeadingIndex !== -1) {
-			const tocItems = NTocGroupTocItemsRef.current;
-			const indicator = NTocGroupIndicatorsRef.current;
-
-			if (tocItems) {
-				const activeHeadingEl = tocItems.querySelector(
-					`[data-index="${activeHeadingIndex}"]`
-				) as HTMLElement;
-				if (activeHeadingEl) {
-					smoothScroll(tocItems, activeHeadingEl);
-				}
-			}
-
-			if (indicator) {
-				const activeIndicatorEl = indicator.querySelector(
-					`[data-index="${activeHeadingIndex}"]`
-				) as HTMLElement;
-				if (activeIndicatorEl) {
-					smoothScroll(indicator, activeIndicatorEl);
-				}
-			}
-		}
-	}, [activeHeadingIndex]);
-
-	const handleMouseDragStart = useCallback(
-		(e: MouseEvent<HTMLDivElement>) => {
-			e.preventDefault();
-			setIsMouseDragging(true);
-			setStartX(e.clientX);
-			setStartWidth(settings.toc.width);
-		},
-		[settings.toc.width]
-	);
-
-	const handleMouseDrag = useCallback(
-		(e: globalThis.MouseEvent) => {
-			if (!isMouseDragging || !NTocGroupTocItemsRef.current) {
-				return;
-			}
-
-			const delta = e.clientX - startX;
-			const widthDelta =
-				settings.toc.position === "left" ? delta : -delta;
-			const newWidth = startWidth + widthDelta;
-
-			NTocGroupTocItemsRef.current.style.width = `${newWidth}px`;
-		},
-		[
-			isMouseDragging,
-			startX,
-			startWidth,
-			settings.toc.position,
-			NTocGroupTocItemsRef,
-		]
-	);
-
-	const handleMouseDragEnd = useCallback(() => {
-		if (!isMouseDragging) {
-			return;
-		}
-
-		setIsMouseDragging(false);
-
-		if (NTocGroupTocItemsRef.current) {
-			const newWidth = NTocGroupTocItemsRef.current.offsetWidth;
-			settingsStore.updateSettingByPath("toc.width", newWidth);
-		}
-	}, [isMouseDragging, NTocGroupTocItemsRef, settings, settingsStore]);
-
-	useEffect(() => {
-		if (isMouseDragging) {
-			currentView.contentEl.addEventListener(
-				"mousemove",
-				handleMouseDrag
-			);
-			currentView.contentEl.addEventListener(
-				"mouseup",
-				handleMouseDragEnd
-			);
-		}
-
-		return () => {
-			currentView.contentEl.removeEventListener(
-				"mousemove",
-				handleMouseDrag
-			);
-			currentView.contentEl.removeEventListener(
-				"mouseup",
-				handleMouseDragEnd
-			);
-		};
-	}, [isMouseDragging, currentView, handleMouseDrag, handleMouseDragEnd]);
-
-	const generateHeadingNumber = useCallback(
-		(index: number): string => {
-			if (settings.render.skipHeading1 && headings[index].level === 1) {
-				return "";
-			}
-
-			const numberStack: number[] = [];
-			let prevLevel = 0;
-
-			for (let i = 0; i <= index; i++) {
-				const { level } = headings[i];
-
-				// 跳过 h1（如果配置了跳过）
-				if (settings.render.skipHeading1 && level === 1) {
-					continue;
-				}
-
-				if (level > prevLevel) {
-					// 新的更深层级，补 1
-					numberStack.push(1);
-				} else if (level === prevLevel) {
-					// 同级，递增
-					numberStack[numberStack.length - 1]++;
-				} else {
-					// 回到上层，弹出多余层级，递增
-					const diff = prevLevel - level;
-					for (let d = 0; d < diff; d++) {
-						numberStack.pop();
-					}
-					numberStack[numberStack.length - 1]++;
-				}
-				prevLevel = level;
-			}
-
-			return numberStack.join(".") + ".";
-		},
-		[headings, settings.render.skipHeading1]
-	);
-
-	useEffect(() => {
-		// 当视图或标题列表变化时，重置折叠状态
-		setCollapsedSet(new Set());
-	}, [currentView, headings]);
-
-	const toggleCollapsedAt = useCallback((index: number) => {
-		setCollapsedSet((prev) => {
-			const next = new Set(prev);
-			if (next.has(index)) {
-				next.delete(index);
-			} else {
-				next.add(index);
-			}
-			return next;
-		});
-	}, []);
-
-	const onCollapseAll = useCallback(() => {
-		setCollapsedSet(
-			new Set(
-				headings
-					.map((_, index) => index)
-					.filter((index) => hasChildren(index, headings))
-			)
-		);
-	}, [headings]);
-
-	const onExpandAll = useCallback(() => {
-		setCollapsedSet(new Set());
-	}, []);
-
-	const visibilityMap = useMemo(() => {
-		const result: boolean[] = new Array(headings.length).fill(true);
-		const collapsedLevels: number[] = [];
-		for (let i = 0; i < headings.length; i++) {
-			const level = headings[i].level;
-
-			// 如果开启了 skipHeading1 且当前是一级标题，则隐藏
-			if (settings.render.skipHeading1 && level === 1) {
-				result[i] = false;
-				continue;
-			}
-
-			// 离开较深的折叠子树：弹出所有 >= 当前层级的折叠层级
-			while (
-				collapsedLevels.length > 0 &&
-				level <= collapsedLevels[collapsedLevels.length - 1]
-			) {
-				collapsedLevels.pop();
-			}
-			// 如果仍存在折叠祖先，则当前项不可见
-			result[i] = collapsedLevels.length === 0;
-			// 若当前项为折叠父节点，则把其层级压栈，影响其后代
-			if (collapsedSet.has(i)) {
-				collapsedLevels.push(level);
-			}
-		}
-		return result;
-	}, [headings, collapsedSet, settings.render.skipHeading1]);
-
-	const shouldShowToc = useMemo(() => {
-		if (settings.render.skipHeading1) {
-			const hasOnlyH1 = headings.every((heading) => heading.level === 1);
-			if (hasOnlyH1) return false;
-		}
-
-		// 如果配置了不在单标题时显示，检查可见标题数量
-		if (!settings.render.showWhenSingleHeading) {
-			const visibleHeadingsCount = headings.filter((heading, index) => {
-				// 如果开启了 skipHeading1，排除 h1
-				if (settings.render.skipHeading1 && heading.level === 1) {
-					return false;
-				}
-				return true;
-			}).length;
-
-			// 只有一个或没有可见标题时不显示
-			if (visibleHeadingsCount <= 1) {
-				return false;
-			}
-		}
-
-		return headings.length > 0;
-	}, [
-		headings,
-		settings.render.skipHeading1,
-		settings.render.showWhenSingleHeading,
-	]);
 
 	// 当 TOC 显示状态变化时重新应用宽度样式
 	useEffect(() => {
