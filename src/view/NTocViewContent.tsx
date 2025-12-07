@@ -8,17 +8,17 @@ import calculateActualDepth from "@src/utils/calculateActualDepth";
 import hasChildren from "@src/utils/hasChildren";
 import { HeadingCache, MarkdownView } from "obsidian";
 import { FC, useRef } from "react";
-import { TocItem } from "../toc-item/TocItem";
-import { TocToolbar } from "../toc-toolbar/TocToolbar";
-import "./TocList.css";
+import { TocItem } from "../components/toc-item/TocItem";
+import { TocToolbar } from "../components/toc-toolbar/TocToolbar";
+import "./NTocViewContent.css";
 
-interface TocListProps {
+interface NTocViewContentProps {
 	currentView: MarkdownView;
 	headings: HeadingCache[];
 	activeHeadingIndex: number;
 }
 
-export const TocList: FC<TocListProps> = ({
+export const NTocViewContent: FC<NTocViewContentProps> = ({
 	currentView,
 	headings,
 	activeHeadingIndex,
@@ -53,14 +53,14 @@ export const TocList: FC<TocListProps> = ({
 	}
 
 	return (
-		<div className="NToc__list-container">
+		<div className="NToc__view-content-container">
 			<TocToolbar
 				headings={headings}
 				onCollapseAll={onCollapseAll}
 				onExpandAll={onExpandAll}
 				hasAnyCollapsed={collapsedSet.size > 0}
 			/>
-			<div ref={listItemsRef} className="NToc__list-items">
+			<div ref={listItemsRef} className="NToc__view-content-items">
 				{headings.map((heading, index) => {
 					if (!visibilityMap[index]) return null;
 					return (

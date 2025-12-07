@@ -10,8 +10,8 @@ import {
 } from "obsidian";
 import { StrictMode } from "react";
 import { createRoot, Root } from "react-dom/client";
-import { TocList } from "../components/toc-list/TocList";
 import "./NTocView.css";
+import { NTocViewContent } from "./NTocViewContent";
 
 export const VIEW_TYPE_NTOC = "next-toc";
 
@@ -72,7 +72,7 @@ export class NTocView extends ItemView {
 			<StrictMode>
 				<SettingsStoreContext.Provider value={this.settingsStore}>
 					{this.currentView && this.headings.length > 0 ? (
-						<TocList
+						<NTocViewContent
 							currentView={this.currentView}
 							headings={this.headings}
 							activeHeadingIndex={this.activeHeadingIndex}
