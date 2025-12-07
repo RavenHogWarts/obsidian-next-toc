@@ -35,7 +35,7 @@ const translations: BaseMessage = {
 			},
 			alwaysExpand: {
 				name: "始终展开目录",
-				desc: "启用或禁用始终展开目录",
+				desc: "启用或禁用始终展开目录，可使用文档属性 `classes` 来控制显示与隐藏：",
 			},
 			width: {
 				name: "目录宽度",

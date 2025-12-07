@@ -1,3 +1,4 @@
+import { InlineCodeBlock } from "@src/components/code-block/InlineCodeBlock";
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
 import { t } from "@src/i18n/i18n";
@@ -32,7 +33,13 @@ export const TocTabContent: FC = () => {
 			<ObsidianSetting
 				slots={{
 					name: t("settings.toc.alwaysExpand.name"),
-					desc: t("settings.toc.alwaysExpand.desc"),
+					desc: (
+						<>
+							{t("settings.toc.alwaysExpand.desc")}
+							<InlineCodeBlock code="pin-ntoc" />
+							<InlineCodeBlock code="unpin-ntoc" />
+						</>
+					),
 					control: (
 						<ObsidianSetting.Toggle
 							value={settings.toc.alwaysExpand}
