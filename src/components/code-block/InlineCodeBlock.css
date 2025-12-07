@@ -1,0 +1,26 @@
+.ntoc-inline-code-block {
+	cursor: pointer;
+	display: inline-block;
+	padding: 2px 6px;
+	margin: 0 4px;
+	border-radius: 3px;
+	font-family: var(--font-monospace);
+	font-size: 0.9em;
+	background-color: var(--code-background);
+	color: var(--code-normal);
+	border: 1px solid var(--background-modifier-border);
+	transition: all 0.2s ease;
+	user-select: none;
+}
+
+.ntoc-inline-code-block:hover {
+	background-color: var(--background-modifier-hover);
+	border-color: var(--background-modifier-border-hover);
+	transform: translateY(-1px);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ntoc-inline-code-block:active {
+	transform: translateY(0);
+	box-shadow: none;
+}
