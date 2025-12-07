@@ -37,6 +37,9 @@ export type BaseMessage = {
 		removed: string;
 		coveredByPattern: string;
 	};
+	view: {
+		view_empty: string;
+	};
 	settings: {
 		toc: {
 			name: string;

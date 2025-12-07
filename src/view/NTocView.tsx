@@ -1,4 +1,5 @@
 import { SettingsStoreContext } from "@src/context/SettingsStoreContext";
+import { t } from "@src/i18n/i18n";
 import NTocPlugin from "@src/main";
 import SettingsStore from "@src/settings/SettingsStore";
 import {
@@ -80,7 +81,7 @@ export class NTocView extends ItemView {
 					) : (
 						<div className="NToc__view-empty">
 							<div className="NToc__view-empty-text">
-								No headings found in current document
+								{t("view.view_empty")}
 							</div>
 						</div>
 					)}

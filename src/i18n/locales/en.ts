@@ -26,6 +26,10 @@ const translations: BaseMessage = {
 		coveredByPattern:
 			"Covered by a pattern. Remove the pattern manually if needed",
 	},
+	view: {
+		view_empty:
+			"No headings found. Please ensure the current document contains headings, or activate the markdown document view.",
+	},
 	settings: {
 		toc: {
 			name: "TOC",
