@@ -23,6 +23,10 @@ const translations: BaseMessage = {
 		removed: "已移除",
 		coveredByPattern: "已被某个规则覆盖，如需移除请手动删除该规则",
 	},
+	view: {
+		view_empty:
+			"未找到标题，请确保当前文档包含标题，或者激活markdown文档视图。",
+	},
 	settings: {
 		toc: {
 			name: "目录",

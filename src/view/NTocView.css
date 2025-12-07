@@ -11,3 +11,35 @@
 	text-align: center;
 	font-size: 14px;
 }
+
+.NToc__view-content-container {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow: hidden;
+}
+
+.NToc__view-content-items {
+	flex: 1;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding: 8px;
+}
+
+/* 滚动条样式 */
+.NToc__view-content-items::-webkit-scrollbar {
+	width: 8px;
+}
+
+.NToc__view-content-items::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.NToc__view-content-items::-webkit-scrollbar-thumb {
+	background: var(--background-modifier-border);
+	border-radius: 4px;
+}
+
+.NToc__view-content-items::-webkit-scrollbar-thumb:hover {
+	background: var(--background-modifier-border-hover);
+}

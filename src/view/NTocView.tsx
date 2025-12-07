@@ -1,4 +1,5 @@
 import { SettingsStoreContext } from "@src/context/SettingsStoreContext";
+import { t } from "@src/i18n/i18n";
 import NTocPlugin from "@src/main";
 import SettingsStore from "@src/settings/SettingsStore";
 import {
@@ -10,8 +11,8 @@ import {
 } from "obsidian";
 import { StrictMode } from "react";
 import { createRoot, Root } from "react-dom/client";
-import { TocList } from "../components/toc-list/TocList";
 import "./NTocView.css";
+import { NTocViewContent } from "./NTocViewContent";
 
 export const VIEW_TYPE_NTOC = "next-toc";
 
@@ -72,7 +73,7 @@ export class NTocView extends ItemView {
 			<StrictMode>
 				<SettingsStoreContext.Provider value={this.settingsStore}>
 					{this.currentView && this.headings.length > 0 ? (
-						<TocList
+						<NTocViewContent
 							currentView={this.currentView}
 							headings={this.headings}
 							activeHeadingIndex={this.activeHeadingIndex}
@@ -80,7 +81,7 @@ export class NTocView extends ItemView {
 					) : (
 						<div className="NToc__view-empty">
 							<div className="NToc__view-empty-text">
-								No headings found in current document
+								{t("view.view_empty")}
 							</div>
 						</div>
 					)}
