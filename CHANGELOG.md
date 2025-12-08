@@ -1,3 +1,12 @@
+## [1.2.3](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.2.2...1.2.3) (2025-12-08)
+
+
+### 🐛 Bug Fixes
+
+* 基于 frontmatter 支持按页控制 TOC 展开 (#115) ([1451287](https://github.com/RavenHogWarts/obsidian-next-toc/commit/14512876e727f3467d1be438402af91cebbe2eaa)), closes [#115](https://github.com/RavenHogWarts/obsidian-next-toc/issues/115)
+
+
+
 ## [1.2.2](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.2.1...1.2.2) (2025-12-07)
 
 
