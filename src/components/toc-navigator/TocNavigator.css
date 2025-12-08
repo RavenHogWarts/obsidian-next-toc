@@ -321,29 +321,3 @@
 .modal .NToc__view {
 	display: none;
 }
-
-/* 特定页面控制样式 */
-.pin-ntoc ~ .NToc__view .NToc__group-content {
-	opacity: 1 !important;
-	visibility: visible !important;
-}
-.unpin-ntoc ~ .NToc__view .NToc__group-content {
-	opacity: 0 !important;
-	visibility: hidden !important;
-}
-
-/* .show-ntoc ~ .NToc__view .NToc__container {
-	opacity: 1 !important;
-	visibility: visible !important;
-}
-.hide-ntoc ~ .NToc__view .NToc__container {
-	opacity: 0 !important;
-	visibility: hidden !important;
-}
-
-.show-ntoc-number ~ .NToc__view .NToc__toc-item-number {
-	display: block !important;
-}
-.hide-ntoc-number ~ .NToc__view .NToc__toc-item-number {
-	display: none !important;
-} */
