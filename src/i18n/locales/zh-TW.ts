@@ -36,7 +36,7 @@ const translations: BaseMessage = {
 			},
 			alwaysExpand: {
 				name: "目錄永遠展開",
-				desc: "啟用或停用目錄永遠展開，可使用文件屬性 `classes` 來控制顯示與隱藏：",
+				desc: "啟用或停用目錄永遠展開，可使用文件屬性 `cssclasses` 來控制顯示與隱藏：",
 			},
 			width: {
 				name: "目錄寬度",
