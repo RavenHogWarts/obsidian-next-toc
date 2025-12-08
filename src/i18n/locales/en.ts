@@ -39,7 +39,7 @@ const translations: BaseMessage = {
 			},
 			alwaysExpand: {
 				name: "TOC always expand",
-				desc: "Enable or disable always expanding the table of contents， you can use the document property `classes` to control show and hide: ",
+				desc: "Enable or disable always expanding the table of contents， you can use the document property `cssclasses` to control show and hide: ",
 			},
 			width: {
 				name: "TOC width",

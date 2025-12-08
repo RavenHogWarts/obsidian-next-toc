@@ -5,6 +5,7 @@ import { useResizableToc } from "@src/hooks/useResizableToc";
 import { useScrollProgress } from "@src/hooks/useScrollProgress";
 import useSettingsStore from "@src/hooks/useSettingsStore";
 import { useTocCollapse } from "@src/hooks/useTocCollapse";
+import { useTocExpansion } from "@src/hooks/useTocExpansion";
 import { useTocVisibility } from "@src/hooks/useTocVisibility";
 import calculateActualDepth from "@src/utils/calculateActualDepth";
 import hasChildren from "@src/utils/hasChildren";
@@ -42,6 +43,12 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 
 	// 获取滚动进度
 	const scrollProgress = useScrollProgress(currentView);
+
+	// 使用 TOC 展开状态 Hook（结合 frontmatter 和 alwaysExpand）
+	const shouldExpandToc = useTocExpansion({
+		currentView,
+		alwaysExpand: settings.toc.alwaysExpand,
+	});
 
 	// 使用折叠管理 Hook
 	const { collapsedSet, toggleCollapsedAt, onCollapseAll, onExpandAll } =
@@ -116,13 +123,13 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	useEffect(() => {
 		if (NTocGroupContentRef.current) {
 			const content = NTocGroupContentRef.current;
-			if (settings.toc.alwaysExpand || isHovered) {
+			if (shouldExpandToc || isHovered) {
 				content.classList.add("NToc__group-content-expanded");
 			} else {
 				content.classList.remove("NToc__group-content-expanded");
 			}
 		}
-	}, [settings.toc.alwaysExpand, isHovered]);
+	}, [shouldExpandToc, isHovered]);
 
 	// 当 TOC 显示状态变化时重新应用宽度样式
 	useEffect(() => {
@@ -143,14 +150,10 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 				ref={NTocGroupRef}
 				className="NToc__group"
 				onMouseEnter={() =>
-					settings.toc.show &&
-					!settings.toc.alwaysExpand &&
-					setIsHovered(true)
+					settings.toc.show && !shouldExpandToc && setIsHovered(true)
 				}
 				onMouseLeave={() =>
-					settings.toc.show &&
-					!settings.toc.alwaysExpand &&
-					setIsHovered(false)
+					settings.toc.show && !shouldExpandToc && setIsHovered(false)
 				}
 			>
 				{settings.tool.showProgressCircle && (
