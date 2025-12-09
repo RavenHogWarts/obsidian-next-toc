@@ -6,13 +6,6 @@ interface UseTocExpansionProps {
 	alwaysExpand: boolean;
 }
 
-/**
- * Hook to determine if TOC should be expanded based on:
- * 1. Frontmatter properties (pin-ntoc, unpin-ntoc)
- * 2. Global alwaysExpand setting
- *
- * Priority: Frontmatter > alwaysExpand setting
- */
 export const useTocExpansion = ({
 	currentView,
 	alwaysExpand,
@@ -26,15 +19,12 @@ export const useTocExpansion = ({
 				return;
 			}
 
-			// Get metadata cache
 			const metadata = currentView.app.metadataCache.getFileCache(
 				currentView.file
 			);
 			const frontmatter = metadata?.frontmatter;
 
-			// Check for frontmatter cssclasses property
 			if (frontmatter) {
-				// Get cssclasses - can be array or string
 				const cssclasses =
 					frontmatter.cssclasses || frontmatter.cssclass;
 				let classArray: string[] = [];
@@ -45,24 +35,34 @@ export const useTocExpansion = ({
 					classArray = cssclasses;
 				}
 
-				// pin-ntoc takes precedence - force expand
 				if (classArray.includes("pin-ntoc")) {
 					setShouldExpand(true);
 					return;
 				}
 
-				// unpin-ntoc takes precedence - force collapse
 				if (classArray.includes("unpin-ntoc")) {
 					setShouldExpand(false);
 					return;
 				}
 			}
 
-			// Fall back to global setting
 			setShouldExpand(alwaysExpand);
 		};
 
 		updateExpansionState();
+
+		const metadataChangeHandler = currentView.app.metadataCache.on(
+			"changed",
+			(file) => {
+				if (file === currentView.file) {
+					updateExpansionState();
+				}
+			}
+		);
+
+		return () => {
+			currentView.app.metadataCache.offref(metadataChangeHandler);
+		};
 	}, [currentView, alwaysExpand]);
 
 	return shouldExpand;
