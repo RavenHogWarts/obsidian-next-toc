@@ -1,3 +1,17 @@
+## [1.2.4](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.2.3...1.2.4) (2025-12-09)
+
+
+### ✨ Features
+
+* **toc:** 监听元数据变更以更新目录展开状态 (#118) ([acfadd4](https://github.com/RavenHogWarts/obsidian-next-toc/commit/acfadd4d6ed6301ce0bbfb2d17969c6ac8472805)), closes [#118](https://github.com/RavenHogWarts/obsidian-next-toc/issues/118)
+
+
+### 🐛 Bug Fixes
+
+* **view:** 避免自动激活并注释 revealLeaf 调用 (#117) ([a0e0790](https://github.com/RavenHogWarts/obsidian-next-toc/commit/a0e079084342f1bb5bad450fb52877a3d3d7057a)), closes [#117](https://github.com/RavenHogWarts/obsidian-next-toc/issues/117)
+
+
+
 ## [1.2.3](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.2.2...1.2.3) (2025-12-08)
 
 
