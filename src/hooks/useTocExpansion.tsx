@@ -63,6 +63,20 @@ export const useTocExpansion = ({
 		};
 
 		updateExpansionState();
+
+		// Listen for metadata changes
+		const metadataChangeHandler = currentView.app.metadataCache.on(
+			"changed",
+			(file) => {
+				if (file === currentView.file) {
+					updateExpansionState();
+				}
+			}
+		);
+
+		return () => {
+			currentView.app.metadataCache.offref(metadataChangeHandler);
+		};
 	}, [currentView, alwaysExpand]);
 
 	return shouldExpand;
