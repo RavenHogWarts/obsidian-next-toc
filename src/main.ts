@@ -72,12 +72,11 @@ export default class NTocPlugin extends Plugin {
 		if (this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC).length === 0) {
 			await this.app.workspace.getRightLeaf(false)?.setViewState({
 				type: VIEW_TYPE_NTOC,
-				active: true,
 			});
 		}
-		this.app.workspace.revealLeaf(
-			this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC)[0]
-		);
+		// this.app.workspace.revealLeaf(
+		// 	this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC)[0]
+		// );
 	}
 
 	private registerCommands() {
