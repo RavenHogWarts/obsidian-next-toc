@@ -3,6 +3,7 @@ import { BaseMessage } from "../types";
 // Remember [use sentence case in UI](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Use+sentence+case+in+UI)
 const translations: BaseMessage = {
 	commands: {
+		openTocView: "Open TOC view",
 		returnToCursor: "Return to cursor",
 		scrollToTop: "Scroll to top",
 		scrollToBottom: "Scroll to bottom",

@@ -2,6 +2,7 @@ import { BaseMessage } from "../types";
 
 const translations: BaseMessage = {
 	commands: {
+		openTocView: "開啟目錄側邊視圖",
 		returnToCursor: "返回游標位置",
 		scrollToTop: "捲動到頂部",
 		scrollToBottom: "捲動到底部",

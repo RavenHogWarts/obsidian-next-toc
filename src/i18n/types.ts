@@ -18,6 +18,7 @@ type SettingsItem<T = Record<string, never>> = IBaseSettingsItem & T;
 // 定义翻译结构类型
 export type BaseMessage = {
 	commands: {
+		openTocView: string;
 		returnToCursor: string;
 		scrollToTop: string;
 		scrollToBottom: string;
