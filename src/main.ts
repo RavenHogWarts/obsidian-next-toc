@@ -41,10 +41,6 @@ export default class NTocPlugin extends Plugin {
 		this.registerContextMenu();
 		this.registerCodeblockProcessor();
 
-		this.app.workspace.onLayoutReady(() => {
-			this.initLeaf();
-		});
-
 		// Register CM6 cursor listener extension
 		this.registerEditorExtension(createCursorListenerExtension(this));
 
@@ -74,12 +70,20 @@ export default class NTocPlugin extends Plugin {
 				type: VIEW_TYPE_NTOC,
 			});
 		}
-		// this.app.workspace.revealLeaf(
-		// 	this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC)[0]
-		// );
+		this.app.workspace.revealLeaf(
+			this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC)[0]
+		);
 	}
 
 	private registerCommands() {
+		this.addCommand({
+			id: "open-toc-view",
+			name: t("commands.openTocView"),
+			callback: async () => {
+				await this.initLeaf();
+			},
+		});
+
 		this.addCommand({
 			id: "return-to-cursor",
 			name: t("commands.returnToCursor"),
