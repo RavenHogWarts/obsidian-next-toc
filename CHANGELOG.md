@@ -1,3 +1,12 @@
+## [1.2.5](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.2.4...1.2.5) (2025-12-10)
+
+
+### ✨ Features
+
+* 添加打开目录侧边视图命令,移除自启动 (#120) ([79cd0ab](https://github.com/RavenHogWarts/obsidian-next-toc/commit/79cd0ab7b3c5709e4cdd188fca1e09be41dc114d)), closes [#120](https://github.com/RavenHogWarts/obsidian-next-toc/issues/120)
+
+
+
 ## [1.2.4](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.2.3...1.2.4) (2025-12-09)
 
 
