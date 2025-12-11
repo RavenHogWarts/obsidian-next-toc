@@ -8,6 +8,7 @@ import { NTocSettings } from "./NTocSettings";
 export class PluginSettingTab extends ObPluginSettingTab {
 	plugin: NTocPlugin;
 	root: Root;
+	icon: string = "table-of-contents";
 
 	constructor(plugin: NTocPlugin) {
 		super(plugin.app, plugin);
