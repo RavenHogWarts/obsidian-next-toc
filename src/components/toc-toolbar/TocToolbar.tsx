@@ -130,7 +130,9 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			<button
 				className="NToc__toc-toolbar-button"
 				aria-label={t("tools.copyTOC")}
-				onClick={handleCopyToClipboard}
+				onClick={() => {
+					handleCopyToClipboard();
+				}}
 			>
 				<span className="NToc__toc-toolbar-button-icon">
 					<ClipboardCopy size={16} />
