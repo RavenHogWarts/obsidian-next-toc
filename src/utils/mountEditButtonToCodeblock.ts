@@ -7,11 +7,11 @@ export default function (app: App, code: string, codeblockDom: HTMLElement) {
 	codeblockDom.addEventListener("mouseover", () => {
 		const markdownView = app.workspace.getActiveViewOfType(MarkdownView);
 		if (markdownView && markdownView.getMode() !== "preview") {
-			cardEditBtn.style.opacity = "1";
+			cardEditBtn.addClass("NToc__inline-card-edit-btn--visible");
 		}
 	});
 	codeblockDom.addEventListener("mouseout", () => {
-		cardEditBtn.style.opacity = "0";
+		cardEditBtn.removeClass("NToc__inline-card-edit-btn--visible");
 	});
 
 	cardEditBtn.onclick = () => {

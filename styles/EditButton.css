@@ -1,0 +1,27 @@
+.NToc__inline-card-edit-btn {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	width: 24px;
+	height: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--background-modifier-form-field);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	cursor: pointer;
+	color: var(--text-muted);
+	opacity: 0;
+	transition: opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.NToc__inline-card-edit-btn:hover {
+	background-color: var(--background-modifier-hover);
+	color: var(--text-normal);
+	border-color: var(--interactive-accent);
+}
+
+.NToc__inline-card-edit-btn.NToc__inline-card-edit-btn--visible {
+	opacity: 1;
+}
