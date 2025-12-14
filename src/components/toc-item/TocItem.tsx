@@ -61,24 +61,27 @@ export const TocItem: FC<TocItemProps> = ({
 	);
 
 	useEffect(() => {
-		if (NTocItemTextRef.current) {
-			// 清空所有子节点
-			markdownRenderService.clearElement(NTocItemTextRef.current);
+		const renderContent = async () => {
+			if (NTocItemTextRef.current) {
+				markdownRenderService.clearElement(NTocItemTextRef.current);
 
-			if (settings.render.renderMarkdown) {
-				NTocItemTextRef.current.classList.add("markdown-rendered");
-				markdownRenderService.renderMarkdown(
-					heading.heading,
-					NTocItemTextRef.current,
-					""
-				);
-			} else {
-				markdownRenderService.setTextContent(
-					heading.heading,
-					NTocItemTextRef.current
-				);
+				if (settings.render.renderMarkdown) {
+					NTocItemTextRef.current.classList.add("markdown-rendered");
+					await markdownRenderService.renderMarkdown(
+						heading.heading,
+						NTocItemTextRef.current,
+						""
+					);
+				} else {
+					markdownRenderService.setTextContent(
+						heading.heading,
+						NTocItemTextRef.current
+					);
+				}
 			}
-		}
+		};
+
+		renderContent();
 	}, [
 		settings.render.renderMarkdown,
 		heading.heading,
@@ -100,7 +103,7 @@ export const TocItem: FC<TocItemProps> = ({
 			data-actual-depth={headingActualDepth}
 			data-start-line={heading.position.start.line}
 			data-active={headingActive}
-			onClick={() => scrollToHeading(currentView, heading)}
+			onClick={async () => await scrollToHeading(currentView, heading)}
 		>
 			<div className="NToc__toc-item">
 				{headingChildren && (

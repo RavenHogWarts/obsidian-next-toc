@@ -19,8 +19,8 @@ export const TocTabContent: FC = () => {
 					control: (
 						<ObsidianSetting.Toggle
 							value={settings.toc.show}
-							onChange={(value) => {
-								settingsStore.updateSettingByPath(
+							onChange={async (value) => {
+								await settingsStore.updateSettingByPath(
 									"toc.show",
 									value
 								);
@@ -43,8 +43,8 @@ export const TocTabContent: FC = () => {
 					control: (
 						<ObsidianSetting.Toggle
 							value={settings.toc.alwaysExpand}
-							onChange={(value) => {
-								settingsStore.updateSettingByPath(
+							onChange={async (value) => {
+								await settingsStore.updateSettingByPath(
 									"toc.alwaysExpand",
 									value
 								);
@@ -61,8 +61,8 @@ export const TocTabContent: FC = () => {
 					control: (
 						<ObsidianSetting.Text
 							value={settings.toc.width.toString()}
-							onChange={(value) => {
-								settingsStore.updateSettingByPath(
+							onChange={async (value) => {
+								await settingsStore.updateSettingByPath(
 									"toc.width",
 									Number(value)
 								);
@@ -83,8 +83,8 @@ export const TocTabContent: FC = () => {
 								left: t("settings.toc.position.options.left"),
 								right: t("settings.toc.position.options.right"),
 							}}
-							onChange={(value) => {
-								settingsStore.updateSettingByPath(
+							onChange={async (value) => {
+								await settingsStore.updateSettingByPath(
 									"toc.position",
 									value as NTocPosition
 								);
@@ -101,8 +101,8 @@ export const TocTabContent: FC = () => {
 					control: (
 						<ObsidianSetting.Text
 							value={settings.toc.offset.toString()}
-							onChange={(value) => {
-								settingsStore.updateSettingByPath(
+							onChange={async (value) => {
+								await settingsStore.updateSettingByPath(
 									"toc.offset",
 									Number(value)
 								);

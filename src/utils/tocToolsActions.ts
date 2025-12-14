@@ -60,7 +60,7 @@ export const scrollTopBottom = (view: MarkdownView, to: "top" | "bottom") => {
 	}
 };
 
-export const navigateHeading = (
+export const navigateHeading = async (
 	view: MarkdownView,
 	headings: HeadingCache[],
 	direction: "next" | "prev"
@@ -107,6 +107,6 @@ export const navigateHeading = (
 	// console.log("Target Index:", targetIndex);
 
 	if (targetIndex >= 0 && targetIndex < headings.length) {
-		scrollToHeading(view, headings[targetIndex]);
+		await scrollToHeading(view, headings[targetIndex]);
 	}
 };

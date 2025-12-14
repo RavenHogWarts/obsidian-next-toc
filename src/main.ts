@@ -66,9 +66,12 @@ export default class NTocPlugin extends Plugin {
 	 */
 	async initLeaf(): Promise<void> {
 		if (this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC).length === 0) {
-			await this.app.workspace.getRightLeaf(false)?.setViewState({
-				type: VIEW_TYPE_NTOC,
-			});
+			const rightLeaf = this.app.workspace.getRightLeaf(false);
+			if (rightLeaf) {
+				await rightLeaf.setViewState({
+					type: VIEW_TYPE_NTOC,
+				});
+			}
 		}
 		this.app.workspace.revealLeaf(
 			this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC)[0]
@@ -144,8 +147,8 @@ export default class NTocPlugin extends Plugin {
 		this.addCommand({
 			id: "toc-expand",
 			name: t("commands.tocExpand"),
-			callback: () => {
-				this.settingsStore.updateSettingByPath(
+			callback: async () => {
+				await this.settingsStore.updateSettingByPath(
 					"toc.alwaysExpand",
 					!this.settingsStore.settings.toc.alwaysExpand
 				);
@@ -156,7 +159,7 @@ export default class NTocPlugin extends Plugin {
 		this.addCommand({
 			id: "add-current-file-to-hide-heading-number-blacklist",
 			name: t("commands.addCurrentFileToHideHeadingNumberBlacklist"),
-			callback: () => {
+			callback: async () => {
 				const file = this.app.workspace.getActiveFile();
 				if (!file) {
 					return;
@@ -169,7 +172,7 @@ export default class NTocPlugin extends Plugin {
 				);
 
 				if (newBlacklist) {
-					this.settingsStore.updateSettingByPath(
+					await this.settingsStore.updateSettingByPath(
 						"render.hideHeadingNumberBlacklist",
 						newBlacklist
 					);
@@ -181,7 +184,7 @@ export default class NTocPlugin extends Plugin {
 		this.addCommand({
 			id: "add-current-folder-to-hide-heading-number-blacklist",
 			name: t("commands.addCurrentFolderToHideHeadingNumberBlacklist"),
-			callback: () => {
+			callback: async () => {
 				const file = this.app.workspace.getActiveFile();
 				if (!file) {
 					return;
@@ -194,7 +197,7 @@ export default class NTocPlugin extends Plugin {
 				);
 
 				if (newBlacklist) {
-					this.settingsStore.updateSettingByPath(
+					await this.settingsStore.updateSettingByPath(
 						"render.hideHeadingNumberBlacklist",
 						newBlacklist
 					);
