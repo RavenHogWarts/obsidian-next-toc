@@ -782,23 +782,20 @@ type ObsidianSettingComponent = FC<ObsidianSettingProps> & {
 	Toggle: typeof Toggle;
 };
 
-const ObsidianSettingWithSubComponents = Object.assign(
-	ObsidianSetting as FC<ObsidianSettingProps>,
-	{
-		Button,
-		Color,
-		Container,
-		Dropdown,
-		ExtraButton,
-		MomentFormat,
-		ProgressBar,
-		Search,
-		Slider,
-		Text,
-		TextArea,
-		Toggle,
-	}
-) as ObsidianSettingComponent;
+const ObsidianSettingWithSubComponents = Object.assign(ObsidianSetting, {
+	Button,
+	Color,
+	Container,
+	Dropdown,
+	ExtraButton,
+	MomentFormat,
+	ProgressBar,
+	Search,
+	Slider,
+	Text,
+	TextArea,
+	Toggle,
+}) as ObsidianSettingComponent;
 
 export { ObsidianSettingWithSubComponents as ObsidianSetting };
 
