@@ -122,10 +122,7 @@ export class NTocRender {
 		}
 	}
 
-	async update(
-		view: MarkdownView | null,
-		props: NTocRenderProps
-	): Promise<void> {
+	update(view: MarkdownView | null, props: NTocRenderProps): void {
 		if (view === null) {
 			// 视图为null，销毁所有内容
 			this.destroy();
