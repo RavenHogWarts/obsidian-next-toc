@@ -37,7 +37,7 @@ export class NTocView extends ItemView {
 	}
 
 	getDisplayText(): string {
-		return "Next TOC";
+		return "Next toc";
 	}
 
 	getIcon(): IconName {

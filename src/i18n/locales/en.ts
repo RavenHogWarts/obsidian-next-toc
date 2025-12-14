@@ -3,13 +3,13 @@ import { BaseMessage } from "../types";
 // Remember [use sentence case in UI](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Use+sentence+case+in+UI)
 const translations: BaseMessage = {
 	commands: {
-		openTocView: "Open TOC view",
+		openTocView: "Open toc view",
 		returnToCursor: "Return to cursor",
 		scrollToTop: "Scroll to top",
 		scrollToBottom: "Scroll to bottom",
 		navigatePreviousHeading: "Navigate to previous heading",
 		navigateNextHeading: "Navigate to next heading",
-		tocExpand: "Expand/Collapse TOC",
+		tocExpand: "Expand/collapse toc",
 		insertReadingTimeCard: "Insert reading time card",
 		insertTableOfContentsCard: "Insert table of contents card",
 		addCurrentFileToHideHeadingNumberBlacklist:
@@ -29,25 +29,25 @@ const translations: BaseMessage = {
 	},
 	view: {
 		view_empty:
-			"No headings found. Please ensure the current document contains headings, or activate the markdown document view.",
+			"No headings found. please ensure the current document contains headings, or activate the markdown document view.",
 	},
 	settings: {
 		toc: {
-			name: "TOC",
+			name: "Toc",
 			show: {
-				name: "TOC show",
+				name: "Toc show",
 				desc: "Enable or disable the table of contents feature",
 			},
 			alwaysExpand: {
-				name: "TOC always expand",
+				name: "Toc always expand",
 				desc: "Enable or disable always expanding the table of contents， you can use the document property `cssclasses` to control show and hide: ",
 			},
 			width: {
-				name: "TOC width",
+				name: "Toc width",
 				desc: "Set the width of the table of contents",
 			},
 			position: {
-				name: "TOC position",
+				name: "Toc position",
 				desc: "Set the position of the table of contents",
 				options: {
 					left: "Left",
@@ -55,7 +55,7 @@ const translations: BaseMessage = {
 				},
 			},
 			offset: {
-				name: "TOC offset",
+				name: "Toc offset",
 				desc: "Set the offset of the table of contents",
 			},
 		},
@@ -70,8 +70,8 @@ const translations: BaseMessage = {
 				desc: "Enable or disable skipping level 1 headings in the table of contents",
 			},
 			renderMarkdown: {
-				name: "Render markdown",
-				desc: "Enable or disable rendering markdown in the table of contents",
+				name: "Render markdown syntax",
+				desc: "Enable or disable rendering markdown syntax in the table of contents",
 			},
 			showWhenSingleHeading: {
 				name: "Show when single heading",
@@ -79,7 +79,7 @@ const translations: BaseMessage = {
 			},
 			hideHeadingNumberBlacklist: {
 				name: "Heading number blacklist",
-				desc: "Specify files that should hide heading numbers (one path per line). Supports wildcards: * (any characters), ? (single character). Only works when 'Use heading number' is enabled. Example: folder/file.md or *.md",
+				desc: "Specify files that should hide heading numbers (one path per line). supports wildcards: * (any characters), ? (single character). only works when 'Use heading number' is enabled. example: folder/file.md or *.md",
 			},
 		},
 		tool: {
@@ -97,7 +97,7 @@ const translations: BaseMessage = {
 			},
 			showProgressCircle: {
 				name: "Use progress circle",
-				desc: "Show the circular reading progress indicator above the toggle button, when the TOC is collapsed",
+				desc: "Show the circular reading progress indicator above the toggle button, when the toc is collapsed",
 			},
 			returnToCursor: {
 				name: "Return to cursor",
@@ -147,7 +147,7 @@ const translations: BaseMessage = {
 			maxDepth: "Maximum heading depth",
 			redirect: "Enable redirect to headings",
 			showNumbers: "Show heading numbers",
-			collapsible: "Make TOC collapsible",
+			collapsible: "Make toc collapsible",
 		},
 		styles: {
 			currentProperties: "Current properties",
@@ -156,12 +156,12 @@ const translations: BaseMessage = {
 		},
 	},
 	tools: {
-		pinTOC: "Pin/Unpin TOC",
-		changePosition: "Change TOC position",
-		expandCollapse: "Expand/Collapse TOC items",
+		pinTOC: "Pin/unpin toc",
+		changePosition: "Change toc position",
+		expandCollapse: "Expand/collapse toc items",
 		leftOffset: "Add offset to the left",
 		rightOffset: "Add offset to the right",
-		copyTOC: "Copy TOC to clipboard",
+		copyTOC: "Copy toc to clipboard",
 		returnNavigation: "Return navigation",
 		returnToCursor: "To cursor",
 		returnToTop: "To top",
