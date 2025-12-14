@@ -66,9 +66,12 @@ export default class NTocPlugin extends Plugin {
 	 */
 	async initLeaf(): Promise<void> {
 		if (this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC).length === 0) {
-			await this.app.workspace.getRightLeaf(false)?.setViewState({
-				type: VIEW_TYPE_NTOC,
-			});
+			const rightLeaf = this.app.workspace.getRightLeaf(false);
+			if (rightLeaf) {
+				await rightLeaf.setViewState({
+					type: VIEW_TYPE_NTOC,
+				});
+			}
 		}
 		this.app.workspace.revealLeaf(
 			this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC)[0]
@@ -120,10 +123,10 @@ export default class NTocPlugin extends Plugin {
 		this.addCommand({
 			id: "navigate-previous-heading",
 			name: t("commands.navigatePreviousHeading"),
-			callback: async () => {
+			callback: () => {
 				const view = this.getActiveMarkdownView();
 				if (view) {
-					const headings = await getFileHeadings(view);
+					const headings = getFileHeadings(view);
 					navigateHeading(view, headings, "prev");
 				}
 			},
@@ -132,10 +135,10 @@ export default class NTocPlugin extends Plugin {
 		this.addCommand({
 			id: "navigate-next-heading",
 			name: t("commands.navigateNextHeading"),
-			callback: async () => {
+			callback: () => {
 				const view = this.getActiveMarkdownView();
 				if (view) {
-					const headings = await getFileHeadings(view);
+					const headings = getFileHeadings(view);
 					navigateHeading(view, headings, "next");
 				}
 			},
@@ -144,8 +147,8 @@ export default class NTocPlugin extends Plugin {
 		this.addCommand({
 			id: "toc-expand",
 			name: t("commands.tocExpand"),
-			callback: () => {
-				this.settingsStore.updateSettingByPath(
+			callback: async () => {
+				await this.settingsStore.updateSettingByPath(
 					"toc.alwaysExpand",
 					!this.settingsStore.settings.toc.alwaysExpand
 				);
@@ -156,7 +159,7 @@ export default class NTocPlugin extends Plugin {
 		this.addCommand({
 			id: "add-current-file-to-hide-heading-number-blacklist",
 			name: t("commands.addCurrentFileToHideHeadingNumberBlacklist"),
-			callback: () => {
+			callback: async () => {
 				const file = this.app.workspace.getActiveFile();
 				if (!file) {
 					return;
@@ -169,7 +172,7 @@ export default class NTocPlugin extends Plugin {
 				);
 
 				if (newBlacklist) {
-					this.settingsStore.updateSettingByPath(
+					await this.settingsStore.updateSettingByPath(
 						"render.hideHeadingNumberBlacklist",
 						newBlacklist
 					);
@@ -181,7 +184,7 @@ export default class NTocPlugin extends Plugin {
 		this.addCommand({
 			id: "add-current-folder-to-hide-heading-number-blacklist",
 			name: t("commands.addCurrentFolderToHideHeadingNumberBlacklist"),
-			callback: () => {
+			callback: async () => {
 				const file = this.app.workspace.getActiveFile();
 				if (!file) {
 					return;
@@ -194,7 +197,7 @@ export default class NTocPlugin extends Plugin {
 				);
 
 				if (newBlacklist) {
-					this.settingsStore.updateSettingByPath(
+					await this.settingsStore.updateSettingByPath(
 						"render.hideHeadingNumberBlacklist",
 						newBlacklist
 					);
@@ -261,9 +264,7 @@ export default class NTocPlugin extends Plugin {
 				if (leaf?.view.getViewType() === VIEW_TYPE_NTOC) {
 					// 强制更新以触发内联导航的隐藏检查
 					if (this.currentView && this.currentView.file) {
-						const headings = await getFileHeadings(
-							this.currentView
-						);
+						const headings = getFileHeadings(this.currentView);
 						const activeHeadingIndex = updateActiveHeading(
 							this.currentView,
 							headings
@@ -282,9 +283,9 @@ export default class NTocPlugin extends Plugin {
 					this.currentView = leaf.view;
 
 					// 使用 requestAnimationFrame 延迟初始化，避免闪烁
-					requestAnimationFrame(async () => {
+					requestAnimationFrame(() => {
 						this.setupScrollListener();
-						await this.updateNToc();
+						this.updateNToc();
 					});
 				} else {
 					// 切换到非MarkdownView（且非NTocView），清理当前TOC
@@ -299,23 +300,23 @@ export default class NTocPlugin extends Plugin {
 		);
 
 		this.registerEvent(
-			this.app.workspace.on("layout-change", async () => {
-				await this.updateNToc();
+			this.app.workspace.on("layout-change", () => {
+				this.updateNToc();
 			})
 		);
 
 		this.registerEvent(
-			this.app.workspace.on("editor-change", async (editor) => {
+			this.app.workspace.on("editor-change", (editor) => {
 				if (this.currentView && this.currentView.editor === editor) {
-					await this.updateNToc();
+					this.updateNToc();
 				}
 			})
 		);
 
 		this.registerEvent(
-			this.app.metadataCache.on("changed", async (file) => {
+			this.app.metadataCache.on("changed", (file) => {
 				if (this.currentView && this.currentView.file === file) {
-					await this.updateNToc();
+					this.updateNToc();
 				}
 			})
 		);
@@ -345,13 +346,13 @@ export default class NTocPlugin extends Plugin {
 			this.currentView.contentEl,
 			{
 				debounceMs: 16,
-				onScroll: async (event) => {
+				onScroll: (event) => {
 					const target = event.target as HTMLElement;
 					if (
 						target.classList.contains("cm-scroller") ||
 						target.classList.contains("markdown-preview-view")
 					) {
-						await this.updateNToc();
+						this.updateNToc();
 					}
 				},
 			}
@@ -384,12 +385,12 @@ export default class NTocPlugin extends Plugin {
 		return null;
 	}
 
-	private async updateNToc() {
+	private updateNToc() {
 		if (!this.currentView || !this.currentView.file) {
 			return;
 		}
 
-		const headings = await getFileHeadings(this.currentView);
+		const headings = getFileHeadings(this.currentView);
 		const activeHeadingIndex = updateActiveHeading(
 			this.currentView,
 			headings

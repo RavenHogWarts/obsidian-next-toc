@@ -20,8 +20,8 @@ export const ToolTabContent: FC = () => {
 					control: (
 						<ObsidianSetting.Toggle
 							value={settings.tool.useToolbar}
-							onChange={(value) => {
-								settingsStore.updateSettingByPath(
+							onChange={async (value) => {
+								await settingsStore.updateSettingByPath(
 									"tool.useToolbar",
 									value
 								);
@@ -38,8 +38,8 @@ export const ToolTabContent: FC = () => {
 					control: (
 						<ObsidianSetting.Toggle
 							value={settings.tool.showProgressBar}
-							onChange={(value) => {
-								settingsStore.updateSettingByPath(
+							onChange={async (value) => {
+								await settingsStore.updateSettingByPath(
 									"tool.showProgressBar",
 									value
 								);
@@ -56,8 +56,8 @@ export const ToolTabContent: FC = () => {
 					control: (
 						<ObsidianSetting.Toggle
 							value={settings.tool.showProgressCircle}
-							onChange={(value) => {
-								settingsStore.updateSettingByPath(
+							onChange={async (value) => {
+								await settingsStore.updateSettingByPath(
 									"tool.showProgressCircle",
 									value
 								);
@@ -82,8 +82,8 @@ export const ToolTabContent: FC = () => {
 						<>
 							<ObsidianSetting.Toggle
 								value={settings.tool.returnToCursor.enabled}
-								onChange={(value) => {
-									settingsStore.updateSettingByPath(
+								onChange={async (value) => {
+									await settingsStore.updateSettingByPath(
 										"tool.returnToCursor.enabled",
 										value
 									);
@@ -91,8 +91,8 @@ export const ToolTabContent: FC = () => {
 							/>
 							<ObsidianSetting.ExtraButton
 								icon={"reset"}
-								onClick={() => {
-									settingsStore.updateSettingByPath(
+								onClick={async () => {
+									await settingsStore.updateSettingByPath(
 										"tool.returnToCursor.icon",
 										DEFAULT_SETTINGS.tool.returnToCursor
 											.icon
@@ -102,8 +102,8 @@ export const ToolTabContent: FC = () => {
 							<IconPicker
 								app={app}
 								value={settings.tool.returnToCursor.icon}
-								onChange={(icon) => {
-									settingsStore.updateSettingByPath(
+								onChange={async (icon) => {
+									await settingsStore.updateSettingByPath(
 										"tool.returnToCursor.icon",
 										icon
 									);
@@ -122,8 +122,8 @@ export const ToolTabContent: FC = () => {
 						<>
 							<ObsidianSetting.Toggle
 								value={settings.tool.returnToTop.enabled}
-								onChange={(value) => {
-									settingsStore.updateSettingByPath(
+								onChange={async (value) => {
+									await settingsStore.updateSettingByPath(
 										"tool.returnToTop.enabled",
 										value
 									);
@@ -131,8 +131,8 @@ export const ToolTabContent: FC = () => {
 							/>
 							<ObsidianSetting.ExtraButton
 								icon={"reset"}
-								onClick={() => {
-									settingsStore.updateSettingByPath(
+								onClick={async () => {
+									await settingsStore.updateSettingByPath(
 										"tool.returnToTop.icon",
 										DEFAULT_SETTINGS.tool.returnToTop.icon
 									);
@@ -141,8 +141,8 @@ export const ToolTabContent: FC = () => {
 							<IconPicker
 								app={app}
 								value={settings.tool.returnToTop.icon}
-								onChange={(icon) => {
-									settingsStore.updateSettingByPath(
+								onChange={async (icon) => {
+									await settingsStore.updateSettingByPath(
 										"tool.returnToTop.icon",
 										icon
 									);
@@ -161,8 +161,8 @@ export const ToolTabContent: FC = () => {
 						<>
 							<ObsidianSetting.Toggle
 								value={settings.tool.returnToBottom.enabled}
-								onChange={(value) => {
-									settingsStore.updateSettingByPath(
+								onChange={async (value) => {
+									await settingsStore.updateSettingByPath(
 										"tool.returnToBottom.enabled",
 										value
 									);
@@ -170,8 +170,8 @@ export const ToolTabContent: FC = () => {
 							/>
 							<ObsidianSetting.ExtraButton
 								icon={"reset"}
-								onClick={() => {
-									settingsStore.updateSettingByPath(
+								onClick={async () => {
+									await settingsStore.updateSettingByPath(
 										"tool.returnToBottom.icon",
 										DEFAULT_SETTINGS.tool.returnToBottom
 											.icon
@@ -181,8 +181,8 @@ export const ToolTabContent: FC = () => {
 							<IconPicker
 								app={app}
 								value={settings.tool.returnToBottom.icon}
-								onChange={(icon) => {
-									settingsStore.updateSettingByPath(
+								onChange={async (icon) => {
+									await settingsStore.updateSettingByPath(
 										"tool.returnToBottom.icon",
 										icon
 									);
@@ -201,8 +201,8 @@ export const ToolTabContent: FC = () => {
 						<>
 							<ObsidianSetting.Toggle
 								value={settings.tool.jumpToNextHeading.enabled}
-								onChange={(value) => {
-									settingsStore.updateSettingByPath(
+								onChange={async (value) => {
+									await settingsStore.updateSettingByPath(
 										"tool.jumpToNextHeading.enabled",
 										value
 									);
@@ -210,8 +210,8 @@ export const ToolTabContent: FC = () => {
 							/>
 							<ObsidianSetting.ExtraButton
 								icon={"reset"}
-								onClick={() => {
-									settingsStore.updateSettingByPath(
+								onClick={async () => {
+									await settingsStore.updateSettingByPath(
 										"tool.jumpToNextHeading.icon",
 										DEFAULT_SETTINGS.tool.jumpToNextHeading
 											.icon
@@ -221,8 +221,8 @@ export const ToolTabContent: FC = () => {
 							<IconPicker
 								app={app}
 								value={settings.tool.jumpToNextHeading.icon}
-								onChange={(icon) => {
-									settingsStore.updateSettingByPath(
+								onChange={async (icon) => {
+									await settingsStore.updateSettingByPath(
 										"tool.jumpToNextHeading.icon",
 										icon
 									);
@@ -241,8 +241,8 @@ export const ToolTabContent: FC = () => {
 						<>
 							<ObsidianSetting.Toggle
 								value={settings.tool.jumpToPrevHeading.enabled}
-								onChange={(value) => {
-									settingsStore.updateSettingByPath(
+								onChange={async (value) => {
+									await settingsStore.updateSettingByPath(
 										"tool.jumpToPrevHeading.enabled",
 										value
 									);
@@ -250,8 +250,8 @@ export const ToolTabContent: FC = () => {
 							/>
 							<ObsidianSetting.ExtraButton
 								icon={"reset"}
-								onClick={() => {
-									settingsStore.updateSettingByPath(
+								onClick={async () => {
+									await settingsStore.updateSettingByPath(
 										"tool.jumpToPrevHeading.icon",
 										DEFAULT_SETTINGS.tool.jumpToPrevHeading
 											.icon
@@ -261,8 +261,8 @@ export const ToolTabContent: FC = () => {
 							<IconPicker
 								app={app}
 								value={settings.tool.jumpToPrevHeading.icon}
-								onChange={(icon) => {
-									settingsStore.updateSettingByPath(
+								onChange={async (icon) => {
+									await settingsStore.updateSettingByPath(
 										"tool.jumpToPrevHeading.icon",
 										icon
 									);

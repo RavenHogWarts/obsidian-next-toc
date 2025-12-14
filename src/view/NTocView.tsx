@@ -37,14 +37,15 @@ export class NTocView extends ItemView {
 	}
 
 	getDisplayText(): string {
-		return "Next TOC";
+		return "Next toc";
 	}
 
 	getIcon(): IconName {
 		return "table-of-contents";
 	}
 
-	protected async onOpen(): Promise<void> {
+	async onOpen(): Promise<void> {
+		await super.onOpen();
 		this.root = createRoot(this.contentEl);
 		this.render();
 	}
@@ -90,10 +91,11 @@ export class NTocView extends ItemView {
 		);
 	}
 
-	protected async onClose(): Promise<void> {
+	async onClose(): Promise<void> {
 		if (this.root) {
 			this.root.unmount();
 			this.root = null;
 		}
+		await super.onClose();
 	}
 }

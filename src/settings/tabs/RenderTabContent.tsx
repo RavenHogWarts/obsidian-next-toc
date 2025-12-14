@@ -17,8 +17,8 @@ export const RenderTabContent: FC = () => {
 					control: (
 						<ObsidianSetting.Toggle
 							value={settings.render.useHeadingNumber}
-							onChange={(value) => {
-								settingsStore.updateSettingByPath(
+							onChange={async (value) => {
+								await settingsStore.updateSettingByPath(
 									"render.useHeadingNumber",
 									value
 								);
@@ -35,8 +35,8 @@ export const RenderTabContent: FC = () => {
 					control: (
 						<ObsidianSetting.Toggle
 							value={settings.render.skipHeading1}
-							onChange={(value) => {
-								settingsStore.updateSettingByPath(
+							onChange={async (value) => {
+								await settingsStore.updateSettingByPath(
 									"render.skipHeading1",
 									value
 								);
@@ -53,8 +53,8 @@ export const RenderTabContent: FC = () => {
 					control: (
 						<ObsidianSetting.Toggle
 							value={settings.render.renderMarkdown}
-							onChange={(value) => {
-								settingsStore.updateSettingByPath(
+							onChange={async (value) => {
+								await settingsStore.updateSettingByPath(
 									"render.renderMarkdown",
 									value
 								);
@@ -71,8 +71,8 @@ export const RenderTabContent: FC = () => {
 					control: (
 						<ObsidianSetting.Toggle
 							value={settings.render.showWhenSingleHeading}
-							onChange={(value) => {
-								settingsStore.updateSettingByPath(
+							onChange={async (value) => {
+								await settingsStore.updateSettingByPath(
 									"render.showWhenSingleHeading",
 									value
 								);
@@ -92,12 +92,12 @@ export const RenderTabContent: FC = () => {
 							value={settings.render.hideHeadingNumberBlacklist.join(
 								"\n"
 							)}
-							onChange={(value) => {
+							onChange={async (value) => {
 								const list = value
 									.split("\n")
 									.map((line) => line.trim())
 									.filter((line) => line.length > 0);
-								settingsStore.updateSettingByPath(
+								await settingsStore.updateSettingByPath(
 									"render.hideHeadingNumberBlacklist",
 									list
 								);

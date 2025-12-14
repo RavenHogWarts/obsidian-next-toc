@@ -32,8 +32,8 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 	const settings = usePluginSettings(settingsStore);
 
 	const handleOffsetChange = useCallback(
-		(direction: "left" | "right") => {
-			settingsStore.updateSettingByPath(
+		async (direction: "left" | "right") => {
+			await settingsStore.updateSettingByPath(
 				"toc.offset",
 				settings.toc.offset +
 					(direction === "left"
@@ -71,8 +71,8 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 					settings.toc.alwaysExpand ? "active" : ""
 				}`}
 				aria-label={t("tools.pinTOC")}
-				onClick={() => {
-					settingsStore.updateSettingByPath(
+				onClick={async () => {
+					await settingsStore.updateSettingByPath(
 						"toc.alwaysExpand",
 						!settings.toc.alwaysExpand
 					);
@@ -85,8 +85,8 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			<button
 				className="NToc__toc-toolbar-button"
 				aria-label={t("tools.changePosition")}
-				onClick={() => {
-					settingsStore.updateSettingByPath(
+				onClick={async () => {
+					await settingsStore.updateSettingByPath(
 						"toc.position",
 						settings.toc.position === "left" ? "right" : "left"
 					);
@@ -130,7 +130,9 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			<button
 				className="NToc__toc-toolbar-button"
 				aria-label={t("tools.copyTOC")}
-				onClick={handleCopyToClipboard}
+				onClick={() => {
+					handleCopyToClipboard();
+				}}
 			>
 				<span className="NToc__toc-toolbar-button-icon">
 					<ClipboardCopy size={16} />
