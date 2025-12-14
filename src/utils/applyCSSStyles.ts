@@ -7,7 +7,7 @@ export default function (
 	Object.entries(styles).forEach(([key, value]) => {
 		if (value != null) {
 			const kebabKey = camelToKebab(key);
-			element.style.setProperty(kebabKey, String(value));
+			element.style.setProperty(kebabKey, value.toString());
 		}
 	});
 }
