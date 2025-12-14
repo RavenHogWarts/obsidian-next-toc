@@ -44,7 +44,8 @@ export class NTocView extends ItemView {
 		return "table-of-contents";
 	}
 
-	protected async onOpen(): Promise<void> {
+	async onOpen(): Promise<void> {
+		await super.onOpen();
 		this.root = createRoot(this.contentEl);
 		this.render();
 	}
