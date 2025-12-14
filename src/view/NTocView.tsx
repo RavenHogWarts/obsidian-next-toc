@@ -91,10 +91,11 @@ export class NTocView extends ItemView {
 		);
 	}
 
-	protected async onClose(): Promise<void> {
+	async onClose(): Promise<void> {
 		if (this.root) {
 			this.root.unmount();
 			this.root = null;
 		}
+		await super.onClose();
 	}
 }
