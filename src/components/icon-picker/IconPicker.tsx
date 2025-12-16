@@ -73,7 +73,6 @@ class IconSelector extends FuzzySuggestModal<IconName> {
 	}
 
 	renderSuggestion(item: FuzzyMatch<IconName>, el: HTMLElement) {
-		super.renderSuggestion(item, el);
 		el.addClass("NToc__icon-suggestion");
 		setIcon(el, item.item);
 		el.createSpan({ text: item.item });
