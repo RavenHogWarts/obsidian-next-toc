@@ -179,5 +179,6 @@ export function updateNTocRender(
 	view: MarkdownView | null,
 	props: NTocRenderProps
 ): void {
+	// no changes
 	NTocRender.getInstance(settingsStore).update(view, props);
 }

@@ -73,7 +73,7 @@ export default class NTocPlugin extends Plugin {
 				});
 			}
 		}
-		this.app.workspace.revealLeaf(
+		await this.app.workspace.revealLeaf(
 			this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC)[0]
 		);
 	}
