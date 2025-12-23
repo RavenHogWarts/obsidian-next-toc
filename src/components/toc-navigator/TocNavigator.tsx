@@ -81,8 +81,8 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 		tocItemsRef: NTocGroupTocItemsRef,
 		tocWidth: settings.toc.width,
 		tocPosition: settings.toc.position,
-		onWidthChange: async (width) => {
-			await settingsStore.updateSettingByPath("toc.width", width);
+		onWidthChange: (width) => {
+			void settingsStore.updateSettingByPath("toc.width", width);
 		},
 	});
 

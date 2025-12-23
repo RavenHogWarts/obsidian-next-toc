@@ -22,7 +22,7 @@ export const InlineCodeBlock: FC<InlineCodeBlockProps> = ({ code, label }) => {
 		<code
 			className="ntoc-inline-code-block"
 			onClick={() => {
-				handleCopy();
+				void handleCopy();
 			}}
 		>
 			{label || code}

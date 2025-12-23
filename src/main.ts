@@ -47,7 +47,7 @@ export default class NTocPlugin extends Plugin {
 		// Setup initial scroll listener
 		this.setupScrollListener();
 
-		await this.updateNToc();
+		this.updateNToc();
 	}
 
 	onunload() {
@@ -127,7 +127,7 @@ export default class NTocPlugin extends Plugin {
 				const view = this.getActiveMarkdownView();
 				if (view) {
 					const headings = getFileHeadings(view);
-					navigateHeading(view, headings, "prev");
+					void navigateHeading(view, headings, "prev");
 				}
 			},
 		});
@@ -139,7 +139,7 @@ export default class NTocPlugin extends Plugin {
 				const view = this.getActiveMarkdownView();
 				if (view) {
 					const headings = getFileHeadings(view);
-					navigateHeading(view, headings, "next");
+					void navigateHeading(view, headings, "next");
 				}
 			},
 		});
@@ -259,7 +259,7 @@ export default class NTocPlugin extends Plugin {
 
 	private registerEvents() {
 		this.registerEvent(
-			this.app.workspace.on("active-leaf-change", async (leaf) => {
+			this.app.workspace.on("active-leaf-change", (leaf) => {
 				// 如果切换到 NTocView，隐藏内联导航但保持 currentView
 				if (leaf?.view.getViewType() === VIEW_TYPE_NTOC) {
 					// 强制更新以触发内联导航的隐藏检查

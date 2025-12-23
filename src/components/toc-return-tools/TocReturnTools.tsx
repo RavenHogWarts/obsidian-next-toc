@@ -81,10 +81,10 @@ export const TocReturnTools: FC<TocReturnToolsProps> = ({
 				scrollTopBottom(currentView, "bottom");
 				break;
 			case "jumpToNextHeading":
-				navigateHeading(currentView, headings, "next");
+				void navigateHeading(currentView, headings, "next");
 				break;
 			case "jumpToPrevHeading":
-				navigateHeading(currentView, headings, "prev");
+				void navigateHeading(currentView, headings, "prev");
 				break;
 			default:
 				throw new Error(`Unknown tool: ${toolKey}`);
