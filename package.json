@@ -12,8 +12,8 @@
 		"changelog:all": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 -n ./scripts/changelog-option.js",
 		"release:pre": "npm run build && npm run version && npm run changelog:u && npm i",
 		"release:tag": "node scripts/release-tag.mjs",
-		"lint": "eslint . --ext .ts,.tsx",
-		"lint:fix": "eslint . --ext .ts,.tsx --fix",
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
 		"test": "jest",
 		"test:watch": "jest --watch",
 		"link:data": "node scripts/link-data.mjs"
@@ -29,8 +29,6 @@
 		"node": ">=18.x"
 	},
 	"devDependencies": {
-		"@codemirror/state": "^6.5.2",
-		"@codemirror/view": "^6.39.4",
 		"@types/jest": "^30.0.0",
 		"@types/node": "^25.0.2",
 		"@types/react": "^19.2.7",
