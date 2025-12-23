@@ -29,7 +29,7 @@ const translations: BaseMessage = {
 	},
 	view: {
 		view_empty:
-			"No headings found. please ensure the current document contains headings, or activate the markdown document view.",
+			"No headings found. Please ensure the current document contains headings, or activate the Markdown document view.",
 	},
 	settings: {
 		toc: {
@@ -70,8 +70,8 @@ const translations: BaseMessage = {
 				desc: "Enable or disable skipping level 1 headings in the table of contents",
 			},
 			renderMarkdown: {
-				name: "Render markdown syntax",
-				desc: "Enable or disable rendering markdown syntax in the table of contents",
+				name: "Render Markdown syntax",
+				desc: "Enable or disable rendering Markdown syntax in the table of contents",
 			},
 			showWhenSingleHeading: {
 				name: "Show when single heading",

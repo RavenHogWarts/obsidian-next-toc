@@ -81,7 +81,7 @@ export const TocItem: FC<TocItemProps> = ({
 			}
 		};
 
-		renderContent();
+		void renderContent();
 	}, [
 		settings.render.renderMarkdown,
 		heading.heading,
@@ -103,7 +103,9 @@ export const TocItem: FC<TocItemProps> = ({
 			data-actual-depth={headingActualDepth}
 			data-start-line={heading.position.start.line}
 			data-active={headingActive}
-			onClick={async () => await scrollToHeading(currentView, heading)}
+			onClick={() => {
+				void scrollToHeading(currentView, heading);
+			}}
 		>
 			<div className="NToc__toc-item">
 				{headingChildren && (

@@ -71,8 +71,8 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 					settings.toc.alwaysExpand ? "active" : ""
 				}`}
 				aria-label={t("tools.pinTOC")}
-				onClick={async () => {
-					await settingsStore.updateSettingByPath(
+				onClick={() => {
+					void settingsStore.updateSettingByPath(
 						"toc.alwaysExpand",
 						!settings.toc.alwaysExpand
 					);
@@ -85,8 +85,8 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			<button
 				className="NToc__toc-toolbar-button"
 				aria-label={t("tools.changePosition")}
-				onClick={async () => {
-					await settingsStore.updateSettingByPath(
+				onClick={() => {
+					void settingsStore.updateSettingByPath(
 						"toc.position",
 						settings.toc.position === "left" ? "right" : "left"
 					);
@@ -112,7 +112,9 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			<button
 				className="NToc__toc-toolbar-button"
 				aria-label={t("tools.leftOffset")}
-				onClick={() => handleOffsetChange("left")}
+				onClick={() => {
+				void handleOffsetChange("left");
+			}}
 			>
 				<span className="NToc__toc-toolbar-button-icon">
 					<ChevronLeft size={16} />
@@ -121,7 +123,9 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			<button
 				className="NToc__toc-toolbar-button"
 				aria-label={t("tools.rightOffset")}
-				onClick={() => handleOffsetChange("right")}
+				onClick={() => {
+				void handleOffsetChange("right");
+			}}
 			>
 				<span className="NToc__toc-toolbar-button-icon">
 					<ChevronRight size={16} />
@@ -131,7 +135,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 				className="NToc__toc-toolbar-button"
 				aria-label={t("tools.copyTOC")}
 				onClick={() => {
-					handleCopyToClipboard();
+					void handleCopyToClipboard();
 				}}
 			>
 				<span className="NToc__toc-toolbar-button-icon">
