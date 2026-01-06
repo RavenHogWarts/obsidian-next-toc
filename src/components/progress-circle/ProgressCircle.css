@@ -9,10 +9,47 @@
 	height: 2.5rem;
 }
 
+/* SVG 根元素 */
+.NToc__progress-circle-wrapper .CircularProgressbar {
+	width: 100%;
+	height: 100%;
+	vertical-align: middle;
+}
+
+/* 进度条路径 (已完成的进度) */
+.NToc__progress-circle-wrapper .CircularProgressbar-path {
+	stroke: var(--interactive-accent);
+	stroke-linecap: round;
+	transition: stroke-dashoffset 0.5s ease 0s;
+}
+
+/* 轨道 (背景圆环) */
+.NToc__progress-circle-wrapper .CircularProgressbar-trail {
+	stroke: var(--background-modifier-border);
+	stroke-linecap: round;
+}
+
+/* 文本 */
+.NToc__progress-circle-wrapper .CircularProgressbar-text {
+	fill: var(--text-normal);
+	font-size: 1.5rem;
+	dominant-baseline: middle;
+	text-anchor: middle;
+}
+
+/* 背景 (仅在 background prop 为 true 时生效) */
+.NToc__progress-circle-wrapper .CircularProgressbar-background {
+	fill: transparent;
+}
+
 /* 响应式调整 */
 @media (max-width: 768px) {
 	.NToc__progress-circle-wrapper {
 		width: 2rem;
 		height: 2rem;
+	}
+
+	.NToc__progress-circle-wrapper .CircularProgressbar-text {
+		font-size: 1.25rem;
 	}
 }
