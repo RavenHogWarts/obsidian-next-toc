@@ -1,7 +1,6 @@
-import { BaseMessage } from "../types";
+import type { BaseTranslation } from "../i18n-types";
 
-// Remember [use sentence case in UI](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines#Use+sentence+case+in+UI)
-const translations: BaseMessage = {
+const en = {
 	commands: {
 		openTocView: "Open toc view",
 		returnToCursor: "Return to cursor",
@@ -21,7 +20,7 @@ const translations: BaseMessage = {
 		alreadyCovered: "Already covered by existing patterns",
 		added: "Added",
 		addedAndRemovedRedundant:
-			"Added and removed {{count}} redundant pattern(s)",
+			"Added and removed {count:number} redundant pattern(s)",
 		notInBlacklist: "Not in blacklist",
 		removed: "Removed",
 		coveredByPattern:
@@ -169,6 +168,6 @@ const translations: BaseMessage = {
 		jumpToNextHeading: "Next heading",
 		jumpToPrevHeading: "Previous heading",
 	},
-};
+} satisfies BaseTranslation;
 
-export default translations;
+export default en;

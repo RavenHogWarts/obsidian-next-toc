@@ -1,7 +1,7 @@
 import { IconPicker } from "@src/components/icon-picker/IconPicker";
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
-import { t } from "@src/i18n/i18n";
+import { LL } from "@src/i18n/i18n";
 import { DEFAULT_SETTINGS } from "@src/types/types";
 import { FC } from "react";
 import ObsidianSetting from "../ObsidianSetting";
@@ -15,8 +15,8 @@ export const ToolTabContent: FC = () => {
 		<ObsidianSetting.Container>
 			<ObsidianSetting
 				slots={{
-					name: t("settings.tool.useToolbar.name"),
-					desc: t("settings.tool.useToolbar.desc"),
+					name: LL.settings.tool.useToolbar.name(),
+					desc: LL.settings.tool.useToolbar.desc(),
 					control: (
 						<ObsidianSetting.Toggle
 							value={settings.tool.useToolbar}
@@ -33,8 +33,8 @@ export const ToolTabContent: FC = () => {
 
 			<ObsidianSetting
 				slots={{
-					name: t("settings.tool.showProgressBar.name"),
-					desc: t("settings.tool.showProgressBar.desc"),
+					name: LL.settings.tool.showProgressBar.name(),
+					desc: LL.settings.tool.showProgressBar.desc(),
 					control: (
 						<ObsidianSetting.Toggle
 							value={settings.tool.showProgressBar}
@@ -51,8 +51,8 @@ export const ToolTabContent: FC = () => {
 
 			<ObsidianSetting
 				slots={{
-					name: t("settings.tool.showProgressCircle.name"),
-					desc: t("settings.tool.showProgressCircle.desc"),
+					name: LL.settings.tool.showProgressCircle.name(),
+					desc: LL.settings.tool.showProgressCircle.desc(),
 					control: (
 						<ObsidianSetting.Toggle
 							value={settings.tool.showProgressCircle}
@@ -69,15 +69,15 @@ export const ToolTabContent: FC = () => {
 
 			<ObsidianSetting
 				slots={{
-					name: t("settings.tool.headings.returnButtons"),
+					name: LL.settings.tool.headings.returnButtons(),
 				}}
 				heading={true}
 			/>
 
 			<ObsidianSetting
 				slots={{
-					name: t("settings.tool.returnToCursor.name"),
-					desc: t("settings.tool.returnToCursor.desc"),
+					name: LL.settings.tool.returnToCursor.name(),
+					desc: LL.settings.tool.returnToCursor.desc(),
 					control: (
 						<>
 							<ObsidianSetting.Toggle
@@ -116,8 +116,8 @@ export const ToolTabContent: FC = () => {
 
 			<ObsidianSetting
 				slots={{
-					name: t("settings.tool.returnToTop.name"),
-					desc: t("settings.tool.returnToTop.desc"),
+					name: LL.settings.tool.returnToTop.name(),
+					desc: LL.settings.tool.returnToTop.desc(),
 					control: (
 						<>
 							<ObsidianSetting.Toggle
@@ -155,8 +155,8 @@ export const ToolTabContent: FC = () => {
 
 			<ObsidianSetting
 				slots={{
-					name: t("settings.tool.returnToBottom.name"),
-					desc: t("settings.tool.returnToBottom.desc"),
+					name: LL.settings.tool.returnToBottom.name(),
+					desc: LL.settings.tool.returnToBottom.desc(),
 					control: (
 						<>
 							<ObsidianSetting.Toggle
@@ -195,8 +195,8 @@ export const ToolTabContent: FC = () => {
 
 			<ObsidianSetting
 				slots={{
-					name: t("settings.tool.jumpToNextHeading.name"),
-					desc: t("settings.tool.jumpToNextHeading.desc"),
+					name: LL.settings.tool.jumpToNextHeading.name(),
+					desc: LL.settings.tool.jumpToNextHeading.desc(),
 					control: (
 						<>
 							<ObsidianSetting.Toggle
@@ -235,8 +235,8 @@ export const ToolTabContent: FC = () => {
 
 			<ObsidianSetting
 				slots={{
-					name: t("settings.tool.jumpToPrevHeading.name"),
-					desc: t("settings.tool.jumpToPrevHeading.desc"),
+					name: LL.settings.tool.jumpToPrevHeading.name(),
+					desc: LL.settings.tool.jumpToPrevHeading.desc(),
 					control: (
 						<>
 							<ObsidianSetting.Toggle

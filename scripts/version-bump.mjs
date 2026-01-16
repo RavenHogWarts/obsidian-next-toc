@@ -1,6 +1,5 @@
-#!/usr/bin/env node
-import { existsSync, readFileSync, writeFileSync } from "fs";
-import readline from "readline";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import readline from "node:readline";
 
 // 检查是否为直接调用模式
 const directVersion = process.argv[2];

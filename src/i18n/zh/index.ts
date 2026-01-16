@@ -1,6 +1,6 @@
-import { BaseMessage } from "../types";
+import type { BaseTranslation } from "../i18n-types";
 
-const translations: BaseMessage = {
+const zh = {
 	commands: {
 		openTocView: "打开目录侧边视图",
 		returnToCursor: "返回光标位置",
@@ -19,7 +19,7 @@ const translations: BaseMessage = {
 	notices: {
 		alreadyCovered: "已被现有规则覆盖",
 		added: "已添加",
-		addedAndRemovedRedundant: "已添加，并移除了 {{count}} 个冗余规则",
+		addedAndRemovedRedundant: "已添加，并移除了 {count:number} 个冗余规则",
 		notInBlacklist: "不在黑名单中",
 		removed: "已移除",
 		coveredByPattern: "已被某个规则覆盖，如需移除请手动删除该规则",
@@ -166,6 +166,6 @@ const translations: BaseMessage = {
 		jumpToNextHeading: "下一个标题",
 		jumpToPrevHeading: "上一个标题",
 	},
-};
+} satisfies BaseTranslation;
 
-export default translations;
+export default zh;
