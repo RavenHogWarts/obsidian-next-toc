@@ -1,6 +1,6 @@
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
-import { t } from "@src/i18n/i18n";
+import { LL } from "@src/i18n/i18n";
 import cleanHeading from "@src/utils/cleanHeading";
 import {
 	ArrowLeftRight,
@@ -70,7 +70,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 				className={`NToc__toc-toolbar-button  ${
 					settings.toc.alwaysExpand ? "active" : ""
 				}`}
-				aria-label={t("tools.pinTOC")}
+				aria-label={LL.tools.pinTOC()}
 				onClick={() => {
 					void settingsStore.updateSettingByPath(
 						"toc.alwaysExpand",
@@ -84,7 +84,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"
-				aria-label={t("tools.changePosition")}
+				aria-label={LL.tools.changePosition()}
 				onClick={() => {
 					void settingsStore.updateSettingByPath(
 						"toc.position",
@@ -98,7 +98,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"
-				aria-label={t("tools.expandCollapse")}
+				aria-label={LL.tools.expandCollapse()}
 				onClick={hasAnyCollapsed ? onExpandAll : onCollapseAll}
 			>
 				<span className="NToc__toc-toolbar-button-icon">
@@ -111,10 +111,10 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"
-				aria-label={t("tools.leftOffset")}
+				aria-label={LL.tools.leftOffset()}
 				onClick={() => {
-				void handleOffsetChange("left");
-			}}
+					void handleOffsetChange("left");
+				}}
 			>
 				<span className="NToc__toc-toolbar-button-icon">
 					<ChevronLeft size={16} />
@@ -122,10 +122,10 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"
-				aria-label={t("tools.rightOffset")}
+				aria-label={LL.tools.rightOffset()}
 				onClick={() => {
-				void handleOffsetChange("right");
-			}}
+					void handleOffsetChange("right");
+				}}
 			>
 				<span className="NToc__toc-toolbar-button-icon">
 					<ChevronRight size={16} />
@@ -133,7 +133,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			</button>
 			<button
 				className="NToc__toc-toolbar-button"
-				aria-label={t("tools.copyTOC")}
+				aria-label={LL.tools.copyTOC()}
 				onClick={() => {
 					void handleCopyToClipboard();
 				}}

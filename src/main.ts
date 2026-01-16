@@ -5,7 +5,7 @@ import {
 	NTocRenderProps,
 	updateNTocRender,
 } from "./components/toc-navigator/NTocRender";
-import { t } from "./i18n/i18n";
+import { LL } from "./i18n/i18n";
 import { createCursorListenerExtension } from "./services/cursorListenerExtension";
 import { PluginSettingTab } from "./settings/PluginSettingTab";
 import SettingsStore from "./settings/SettingsStore";
@@ -81,7 +81,7 @@ export default class NTocPlugin extends Plugin {
 	private registerCommands() {
 		this.addCommand({
 			id: "open-toc-view",
-			name: t("commands.openTocView"),
+			name: LL.commands.openTocView(),
 			callback: async () => {
 				await this.initLeaf();
 			},
@@ -89,7 +89,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.addCommand({
 			id: "return-to-cursor",
-			name: t("commands.returnToCursor"),
+			name: LL.commands.returnToCursor(),
 			editorCallback: (editor: Editor) => {
 				const view = this.getActiveMarkdownView();
 				if (view && editor === view.editor) {
@@ -100,7 +100,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.addCommand({
 			id: "scroll-to-top",
-			name: t("commands.scrollToTop"),
+			name: LL.commands.scrollToTop(),
 			callback: () => {
 				const view = this.getActiveMarkdownView();
 				if (view) {
@@ -111,7 +111,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.addCommand({
 			id: "scroll-to-bottom",
-			name: t("commands.scrollToBottom"),
+			name: LL.commands.scrollToBottom(),
 			callback: () => {
 				const view = this.getActiveMarkdownView();
 				if (view) {
@@ -122,7 +122,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.addCommand({
 			id: "navigate-previous-heading",
-			name: t("commands.navigatePreviousHeading"),
+			name: LL.commands.navigatePreviousHeading(),
 			callback: () => {
 				const view = this.getActiveMarkdownView();
 				if (view) {
@@ -134,7 +134,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.addCommand({
 			id: "navigate-next-heading",
-			name: t("commands.navigateNextHeading"),
+			name: LL.commands.navigateNextHeading(),
 			callback: () => {
 				const view = this.getActiveMarkdownView();
 				if (view) {
@@ -146,7 +146,7 @@ export default class NTocPlugin extends Plugin {
 
 		this.addCommand({
 			id: "toc-expand",
-			name: t("commands.tocExpand"),
+			name: LL.commands.tocExpand(),
 			callback: async () => {
 				await this.settingsStore.updateSettingByPath(
 					"toc.alwaysExpand",
@@ -158,7 +158,7 @@ export default class NTocPlugin extends Plugin {
 		// Toggle current file in hide heading number blacklist
 		this.addCommand({
 			id: "add-current-file-to-hide-heading-number-blacklist",
-			name: t("commands.addCurrentFileToHideHeadingNumberBlacklist"),
+			name: LL.commands.addCurrentFileToHideHeadingNumberBlacklist(),
 			callback: async () => {
 				const file = this.app.workspace.getActiveFile();
 				if (!file) {
@@ -183,7 +183,7 @@ export default class NTocPlugin extends Plugin {
 		// Toggle current folder in hide heading number blacklist
 		this.addCommand({
 			id: "add-current-folder-to-hide-heading-number-blacklist",
-			name: t("commands.addCurrentFolderToHideHeadingNumberBlacklist"),
+			name: LL.commands.addCurrentFolderToHideHeadingNumberBlacklist(),
 			callback: async () => {
 				const file = this.app.workspace.getActiveFile();
 				if (!file) {
@@ -207,7 +207,7 @@ export default class NTocPlugin extends Plugin {
 
 		// this.addCommand({
 		// 	id: "insert-reading-time-card",
-		// 	name: t("commands.insertReadingTimeCard"),
+		// 	name: LL.commands.insertReadingTimeCard(),
 		// 	editorCallback: (editor: Editor) => {
 		// 		new CardCreateModal(
 		// 			this.app,
@@ -218,7 +218,7 @@ export default class NTocPlugin extends Plugin {
 
 		// this.addCommand({
 		// 	id: "insert-table-of-contents-card",
-		// 	name: t("commands.insertTableOfContentsCard"),
+		// 	name: LL.commands.insertTableOfContentsCard(),
 		// 	editorCallback: (editor: Editor) => {
 		// 		new CardCreateModal(
 		// 			this.app,
@@ -233,7 +233,7 @@ export default class NTocPlugin extends Plugin {
 		// 	this.app.workspace.on("editor-menu", (menu, editor, view) => {
 		// 		if (view instanceof MarkdownView) {
 		// 			menu.addItem((item) => {
-		// 				item.setTitle(t("commands.insertReadingTimeCard"));
+		// 				item.setTitle(LL.commands.insertReadingTimeCard());
 		// 				item.setIcon("clock");
 		// 				item.onClick(() => {
 		// 					new CardCreateModal(
@@ -243,7 +243,7 @@ export default class NTocPlugin extends Plugin {
 		// 				});
 		// 			});
 		// 			menu.addItem((item) => {
-		// 				item.setTitle(t("commands.insertTableOfContentsCard"));
+		// 				item.setTitle(LL.commands.insertTableOfContentsCard());
 		// 				item.setIcon("table-of-contents");
 		// 				item.onClick(() => {
 		// 					new CardCreateModal(

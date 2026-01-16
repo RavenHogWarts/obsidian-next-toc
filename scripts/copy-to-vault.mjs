@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
-import { existsSync } from "fs";
-import { copyFile, mkdir, readFile } from "fs/promises";
-import { dirname, join } from "path";
-import { fileURLToPath } from "url";
+import { existsSync } from "node:fs";
+import { copyFile, mkdir, readFile } from "node:fs/promises";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = join(__dirname, "..");

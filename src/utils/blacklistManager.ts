@@ -1,5 +1,5 @@
+import { LL } from "@src/i18n/i18n";
 import { Notice, TFile } from "obsidian";
-import { t } from "../i18n/i18n";
 import { isFileInBlacklist } from "./checkBlacklist";
 
 /**
@@ -80,7 +80,7 @@ export function addToBlacklist(
 ): string[] | null {
 	// Check if pattern is redundant
 	if (isPatternRedundant(filePath, blacklist)) {
-		new Notice(`${filePath}: ${t("notices.alreadyCovered")}`);
+		new Notice(`${filePath}: ${LL.notices.alreadyCovered()}`);
 		return null;
 	}
 
@@ -93,12 +93,12 @@ export function addToBlacklist(
 
 	if (redundant.length > 0) {
 		new Notice(
-			`${filePath}: ${t("notices.addedAndRemovedRedundant", {
+			`${filePath}: ${LL.notices.addedAndRemovedRedundant({
 				count: redundant.length,
 			})}`
 		);
 	} else {
-		new Notice(`${filePath}: ${t("notices.added")}`);
+		new Notice(`${filePath}: ${LL.notices.added()}`);
 	}
 
 	return newBlacklist;
@@ -115,12 +115,12 @@ export function removeFromBlacklist(
 	blacklist: string[]
 ): string[] | null {
 	if (!blacklist.includes(filePath)) {
-		new Notice(`${filePath}: ${t("notices.notInBlacklist")}`);
+		new Notice(`${filePath}: ${LL.notices.notInBlacklist()}`);
 		return null;
 	}
 
 	const newBlacklist = blacklist.filter((p) => p !== filePath);
-	new Notice(`${filePath}: ${t("notices.removed")}`);
+	new Notice(`${filePath}: ${LL.notices.removed()}`);
 	return newBlacklist;
 }
 
@@ -143,7 +143,7 @@ export function toggleFileInBlacklist(
 			return removeFromBlacklist(filePath, blacklist);
 		} else {
 			// File is covered by a pattern, inform user
-			new Notice(`${filePath}: ${t("notices.coveredByPattern")}`);
+			new Notice(`${filePath}: ${LL.notices.coveredByPattern()}`);
 			return null;
 		}
 	} else {

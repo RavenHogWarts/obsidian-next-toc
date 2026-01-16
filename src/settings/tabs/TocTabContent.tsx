@@ -1,7 +1,7 @@
 import { InlineCodeBlock } from "@src/components/code-block/InlineCodeBlock";
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
-import { t } from "@src/i18n/i18n";
+import { LL } from "@src/i18n/i18n";
 import { NTocPosition } from "@src/types/types";
 import { FC } from "react";
 import ObsidianSetting from "../ObsidianSetting";
@@ -14,8 +14,8 @@ export const TocTabContent: FC = () => {
 		<ObsidianSetting.Container>
 			<ObsidianSetting
 				slots={{
-					name: t("settings.toc.show.name"),
-					desc: t("settings.toc.show.desc"),
+					name: LL.settings.toc.show.name(),
+					desc: LL.settings.toc.show.desc(),
 					control: (
 						<ObsidianSetting.Toggle
 							value={settings.toc.show}
@@ -32,10 +32,10 @@ export const TocTabContent: FC = () => {
 
 			<ObsidianSetting
 				slots={{
-					name: t("settings.toc.alwaysExpand.name"),
+					name: LL.settings.toc.alwaysExpand.name(),
 					desc: (
 						<>
-							{t("settings.toc.alwaysExpand.desc")}
+							{LL.settings.toc.alwaysExpand.desc()}
 							<InlineCodeBlock code="pin-ntoc" />
 							<InlineCodeBlock code="unpin-ntoc" />
 						</>
@@ -56,8 +56,8 @@ export const TocTabContent: FC = () => {
 
 			<ObsidianSetting
 				slots={{
-					name: t("settings.toc.width.name"),
-					desc: t("settings.toc.width.desc"),
+					name: LL.settings.toc.width.name(),
+					desc: LL.settings.toc.width.desc(),
 					control: (
 						<ObsidianSetting.Text
 							value={settings.toc.width.toString()}
@@ -74,14 +74,14 @@ export const TocTabContent: FC = () => {
 
 			<ObsidianSetting
 				slots={{
-					name: t("settings.toc.position.name"),
-					desc: t("settings.toc.position.desc"),
+					name: LL.settings.toc.position.name(),
+					desc: LL.settings.toc.position.desc(),
 					control: (
 						<ObsidianSetting.Dropdown
 							value={settings.toc.position}
 							options={{
-								left: t("settings.toc.position.options.left"),
-								right: t("settings.toc.position.options.right"),
+								left: LL.settings.toc.position.options.left(),
+								right: LL.settings.toc.position.options.right(),
 							}}
 							onChange={async (value) => {
 								await settingsStore.updateSettingByPath(
@@ -96,8 +96,8 @@ export const TocTabContent: FC = () => {
 
 			<ObsidianSetting
 				slots={{
-					name: t("settings.toc.offset.name"),
-					desc: t("settings.toc.offset.desc"),
+					name: LL.settings.toc.offset.name(),
+					desc: LL.settings.toc.offset.desc(),
 					control: (
 						<ObsidianSetting.Text
 							value={settings.toc.offset.toString()}

@@ -1,6 +1,6 @@
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
-import { t } from "@src/i18n/i18n";
+import { LL } from "@src/i18n/i18n";
 import { FC } from "react";
 import ObsidianSetting from "../ObsidianSetting";
 
@@ -12,8 +12,8 @@ export const RenderTabContent: FC = () => {
 		<ObsidianSetting.Container>
 			<ObsidianSetting
 				slots={{
-					name: t("settings.render.useHeadingNumber.name"),
-					desc: t("settings.render.useHeadingNumber.desc"),
+					name: LL.settings.render.useHeadingNumber.name(),
+					desc: LL.settings.render.useHeadingNumber.desc(),
 					control: (
 						<ObsidianSetting.Toggle
 							value={settings.render.useHeadingNumber}
@@ -30,8 +30,8 @@ export const RenderTabContent: FC = () => {
 
 			<ObsidianSetting
 				slots={{
-					name: t("settings.render.skipHeading1.name"),
-					desc: t("settings.render.skipHeading1.desc"),
+					name: LL.settings.render.skipHeading1.name(),
+					desc: LL.settings.render.skipHeading1.desc(),
 					control: (
 						<ObsidianSetting.Toggle
 							value={settings.render.skipHeading1}
@@ -48,8 +48,8 @@ export const RenderTabContent: FC = () => {
 
 			<ObsidianSetting
 				slots={{
-					name: t("settings.render.renderMarkdown.name"),
-					desc: t("settings.render.renderMarkdown.desc"),
+					name: LL.settings.render.renderMarkdown.name(),
+					desc: LL.settings.render.renderMarkdown.desc(),
 					control: (
 						<ObsidianSetting.Toggle
 							value={settings.render.renderMarkdown}
@@ -66,8 +66,8 @@ export const RenderTabContent: FC = () => {
 
 			<ObsidianSetting
 				slots={{
-					name: t("settings.render.showWhenSingleHeading.name"),
-					desc: t("settings.render.showWhenSingleHeading.desc"),
+					name: LL.settings.render.showWhenSingleHeading.name(),
+					desc: LL.settings.render.showWhenSingleHeading.desc(),
 					control: (
 						<ObsidianSetting.Toggle
 							value={settings.render.showWhenSingleHeading}
@@ -85,8 +85,8 @@ export const RenderTabContent: FC = () => {
 			<ObsidianSetting
 				visible={settings.render.useHeadingNumber}
 				slots={{
-					name: t("settings.render.hideHeadingNumberBlacklist.name"),
-					desc: t("settings.render.hideHeadingNumberBlacklist.desc"),
+					name: LL.settings.render.hideHeadingNumberBlacklist.name(),
+					desc: LL.settings.render.hideHeadingNumberBlacklist.desc(),
 					control: (
 						<ObsidianSetting.TextArea
 							value={settings.render.hideHeadingNumberBlacklist.join(

@@ -10,8 +10,10 @@
 		"version": "npm run build && node scripts/version-bump.mjs && npm run changelog:u && npm i",
 		"changelog:u": "conventional-changelog -p angular -i CHANGELOG.md -s -u -n ./scripts/changelog-option.js",
 		"changelog:all": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 -n ./scripts/changelog-option.js",
-		"lint": "eslint . --ext .ts,.tsx",
-		"lint:fix": "eslint . --ext .ts,.tsx --fix",
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
+		"i18n:typesafe": "typesafe-i18n",
+		"i18n:sync": "node scripts/sync-i18n.mjs",
 		"test": "jest",
 		"test:watch": "jest --watch",
 		"link:data": "node scripts/link-data.mjs"
@@ -46,6 +48,7 @@
 		"postcss-nesting": "^13.0.2",
 		"ts-jest": "^29.4.6",
 		"tslib": "2.8.1",
+		"typesafe-i18n": "^5.26.2",
 		"typescript": "^5.9.3"
 	},
 	"dependencies": {
