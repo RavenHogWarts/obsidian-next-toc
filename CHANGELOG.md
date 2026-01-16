@@ -1,3 +1,17 @@
+# [1.3.0](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.2.6...1.3.0) (2026-01-16)
+
+
+### ✨ Features
+
+* **i18n:** 切换到 typesafe-i18n 的类型化调用 (#135) ([c255961](https://github.com/RavenHogWarts/obsidian-next-toc/commit/c25596102f4271401fda94d1adee2c88c2a8d330)), closes [#135](https://github.com/RavenHogWarts/obsidian-next-toc/issues/135)
+
+
+### 🔨 Chore
+
+* **deps:** 更新 package-lock 元数据并调整依赖位置 (#134) ([ff908c6](https://github.com/RavenHogWarts/obsidian-next-toc/commit/ff908c6fb1626b208adda97f9927856d215d76cb)), closes [#134](https://github.com/RavenHogWarts/obsidian-next-toc/issues/134)
+
+
+
 ## [1.2.6](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.2.5...1.2.6) (2026-01-06)
 
 ### ♻️ Refactor
