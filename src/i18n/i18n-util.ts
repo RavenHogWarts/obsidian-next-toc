@@ -12,6 +12,7 @@ export const baseLocale: Locales = 'zh'
 
 export const locales: Locales[] = [
 	'en',
+	'fr',
 	'zh',
 	'zh-TW'
 ]

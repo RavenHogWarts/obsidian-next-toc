@@ -7,6 +7,7 @@ export type BaseLocale = 'zh'
 
 export type Locales =
 	| 'en'
+	| 'fr'
 	| 'zh'
 	| 'zh-TW'
 
