@@ -1,6 +1,6 @@
 import { getLanguage } from "obsidian";
 import type { Locales, TranslationFunctions } from "./i18n-types";
-import { baseLocale, i18nObject, isLocale, loadedLocales } from "./i18n-util";
+import { i18nObject, isLocale, loadedLocales } from "./i18n-util";
 import { loadAllLocales } from "./i18n-util.sync";
 
 /**
@@ -20,7 +20,7 @@ export class I18n {
 		const obsidianLang = getLanguage();
 
 		// 确定使用的 locale：如果 Obsidian 语言在支持列表中则使用，否则回退到基础语言
-		this.currentLocale = isLocale(obsidianLang) ? obsidianLang : baseLocale;
+		this.currentLocale = isLocale(obsidianLang) ? obsidianLang : "en";
 
 		// 初始化翻译函数对象
 		this.LL = i18nObject(this.currentLocale);
