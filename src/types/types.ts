@@ -17,6 +17,7 @@ export interface NTocPluginSettings {
 	};
 	render: {
 		useHeadingNumber: boolean;
+		numberingStartIndex: number;
 		skipHeading1: boolean;
 		renderMarkdown: boolean;
 		showWhenSingleHeading: boolean;
@@ -45,6 +46,7 @@ export const DEFAULT_SETTINGS: NTocPluginSettings = {
 	},
 	render: {
 		useHeadingNumber: false,
+		numberingStartIndex: 1,
 		skipHeading1: false,
 		renderMarkdown: true,
 		showWhenSingleHeading: true,

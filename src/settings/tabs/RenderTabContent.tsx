@@ -29,6 +29,29 @@ export const RenderTabContent: FC = () => {
 			/>
 
 			<ObsidianSetting
+				// visible={settings.render.useHeadingNumber}
+				slots={{
+					name: LL.settings.render.numberingStartIndex.name(),
+					desc: LL.settings.render.numberingStartIndex.desc(),
+					control: (
+						<ObsidianSetting.Dropdown
+							value={settings.render.numberingStartIndex.toString()}
+							options={{
+								"0": LL.settings.render.numberingStartIndex.options.zero(),
+								"1": LL.settings.render.numberingStartIndex.options.one(),
+							}}
+							onChange={async (value) => {
+								await settingsStore.updateSettingByPath(
+									"render.numberingStartIndex",
+									parseInt(value),
+								);
+							}}
+						/>
+					),
+				}}
+			/>
+
+			<ObsidianSetting
 				slots={{
 					name: LL.settings.render.skipHeading1.name(),
 					desc: LL.settings.render.skipHeading1.desc(),

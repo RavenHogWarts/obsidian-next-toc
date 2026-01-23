@@ -58,6 +58,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	const generateHeadingNumber = useHeadingNumbering(
 		headings,
 		settings.render.skipHeading1,
+		settings.render.numberingStartIndex,
 	);
 
 	// 使用可见性计算 Hook

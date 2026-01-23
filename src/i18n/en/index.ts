@@ -73,6 +73,14 @@ const en = {
 				name: "Use heading number",
 				desc: "Enable or disable using heading numbers in the table of contents",
 			},
+			numberingStartIndex: {
+				name: "Heading number start index",
+				desc: "Choose whether to start numbering from 0 or 1.",
+				options: {
+					zero: "0",
+					one: "1",
+				},
+			},
 			skipHeading1: {
 				name: "Skip heading 1",
 				desc: "Enable or disable skipping level 1 headings in the table of contents",

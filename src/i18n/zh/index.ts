@@ -71,6 +71,14 @@ const zh = {
 				name: "使用标题编号",
 				desc: "启用或禁用在目录中使用标题编号",
 			},
+			numberingStartIndex: {
+				name: "标题编号起始序号",
+				desc: "选择标题编号是从 0 开始还是从 1 开始。",
+				options: {
+					zero: "0",
+					one: "1",
+				},
+			},
 			skipHeading1: {
 				name: "跳过一级标题",
 				desc: "启用或禁用在目录中跳过一级标题",

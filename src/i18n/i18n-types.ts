@@ -201,6 +201,26 @@ type RootTranslation = {
 				 */
 				desc: string
 			}
+			numberingStartIndex: {
+				/**
+				 * 标​题​编​号​起​始​序​号
+				 */
+				name: string
+				/**
+				 * 选​择​标​题​编​号​是​从​ ​0​ ​开​始​还​是​从​ ​1​ ​开​始​。
+				 */
+				desc: string
+				options: {
+					/**
+					 * 0
+					 */
+					zero: string
+					/**
+					 * 1
+					 */
+					one: string
+				}
+			}
 			skipHeading1: {
 				/**
 				 * 跳​过​一​级​标​题
@@ -683,6 +703,26 @@ export type TranslationFunctions = {
 				 * 启用或禁用在目录中使用标题编号
 				 */
 				desc: () => LocalizedString
+			}
+			numberingStartIndex: {
+				/**
+				 * 标题编号起始序号
+				 */
+				name: () => LocalizedString
+				/**
+				 * 选择标题编号是从 0 开始还是从 1 开始。
+				 */
+				desc: () => LocalizedString
+				options: {
+					/**
+					 * 0
+					 */
+					zero: () => LocalizedString
+					/**
+					 * 1
+					 */
+					one: () => LocalizedString
+				}
 			}
 			skipHeading1: {
 				/**

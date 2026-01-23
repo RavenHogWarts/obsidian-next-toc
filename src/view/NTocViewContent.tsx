@@ -33,13 +33,14 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 	// 使用折叠管理 Hook
 	const { collapsedSet, toggleCollapsedAt } = useTocCollapse(
 		currentView,
-		headings
+		headings,
 	);
 
 	// 使用标题编号 Hook
 	const generateHeadingNumber = useHeadingNumbering(
 		headings,
-		settings.render.skipHeading1
+		settings.render.skipHeading1,
+		settings.render.numberingStartIndex,
 	);
 
 	// 使用可见性计算 Hook
@@ -58,7 +59,7 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 		if (NTocProgressBarRef.current && settings.tool.showProgressBar) {
 			NTocProgressBarRef.current.style.setProperty(
 				"--NToc__toc-progress-width",
-				`${scrollProgress}%`
+				`${scrollProgress}%`,
 			);
 		}
 	}, [scrollProgress, settings.tool.showProgressBar]);
@@ -86,7 +87,7 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 							headingIndex={index}
 							headingActualDepth={calculateActualDepth(
 								index,
-								headings
+								headings,
 							)}
 							headingNumber={generateHeadingNumber(index)}
 							headingActive={index === activeHeadingIndex}

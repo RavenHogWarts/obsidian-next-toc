@@ -71,6 +71,14 @@ const zh_TW = {
 				name: "使用標題編號",
 				desc: "啟用或停用在目錄中使用標題編號",
 			},
+			numberingStartIndex: {
+				name: "標題編號起始序號",
+				desc: "選擇標題編號是從 0 開始還是從 1 開始。",
+				options: {
+					zero: "0",
+					one: "1",
+				},
+			},
 			skipHeading1: {
 				name: "跳過一級標題",
 				desc: "啟用或停用在目錄中跳過一級標題",
