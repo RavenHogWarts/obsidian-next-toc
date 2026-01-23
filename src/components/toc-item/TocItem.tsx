@@ -1,6 +1,6 @@
+import { useHeadingNumberState } from "@src/hooks/useHeadingNumberState";
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
-import { shouldUseHeadingNumber as checkShouldUseHeadingNumber } from "@src/utils/checkBlacklist";
 import scrollToHeading from "@src/utils/scrollToHeading";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Component, HeadingCache, MarkdownView } from "obsidian";
@@ -33,21 +33,12 @@ export const TocItem: FC<TocItemProps> = ({
 	const settingsStore = useSettingsStore();
 	const settings = usePluginSettings(settingsStore);
 
-	// Calculate the effective useHeadingNumber based on blacklist
-	const currentFile = currentView.file;
-	const effectiveUseHeadingNumber = useMemo(
-		() =>
-			checkShouldUseHeadingNumber(
-				settings.render.useHeadingNumber,
-				currentFile,
-				settings.render.hideHeadingNumberBlacklist
-			),
-		[
-			settings.render.useHeadingNumber,
-			currentFile,
-			settings.render.hideHeadingNumberBlacklist,
-		]
-	);
+	// 计算是否使用标题编号（结合 frontmatter cssclass 和黑名单）
+	const effectiveUseHeadingNumber = useHeadingNumberState({
+		currentView,
+		defaultUseHeadingNumber: settings.render.useHeadingNumber,
+		hideHeadingNumberBlacklist: settings.render.hideHeadingNumberBlacklist,
+	});
 
 	const NTocItemTextRef = useRef<HTMLDivElement>(null);
 
@@ -57,7 +48,7 @@ export const TocItem: FC<TocItemProps> = ({
 	// 创建 Markdown 渲染服务
 	const markdownRenderService = useMemo(
 		() => settingsStore.createMarkdownRenderService(markdownComponent),
-		[settingsStore, markdownComponent]
+		[settingsStore, markdownComponent],
 	);
 
 	useEffect(() => {
@@ -70,12 +61,12 @@ export const TocItem: FC<TocItemProps> = ({
 					await markdownRenderService.renderMarkdown(
 						heading.heading,
 						NTocItemTextRef.current,
-						""
+						"",
 					);
 				} else {
 					markdownRenderService.setTextContent(
 						heading.heading,
-						NTocItemTextRef.current
+						NTocItemTextRef.current,
 					);
 				}
 			}

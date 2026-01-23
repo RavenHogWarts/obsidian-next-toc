@@ -71,7 +71,7 @@ const fr = {
 			name: "Rendu",
 			useHeadingNumber: {
 				name: "Utiliser les numéros de titres",
-				desc: "Activer ou désactiver l'utilisation des numéros de titres dans la table des matières",
+				desc: "Activer ou désactiver l'utilisation des numéros de titres dans la table des matières. Vous pouvez utiliser la propriété de document `cssclasses` pour contrôler l'affichage et le masquage (Priorité supérieure à la liste noire) : ",
 			},
 			skipHeading1: {
 				name: "Ignorer les titres de niveau 1",

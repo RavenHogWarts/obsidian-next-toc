@@ -1,3 +1,4 @@
+import { InlineCodeBlock } from "@src/components/code-block/InlineCodeBlock";
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
 import { LL } from "@src/i18n/i18n";
@@ -13,14 +14,20 @@ export const RenderTabContent: FC = () => {
 			<ObsidianSetting
 				slots={{
 					name: LL.settings.render.useHeadingNumber.name(),
-					desc: LL.settings.render.useHeadingNumber.desc(),
+					desc: (
+						<>
+							{LL.settings.render.useHeadingNumber.desc()}
+							<InlineCodeBlock code="number-ntoc" />
+							<InlineCodeBlock code="unnumber-ntoc" />
+						</>
+					),
 					control: (
 						<ObsidianSetting.Toggle
 							value={settings.render.useHeadingNumber}
 							onChange={async (value) => {
 								await settingsStore.updateSettingByPath(
 									"render.useHeadingNumber",
-									value
+									value,
 								);
 							}}
 						/>
@@ -38,7 +45,7 @@ export const RenderTabContent: FC = () => {
 							onChange={async (value) => {
 								await settingsStore.updateSettingByPath(
 									"render.skipHeading1",
-									value
+									value,
 								);
 							}}
 						/>
@@ -56,7 +63,7 @@ export const RenderTabContent: FC = () => {
 							onChange={async (value) => {
 								await settingsStore.updateSettingByPath(
 									"render.renderMarkdown",
-									value
+									value,
 								);
 							}}
 						/>
@@ -74,7 +81,7 @@ export const RenderTabContent: FC = () => {
 							onChange={async (value) => {
 								await settingsStore.updateSettingByPath(
 									"render.showWhenSingleHeading",
-									value
+									value,
 								);
 							}}
 						/>
@@ -90,7 +97,7 @@ export const RenderTabContent: FC = () => {
 					control: (
 						<ObsidianSetting.TextArea
 							value={settings.render.hideHeadingNumberBlacklist.join(
-								"\n"
+								"\n",
 							)}
 							onChange={async (value) => {
 								const list = value
@@ -99,7 +106,7 @@ export const RenderTabContent: FC = () => {
 									.filter((line) => line.length > 0);
 								await settingsStore.updateSettingByPath(
 									"render.hideHeadingNumberBlacklist",
-									list
+									list,
 								);
 							}}
 						/>

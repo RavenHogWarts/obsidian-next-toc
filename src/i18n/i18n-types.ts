@@ -197,7 +197,7 @@ type RootTranslation = {
 				 */
 				name: string
 				/**
-				 * 启​用​或​禁​用​在​目​录​中​使​用​标​题​编​号
+				 * 启​用​或​禁​用​在​目​录​中​使​用​标​题​编​号​，​可​使​用​文​档​属​性​ ​`​c​s​s​c​l​a​s​s​e​s​`​ ​来​控​制​显​示​与​隐​藏​（​优​先​级​高​于​黑​名​单​）​：
 				 */
 				desc: string
 			}
@@ -680,7 +680,7 @@ export type TranslationFunctions = {
 				 */
 				name: () => LocalizedString
 				/**
-				 * 启用或禁用在目录中使用标题编号
+				 * 启用或禁用在目录中使用标题编号，可使用文档属性 `cssclasses` 来控制显示与隐藏（优先级高于黑名单）：
 				 */
 				desc: () => LocalizedString
 			}

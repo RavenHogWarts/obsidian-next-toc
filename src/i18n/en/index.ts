@@ -71,7 +71,7 @@ const en = {
 			name: "Render",
 			useHeadingNumber: {
 				name: "Use heading number",
-				desc: "Enable or disable using heading numbers in the table of contents",
+				desc: "Enable or disable using heading numbers in the table of contents. You can use the document property `cssclasses` to control show and hide (Priority higher than blacklist): ",
 			},
 			skipHeading1: {
 				name: "Skip heading 1",

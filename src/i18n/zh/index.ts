@@ -69,7 +69,7 @@ const zh = {
 			name: "渲染",
 			useHeadingNumber: {
 				name: "使用标题编号",
-				desc: "启用或禁用在目录中使用标题编号",
+				desc: "启用或禁用在目录中使用标题编号，可使用文档属性 `cssclasses` 来控制显示与隐藏（优先级高于黑名单）：",
 			},
 			skipHeading1: {
 				name: "跳过一级标题",

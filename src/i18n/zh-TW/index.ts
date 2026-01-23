@@ -69,7 +69,7 @@ const zh_TW = {
 			name: "渲染",
 			useHeadingNumber: {
 				name: "使用標題編號",
-				desc: "啟用或停用在目錄中使用標題編號",
+				desc: "啟用或停用在目錄中使用標題編號，可使用文件屬性 `cssclasses` 來控制顯示與隱藏（優先級高於黑名單）：",
 			},
 			skipHeading1: {
 				name: "跳過一級標題",
