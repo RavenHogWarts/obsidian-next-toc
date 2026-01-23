@@ -1,3 +1,26 @@
+# [1.4.0](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.3.0...1.4.0) (2026-01-23)
+
+
+### ♻️ Refactor
+
+* **i18n:** 使用明确英文为回退语言并移除未用导出 (#141) ([0536162](https://github.com/RavenHogWarts/obsidian-next-toc/commit/05361622c3ef3e153fb42e249179f0a2a4fed942)), closes [#141](https://github.com/RavenHogWarts/obsidian-next-toc/issues/141)
+
+
+### ✨ Features
+
+* 根据 frontmatter 与黑名单决定是否显示标题编号 (#146) ([f0c0d87](https://github.com/RavenHogWarts/obsidian-next-toc/commit/f0c0d874e9476f6d7531f4a187c20440866ca8ce)), closes [#146](https://github.com/RavenHogWarts/obsidian-next-toc/issues/146)
+* 添加指示器模式与居中显示 (#145) ([7e737da](https://github.com/RavenHogWarts/obsidian-next-toc/commit/7e737da776d4c5a2befc15430e5cc0291671b614)), closes [#145](https://github.com/RavenHogWarts/obsidian-next-toc/issues/145)
+* 支持设置标题编号起始序号 (#147) ([52189ea](https://github.com/RavenHogWarts/obsidian-next-toc/commit/52189ea695a3140d8ddf48126c26aac09bd2b8b4)), closes [#147](https://github.com/RavenHogWarts/obsidian-next-toc/issues/147)
+* **i18n:** 添加法语 (fr) 本地化支持 (#143) ([67515e9](https://github.com/RavenHogWarts/obsidian-next-toc/commit/67515e9fc4f96e5dd5c7b1c42983ee50cfdb461f)), closes [#143](https://github.com/RavenHogWarts/obsidian-next-toc/issues/143)
+* **i18n:** 添加法语翻译文件 (#142) ([cff4e2b](https://github.com/RavenHogWarts/obsidian-next-toc/commit/cff4e2bbc3ee268a902ac9213a3e2157aa7311e9)), closes [#142](https://github.com/RavenHogWarts/obsidian-next-toc/issues/142)
+
+
+### 🐛 Bug Fixes
+
+* 修复安全问题 ([27a45a2](https://github.com/RavenHogWarts/obsidian-next-toc/commit/27a45a27a716ff3b780486bb6042b69eea9b6387))
+
+
+
 # [1.3.0](https://github.com/RavenHogWarts/obsidian-next-toc/compare/1.2.6...1.3.0) (2026-01-16)
 
 
