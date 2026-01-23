@@ -101,50 +101,13 @@
    移动端响应式样式
    ======================================== */
 @media (max-width: 768px) {
-	.NToc__group-indicator-container,
-	.NToc__group-indicator-container--bar[data-actual-depth="0"],
-	.NToc__group-indicator-container--bar[data-actual-depth="1"],
-	.NToc__group-indicator-container--bar[data-actual-depth="2"],
-	.NToc__group-indicator-container--bar[data-actual-depth="3"],
-	.NToc__group-indicator-container--bar[data-actual-depth="4"],
-	.NToc__group-indicator-container--bar[data-actual-depth="5"],
-	.NToc__group-indicator-container--bar[data-actual-depth^="6"] {
-		/* 所有层级在移动端使用统一的圆点大小 */
-		width: 0.5rem;
-		height: 0.5rem;
-		min-height: 0.5rem;
-		margin: 0.5rem 0;
-		align-items: center;
-		justify-content: center;
+	/* 移动端通用调整：减小间距 */
+	.NToc__group-indicator-container {
+		min-height: 20px;
+		margin: 2px 0;
 	}
 
-	.NToc__group-indicator-container--bar .NToc__group-indicator {
-		width: 0.5rem;
-		height: 0.5rem;
-		border-radius: 50%;
-		background: var(--background-modifier-border);
-		transition: background-color 0.2s ease;
-	}
-
-	.NToc__group-indicator-container--bar[data-active="true"]
-		.NToc__group-indicator {
-		background: var(--interactive-accent);
-	}
-
-	/* 圆点模式在移动端保持圆点样式 */
-	.NToc__group-indicator-container--dot {
-		width: 0.5rem;
-		height: 0.5rem;
-		min-height: 0.5rem;
-		margin: 0.5rem 0;
-	}
-
-	.NToc__group-indicator-container--dot .NToc__group-indicator {
-		width: 0.5rem;
-		height: 0.5rem;
-	}
-
-	/* 隐藏模式在移动端保持隐藏 */
+	/* Hidden 模式在移动端保持隐藏 */
 	.NToc__group-indicator-container--hidden {
 		width: 4px;
 		min-height: 8px;
