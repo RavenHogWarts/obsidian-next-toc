@@ -161,6 +161,30 @@ type RootTranslation = {
 				 */
 				desc: string
 			}
+			indicatorMode: {
+				/**
+				 * 指​示​器​模​式
+				 */
+				name: string
+				/**
+				 * 设​置​目​录​收​起​时​指​示​器​的​显​示​模​式
+				 */
+				desc: string
+				options: {
+					/**
+					 * 长​条
+					 */
+					bar: string
+					/**
+					 * 圆​点
+					 */
+					dot: string
+					/**
+					 * 隐​藏
+					 */
+					hidden: string
+				}
+			}
 		}
 		render: {
 			/**
@@ -619,6 +643,30 @@ export type TranslationFunctions = {
 				 * 设置目录的偏移量
 				 */
 				desc: () => LocalizedString
+			}
+			indicatorMode: {
+				/**
+				 * 指示器模式
+				 */
+				name: () => LocalizedString
+				/**
+				 * 设置目录收起时指示器的显示模式
+				 */
+				desc: () => LocalizedString
+				options: {
+					/**
+					 * 长条
+					 */
+					bar: () => LocalizedString
+					/**
+					 * 圆点
+					 */
+					dot: () => LocalizedString
+					/**
+					 * 隐藏
+					 */
+					hidden: () => LocalizedString
+				}
 			}
 		}
 		render: {

@@ -112,6 +112,18 @@
 		height: 0;
 		display: none;
 	}
+
+	/* dot 模式下让指示器容器居中 */
+	&:has(.NToc__group-indicator-container--dot) {
+		align-self: center;
+		align-items: center;
+	}
+
+	/* hidden 模式下也让指示器容器居中 */
+	&:has(.NToc__group-indicator-container--hidden) {
+		align-self: center;
+		align-items: center;
+	}
 }
 
 .NToc__progress-circle-container {

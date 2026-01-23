@@ -11,7 +11,12 @@
 	min-height: 28px;
 	margin: 3px 0;
 	transition: all 0.2s ease;
+}
 
+/* ========================================
+   Bar 模式（长条样式）- 默认
+   ======================================== */
+.NToc__group-indicator-container--bar {
 	/* 根据实际深度设置不同的宽度 */
 	&[data-actual-depth="0"] {
 		width: 2.25rem;
@@ -42,29 +47,68 @@
 		width: 0.375rem;
 	}
 
-	&[data-active="true"] .NToc__group-indicator {
-		background: var(--interactive-accent);
+	.NToc__group-indicator {
+		width: inherit;
+		height: 4px;
+		border-radius: 4px;
+		background: var(--background-modifier-border);
+		transition:
+			background-color 0.2s ease,
+			width 0.2s ease;
+		flex-shrink: 0;
 	}
 }
 
-.NToc__group-indicator {
-	width: inherit;
-	height: 4px;
-	border-radius: 4px;
-	background: var(--background-modifier-border);
-	transition: background-color 0.2s ease, width 0.2s ease;
-	flex-shrink: 0;
+/* ========================================
+   Dot 模式（圆点样式）
+   ======================================== */
+.NToc__group-indicator-container--dot {
+	width: fit-content;
+	justify-content: center;
+	padding: 0 0.25rem;
+
+	.NToc__group-indicator {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--background-modifier-border);
+		transition:
+			background-color 0.2s ease,
+			transform 0.2s ease;
+		flex-shrink: 0;
+	}
+
+	&[data-active="true"] .NToc__group-indicator {
+		background: var(--interactive-accent);
+		transform: scale(1.3);
+	}
 }
 
+/* ========================================
+   Hidden 模式（隐藏样式）
+   保留容器以触发悬停事件，但视觉上不可见
+   ======================================== */
+.NToc__group-indicator-container--hidden {
+	width: 8px;
+	min-height: 16px;
+	margin: 1px 0;
+	opacity: 0;
+	/* 确保可以触发鼠标事件 */
+	pointer-events: auto;
+}
+
+/* ========================================
+   移动端响应式样式
+   ======================================== */
 @media (max-width: 768px) {
 	.NToc__group-indicator-container,
-	.NToc__group-indicator-container[data-actual-depth="0"],
-	.NToc__group-indicator-container[data-actual-depth="1"],
-	.NToc__group-indicator-container[data-actual-depth="2"],
-	.NToc__group-indicator-container[data-actual-depth="3"],
-	.NToc__group-indicator-container[data-actual-depth="4"],
-	.NToc__group-indicator-container[data-actual-depth="5"],
-	.NToc__group-indicator-container[data-actual-depth^="6"] {
+	.NToc__group-indicator-container--bar[data-actual-depth="0"],
+	.NToc__group-indicator-container--bar[data-actual-depth="1"],
+	.NToc__group-indicator-container--bar[data-actual-depth="2"],
+	.NToc__group-indicator-container--bar[data-actual-depth="3"],
+	.NToc__group-indicator-container--bar[data-actual-depth="4"],
+	.NToc__group-indicator-container--bar[data-actual-depth="5"],
+	.NToc__group-indicator-container--bar[data-actual-depth^="6"] {
 		/* 所有层级在移动端使用统一的圆点大小 */
 		width: 0.5rem;
 		height: 0.5rem;
@@ -74,7 +118,7 @@
 		justify-content: center;
 	}
 
-	.NToc__group-indicator {
+	.NToc__group-indicator-container--bar .NToc__group-indicator {
 		width: 0.5rem;
 		height: 0.5rem;
 		border-radius: 50%;
@@ -82,8 +126,28 @@
 		transition: background-color 0.2s ease;
 	}
 
-	.NToc__group-indicator-container[data-active="true"]
+	.NToc__group-indicator-container--bar[data-active="true"]
 		.NToc__group-indicator {
 		background: var(--interactive-accent);
+	}
+
+	/* 圆点模式在移动端保持圆点样式 */
+	.NToc__group-indicator-container--dot {
+		width: 0.5rem;
+		height: 0.5rem;
+		min-height: 0.5rem;
+		margin: 0.5rem 0;
+	}
+
+	.NToc__group-indicator-container--dot .NToc__group-indicator {
+		width: 0.5rem;
+		height: 0.5rem;
+	}
+
+	/* 隐藏模式在移动端保持隐藏 */
+	.NToc__group-indicator-container--hidden {
+		width: 4px;
+		min-height: 8px;
+		margin: 0.25rem 0;
 	}
 }

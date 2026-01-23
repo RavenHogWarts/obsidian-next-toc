@@ -57,6 +57,15 @@ const fr = {
 				name: "Décalage de la table des matières",
 				desc: "Définir le décalage de la table des matières",
 			},
+			indicatorMode: {
+				name: "Mode d'indicateur",
+				desc: "Définir le mode d'affichage des indicateurs de la table des matières lorsqu'elle est réduite",
+				options: {
+					bar: "Barre",
+					dot: "Point",
+					hidden: "Masqué",
+				},
+			},
 		},
 		render: {
 			name: "Rendu",

@@ -2,7 +2,7 @@ import { InlineCodeBlock } from "@src/components/code-block/InlineCodeBlock";
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
 import { LL } from "@src/i18n/i18n";
-import { NTocPosition } from "@src/types/types";
+import { NTocIndicatorMode, NTocPosition } from "@src/types/types";
 import { FC } from "react";
 import ObsidianSetting from "../ObsidianSetting";
 
@@ -22,7 +22,7 @@ export const TocTabContent: FC = () => {
 							onChange={async (value) => {
 								await settingsStore.updateSettingByPath(
 									"toc.show",
-									value
+									value,
 								);
 							}}
 						/>
@@ -46,7 +46,7 @@ export const TocTabContent: FC = () => {
 							onChange={async (value) => {
 								await settingsStore.updateSettingByPath(
 									"toc.alwaysExpand",
-									value
+									value,
 								);
 							}}
 						/>
@@ -64,7 +64,7 @@ export const TocTabContent: FC = () => {
 							onChange={async (value) => {
 								await settingsStore.updateSettingByPath(
 									"toc.width",
-									Number(value)
+									Number(value),
 								);
 							}}
 						/>
@@ -86,7 +86,7 @@ export const TocTabContent: FC = () => {
 							onChange={async (value) => {
 								await settingsStore.updateSettingByPath(
 									"toc.position",
-									value as NTocPosition
+									value as NTocPosition,
 								);
 							}}
 						/>
@@ -104,7 +104,30 @@ export const TocTabContent: FC = () => {
 							onChange={async (value) => {
 								await settingsStore.updateSettingByPath(
 									"toc.offset",
-									Number(value)
+									Number(value),
+								);
+							}}
+						/>
+					),
+				}}
+			/>
+
+			<ObsidianSetting
+				slots={{
+					name: LL.settings.toc.indicatorMode.name(),
+					desc: LL.settings.toc.indicatorMode.desc(),
+					control: (
+						<ObsidianSetting.Dropdown
+							value={settings.toc.indicatorMode}
+							options={{
+								bar: LL.settings.toc.indicatorMode.options.bar(),
+								dot: LL.settings.toc.indicatorMode.options.dot(),
+								hidden: LL.settings.toc.indicatorMode.options.hidden(),
+							}}
+							onChange={async (value) => {
+								await settingsStore.updateSettingByPath(
+									"toc.indicatorMode",
+									value as NTocIndicatorMode,
 								);
 							}}
 						/>

@@ -55,6 +55,15 @@ const zh = {
 				name: "目录偏移",
 				desc: "设置目录的偏移量",
 			},
+			indicatorMode: {
+				name: "指示器模式",
+				desc: "设置目录收起时指示器的显示模式",
+				options: {
+					bar: "长条",
+					dot: "圆点",
+					hidden: "隐藏",
+				},
+			},
 		},
 		render: {
 			name: "渲染",

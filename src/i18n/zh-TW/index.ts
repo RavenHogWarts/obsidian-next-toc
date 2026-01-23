@@ -55,6 +55,15 @@ const zh_TW = {
 				name: "目錄偏移",
 				desc: "設定目錄的偏移量",
 			},
+			indicatorMode: {
+				name: "指示器模式",
+				desc: "設定目錄收起時指示器的顯示模式",
+				options: {
+					bar: "長條",
+					dot: "圓點",
+					hidden: "隱藏",
+				},
+			},
 		},
 		render: {
 			name: "渲染",

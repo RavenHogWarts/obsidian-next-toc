@@ -57,6 +57,15 @@ const en = {
 				name: "Toc offset",
 				desc: "Set the offset of the table of contents",
 			},
+			indicatorMode: {
+				name: "Indicator mode",
+				desc: "Set the display mode for TOC indicators when collapsed",
+				options: {
+					bar: "Bar",
+					dot: "Dot",
+					hidden: "Hidden",
+				},
+			},
 		},
 		render: {
 			name: "Render",

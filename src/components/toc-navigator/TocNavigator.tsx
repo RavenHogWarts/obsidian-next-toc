@@ -57,7 +57,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	// 使用标题编号 Hook
 	const generateHeadingNumber = useHeadingNumbering(
 		headings,
-		settings.render.skipHeading1
+		settings.render.skipHeading1,
 	);
 
 	// 使用可见性计算 Hook
@@ -72,7 +72,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	useActiveHeadingScroll(
 		activeHeadingIndex,
 		NTocGroupTocItemsRef,
-		NTocGroupIndicatorsRef
+		NTocGroupIndicatorsRef,
 	);
 
 	// 使用可调整大小 Hook
@@ -92,7 +92,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 			const container = NTocContainerRef.current;
 			container.style.setProperty(
 				"--NToc__toc-offset",
-				`${settings.toc.offset}px`
+				`${settings.toc.offset}px`,
 			);
 		}
 	}, [settings.toc.offset]);
@@ -102,7 +102,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 		if (NTocProgressBarRef.current && settings.tool.showProgressBar) {
 			NTocProgressBarRef.current.style.setProperty(
 				"--NToc__toc-progress-width",
-				`${scrollProgress}%`
+				`${scrollProgress}%`,
 			);
 		}
 	}, [scrollProgress, settings.tool.showProgressBar]);
@@ -177,9 +177,10 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 								headingIndex={index}
 								headingActualDepth={calculateActualDepth(
 									index,
-									headings
+									headings,
 								)}
 								headingActive={index === activeHeadingIndex}
+								indicatorMode={settings.toc.indicatorMode}
 							/>
 						);
 					})}
@@ -220,20 +221,20 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 										headingIndex={index}
 										headingActualDepth={calculateActualDepth(
 											index,
-											headings
+											headings,
 										)}
 										headingNumber={generateHeadingNumber(
-											index
+											index,
 										)}
 										headingActive={
 											index === activeHeadingIndex
 										}
 										headingChildren={hasChildren(
 											index,
-											headings
+											headings,
 										)}
 										isCollapsedParent={collapsedSet.has(
-											index
+											index,
 										)}
 										onToggleCollapse={toggleCollapsedAt}
 									/>

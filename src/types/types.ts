@@ -4,6 +4,7 @@ interface IButtonTool {
 }
 
 export type NTocPosition = "left" | "right";
+export type NTocIndicatorMode = "bar" | "dot" | "hidden";
 
 export interface NTocPluginSettings {
 	toc: {
@@ -12,6 +13,7 @@ export interface NTocPluginSettings {
 		width: number;
 		position: NTocPosition;
 		offset: number;
+		indicatorMode: NTocIndicatorMode;
 	};
 	render: {
 		useHeadingNumber: boolean;
@@ -39,6 +41,7 @@ export const DEFAULT_SETTINGS: NTocPluginSettings = {
 		width: 240,
 		position: "right",
 		offset: 12,
+		indicatorMode: "bar",
 	},
 	render: {
 		useHeadingNumber: false,
