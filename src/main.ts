@@ -9,7 +9,7 @@ import { LL } from "./i18n/i18n";
 import { createCursorListenerExtension } from "./services/cursorListenerExtension";
 import { PluginSettingTab } from "./settings/PluginSettingTab";
 import SettingsStore from "./settings/SettingsStore";
-import { NTocPluginSettings } from "./types/types";
+import { IPluginSettings } from "./types/types";
 import {
 	toggleFileInBlacklist,
 	toggleFolderInBlacklist,
@@ -25,7 +25,7 @@ import updateActiveHeading from "./utils/updateActiveHeading";
 import { NTocView, VIEW_TYPE_NTOC } from "./view/NTocView";
 
 export default class NTocPlugin extends Plugin {
-	settings: NTocPluginSettings;
+	settings: IPluginSettings;
 	currentView = this.app.workspace.getActiveViewOfType(MarkdownView);
 	readonly settingsStore = new SettingsStore(this);
 	private scrollListenerCleanup: (() => void) | null = null;
@@ -74,7 +74,7 @@ export default class NTocPlugin extends Plugin {
 			}
 		}
 		await this.app.workspace.revealLeaf(
-			this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC)[0]
+			this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC)[0],
 		);
 	}
 
@@ -150,7 +150,7 @@ export default class NTocPlugin extends Plugin {
 			callback: async () => {
 				await this.settingsStore.updateSettingByPath(
 					"toc.alwaysExpand",
-					!this.settingsStore.settings.toc.alwaysExpand
+					!this.settingsStore.settings.toc.alwaysExpand,
 				);
 			},
 		});
@@ -168,13 +168,13 @@ export default class NTocPlugin extends Plugin {
 				const newBlacklist = toggleFileInBlacklist(
 					file,
 					this.settingsStore.settings.render
-						.hideHeadingNumberBlacklist
+						.hideHeadingNumberBlacklist,
 				);
 
 				if (newBlacklist) {
 					await this.settingsStore.updateSettingByPath(
 						"render.hideHeadingNumberBlacklist",
-						newBlacklist
+						newBlacklist,
 					);
 				}
 			},
@@ -193,13 +193,13 @@ export default class NTocPlugin extends Plugin {
 				const newBlacklist = toggleFolderInBlacklist(
 					file,
 					this.settingsStore.settings.render
-						.hideHeadingNumberBlacklist
+						.hideHeadingNumberBlacklist,
 				);
 
 				if (newBlacklist) {
 					await this.settingsStore.updateSettingByPath(
 						"render.hideHeadingNumberBlacklist",
-						newBlacklist
+						newBlacklist,
 					);
 				}
 			},
@@ -267,7 +267,7 @@ export default class NTocPlugin extends Plugin {
 						const headings = getFileHeadings(this.currentView);
 						const activeHeadingIndex = updateActiveHeading(
 							this.currentView,
-							headings
+							headings,
 						);
 						this.renderNToc(this.currentView, {
 							headings,
@@ -296,13 +296,13 @@ export default class NTocPlugin extends Plugin {
 						activeHeadingIndex: -1,
 					});
 				}
-			})
+			}),
 		);
 
 		this.registerEvent(
 			this.app.workspace.on("layout-change", () => {
 				this.updateNToc();
-			})
+			}),
 		);
 
 		this.registerEvent(
@@ -310,7 +310,7 @@ export default class NTocPlugin extends Plugin {
 				if (this.currentView && this.currentView.editor === editor) {
 					this.updateNToc();
 				}
-			})
+			}),
 		);
 
 		this.registerEvent(
@@ -318,7 +318,7 @@ export default class NTocPlugin extends Plugin {
 				if (this.currentView && this.currentView.file === file) {
 					this.updateNToc();
 				}
-			})
+			}),
 		);
 	}
 
@@ -355,7 +355,7 @@ export default class NTocPlugin extends Plugin {
 						this.updateNToc();
 					}
 				},
-			}
+			},
 		);
 	}
 
@@ -393,7 +393,7 @@ export default class NTocPlugin extends Plugin {
 		const headings = getFileHeadings(this.currentView);
 		const activeHeadingIndex = updateActiveHeading(
 			this.currentView,
-			headings
+			headings,
 		);
 		this.renderNToc(this.currentView, {
 			headings,
@@ -412,7 +412,7 @@ export default class NTocPlugin extends Plugin {
 				leaf.view.updateTocData(
 					view,
 					props.headings,
-					props.activeHeadingIndex
+					props.activeHeadingIndex,
 				);
 			}
 		});

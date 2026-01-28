@@ -3,7 +3,7 @@ import {
 	createMarkdownRenderService,
 	MarkdownRenderService,
 } from "@src/services/MarkdownRenderService";
-import { DEFAULT_SETTINGS, NTocPluginSettings } from "@src/types/types";
+import { DEFAULT_SETTINGS, IPluginSettings } from "@src/types/types";
 import { Component } from "obsidian";
 
 export default class SettingsStore {
@@ -14,7 +14,7 @@ export default class SettingsStore {
 			this.#subscribers.add(callback);
 			return () => this.#subscribers.delete(callback);
 		},
-		getSnapshot: (): NTocPluginSettings => this.#plugin.settings,
+		getSnapshot: (): IPluginSettings => this.#plugin.settings,
 	};
 
 	constructor(plugin: NTocPlugin) {
@@ -47,7 +47,6 @@ export default class SettingsStore {
 	}
 
 	#mergeWithDefaults<T>(saved: unknown, defaults: T): T {
-		// 如果默认值是对象（且非数组），则递归按默认结构构建结果
 		if (
 			defaults !== null &&
 			typeof defaults === "object" &&
@@ -59,16 +58,42 @@ export default class SettingsStore {
 				unknown
 			>;
 			const savedRecord = (saved ?? {}) as Record<string, unknown>;
+
+			// 遍历默认配置的键
 			for (const key of Object.keys(defaultRecord)) {
-				result[key] = this.#mergeWithDefaults(
-					savedRecord[key],
-					defaultRecord[key]
-				);
+				// 防止原型污染：跳过危险属性
+				if (
+					key === "__proto__" ||
+					key === "constructor" ||
+					key === "prototype"
+				) {
+					continue;
+				}
+
+				const defaultValue = defaultRecord[key];
+				const savedValue = savedRecord[key];
+
+				// 如果默认值是空对象，且 saved 中有该字段且是对象，直接使用 saved 的值
+				if (
+					typeof defaultValue === "object" &&
+					defaultValue !== null &&
+					!Array.isArray(defaultValue) &&
+					Object.keys(defaultValue).length === 0 &&
+					typeof savedValue === "object" &&
+					savedValue !== null
+				) {
+					result[key] = savedValue;
+				} else {
+					result[key] = this.#mergeWithDefaults(
+						savedValue,
+						defaultValue,
+					);
+				}
 			}
+
 			return result as unknown as T;
 		}
 
-		// 基元或数组：类型不匹配或未提供则回退到默认值
 		const isArrayDefault = Array.isArray(defaults);
 		const isArraySaved = Array.isArray(saved);
 		if (
@@ -86,13 +111,13 @@ export default class SettingsStore {
 		// 与默认配置深度对齐：只保留定义内字段并填充缺省
 		this.#plugin.settings = this.#mergeWithDefaults(
 			saved ?? {},
-			DEFAULT_SETTINGS
+			DEFAULT_SETTINGS,
 		);
 		await this.#plugin.saveSettings();
 		this.#notifyStoreSubscribers();
 	}
 
-	async updateSettings(settings: NTocPluginSettings) {
+	async updateSettings(settings: IPluginSettings) {
 		this.#plugin.settings = Object.assign({}, settings);
 		await this.#plugin.saveSettings();
 		this.#notifyStoreSubscribers();
@@ -100,13 +125,80 @@ export default class SettingsStore {
 
 	/**
 	 * 通过路径更新特定设置值
-	 * @param path 设置路径，如 "toc.show" 或 "tool.returnToCursor.enabled"
+	 * @param path 设置路径
 	 * @param value 新的设置值
 	 */
 	async updateSettingByPath<T>(path: string, value: T) {
 		// 创建设置的深拷贝
 		const newSettings = JSON.parse(JSON.stringify(this.#plugin.settings));
 		const pathParts = path.split(".");
+
+		// 防止原型污染：验证路径中不包含危险属性
+		for (const part of pathParts) {
+			if (
+				part === "__proto__" ||
+				part === "constructor" ||
+				part === "prototype"
+			) {
+				throw new Error(
+					`Invalid setting path: ${path} - contains dangerous property`,
+				);
+			}
+		}
+
+		let current: unknown = newSettings;
+
+		// 遍历路径，找到父对象，如果不存在则创建
+		for (let i = 0; i < pathParts.length - 1; i++) {
+			const part = pathParts[i];
+			if (typeof current === "object" && current !== null) {
+				const currentRecord = current as Record<string, unknown>;
+				// 如果路径不存在，创建一个空对象
+				if (
+					!Object.prototype.hasOwnProperty.call(currentRecord, part)
+				) {
+					currentRecord[part] = {};
+				}
+				current = currentRecord[part];
+			} else {
+				throw new Error(`Invalid setting path: ${path}`);
+			}
+		}
+
+		// 设置最终值
+		const finalPart = pathParts[pathParts.length - 1];
+		if (typeof current === "object" && current !== null) {
+			(current as Record<string, unknown>)[finalPart] = value;
+		} else {
+			throw new Error(`Invalid setting path: ${path}`);
+		}
+
+		// 使用 updateSettings 方法更新设置
+		await this.updateSettings(newSettings);
+	}
+
+	/**
+	 * 通过路径删除特定设置值
+	 * @param path 设置路径
+	 */
+	async deleteSettingByPath(path: string) {
+		// 创建设置的深拷贝
+		const newSettings = JSON.parse(JSON.stringify(this.#plugin.settings));
+		const pathParts = path.split(".");
+
+		// 防止原型污染：验证路径中不包含危险属性
+		for (const part of pathParts) {
+			if (
+				part === "__proto__" ||
+				part === "constructor" ||
+				part === "prototype"
+			) {
+				throw new Error(
+					`Invalid setting path: ${path} - contains dangerous property`,
+				);
+			}
+		}
+
 		let current: unknown = newSettings;
 
 		// 遍历路径，找到父对象
@@ -115,27 +207,26 @@ export default class SettingsStore {
 			if (
 				typeof current === "object" &&
 				current !== null &&
-				part in current
+				Object.prototype.hasOwnProperty.call(current, part)
 			) {
 				current = (current as Record<string, unknown>)[part];
 			} else {
-				throw new Error(`Invalid setting path: ${path}`);
+				// 路径不存在，无需删除，直接返回
+				return;
 			}
 		}
 
-		// 设置最终值
+		// 删除最终属性
 		const finalPart = pathParts[pathParts.length - 1];
 		if (
 			typeof current === "object" &&
 			current !== null &&
-			finalPart in current
+			Object.prototype.hasOwnProperty.call(current, finalPart)
 		) {
-			(current as Record<string, unknown>)[finalPart] = value;
-		} else {
-			throw new Error(`Invalid setting path: ${path}`);
+			delete (current as Record<string, unknown>)[finalPart];
+			// 使用 updateSettings 方法更新设置
+			await this.updateSettings(newSettings);
 		}
-
-		// 使用 updateSettings 方法更新设置
-		await this.updateSettings(newSettings);
+		// 如果路径不存在，无需删除，直接返回
 	}
 }

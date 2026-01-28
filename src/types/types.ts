@@ -6,7 +6,7 @@ interface IButtonTool {
 export type NTocPosition = "left" | "right";
 export type NTocIndicatorMode = "bar" | "dot" | "hidden";
 
-export interface NTocPluginSettings {
+export interface IPluginSettings {
 	toc: {
 		show: boolean;
 		alwaysExpand: boolean;
@@ -35,7 +35,7 @@ export interface NTocPluginSettings {
 	};
 }
 
-export const DEFAULT_SETTINGS: NTocPluginSettings = {
+export const DEFAULT_SETTINGS: IPluginSettings = {
 	toc: {
 		show: true,
 		alwaysExpand: true,
