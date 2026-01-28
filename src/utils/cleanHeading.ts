@@ -20,7 +20,12 @@ export function removeStrikethrough(s: string) {
 	return s.replace(/~~([^~]+)~~/g, "$1");
 }
 export function removeHtmlTags(s: string) {
-	return s.replace(/<[^>]+>/g, "");
+	let previous;
+	do {
+		previous = s;
+		s = s.replace(/<[^>]+>/g, "");
+	} while (s !== previous);
+	return s;
 }
 export function removeSuperscript(s: string) {
 	return s.replace(/\^([^^]+)\^/g, "$1");
