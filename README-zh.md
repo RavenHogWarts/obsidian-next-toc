@@ -3,12 +3,7 @@
 # Next TOC
 显示当前文档阅读进度、目录及导航辅助功能的浮动面板
 
-[![GitHub stars](https://img.shields.io/github/stars/Raven-Pensieve/obsidian-next-toc?style=flat&label=星标)](https://github.com/Raven-Pensieve/obsidian-next-toc/stargazers)
-[![Total Downloads](https://img.shields.io/github/downloads/Raven-Pensieve/obsidian-next-toc/total?style=flat&label=总下载量)](https://github.com/Raven-Pensieve/obsidian-next-toc/releases)
-[![Latest Downloads](https://img.shields.io/github/downloads/Raven-Pensieve/obsidian-next-toc/latest/total?style=flat&label=最新版下载量)](https://github.com/Raven-Pensieve/obsidian-next-toc/releases/latest)
-[![GitHub License](https://img.shields.io/github/license/Raven-Pensieve/obsidian-next-toc?style=flat&label=许可证)](https://github.com/Raven-Pensieve/obsidian-next-toc/blob/master/LICENSE)
-[![GitHub Issues](https://img.shields.io/github/issues/Raven-Pensieve/obsidian-next-toc?style=flat&label=问题)](https://github.com/Raven-Pensieve/obsidian-next-toc/issues)
-[![GitHub Last Commit](https://img.shields.io/github/last-commit/Raven-Pensieve/obsidian-next-toc?style=flat&label=最后提交)](https://github.com/Raven-Pensieve/obsidian-next-toc/commits/master)
+![GitHub Socialify](https://socialify.git.ci/Raven-Pensieve/obsidian-next-toc/image?description=1&font=Rokkitt&forks=1&issues=1&language=1&name=1&owner=1&pattern=Floating+Cogs&pulls=1&stargazers=1&theme=Auto)
 
 ## 安装
 ### 社区插件市场安装
