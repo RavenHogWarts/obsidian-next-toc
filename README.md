@@ -3,12 +3,7 @@ English | [中文](https://github.com/Raven-Pensieve/obsidian-next-toc/blob/mast
 # Next TOC
 Floating panel displaying the current document's reading progress, table of contents, and navigation aids.
 
-[![GitHub stars](https://img.shields.io/github/stars/Raven-Pensieve/obsidian-next-toc?style=flat&label=Stars)](https://github.com/Raven-Pensieve/obsidian-next-toc/stargazers)
-[![Total Downloads](https://img.shields.io/github/downloads/Raven-Pensieve/obsidian-next-toc/total?style=flat&label=Total%20Downloads)](https://github.com/Raven-Pensieve/obsidian-next-toc/releases)
-[![Latest Downloads](https://img.shields.io/github/downloads/Raven-Pensieve/obsidian-next-toc/latest/total?style=flat&label=Latest%20Downloads)](https://github.com/Raven-Pensieve/obsidian-next-toc/releases/latest)
-[![GitHub License](https://img.shields.io/github/license/Raven-Pensieve/obsidian-next-toc?style=flat&label=License)](https://github.com/Raven-Pensieve/obsidian-next-toc/blob/master/LICENSE)
-[![GitHub Issues](https://img.shields.io/github/issues/Raven-Pensieve/obsidian-next-toc?style=flat&label=Issues)](https://github.com/Raven-Pensieve/obsidian-next-toc/issues)
-[![GitHub Last Commit](https://img.shields.io/github/last-commit/Raven-Pensieve/obsidian-next-toc?style=flat&label=Last%20Commit)](https://github.com/Raven-Pensieve/obsidian-next-toc/commits/master)
+![GitHub Socialify](https://socialify.git.ci/Raven-Pensieve/obsidian-next-toc/image?description=1&font=Rokkitt&forks=1&issues=1&language=1&name=1&owner=1&pattern=Floating+Cogs&pulls=1&stargazers=1&theme=Auto)
 
 ## Installation
 ### Community plugin market installation
