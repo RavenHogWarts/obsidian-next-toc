@@ -58,7 +58,7 @@ export class NTocRender {
 	private findContainers(view: MarkdownView): HTMLElement[] {
 		const nodeList = view.contentEl.querySelectorAll(".NToc__view");
 		return Array.from(nodeList).filter(
-			(el): el is HTMLElement => el instanceof HTMLElement
+			(el): el is HTMLElement => el.instanceOf(HTMLElement)
 		);
 	}
 
