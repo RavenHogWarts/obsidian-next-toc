@@ -27,7 +27,7 @@
 		}
 
 		.NToc__group-resize {
-			right: -2px; /* 调整到容器右边缘外侧 */
+			right: -6px;
 		}
 
 		.NToc__return-tools {
@@ -66,7 +66,7 @@
 		}
 
 		.NToc__group-resize {
-			left: -2px; /* 调整到容器左边缘外侧 */
+			left: -6px;
 		}
 
 		.NToc__return-tools {
@@ -183,14 +183,53 @@
 	top: 0;
 	bottom: 0;
 	height: auto;
-	width: 4px;
+	width: 12px;
 	cursor: ew-resize;
 	background: transparent;
-	transition: background-color 150ms ease;
-	z-index: 1;
+	transition: background-color 150ms ease, opacity 150ms ease;
+	z-index: 3;
+	opacity: 0.35;
+
+	&::before {
+		content: "";
+		position: absolute;
+		top: 10px;
+		bottom: 10px;
+		left: 50%;
+		width: 3px;
+		transform: translateX(-50%);
+		border-radius: 999px;
+		background-color: var(--background-modifier-border);
+		transition:
+			background-color 150ms ease,
+			width 150ms ease,
+			opacity 150ms ease;
+		opacity: 0.65;
+	}
 
 	&:hover {
+		opacity: 1;
+
+		&::before {
+			width: 4px;
+			background-color: var(--interactive-accent);
+			opacity: 1;
+		}
+	}
+}
+
+.NToc__toc-items:hover .NToc__group-resize,
+.NToc__toc-items.NToc__toc-items-resizing .NToc__group-resize {
+	opacity: 0.85;
+}
+
+.NToc__toc-items.NToc__toc-items-resizing {
+	user-select: none;
+
+	.NToc__group-resize::before {
+		width: 4px;
 		background-color: var(--interactive-accent);
+		opacity: 1;
 	}
 }
 
