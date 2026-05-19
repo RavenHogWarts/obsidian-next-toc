@@ -1,3 +1,46 @@
+## [2.0.1](https://github.com/Raven-Pensieve/obsidian-next-toc/compare/2.0.0...2.0.1) (2026-05-19)
+
+
+### ♻️ Refactor
+
+* 优化样式选择器和按钮重置 ([f48c3d7](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/f48c3d787e6838387b12ba72612cc3b6937055e5))
+* **settings:** 重命名设置类型并修复逗号 (#157) ([1960654](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/1960654c8bf2842b9d701bebf7d6c1562582c341)), closes [#157](https://github.com/Raven-Pensieve/obsidian-next-toc/issues/157)
+
+
+### ✨ Features
+
+* 改进目录导航器的拖拽调整体验 ([c18ac69](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/c18ac696b8f823d68f547562a8bd5ba2ad4d1d20))
+* 更新i18n配置和ESLint禁用规则 ([2788d99](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/2788d991f2f0dc5a6c9e84f9dec3a21bcf5f0444))
+* 使用activeDocument替换document ([f5e717d](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/f5e717d2032bd1547cbd200871dff23a5fe4f802))
+* 移除vault复制脚本并优化构建配置 ([e932d6b](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/e932d6bc7acd9deac19e4b2765f322e0f833623a))
+* 重构 ESLint 配置使用新的扁平化格式 ([d271b60](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/d271b60fb5723af9a9648322fb0bce7adfbead23))
+* 重构代码块编辑按钮挂载函数签名 ([28f6c3b](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/28f6c3be7a224e2ed914878a537557a220610296))
+* 重构构建和开发工作流 ([203bf2a](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/203bf2a1ec43912a2e8552a045e5b03d568347bc))
+
+
+### 🐛 Bug Fixes
+
+* 递归移除 HTML 标签防止嵌套残留 (#158) ([78ffb5a](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/78ffb5a0ae5d2ad0879216e808d8b7a0a72fca0c)), closes [#158](https://github.com/Raven-Pensieve/obsidian-next-toc/issues/158)
+* 显式使用window对象调用全局函数 ([35293b8](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/35293b88f4af816318de6162333de6856f0b81f2))
+* 修复类型检查方法调用 ([8691ae1](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/8691ae1f402d726f105930e7377b7336889e321e))
+
+
+### 📝 Documentation
+
+* update repository owner in READMEs and remove manual installation, development, and support sections. ([796379e](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/796379efb17fd057d3222b3de7d85c5272a46908))
+
+
+### 🔧 CI
+
+* 添加构建证明并优化发布流程 ([a0f6bd6](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/a0f6bd6f1c91d0e4f97ecfaec82a54c9e77289f2))
+
+
+### 🔨 Chore
+
+* 更新 pnpm 锁文件 (#156) ([7aba8b8](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/7aba8b891a68b6baea76c35c98d15ae90ae4f652)), closes [#156](https://github.com/Raven-Pensieve/obsidian-next-toc/issues/156)
+
+
+
 # [2.0.0](https://github.com/Raven-Pensieve/obsidian-next-toc/compare/1.4.0...2.0.0) (2026-01-25)
 
 
