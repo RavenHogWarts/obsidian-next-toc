@@ -42,7 +42,11 @@
 
 /* Tab Button Reset and Styling */
 button.NToc__tab {
-	all: unset; /* Reset all styles */
+	appearance: none;
+	-webkit-appearance: none;
+	border: 0;
+	margin: 0;
+	background: transparent;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -53,7 +57,9 @@ button.NToc__tab {
 	position: relative;
 	color: var(--text-muted);
 	font-size: var(--font-ui-small);
-	transition: color 150ms ease, background-color 150ms ease;
+	transition:
+		color 150ms ease,
+		background-color 150ms ease;
 	user-select: none;
 	white-space: nowrap;
 	font-weight: var(--font-normal);

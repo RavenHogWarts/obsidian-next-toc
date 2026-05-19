@@ -149,7 +149,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 			)}
 			<div
 				ref={NTocGroupRef}
-				className="NToc__group"
+				className={`NToc__group ${shouldExpandToc || isHovered ? "NToc__group-content-expanded" : ""}`}
 				onMouseEnter={() =>
 					settings.toc.show && !shouldExpandToc && setIsHovered(true)
 				}
@@ -167,7 +167,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 				)}
 				<div
 					ref={NTocGroupIndicatorsRef}
-					className="NToc__group-indicators"
+					className={`NToc__group-indicators NToc__group-indicators-${settings.toc.indicatorMode}`}
 				>
 					{headings.map((heading, index) => {
 						if (!visibilityMap[index]) return null;

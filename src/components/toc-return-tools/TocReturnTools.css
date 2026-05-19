@@ -4,18 +4,19 @@
 	/* margin: 4px; */
 	position: relative;
 	gap: 8px;
-
-	&:has(.NToc__tool-expand-right) {
-		flex-direction: row;
-	}
-
-	&:has(.NToc__tool-expand-left) {
-		flex-direction: row-reverse;
-		justify-content: unset !important;
-	}
+	flex-direction: row;
 
 	svg {
 		margin: -2px;
+	}
+}
+
+.NToc__return-tools.NToc__return-tools-right {
+	flex-direction: row-reverse;
+	justify-content: unset;
+
+	.NToc__tool-buttons.NToc__tool-expand-left {
+		flex-direction: row-reverse;
 	}
 }
 
