@@ -76,7 +76,7 @@ jobs:
 
                   # 构建产物检查
                   echo "📦 Verifying build artifacts..."
-                  required_files=("main.js" "manifest.json" "styles.css")
+                  required_files=("dist/main.js" "dist/manifest.json" "dist/styles.css")
                   missing_files=()
 
                   for file in "${required_files[@]}"; do
@@ -97,7 +97,7 @@ jobs:
                   # 版本一致性检查
                   echo "🔢 Checking version consistency..."
                   package_version=$(node -p "require('./package.json').version")
-                  manifest_version=$(node -p "require('./manifest.json').version")
+                  manifest_version=$(node -p "require('./dist/manifest.json').version")
 
                   echo "Package.json version: $package_version"
                   echo "Manifest.json version: $manifest_version"
