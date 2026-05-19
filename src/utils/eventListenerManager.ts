@@ -27,7 +27,7 @@ export function isElementValid(element: HTMLElement): boolean {
 	return (
 		element &&
 		element.parentNode !== null &&
-		document.contains(element) &&
+		activeDocument.contains(element) &&
 		element.isConnected
 	);
 }
