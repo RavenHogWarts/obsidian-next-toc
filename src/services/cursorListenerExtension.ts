@@ -15,7 +15,7 @@ export function createCursorListenerExtension(
 	const scheduleFlush = () => {
 		if (scheduled) return;
 		scheduled = true;
-		requestAnimationFrame(() => {
+		window.requestAnimationFrame(() => {
 			scheduled = false;
 			for (const view of pendingViews) {
 				plugin.onCursorMoved(view);

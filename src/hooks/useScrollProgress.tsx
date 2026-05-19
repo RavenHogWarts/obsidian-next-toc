@@ -77,7 +77,7 @@ export const useScrollProgress = (currentView: MarkdownView | null) => {
 		let timeoutId: number | null = null;
 		const debouncedHandler = (event: Event) => {
 			if (timeoutId) {
-				clearTimeout(timeoutId);
+				window.clearTimeout(timeoutId);
 			}
 			timeoutId = window.setTimeout(() => {
 				handleScroll(event);
@@ -95,7 +95,7 @@ export const useScrollProgress = (currentView: MarkdownView | null) => {
 		// 保存清理函数
 		scrollListenerRef.current = () => {
 			if (timeoutId) {
-				clearTimeout(timeoutId);
+				window.clearTimeout(timeoutId);
 			}
 			scrollElement.removeEventListener("scroll", debouncedHandler);
 		};

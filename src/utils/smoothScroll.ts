@@ -18,9 +18,9 @@ export default function (
 		container.scrollTop = startScroll + distance * easeProgress;
 
 		if (progress < 1) {
-			requestAnimationFrame(animate);
+			window.requestAnimationFrame(animate);
 		}
 	};
 
-	requestAnimationFrame(animate);
+	window.requestAnimationFrame(animate);
 }

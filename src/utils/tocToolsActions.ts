@@ -45,7 +45,7 @@ export const scrollTopBottom = (view: MarkdownView, to: "top" | "bottom") => {
 				".markdown-preview-view"
 			) as HTMLElement;
 
-			setTimeout(() => {
+			window.setTimeout(() => {
 				const finalMaxScroll = Math.max(
 					0,
 					previewContainer.scrollHeight -
