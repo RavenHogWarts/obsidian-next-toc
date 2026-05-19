@@ -1,6 +1,10 @@
 import { App, MarkdownView, setIcon } from "obsidian";
 
-export default function (app: App, code: string, codeblockDom: HTMLElement) {
+export default function (
+	app: App,
+	// code: string,
+	codeblockDom: HTMLElement,
+) {
 	const cardEditBtn = codeblockDom.createDiv("NToc__inline-card-edit-btn");
 	setIcon(cardEditBtn, "pencil");
 

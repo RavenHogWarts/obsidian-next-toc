@@ -27,13 +27,13 @@ export const useScrollProgress = (currentView: MarkdownView | null) => {
 			if (mode === "source") {
 				// 在source模式下，查找.cm-scroller元素
 				const cmScroller = view.contentEl.querySelector(
-					".cm-scroller"
+					".cm-scroller",
 				) as HTMLElement;
 				if (cmScroller) return cmScroller;
 			} else if (mode === "preview") {
 				// 在preview模式下，查找.markdown-preview-view元素
 				const previewView = view.contentEl.querySelector(
-					".markdown-preview-view"
+					".markdown-preview-view",
 				) as HTMLElement;
 				if (previewView) return previewView;
 			}
@@ -41,7 +41,7 @@ export const useScrollProgress = (currentView: MarkdownView | null) => {
 			// 如果找不到特定元素，使用contentEl本身
 			return view.contentEl;
 		},
-		[]
+		[],
 	);
 
 	const handleScroll = useCallback(
@@ -52,7 +52,7 @@ export const useScrollProgress = (currentView: MarkdownView | null) => {
 				setProgress(newProgress);
 			}
 		},
-		[calculateProgress]
+		[calculateProgress],
 	);
 
 	useEffect(() => {
@@ -77,7 +77,7 @@ export const useScrollProgress = (currentView: MarkdownView | null) => {
 		let timeoutId: number | null = null;
 		const debouncedHandler = (event: Event) => {
 			if (timeoutId) {
-				clearTimeout(timeoutId);
+				window.clearTimeout(timeoutId);
 			}
 			timeoutId = window.setTimeout(() => {
 				handleScroll(event);
@@ -95,7 +95,7 @@ export const useScrollProgress = (currentView: MarkdownView | null) => {
 		// 保存清理函数
 		scrollListenerRef.current = () => {
 			if (timeoutId) {
-				clearTimeout(timeoutId);
+				window.clearTimeout(timeoutId);
 			}
 			scrollElement.removeEventListener("scroll", debouncedHandler);
 		};

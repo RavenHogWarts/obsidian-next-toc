@@ -57,8 +57,8 @@ export class NTocRender {
 
 	private findContainers(view: MarkdownView): HTMLElement[] {
 		const nodeList = view.contentEl.querySelectorAll(".NToc__view");
-		return Array.from(nodeList).filter(
-			(el): el is HTMLElement => el instanceof HTMLElement
+		return Array.from(nodeList).filter((el): el is HTMLElement =>
+			el.instanceOf(HTMLElement),
 		);
 	}
 
@@ -160,7 +160,7 @@ export class NTocRender {
 						activeHeadingIndex={this.activeHeadingIndex}
 					/>
 				</SettingsStoreContext.Provider>
-			</StrictMode>
+			</StrictMode>,
 		);
 		this.root = root;
 	}
@@ -177,7 +177,7 @@ export class NTocRender {
 export function updateNTocRender(
 	settingsStore: SettingsStore,
 	view: MarkdownView | null,
-	props: NTocRenderProps
+	props: NTocRenderProps,
 ): void {
 	// no changes
 	NTocRender.getInstance(settingsStore).update(view, props);

@@ -56,11 +56,11 @@ export const TocReturnTools: FC<TocReturnToolsProps> = ({
 		};
 
 		if (isExpanded) {
-			document.addEventListener("mousedown", handleClickOutside);
+			activeDocument.addEventListener("mousedown", handleClickOutside);
 		}
 
 		return () => {
-			document.removeEventListener("mousedown", handleClickOutside);
+			activeDocument.removeEventListener("mousedown", handleClickOutside);
 		};
 	}, [isExpanded]);
 
@@ -91,7 +91,10 @@ export const TocReturnTools: FC<TocReturnToolsProps> = ({
 	};
 
 	return (
-		<div ref={NTocReturnToolsRef} className="NToc__return-tools">
+		<div
+			ref={NTocReturnToolsRef}
+			className={`NToc__return-tools NToc__return-tools-${settings.toc.position}`}
+		>
 			{/* 主按钮 */}
 			<button
 				className="NToc__return-button-master"

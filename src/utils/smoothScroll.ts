@@ -1,7 +1,7 @@
 export default function (
 	container: HTMLElement,
 	element: HTMLElement,
-	duration = 300
+	duration = 300,
 ) {
 	const startTime = performance.now();
 	const startScroll = container.scrollTop;
@@ -18,9 +18,9 @@ export default function (
 		container.scrollTop = startScroll + distance * easeProgress;
 
 		if (progress < 1) {
-			requestAnimationFrame(animate);
+			window.requestAnimationFrame(animate);
 		}
 	};
 
-	requestAnimationFrame(animate);
+	window.requestAnimationFrame(animate);
 }

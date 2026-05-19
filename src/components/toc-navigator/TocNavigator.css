@@ -85,7 +85,7 @@
 		display: none;
 	}
 
-	&:has(.NToc__group-content.NToc__group-content-expanded) {
+	&.NToc__group-content-expanded {
 		.NToc__progress-circle-container,
 		.NToc__group-indicators {
 			visibility: hidden;
@@ -113,14 +113,8 @@
 		display: none;
 	}
 
-	/* dot 模式下让指示器容器居中 */
-	&:has(.NToc__group-indicator-container--dot) {
-		align-self: center;
-		align-items: center;
-	}
-
-	/* hidden 模式下也让指示器容器居中 */
-	&:has(.NToc__group-indicator-container--hidden) {
+	&.NToc__group-indicators-dot,
+	&.NToc__group-indicators-hidden {
 		align-self: center;
 		align-items: center;
 	}
@@ -268,6 +262,8 @@
 	}
 
 	.NToc__toc-item-container {
+		min-height: auto;
+
 		&[data-actual-depth="0"] {
 			padding-left: 0.875rem;
 			font-weight: 600;
@@ -313,10 +309,6 @@
 		display: flex;
 		flex-direction: column;
 	} */
-
-	.NToc__toc-item-container {
-		min-height: auto;
-	}
 
 	.NToc__toc-item-content {
 		max-width: auto;

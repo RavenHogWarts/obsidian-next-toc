@@ -13,7 +13,7 @@
 // 获取所有CSS属性名的函数
 export function getAllCSSProperties(): string[] {
 	// 创建一个虚拟的style对象来获取所有属性
-	const div = document.createElement("div");
+	const div = activeDocument.createElement("div");
 	const computedStyle = getComputedStyle(div);
 
 	const properties: string[] = [];
@@ -497,7 +497,7 @@ export function getAllCSSProperties(): string[] {
 // 根据输入过滤CSS属性
 export function filterCSSProperties(
 	input: string,
-	allProperties: string[]
+	allProperties: string[],
 ): string[] {
 	if (!input) return allProperties;
 

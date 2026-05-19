@@ -283,7 +283,7 @@ export default class NTocPlugin extends Plugin {
 					this.currentView = leaf.view;
 
 					// 使用 requestAnimationFrame 延迟初始化，避免闪烁
-					requestAnimationFrame(() => {
+					window.requestAnimationFrame(() => {
 						this.setupScrollListener();
 						this.updateNToc();
 					});

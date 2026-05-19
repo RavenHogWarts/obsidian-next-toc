@@ -7,7 +7,7 @@ interface CursorMoveHandler {
 }
 
 export function createCursorListenerExtension(
-	plugin: CursorMoveHandler
+	plugin: CursorMoveHandler,
 ): Extension {
 	let scheduled = false;
 	const pendingViews = new Set<EditorView>();
@@ -15,7 +15,7 @@ export function createCursorListenerExtension(
 	const scheduleFlush = () => {
 		if (scheduled) return;
 		scheduled = true;
-		requestAnimationFrame(() => {
+		window.requestAnimationFrame(() => {
 			scheduled = false;
 			for (const view of pendingViews) {
 				plugin.onCursorMoved(view);
