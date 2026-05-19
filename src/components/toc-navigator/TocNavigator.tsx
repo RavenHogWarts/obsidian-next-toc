@@ -77,7 +77,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	);
 
 	// 使用可调整大小 Hook
-	const { handleMouseDragStart } = useResizableToc({
+	const { handleMouseDragStart, isMouseDragging } = useResizableToc({
 		currentView,
 		tocItemsRef: NTocGroupTocItemsRef,
 		tocWidth: settings.toc.width,
@@ -200,11 +200,12 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 					{shouldShowToc && (
 						<div
 							ref={NTocGroupTocItemsRef}
-							className="NToc__toc-items"
+							className={`NToc__toc-items ${isMouseDragging ? "NToc__toc-items-resizing" : ""}`}
 						>
 							<div
 								className="NToc__group-resize"
 								onMouseDown={handleMouseDragStart}
+								aria-hidden="true"
 							/>
 							{settings.tool.showProgressBar && (
 								<div
