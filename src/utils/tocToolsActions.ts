@@ -35,21 +35,21 @@ export const scrollTopBottom = (view: MarkdownView, to: "top" | "bottom") => {
 		const lastLine = editor.lastLine();
 		editor.scrollIntoView(
 			{ from: { line: lastLine, ch: 0 }, to: { line: lastLine, ch: 0 } },
-			true
+			true,
 		);
 	} else {
 		// 阅读模式：使用最可靠的方法
 		const scrollToBottomReading = () => {
 			// 获取阅读模式的滚动容器
 			const previewContainer = view.contentEl.querySelector(
-				".markdown-preview-view"
+				".markdown-preview-view",
 			) as HTMLElement;
 
 			window.setTimeout(() => {
 				const finalMaxScroll = Math.max(
 					0,
 					previewContainer.scrollHeight -
-						previewContainer.clientHeight
+						previewContainer.clientHeight,
 				);
 				view.currentMode.applyScroll(finalMaxScroll);
 				previewContainer.scrollTop = finalMaxScroll;
@@ -63,7 +63,7 @@ export const scrollTopBottom = (view: MarkdownView, to: "top" | "bottom") => {
 export const navigateHeading = async (
 	view: MarkdownView,
 	headings: HeadingCache[],
-	direction: "next" | "prev"
+	direction: "next" | "prev",
 ) => {
 	let targetIndex = -1;
 

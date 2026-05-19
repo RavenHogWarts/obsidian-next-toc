@@ -7,7 +7,7 @@ export interface ScrollListenerOptions {
 
 export function createScrollListener(
 	element: HTMLElement,
-	options: ScrollListenerOptions
+	options: ScrollListenerOptions,
 ): () => void {
 	const { debounceMs = 16, onScroll } = options;
 
@@ -36,7 +36,7 @@ export function safeRemoveEventListener(
 	element: HTMLElement,
 	event: string,
 	handler: EventListener,
-	options?: boolean | EventListenerOptions
+	options?: boolean | EventListenerOptions,
 ): void {
 	if (isElementValid(element)) {
 		element.removeEventListener(event, handler, options);

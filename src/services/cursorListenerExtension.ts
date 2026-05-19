@@ -7,7 +7,7 @@ interface CursorMoveHandler {
 }
 
 export function createCursorListenerExtension(
-	plugin: CursorMoveHandler
+	plugin: CursorMoveHandler,
 ): Extension {
 	let scheduled = false;
 	const pendingViews = new Set<EditorView>();

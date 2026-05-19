@@ -31,7 +31,7 @@ export const useResizableToc = ({
 			setStartX(e.clientX);
 			setStartWidth(tocWidth);
 		},
-		[tocWidth]
+		[tocWidth],
 	);
 
 	const handleMouseDrag = useCallback(
@@ -46,7 +46,7 @@ export const useResizableToc = ({
 
 			tocItemsRef.current.style.width = `${newWidth}px`;
 		},
-		[isMouseDragging, startX, startWidth, tocPosition, tocItemsRef]
+		[isMouseDragging, startX, startWidth, tocPosition, tocItemsRef],
 	);
 
 	const handleMouseDragEnd = useCallback(() => {
@@ -66,22 +66,22 @@ export const useResizableToc = ({
 		if (isMouseDragging) {
 			currentView.contentEl.addEventListener(
 				"mousemove",
-				handleMouseDrag
+				handleMouseDrag,
 			);
 			currentView.contentEl.addEventListener(
 				"mouseup",
-				handleMouseDragEnd
+				handleMouseDragEnd,
 			);
 		}
 
 		return () => {
 			currentView.contentEl.removeEventListener(
 				"mousemove",
-				handleMouseDrag
+				handleMouseDrag,
 			);
 			currentView.contentEl.removeEventListener(
 				"mouseup",
-				handleMouseDragEnd
+				handleMouseDragEnd,
 			);
 		};
 	}, [isMouseDragging, currentView, handleMouseDrag, handleMouseDragEnd]);

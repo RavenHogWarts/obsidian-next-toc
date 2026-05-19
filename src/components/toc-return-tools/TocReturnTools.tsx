@@ -60,10 +60,7 @@ export const TocReturnTools: FC<TocReturnToolsProps> = ({
 		}
 
 		return () => {
-			activeDocument.removeEventListener(
-				"mousedown",
-				handleClickOutside
-			);
+			activeDocument.removeEventListener("mousedown", handleClickOutside);
 		};
 	}, [isExpanded]);
 

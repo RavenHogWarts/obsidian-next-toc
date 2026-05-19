@@ -497,7 +497,7 @@ export function getAllCSSProperties(): string[] {
 // 根据输入过滤CSS属性
 export function filterCSSProperties(
 	input: string,
-	allProperties: string[]
+	allProperties: string[],
 ): string[] {
 	if (!input) return allProperties;
 

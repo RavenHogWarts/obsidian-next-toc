@@ -1,7 +1,7 @@
 export default function (
 	container: HTMLElement,
 	element: HTMLElement,
-	duration = 300
+	duration = 300,
 ) {
 	const startTime = performance.now();
 	const startScroll = container.scrollTop;
