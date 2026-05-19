@@ -7,7 +7,8 @@ on:
 
 permissions:
     contents: write
-
+    id-token: write
+    attestations: write
 env:
     PLUGIN_ID: next-toc # 插件ID
 
@@ -59,11 +60,15 @@ jobs:
               run: |
                   pnpm install --frozen-lockfile
                   pnpm run build
-                  mkdir ${{ env.PLUGIN_ID }}
-                  cp main.js manifest.json styles.css ${{ env.PLUGIN_ID }}
-                  zip -r ${{ env.PLUGIN_ID }}.zip ${{ env.PLUGIN_ID }}
-                  ls
                   echo "tag_name=$(git tag --sort version:refname | tail -n 1)" >> $GITHUB_OUTPUT
+
+            - name: Generate artifact attestation
+              uses: actions/attest-build-provenance@v2
+              with:
+                  subject-path: |
+                      dist/main.js
+                      dist/manifest.json
+                      dist/styles.css
 
             - name: Create Release
               id: create_release
@@ -79,9 +84,8 @@ jobs:
 
                       **Version:** ${{ github.ref_name }}
                   files: |
-                      ${{ env.PLUGIN_ID }}.zip
-                      main.js
-                      manifest.json
-                      styles.css
+                      dist/main.js
+                      dist/manifest.json
+                      dist/styles.css
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
