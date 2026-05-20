@@ -39,8 +39,8 @@
 		"@eslint/js": "^10.0.1",
 		"@types/jest": "^30.0.0",
 		"@types/node": "^25.9.0",
-		"@types/react": "^19.2.14",
-		"@types/react-dom": "^19.2.3",
+		"@types/react": "^18.3.12",
+		"@types/react-dom": "^18.3.1",
 		"@typescript-eslint/eslint-plugin": "8.59.4",
 		"@typescript-eslint/parser": "^8.59.4",
 		"conventional-changelog-cli": "^5.0.0",
@@ -61,8 +61,8 @@
 	"dependencies": {
 		"lucide-react": "^1.16.0",
 		"radix-ui": "^1.4.3",
-		"react": "^19.2.6",
+		"react": "^18.3.1",
 		"react-circular-progressbar": "^2.2.0",
-		"react-dom": "^19.2.6"
+		"react-dom": "^18.3.1"
 	}
 }
