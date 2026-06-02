@@ -111,7 +111,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	useEffect(() => {
 		if (NTocGroupRef.current) {
 			const group = NTocGroupRef.current;
-			if (settings.toc.show === false) {
+			if (settings.toc.show === false || !shouldShowToc) {
 				group.classList.add("NToc__group-hidden");
 				// 当隐藏TOC时，重置悬停状态
 				setIsHovered(false);
@@ -119,7 +119,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 				group.classList.remove("NToc__group-hidden");
 			}
 		}
-	}, [settings.toc.show]);
+	}, [settings.toc.show, shouldShowToc,]);
 
 	useEffect(() => {
 		if (NTocGroupContentRef.current) {
