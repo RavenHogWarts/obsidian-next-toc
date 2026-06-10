@@ -15,24 +15,6 @@ export const ToolTabContent: FC = () => {
 		<ObsidianSetting.Container>
 			<ObsidianSetting
 				slots={{
-					name: LL.settings.tool.useToolbar.name(),
-					desc: LL.settings.tool.useToolbar.desc(),
-					control: (
-						<ObsidianSetting.Toggle
-							value={settings.tool.useToolbar}
-							onChange={(value) => {
-								void settingsStore.updateSettingByPath(
-									"tool.useToolbar",
-									value,
-								);
-							}}
-						/>
-					),
-				}}
-			/>
-
-			<ObsidianSetting
-				slots={{
 					name: LL.settings.tool.toolbarAlwaysShow.name(),
 					desc: LL.settings.tool.toolbarAlwaysShow.desc(),
 					control: (
@@ -77,6 +59,24 @@ export const ToolTabContent: FC = () => {
 							onChange={(value) => {
 								void settingsStore.updateSettingByPath(
 									"tool.showProgressCircle",
+									value,
+								);
+							}}
+						/>
+					),
+				}}
+			/>
+
+			<ObsidianSetting
+				slots={{
+					name: LL.settings.tool.useToolbar.name(),
+					desc: LL.settings.tool.useToolbar.desc(),
+					control: (
+						<ObsidianSetting.Toggle
+							value={settings.tool.useToolbar}
+							onChange={(value) => {
+								void settingsStore.updateSettingByPath(
+									"tool.useToolbar",
 									value,
 								);
 							}}

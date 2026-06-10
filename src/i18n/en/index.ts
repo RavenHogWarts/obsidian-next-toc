@@ -116,8 +116,8 @@ const en = {
 				desc: "Show the toolbar with navigation buttons",
 			},
 			toolbarAlwaysShow: {
-				name: "Always show toolbar",
-				desc: "Keep the toolbar always visible above the TOC without hovering",
+				name: "Always show TOC toolbar",
+				desc: "When the TOC is expanded, the TOC toolbar stays visible without hovering",
 			},
 			showProgressBar: {
 				name: "Use progress bar",
