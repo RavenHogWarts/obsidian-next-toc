@@ -59,6 +59,10 @@ const zh = {
 				name: "目录偏移",
 				desc: "设置目录的偏移量",
 			},
+			offsetY: {
+				name: "目录纵向偏移",
+				desc: "设置目录的纵向偏移量",
+			},
 			indicatorMode: {
 				name: "指示器模式",
 				desc: "设置目录收起时指示器的显示模式",
@@ -179,6 +183,8 @@ const zh = {
 		expandCollapse: "展开/收起目录项",
 		leftOffset: "向左偏移",
 		rightOffset: "向右偏移",
+		upOffset: "向上移动",
+		downOffset: "向下移动",
 		copyTOC: "复制目录到剪贴板",
 		returnNavigation: "返回导航",
 		returnToCursor: "返回光标位置",

@@ -61,6 +61,10 @@ const en = {
 				name: "Toc offset",
 				desc: "Set the offset of the table of contents",
 			},
+			offsetY: {
+				name: "Toc vertical offset",
+				desc: "Set the vertical offset of the table of contents",
+			},
 			indicatorMode: {
 				name: "Indicator mode",
 				desc: "Set the display mode for TOC indicators when collapsed",
@@ -181,6 +185,8 @@ const en = {
 		expandCollapse: "Expand/collapse toc items",
 		leftOffset: "Add offset to the left",
 		rightOffset: "Add offset to the right",
+		upOffset: "Move up",
+		downOffset: "Move down",
 		copyTOC: "Copy toc to clipboard",
 		returnNavigation: "Return navigation",
 		returnToCursor: "To cursor",

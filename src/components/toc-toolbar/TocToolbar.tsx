@@ -4,8 +4,10 @@ import { LL } from "@src/i18n/i18n";
 import cleanHeading from "@src/utils/cleanHeading";
 import {
 	ArrowLeftRight,
+	ChevronDown,
 	ChevronLeft,
 	ChevronRight,
+	ChevronUp,
 	ChevronsDownUp,
 	ChevronsUpDown,
 	ClipboardCopy,
@@ -41,11 +43,21 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 							? -1
 							: 1
 						: settings.toc.position === "left"
-						? 1
-						: -1)
+							? 1
+							: -1),
 			);
 		},
-		[settings.toc.offset, settings.toc.position]
+		[settings.toc.offset, settings.toc.position],
+	);
+
+	const handleOffsetYChange = useCallback(
+		async (direction: "up" | "down") => {
+			await settingsStore.updateSettingByPath(
+				"toc.offsetY",
+				settings.toc.offsetY + (direction === "up" ? -1 : 1),
+			);
+		},
+		[settings.toc.offsetY],
 	);
 
 	const handleCopyToClipboard = useCallback(async () => {
@@ -74,7 +86,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 				onClick={() => {
 					void settingsStore.updateSettingByPath(
 						"toc.alwaysExpand",
-						!settings.toc.alwaysExpand
+						!settings.toc.alwaysExpand,
 					);
 				}}
 			>
@@ -88,7 +100,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 				onClick={() => {
 					void settingsStore.updateSettingByPath(
 						"toc.position",
-						settings.toc.position === "left" ? "right" : "left"
+						settings.toc.position === "left" ? "right" : "left",
 					);
 				}}
 			>
@@ -129,6 +141,28 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 			>
 				<span className="NToc__toc-toolbar-button-icon">
 					<ChevronRight size={16} />
+				</span>
+			</button>
+			<button
+				className="NToc__toc-toolbar-button"
+				aria-label={LL.tools.upOffset()}
+				onClick={() => {
+					void handleOffsetYChange("up");
+				}}
+			>
+				<span className="NToc__toc-toolbar-button-icon">
+					<ChevronUp size={16} />
+				</span>
+			</button>
+			<button
+				className="NToc__toc-toolbar-button"
+				aria-label={LL.tools.downOffset()}
+				onClick={() => {
+					void handleOffsetYChange("down");
+				}}
+			>
+				<span className="NToc__toc-toolbar-button-icon">
+					<ChevronDown size={16} />
 				</span>
 			</button>
 			<button

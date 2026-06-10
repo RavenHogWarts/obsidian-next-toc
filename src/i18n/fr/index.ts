@@ -61,6 +61,10 @@ const fr = {
 				name: "Décalage de la table des matières",
 				desc: "Définir le décalage de la table des matières",
 			},
+			offsetY: {
+				name: "Décalage vertical de la table des matières",
+				desc: "Définir le décalage vertical de la table des matières",
+			},
 			indicatorMode: {
 				name: "Mode d'indicateur",
 				desc: "Définir le mode d'affichage des indicateurs de la table des matières lorsqu'elle est réduite",
@@ -174,6 +178,8 @@ const fr = {
 			"Développer/réduire les éléments de la table des matières",
 		leftOffset: "Ajouter un décalage à gauche",
 		rightOffset: "Ajouter un décalage à droite",
+		upOffset: "Déplacer vers le haut",
+		downOffset: "Déplacer vers le bas",
 		copyTOC: "Copier la table des matières dans le presse-papiers",
 		returnNavigation: "Navigation de retour",
 		returnToCursor: "Au curseur",

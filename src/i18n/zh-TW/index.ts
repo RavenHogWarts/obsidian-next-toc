@@ -59,6 +59,10 @@ const zh_TW = {
 				name: "目錄偏移",
 				desc: "設定目錄的偏移量",
 			},
+			offsetY: {
+				name: "目錄縱向偏移",
+				desc: "設定目錄的縱向偏移量",
+			},
 			indicatorMode: {
 				name: "指示器模式",
 				desc: "設定目錄收起時指示器的顯示模式",
@@ -179,6 +183,8 @@ const zh_TW = {
 		expandCollapse: "展開／收合目錄項目",
 		leftOffset: "向左偏移",
 		rightOffset: "向右偏移",
+		upOffset: "向上移動",
+		downOffset: "向下移動",
 		copyTOC: "複製目錄到剪貼簿",
 		returnNavigation: "返回導航",
 		returnToCursor: "返回游標位置",
