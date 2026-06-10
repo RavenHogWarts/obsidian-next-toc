@@ -4,6 +4,7 @@ import {
 	MarkdownRenderService,
 } from "@src/services/MarkdownRenderService";
 import { DEFAULT_SETTINGS, IPluginSettings } from "@src/types/types";
+import { migrateSettings } from "@src/utils/migrateSettings";
 import { Component } from "obsidian";
 
 export default class SettingsStore {
@@ -107,7 +108,16 @@ export default class SettingsStore {
 	}
 
 	async loadSettings() {
-		const saved = await this.#plugin.loadData();
+		const saved = (await this.#plugin.loadData()) as Record<
+			string,
+			unknown
+		> | null;
+
+		// 迁移旧配置（必须在 mergeWithDefaults 之前，否则旧键会被丢弃）
+		if (saved) {
+			migrateSettings(saved);
+		}
+
 		// 与默认配置深度对齐：只保留定义内字段并填充缺省
 		this.#plugin.settings = this.#mergeWithDefaults(
 			saved ?? {},

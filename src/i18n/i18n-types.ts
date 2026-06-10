@@ -241,13 +241,13 @@ type RootTranslation = {
 					one: string
 				}
 			}
-			skipHeading1: {
+			skipHeadingLevels: {
 				/**
-				 * 跳​过​一​级​标​题
+				 * 跳​过​标​题​层​级
 				 */
 				name: string
 				/**
-				 * 启​用​或​禁​用​在​目​录​中​跳​过​一​级​标​题
+				 * 选​择​在​目​录​中​需​要​跳​过​的​标​题​层​级
 				 */
 				desc: string
 			}
@@ -772,13 +772,13 @@ export type TranslationFunctions = {
 					one: () => LocalizedString
 				}
 			}
-			skipHeading1: {
+			skipHeadingLevels: {
 				/**
-				 * 跳过一级标题
+				 * 跳过标题层级
 				 */
 				name: () => LocalizedString
 				/**
-				 * 启用或禁用在目录中跳过一级标题
+				 * 选择在目录中需要跳过的标题层级
 				 */
 				desc: () => LocalizedString
 			}

@@ -87,9 +87,9 @@ const zh_TW = {
 					one: "1",
 				},
 			},
-			skipHeading1: {
-				name: "跳過一級標題",
-				desc: "啟用或停用在目錄中跳過一級標題",
+			skipHeadingLevels: {
+				name: "跳過標題層級",
+				desc: "選擇在目錄中需要跳過的標題層級",
 			},
 			renderMarkdown: {
 				name: "渲染 Markdown",

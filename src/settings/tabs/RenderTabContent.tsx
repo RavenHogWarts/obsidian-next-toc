@@ -60,18 +60,50 @@ export const RenderTabContent: FC = () => {
 
 			<ObsidianSetting
 				slots={{
-					name: LL.settings.render.skipHeading1.name(),
-					desc: LL.settings.render.skipHeading1.desc(),
+					name: LL.settings.render.skipHeadingLevels.name(),
+					desc: LL.settings.render.skipHeadingLevels.desc(),
 					control: (
-						<ObsidianSetting.Toggle
-							value={settings.render.skipHeading1}
-							onChange={async (value) => {
-								await settingsStore.updateSettingByPath(
-									"render.skipHeading1",
-									value,
-								);
+						<div
+							style={{
+								display: "flex",
+								gap: "8px",
+								flexWrap: "wrap",
 							}}
-						/>
+						>
+							{[1, 2, 3, 4, 5, 6].map((level) => (
+								<label
+									key={level}
+									style={{
+										display: "flex",
+										alignItems: "center",
+										gap: "4px",
+										cursor: "pointer",
+									}}
+								>
+									<input
+										type="checkbox"
+										checked={settings.render.skipHeadingLevels.includes(
+											level,
+										)}
+										onChange={async (e) => {
+											const current =
+												settings.render
+													.skipHeadingLevels;
+											const updated = e.target.checked
+												? [...current, level]
+												: current.filter(
+														(l) => l !== level,
+													);
+											await settingsStore.updateSettingByPath(
+												"render.skipHeadingLevels",
+												updated,
+											);
+										}}
+									/>
+									<span>H{level}</span>
+								</label>
+							))}
+						</div>
 					),
 				}}
 			/>

@@ -41,7 +41,7 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 	// 使用标题编号 Hook
 	const generateHeadingNumber = useHeadingNumbering(
 		headings,
-		settings.render.skipHeading1,
+		settings.render.skipHeadingLevels,
 		settings.render.numberingStartIndex,
 	);
 
@@ -49,7 +49,7 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 	const { visibilityMap, shouldShowToc } = useTocVisibility({
 		headings,
 		collapsedSet,
-		skipHeading1: settings.render.skipHeading1,
+		skipHeadingLevels: settings.render.skipHeadingLevels,
 		showWhenSingleHeading: settings.render.showWhenSingleHeading,
 	});
 
