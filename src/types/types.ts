@@ -27,6 +27,7 @@ export interface IPluginSettings {
 	};
 	tool: {
 		useToolbar: boolean;
+		toolbarAlwaysShow: boolean;
 		showProgressBar: boolean;
 		showProgressCircle: boolean;
 		returnToCursor: IButtonTool;
@@ -58,6 +59,7 @@ export const DEFAULT_SETTINGS: IPluginSettings = {
 	},
 	tool: {
 		useToolbar: true,
+		toolbarAlwaysShow: false,
 		showProgressBar: true,
 		showProgressCircle: true,
 		returnToCursor: {

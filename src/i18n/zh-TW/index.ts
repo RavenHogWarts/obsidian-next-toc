@@ -113,6 +113,10 @@ const zh_TW = {
 				name: "使用工具列",
 				desc: "顯示帶有導覽按鈕的工具列",
 			},
+			toolbarAlwaysShow: {
+				name: "工具列常駐顯示",
+				desc: "工具列始終顯示在目錄上方，無需懸停觸發",
+			},
 			showProgressBar: {
 				name: "顯示進度條",
 				desc: "在目錄上方顯示閱讀進度",

@@ -9,6 +9,10 @@
 	--NToc__toc-offset: 0px;
 	--NToc__toc-offset-y: 0%;
 
+	&.NToc__container-toolbar-always {
+		gap: 2.5rem;
+	}
+
 	&.NToc__container-left {
 		right: auto;
 		left: var(--NToc__toc-offset);
@@ -176,6 +180,15 @@
 	&::-webkit-scrollbar-thumb {
 		background-color: var(--scrollbar-thumb-bg);
 		border-radius: 3px;
+	}
+}
+
+/* 常驻工具栏模式：仅在目录展开时，toolbar 无需 hover 即可见 */
+.NToc__group-content-toolbar-always {
+	/* 展开状态下 toolbar 始终可见，不需要额外 hover */
+	&.NToc__group-content-expanded .NToc__toc-toolbar {
+		opacity: 1;
+		pointer-events: auto;
 	}
 }
 
