@@ -15,12 +15,14 @@ interface NTocViewContentProps {
 	currentView: MarkdownView;
 	headings: HeadingCache[];
 	activeHeadingIndex: number;
+	visibleHeadingIndices: number[];
 }
 
 export const NTocViewContent: FC<NTocViewContentProps> = ({
 	currentView,
 	headings,
 	activeHeadingIndex,
+	visibleHeadingIndices,
 }) => {
 	const settingsStore = useSettingsStore();
 	const settings = usePluginSettings(settingsStore);
@@ -91,6 +93,9 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 							)}
 							headingNumber={generateHeadingNumber(index)}
 							headingActive={index === activeHeadingIndex}
+							headingVisible={visibleHeadingIndices.includes(
+								index,
+							)}
 							headingChildren={hasChildren(index, headings)}
 							isCollapsedParent={collapsedSet.has(index)}
 							onToggleCollapse={toggleCollapsedAt}

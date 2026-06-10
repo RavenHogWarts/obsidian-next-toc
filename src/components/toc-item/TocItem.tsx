@@ -14,6 +14,7 @@ interface TocItemProps {
 	headingActualDepth: number;
 	headingNumber: string;
 	headingActive: boolean;
+	headingVisible: boolean;
 	headingChildren: boolean;
 	isCollapsedParent: boolean;
 	onToggleCollapse: (index: number) => void;
@@ -26,6 +27,7 @@ export const TocItem: FC<TocItemProps> = ({
 	headingActualDepth,
 	headingNumber,
 	headingActive,
+	headingVisible,
 	headingChildren,
 	isCollapsedParent,
 	onToggleCollapse,
@@ -94,6 +96,7 @@ export const TocItem: FC<TocItemProps> = ({
 			data-actual-depth={headingActualDepth}
 			data-start-line={heading.position.start.line}
 			data-active={headingActive}
+			data-visible={headingVisible}
 			onClick={() => {
 				void scrollToHeading(currentView, heading);
 			}}

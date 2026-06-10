@@ -9,6 +9,7 @@ import { TocNavigator } from "./TocNavigator";
 export interface NTocRenderProps {
 	headings: HeadingCache[];
 	activeHeadingIndex: number;
+	visibleHeadingIndices?: number[];
 	multiViewMode?: boolean;
 }
 
@@ -20,6 +21,7 @@ const viewRenderStates: WeakMap<
 	{
 		headings: HeadingCache[];
 		activeHeadingIndex: number;
+		visibleHeadingIndices: number[];
 		settingsStore: SettingsStore;
 	}
 > = new WeakMap();
@@ -33,6 +35,7 @@ export class NTocRender {
 
 	headings: HeadingCache[] = [];
 	activeHeadingIndex: number = -1;
+	visibleHeadingIndices: number[] = [];
 
 	constructor(settingsStore: SettingsStore) {
 		this.settingsStore = settingsStore;
@@ -138,6 +141,7 @@ export class NTocRender {
 		this.view = view;
 		this.headings = props.headings;
 		this.activeHeadingIndex = props.activeHeadingIndex;
+		this.visibleHeadingIndices = props.visibleHeadingIndices ?? [];
 
 		this.display();
 	}
@@ -151,7 +155,12 @@ export class NTocRender {
 			return;
 		}
 
-		this.renderView(this.view, this.headings, this.activeHeadingIndex);
+		this.renderView(
+			this.view,
+			this.headings,
+			this.activeHeadingIndex,
+			this.visibleHeadingIndices,
+		);
 		this.root =
 			containerRootMap.get(this.findContainers(this.view)[0]!) ?? null;
 	}
@@ -160,6 +169,7 @@ export class NTocRender {
 		view: MarkdownView,
 		headings: HeadingCache[],
 		activeHeadingIndex: number,
+		visibleHeadingIndices: number[],
 	) {
 		const container = this.getOrCreateContainer(view);
 		const root = this.getOrCreateRoot(container);
@@ -170,6 +180,7 @@ export class NTocRender {
 						currentView={view}
 						headings={headings}
 						activeHeadingIndex={activeHeadingIndex}
+						visibleHeadingIndices={visibleHeadingIndices}
 					/>
 				</SettingsStoreContext.Provider>
 			</StrictMode>,
@@ -197,6 +208,7 @@ export function updateNTocRender(
 			view,
 			props.headings,
 			props.activeHeadingIndex,
+			props.visibleHeadingIndices ?? [],
 		);
 	} else {
 		NTocRender.getInstance(settingsStore).update(view, props);
@@ -208,11 +220,13 @@ function renderViewNToc(
 	view: MarkdownView,
 	headings: HeadingCache[],
 	activeHeadingIndex: number,
+	visibleHeadingIndices: number[],
 ): void {
 	// Store render state
 	viewRenderStates.set(view, {
 		headings,
 		activeHeadingIndex,
+		visibleHeadingIndices,
 		settingsStore,
 	});
 
@@ -253,6 +267,7 @@ function renderViewNToc(
 					currentView={view}
 					headings={headings}
 					activeHeadingIndex={activeHeadingIndex}
+					visibleHeadingIndices={visibleHeadingIndices}
 				/>
 			</SettingsStoreContext.Provider>
 		</StrictMode>,

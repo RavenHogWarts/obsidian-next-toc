@@ -25,6 +25,7 @@ export class NTocView extends ItemView {
 	private currentView: MarkdownView | null = null;
 	private headings: HeadingCache[] = [];
 	private activeHeadingIndex: number = -1;
+	private visibleHeadingIndices: number[] = [];
 
 	constructor(leaf: WorkspaceLeaf, plugin: NTocPlugin) {
 		super(leaf);
@@ -56,11 +57,13 @@ export class NTocView extends ItemView {
 	updateTocData(
 		view: MarkdownView | null,
 		headings: HeadingCache[],
-		activeHeadingIndex: number
+		activeHeadingIndex: number,
+		visibleHeadingIndices: number[],
 	): void {
 		this.currentView = view;
 		this.headings = headings;
 		this.activeHeadingIndex = activeHeadingIndex;
+		this.visibleHeadingIndices = visibleHeadingIndices;
 		this.render();
 	}
 
@@ -78,6 +81,7 @@ export class NTocView extends ItemView {
 							currentView={this.currentView}
 							headings={this.headings}
 							activeHeadingIndex={this.activeHeadingIndex}
+							visibleHeadingIndices={this.visibleHeadingIndices}
 						/>
 					) : (
 						<div className="NToc__view-empty">
@@ -87,7 +91,7 @@ export class NTocView extends ItemView {
 						</div>
 					)}
 				</SettingsStoreContext.Provider>
-			</StrictMode>
+			</StrictMode>,
 		);
 	}
 

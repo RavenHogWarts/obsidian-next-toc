@@ -63,6 +63,14 @@
 			color: var(--text-on-accent);
 		}
 	}
+
+	&[data-visible="true"]:not([data-active="true"]) {
+		border-radius: 5px;
+
+		.NToc__toc-item-level {
+			border: 1px solid var(--text-accent);
+		}
+	}
 }
 
 .NToc__toc-item {
