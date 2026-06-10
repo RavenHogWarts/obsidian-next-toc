@@ -115,6 +115,10 @@ const en = {
 				name: "Use toolbar",
 				desc: "Show the toolbar with navigation buttons",
 			},
+			toolbarAlwaysShow: {
+				name: "Always show toolbar",
+				desc: "Keep the toolbar always visible above the TOC without hovering",
+			},
 			showProgressBar: {
 				name: "Use progress bar",
 				desc: "Show the reading progress bar above the table of contents",

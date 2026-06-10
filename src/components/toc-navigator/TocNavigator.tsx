@@ -127,17 +127,6 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 		}
 	}, [settings.toc.show, shouldShowToc]);
 
-	useEffect(() => {
-		if (NTocGroupContentRef.current) {
-			const content = NTocGroupContentRef.current;
-			if (shouldExpandToc || isHovered) {
-				content.classList.add("NToc__group-content-expanded");
-			} else {
-				content.classList.remove("NToc__group-content-expanded");
-			}
-		}
-	}, [shouldExpandToc, isHovered]);
-
 	// 当 TOC 显示状态变化时重新应用宽度样式
 	useEffect(() => {
 		if (NTocGroupTocItemsRef.current && shouldShowToc) {
@@ -148,7 +137,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	return (
 		<div
 			ref={NTocContainerRef}
-			className={`NToc__container NToc__container-${settings.toc.position}`}
+			className={`NToc__container NToc__container-${settings.toc.position}${settings.tool.toolbarAlwaysShow ? " NToc__container-toolbar-always" : ""}`}
 		>
 			{settings.tool.useToolbar && (
 				<TocReturnTools currentView={currentView} headings={headings} />
@@ -193,7 +182,10 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 					})}
 				</div>
 
-				<div ref={NTocGroupContentRef} className="NToc__group-content">
+				<div
+					ref={NTocGroupContentRef}
+					className={`NToc__group-content${settings.tool.toolbarAlwaysShow ? " NToc__group-content-toolbar-always" : ""}${shouldExpandToc || isHovered ? " NToc__group-content-expanded" : ""}`}
+				>
 					{shouldShowToc && (
 						<TocToolbar
 							headings={headings}

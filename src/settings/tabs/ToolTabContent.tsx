@@ -23,7 +23,25 @@ export const ToolTabContent: FC = () => {
 							onChange={(value) => {
 								void settingsStore.updateSettingByPath(
 									"tool.useToolbar",
-									value
+									value,
+								);
+							}}
+						/>
+					),
+				}}
+			/>
+
+			<ObsidianSetting
+				slots={{
+					name: LL.settings.tool.toolbarAlwaysShow.name(),
+					desc: LL.settings.tool.toolbarAlwaysShow.desc(),
+					control: (
+						<ObsidianSetting.Toggle
+							value={settings.tool.toolbarAlwaysShow}
+							onChange={(value) => {
+								void settingsStore.updateSettingByPath(
+									"tool.toolbarAlwaysShow",
+									value,
 								);
 							}}
 						/>
@@ -41,7 +59,7 @@ export const ToolTabContent: FC = () => {
 							onChange={(value) => {
 								void settingsStore.updateSettingByPath(
 									"tool.showProgressBar",
-									value
+									value,
 								);
 							}}
 						/>
@@ -59,7 +77,7 @@ export const ToolTabContent: FC = () => {
 							onChange={(value) => {
 								void settingsStore.updateSettingByPath(
 									"tool.showProgressCircle",
-									value
+									value,
 								);
 							}}
 						/>
@@ -85,7 +103,7 @@ export const ToolTabContent: FC = () => {
 								onChange={(value) => {
 									void settingsStore.updateSettingByPath(
 										"tool.returnToCursor.enabled",
-										value
+										value,
 									);
 								}}
 							/>
@@ -95,7 +113,7 @@ export const ToolTabContent: FC = () => {
 									void settingsStore.updateSettingByPath(
 										"tool.returnToCursor.icon",
 										DEFAULT_SETTINGS.tool.returnToCursor
-											.icon
+											.icon,
 									);
 								}}
 							/>
@@ -105,7 +123,7 @@ export const ToolTabContent: FC = () => {
 								onChange={(icon) => {
 									void settingsStore.updateSettingByPath(
 										"tool.returnToCursor.icon",
-										icon
+										icon,
 									);
 								}}
 							/>
@@ -125,7 +143,7 @@ export const ToolTabContent: FC = () => {
 								onChange={(value) => {
 									void settingsStore.updateSettingByPath(
 										"tool.returnToTop.enabled",
-										value
+										value,
 									);
 								}}
 							/>
@@ -134,7 +152,7 @@ export const ToolTabContent: FC = () => {
 								onClick={() => {
 									void settingsStore.updateSettingByPath(
 										"tool.returnToTop.icon",
-										DEFAULT_SETTINGS.tool.returnToTop.icon
+										DEFAULT_SETTINGS.tool.returnToTop.icon,
 									);
 								}}
 							/>
@@ -144,7 +162,7 @@ export const ToolTabContent: FC = () => {
 								onChange={(icon) => {
 									void settingsStore.updateSettingByPath(
 										"tool.returnToTop.icon",
-										icon
+										icon,
 									);
 								}}
 							/>
@@ -164,7 +182,7 @@ export const ToolTabContent: FC = () => {
 								onChange={(value) => {
 									void settingsStore.updateSettingByPath(
 										"tool.returnToBottom.enabled",
-										value
+										value,
 									);
 								}}
 							/>
@@ -174,7 +192,7 @@ export const ToolTabContent: FC = () => {
 									void settingsStore.updateSettingByPath(
 										"tool.returnToBottom.icon",
 										DEFAULT_SETTINGS.tool.returnToBottom
-											.icon
+											.icon,
 									);
 								}}
 							/>
@@ -184,7 +202,7 @@ export const ToolTabContent: FC = () => {
 								onChange={(icon) => {
 									void settingsStore.updateSettingByPath(
 										"tool.returnToBottom.icon",
-										icon
+										icon,
 									);
 								}}
 							/>
@@ -204,7 +222,7 @@ export const ToolTabContent: FC = () => {
 								onChange={(value) => {
 									void settingsStore.updateSettingByPath(
 										"tool.jumpToNextHeading.enabled",
-										value
+										value,
 									);
 								}}
 							/>
@@ -214,7 +232,7 @@ export const ToolTabContent: FC = () => {
 									void settingsStore.updateSettingByPath(
 										"tool.jumpToNextHeading.icon",
 										DEFAULT_SETTINGS.tool.jumpToNextHeading
-											.icon
+											.icon,
 									);
 								}}
 							/>
@@ -224,7 +242,7 @@ export const ToolTabContent: FC = () => {
 								onChange={(icon) => {
 									void settingsStore.updateSettingByPath(
 										"tool.jumpToNextHeading.icon",
-										icon
+										icon,
 									);
 								}}
 							/>
@@ -244,7 +262,7 @@ export const ToolTabContent: FC = () => {
 								onChange={(value) => {
 									void settingsStore.updateSettingByPath(
 										"tool.jumpToPrevHeading.enabled",
-										value
+										value,
 									);
 								}}
 							/>
@@ -254,7 +272,7 @@ export const ToolTabContent: FC = () => {
 									void settingsStore.updateSettingByPath(
 										"tool.jumpToPrevHeading.icon",
 										DEFAULT_SETTINGS.tool.jumpToPrevHeading
-											.icon
+											.icon,
 									);
 								}}
 							/>
@@ -264,7 +282,7 @@ export const ToolTabContent: FC = () => {
 								onChange={(icon) => {
 									void settingsStore.updateSettingByPath(
 										"tool.jumpToPrevHeading.icon",
-										icon
+										icon,
 									);
 								}}
 							/>
