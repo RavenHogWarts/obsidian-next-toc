@@ -22,12 +22,14 @@ interface TocNavigatorProps {
 	currentView: MarkdownView;
 	headings: HeadingCache[];
 	activeHeadingIndex: number;
+	visibleHeadingIndices?: number[];
 }
 
 export const TocNavigator: FC<TocNavigatorProps> = ({
 	currentView,
 	headings,
 	activeHeadingIndex,
+	visibleHeadingIndices = [],
 }) => {
 	const settingsStore = useSettingsStore();
 	const settings = usePluginSettings(settingsStore);
@@ -119,7 +121,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 				group.classList.remove("NToc__group-hidden");
 			}
 		}
-	}, [settings.toc.show, shouldShowToc,]);
+	}, [settings.toc.show, shouldShowToc]);
 
 	useEffect(() => {
 		if (NTocGroupContentRef.current) {
@@ -231,6 +233,9 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 										headingActive={
 											index === activeHeadingIndex
 										}
+										headingVisible={visibleHeadingIndices.includes(
+											index,
+										)}
 										headingChildren={hasChildren(
 											index,
 											headings,

@@ -278,13 +278,12 @@ export default class NTocPlugin extends Plugin {
 					// 强制更新以触发内联导航的隐藏检查
 					if (this.currentView && this.currentView.file) {
 						const headings = getFileHeadings(this.currentView);
-						const activeHeadingIndex = updateActiveHeading(
-							this.currentView,
-							headings,
-						);
+						const { activeHeadingIndex, visibleHeadingIndices } =
+							updateActiveHeading(this.currentView, headings);
 						this.renderNToc(this.currentView, {
 							headings,
 							activeHeadingIndex,
+							visibleHeadingIndices,
 						});
 					}
 					return;
@@ -496,10 +495,12 @@ export default class NTocPlugin extends Plugin {
 		}
 
 		const headings = getFileHeadings(view);
-		const activeHeadingIndex = updateActiveHeading(view, headings);
+		const { activeHeadingIndex, visibleHeadingIndices } =
+			updateActiveHeading(view, headings);
 		this.renderNToc(view, {
 			headings,
 			activeHeadingIndex,
+			visibleHeadingIndices,
 		});
 	}
 
@@ -537,17 +538,15 @@ export default class NTocPlugin extends Plugin {
 		if (!this.currentView || !this.currentView.file) {
 			ntocViews.forEach((leaf) => {
 				if (leaf.view instanceof NTocView) {
-					leaf.view.updateTocData(null, [], -1);
+					leaf.view.updateTocData(null, [], -1, []);
 				}
 			});
 			return;
 		}
 
 		const headings = getFileHeadings(this.currentView);
-		const activeHeadingIndex = updateActiveHeading(
-			this.currentView,
-			headings,
-		);
+		const { activeHeadingIndex, visibleHeadingIndices } =
+			updateActiveHeading(this.currentView, headings);
 
 		ntocViews.forEach((leaf) => {
 			if (leaf.view instanceof NTocView) {
@@ -555,6 +554,7 @@ export default class NTocPlugin extends Plugin {
 					this.currentView,
 					headings,
 					activeHeadingIndex,
+					visibleHeadingIndices,
 				);
 			}
 		});
