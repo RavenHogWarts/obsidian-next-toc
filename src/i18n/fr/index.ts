@@ -41,6 +41,10 @@ const fr = {
 				name: "Toujours développer la table des matières",
 				desc: "Activer ou désactiver le développement permanent de la table des matières. Vous pouvez utiliser la propriété de document `cssclasses` pour contrôler l'affichage et le masquage : ",
 			},
+			renderInAllVisibleViews: {
+				name: "Rendre la table des matières dans toutes les vues visibles",
+				desc: "Lorsque cette option est activée, la table des matières en ligne sera affichée dans toutes les vues Markdown actuellement visibles ; lorsqu'elle est désactivée, elle ne sera affichée que dans la vue active. Désactivée par défaut pour éviter une surcharge de rendu supplémentaire.",
+			},
 			width: {
 				name: "Largeur de la table des matières",
 				desc: "Définir la largeur de la table des matières",
