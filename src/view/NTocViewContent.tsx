@@ -54,7 +54,11 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 	});
 
 	// 使用自动滚动 Hook
-	useActiveHeadingScroll(activeHeadingIndex, listItemsRef);
+	useActiveHeadingScroll(
+		activeHeadingIndex,
+		[listItemsRef],
+		visibleHeadingIndices,
+	);
 
 	// 更新进度条宽度
 	useEffect(() => {

@@ -74,8 +74,8 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 	// 使用自动滚动 Hook
 	useActiveHeadingScroll(
 		activeHeadingIndex,
-		NTocGroupTocItemsRef,
-		NTocGroupIndicatorsRef,
+		[NTocGroupTocItemsRef, NTocGroupIndicatorsRef],
+		visibleHeadingIndices,
 	);
 
 	// 使用可调整大小 Hook
