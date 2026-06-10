@@ -87,9 +87,9 @@ const zh = {
 					one: "1",
 				},
 			},
-			skipHeading1: {
-				name: "跳过一级标题",
-				desc: "启用或禁用在目录中跳过一级标题",
+			skipHeadingLevels: {
+				name: "跳过标题层级",
+				desc: "选择在目录中需要跳过的标题层级",
 			},
 			renderMarkdown: {
 				name: "渲染 Markdown",

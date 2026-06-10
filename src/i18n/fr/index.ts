@@ -81,9 +81,9 @@ const fr = {
 				name: "Utiliser les numéros de titres",
 				desc: "Activer ou désactiver l'utilisation des numéros de titres dans la table des matières. Vous pouvez utiliser la propriété de document `cssclasses` pour contrôler l'affichage et le masquage (Priorité supérieure à la liste noire) : ",
 			},
-			skipHeading1: {
-				name: "Ignorer les titres de niveau 1",
-				desc: "Activer ou désactiver le fait d'ignorer les titres de niveau 1 dans la table des matières",
+			skipHeadingLevels: {
+				name: "Ignorer les niveaux de titres",
+				desc: "Sélectionnez les niveaux de titres à ignorer dans la table des matières",
 			},
 			renderMarkdown: {
 				name: "Rendre la syntaxe Markdown",

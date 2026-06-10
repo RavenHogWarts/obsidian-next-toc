@@ -4,18 +4,18 @@ import { useCallback } from "react";
 /**
  * 生成标题编号的 Hook
  * @param headings 标题列表
- * @param skipHeading1 是否跳过一级标题
+ * @param skipHeadingLevels 需要跳过的标题层级列表
  * @param startIndex 标题编号起始值 (默认1)
  * @returns 生成标题编号的函数
  */
 export const useHeadingNumbering = (
 	headings: HeadingCache[],
-	skipHeading1: boolean,
+	skipHeadingLevels: number[],
 	startIndex: number,
 ) => {
 	const generateHeadingNumber = useCallback(
 		(index: number): string => {
-			if (skipHeading1 && headings[index].level === 1) {
+			if (skipHeadingLevels.includes(headings[index].level)) {
 				return "";
 			}
 
@@ -25,8 +25,8 @@ export const useHeadingNumbering = (
 			for (let i = 0; i <= index; i++) {
 				const { level } = headings[i];
 
-				// 跳过 h1（如果配置了跳过）
-				if (skipHeading1 && level === 1) {
+				// 跳过配置中指定的层级
+				if (skipHeadingLevels.includes(level)) {
 					continue;
 				}
 
@@ -52,7 +52,7 @@ export const useHeadingNumbering = (
 
 			return numberStack.join(".") + ".";
 		},
-		[headings, skipHeading1, startIndex],
+		[headings, skipHeadingLevels, startIndex],
 	);
 
 	return generateHeadingNumber;

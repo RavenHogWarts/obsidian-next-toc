@@ -4,7 +4,7 @@ import { useMemo } from "react";
 interface UseTocVisibilityParams {
 	headings: HeadingCache[];
 	collapsedSet: Set<number>;
-	skipHeading1: boolean;
+	skipHeadingLevels: number[];
 	showWhenSingleHeading: boolean;
 }
 
@@ -21,7 +21,7 @@ interface UseTocVisibilityReturn {
 export const useTocVisibility = ({
 	headings,
 	collapsedSet,
-	skipHeading1,
+	skipHeadingLevels,
 	showWhenSingleHeading,
 }: UseTocVisibilityParams): UseTocVisibilityReturn => {
 	const visibilityMap = useMemo(() => {
@@ -31,8 +31,8 @@ export const useTocVisibility = ({
 		for (let i = 0; i < headings.length; i++) {
 			const level = headings[i].level;
 
-			// 如果开启了 skipHeading1 且当前是一级标题，则隐藏
-			if (skipHeading1 && level === 1) {
+			// 如果当前标题层级在跳过列表中，则隐藏
+			if (skipHeadingLevels.includes(level)) {
 				result[i] = false;
 				continue;
 			}
@@ -55,19 +55,21 @@ export const useTocVisibility = ({
 		}
 
 		return result;
-	}, [headings, collapsedSet, skipHeading1]);
+	}, [headings, collapsedSet, skipHeadingLevels]);
 
 	const shouldShowToc = useMemo(() => {
-		if (skipHeading1) {
-			const hasOnlyH1 = headings.every((heading) => heading.level === 1);
-			if (hasOnlyH1) return false;
+		if (skipHeadingLevels.length > 0) {
+			const hasOnlySkipped = headings.every((heading) =>
+				skipHeadingLevels.includes(heading.level),
+			);
+			if (hasOnlySkipped) return false;
 		}
 
 		// 如果配置了不在单标题时显示，检查可见标题数量
 		if (!showWhenSingleHeading) {
 			const visibleHeadingsCount = headings.filter((heading) => {
-				// 如果开启了 skipHeading1，排除 h1
-				if (skipHeading1 && heading.level === 1) {
+				// 排除跳过列表中的标题
+				if (skipHeadingLevels.includes(heading.level)) {
 					return false;
 				}
 				return true;
@@ -80,7 +82,7 @@ export const useTocVisibility = ({
 		}
 
 		return headings.length > 0;
-	}, [headings, skipHeading1, showWhenSingleHeading]);
+	}, [headings, skipHeadingLevels, showWhenSingleHeading]);
 
 	return {
 		visibilityMap,

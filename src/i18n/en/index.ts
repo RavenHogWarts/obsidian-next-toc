@@ -89,9 +89,9 @@ const en = {
 					one: "1",
 				},
 			},
-			skipHeading1: {
-				name: "Skip heading 1",
-				desc: "Enable or disable skipping level 1 headings in the table of contents",
+			skipHeadingLevels: {
+				name: "Skip heading levels",
+				desc: "Select which heading levels to skip in the table of contents",
 			},
 			renderMarkdown: {
 				name: "Render Markdown syntax",

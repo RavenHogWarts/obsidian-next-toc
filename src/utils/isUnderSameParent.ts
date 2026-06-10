@@ -4,7 +4,7 @@ export default function (
 	index1: number,
 	index2: number,
 	headings: HeadingCache[],
-	skipH1: boolean
+	skipLevels: number[],
 ): boolean {
 	const level = headings[index1].level;
 
@@ -13,7 +13,7 @@ export default function (
 	let parent2 = -1;
 
 	for (let i = index1; i >= 0; i--) {
-		if (skipH1 && headings[i].level === 1) {
+		if (skipLevels.includes(headings[i].level)) {
 			continue;
 		}
 		if (headings[i].level < level) {
@@ -23,7 +23,7 @@ export default function (
 	}
 
 	for (let i = index2; i >= 0; i--) {
-		if (skipH1 && headings[i].level === 1) {
+		if (skipLevels.includes(headings[i].level)) {
 			continue;
 		}
 		if (headings[i].level < level) {

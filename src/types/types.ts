@@ -20,7 +20,7 @@ export interface IPluginSettings {
 	render: {
 		useHeadingNumber: boolean;
 		numberingStartIndex: number;
-		skipHeading1: boolean;
+		skipHeadingLevels: number[];
 		renderMarkdown: boolean;
 		showWhenSingleHeading: boolean;
 		hideHeadingNumberBlacklist: string[]; // Files that should hide heading numbers (only works when useHeadingNumber is true)
@@ -51,7 +51,7 @@ export const DEFAULT_SETTINGS: IPluginSettings = {
 	render: {
 		useHeadingNumber: false,
 		numberingStartIndex: 1,
-		skipHeading1: false,
+		skipHeadingLevels: [],
 		renderMarkdown: true,
 		showWhenSingleHeading: true,
 		hideHeadingNumberBlacklist: [],
