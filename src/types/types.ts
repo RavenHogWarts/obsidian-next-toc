@@ -14,6 +14,7 @@ export interface IPluginSettings {
 		width: number;
 		position: NTocPosition;
 		offset: number;
+		offsetY: number;
 		indicatorMode: NTocIndicatorMode;
 	};
 	render: {
@@ -44,6 +45,7 @@ export const DEFAULT_SETTINGS: IPluginSettings = {
 		width: 240,
 		position: "right",
 		offset: 12,
+		offsetY: 0,
 		indicatorMode: "bar",
 	},
 	render: {

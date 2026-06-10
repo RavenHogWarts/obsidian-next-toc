@@ -97,8 +97,12 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 				"--NToc__toc-offset",
 				`${settings.toc.offset}px`,
 			);
+			container.style.setProperty(
+				"--NToc__toc-offset-y",
+				`${settings.toc.offsetY}%`,
+			);
 		}
-	}, [settings.toc.offset]);
+	}, [settings.toc.offset, settings.toc.offsetY]);
 
 	// 更新进度条宽度
 	useEffect(() => {

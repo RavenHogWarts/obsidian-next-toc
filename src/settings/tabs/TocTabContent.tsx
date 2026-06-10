@@ -132,6 +132,24 @@ export const TocTabContent: FC = () => {
 
 			<ObsidianSetting
 				slots={{
+					name: LL.settings.toc.offsetY.name(),
+					desc: LL.settings.toc.offsetY.desc(),
+					control: (
+						<ObsidianSetting.Text
+							value={settings.toc.offsetY.toString()}
+							onChange={async (value) => {
+								await settingsStore.updateSettingByPath(
+									"toc.offsetY",
+									Number(value),
+								);
+							}}
+						/>
+					),
+				}}
+			/>
+
+			<ObsidianSetting
+				slots={{
 					name: LL.settings.toc.indicatorMode.name(),
 					desc: LL.settings.toc.indicatorMode.desc(),
 					control: (

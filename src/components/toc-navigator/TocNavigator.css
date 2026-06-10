@@ -1,12 +1,13 @@
 .NToc__container {
 	position: absolute;
-	top: 6%;
+	top: calc(6% + var(--NToc__toc-offset-y));
 	height: fit-content;
 	display: flex;
 	flex-direction: column;
 	gap: 1.25rem;
 	z-index: var(--layer-popover);
 	--NToc__toc-offset: 0px;
+	--NToc__toc-offset-y: 0%;
 
 	&.NToc__container-left {
 		right: auto;
@@ -186,7 +187,9 @@
 	width: 12px;
 	cursor: ew-resize;
 	background: transparent;
-	transition: background-color 150ms ease, opacity 150ms ease;
+	transition:
+		background-color 150ms ease,
+		opacity 150ms ease;
 	z-index: 3;
 	opacity: 0.35;
 
