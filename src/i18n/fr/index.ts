@@ -108,8 +108,8 @@ const fr = {
 				desc: "Afficher la barre d'outils avec les boutons de navigation",
 			},
 			toolbarAlwaysShow: {
-				name: "Toujours afficher la barre d'outils",
-				desc: "Garder la barre d'outils toujours visible au-dessus de la table des matières sans survol",
+				name: "Toujours afficher la barre d'outils de la table des matières",
+				desc: "Lorsque la table des matières est développée, la barre d'outils reste visible sans survol",
 			},
 			showProgressBar: {
 				name: "Utiliser la barre de progression",

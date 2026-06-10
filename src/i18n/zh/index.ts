@@ -114,8 +114,8 @@ const zh = {
 				desc: "显示带有导航按钮的工具栏",
 			},
 			toolbarAlwaysShow: {
-				name: "工具栏常驻显示",
-				desc: "工具栏始终显示在目录上方，无需悬停触发",
+				name: "目录工具栏常驻显示",
+				desc: "目录展开时，目录工具栏始终可见，无需悬停触发",
 			},
 			showProgressBar: {
 				name: "显示进度条",
