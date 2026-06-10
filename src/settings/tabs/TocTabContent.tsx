@@ -56,6 +56,24 @@ export const TocTabContent: FC = () => {
 
 			<ObsidianSetting
 				slots={{
+					name: LL.settings.toc.renderInAllVisibleViews.name(),
+					desc: LL.settings.toc.renderInAllVisibleViews.desc(),
+					control: (
+						<ObsidianSetting.Toggle
+							value={settings.toc.renderInAllVisibleViews}
+							onChange={async (value) => {
+								await settingsStore.updateSettingByPath(
+									"toc.renderInAllVisibleViews",
+									value,
+								);
+							}}
+						/>
+					),
+				}}
+			/>
+
+			<ObsidianSetting
+				slots={{
 					name: LL.settings.toc.width.name(),
 					desc: LL.settings.toc.width.desc(),
 					control: (

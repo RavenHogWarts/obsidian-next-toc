@@ -39,6 +39,10 @@ const zh_TW = {
 				name: "目錄永遠展開",
 				desc: "啟用或停用目錄永遠展開，可使用文件屬性 `cssclasses` 來控制顯示與隱藏：",
 			},
+			renderInAllVisibleViews: {
+				name: "在所有可見視圖中渲染目錄",
+				desc: "開啟後，會在所有當前可見的 Markdown 視圖中顯示內聯目錄；關閉時僅在當前活動視圖中顯示。預設關閉以避免額外渲染開銷。",
+			},
 			width: {
 				name: "目錄寬度",
 				desc: "設定目錄的寬度",

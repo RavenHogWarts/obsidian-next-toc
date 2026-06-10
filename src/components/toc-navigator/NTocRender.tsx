@@ -9,9 +9,20 @@ import { TocNavigator } from "./TocNavigator";
 export interface NTocRenderProps {
 	headings: HeadingCache[];
 	activeHeadingIndex: number;
+	multiViewMode?: boolean;
 }
 
 const containerRootMap: WeakMap<HTMLElement, Root> = new WeakMap();
+
+// Per-view render state for multi-view mode
+const viewRenderStates: WeakMap<
+	MarkdownView,
+	{
+		headings: HeadingCache[];
+		activeHeadingIndex: number;
+		settingsStore: SettingsStore;
+	}
+> = new WeakMap();
 
 export class NTocRender {
 	private static instance: NTocRender | null = null;
@@ -32,14 +43,6 @@ export class NTocRender {
 			NTocRender.instance = new NTocRender(settingsStore);
 		}
 		return NTocRender.instance;
-	}
-
-	private isActiveLeaf(): boolean {
-		if (!this.view) return false;
-		const activeMarkdownView =
-			this.view.app.workspace.getActiveViewOfType(MarkdownView);
-		// console.debug("Active markdown view:", activeMarkdownView);
-		return !!activeMarkdownView && activeMarkdownView === this.view;
 	}
 
 	private shouldShowInlineNav(): boolean {
@@ -135,7 +138,6 @@ export class NTocRender {
 		this.view = view;
 		this.headings = props.headings;
 		this.activeHeadingIndex = props.activeHeadingIndex;
-		// console.debug("Active heading index:", this.activeHeadingIndex);
 
 		this.display();
 	}
@@ -149,20 +151,29 @@ export class NTocRender {
 			return;
 		}
 
-		const container = this.getOrCreateContainer(this.view);
+		this.renderView(this.view, this.headings, this.activeHeadingIndex);
+		this.root =
+			containerRootMap.get(this.findContainers(this.view)[0]!) ?? null;
+	}
+
+	private renderView(
+		view: MarkdownView,
+		headings: HeadingCache[],
+		activeHeadingIndex: number,
+	) {
+		const container = this.getOrCreateContainer(view);
 		const root = this.getOrCreateRoot(container);
 		root.render(
 			<StrictMode>
 				<SettingsStoreContext.Provider value={this.settingsStore}>
 					<TocNavigator
-						currentView={this.view}
-						headings={this.headings}
-						activeHeadingIndex={this.activeHeadingIndex}
+						currentView={view}
+						headings={headings}
+						activeHeadingIndex={activeHeadingIndex}
 					/>
 				</SettingsStoreContext.Provider>
 			</StrictMode>,
 		);
-		this.root = root;
 	}
 
 	destroy() {
@@ -179,6 +190,95 @@ export function updateNTocRender(
 	view: MarkdownView | null,
 	props: NTocRenderProps,
 ): void {
-	// no changes
-	NTocRender.getInstance(settingsStore).update(view, props);
+	if (props.multiViewMode && view) {
+		// In multi-view mode, render per-view without the active-leaf restriction
+		renderViewNToc(
+			settingsStore,
+			view,
+			props.headings,
+			props.activeHeadingIndex,
+		);
+	} else {
+		NTocRender.getInstance(settingsStore).update(view, props);
+	}
+}
+
+function renderViewNToc(
+	settingsStore: SettingsStore,
+	view: MarkdownView,
+	headings: HeadingCache[],
+	activeHeadingIndex: number,
+): void {
+	// Store render state
+	viewRenderStates.set(view, {
+		headings,
+		activeHeadingIndex,
+		settingsStore,
+	});
+
+	// Find or create container
+	const nodeList = view.contentEl.querySelectorAll(".NToc__view");
+	const containers = Array.from(nodeList).filter((el): el is HTMLElement =>
+		el.instanceOf(HTMLElement),
+	);
+
+	let container: HTMLElement;
+	if (containers.length === 0) {
+		container = view.contentEl.createDiv("NToc__view");
+	} else {
+		container = containers[0]!;
+		// Remove duplicates
+		for (let i = 1; i < containers.length; i++) {
+			const dup = containers[i]!;
+			const root = containerRootMap.get(dup);
+			if (root) {
+				try {
+					root.unmount();
+				} catch {}
+				containerRootMap.delete(dup);
+			}
+			try {
+				dup.remove();
+			} catch {}
+		}
+	}
+
+	const root = containerRootMap.get(container) ?? createRoot(container);
+	containerRootMap.set(container, root);
+
+	root.render(
+		<StrictMode>
+			<SettingsStoreContext.Provider value={settingsStore}>
+				<TocNavigator
+					currentView={view}
+					headings={headings}
+					activeHeadingIndex={activeHeadingIndex}
+				/>
+			</SettingsStoreContext.Provider>
+		</StrictMode>,
+	);
+}
+
+export function destroyNTocRenderForView(view: MarkdownView): void {
+	// Clean up render state
+	viewRenderStates.delete(view);
+
+	// Find and destroy containers
+	const nodeList = view.contentEl.querySelectorAll(".NToc__view");
+	const containers = Array.from(nodeList).filter((el): el is HTMLElement =>
+		el.instanceOf(HTMLElement),
+	);
+
+	for (const container of containers) {
+		const root = containerRootMap.get(container);
+		if (root) {
+			try {
+				root.unmount();
+			} catch {}
+			containerRootMap.delete(container);
+		}
+		try {
+			if (container.parentNode) container.remove();
+		} catch {}
+	}
 }

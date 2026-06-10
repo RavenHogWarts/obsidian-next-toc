@@ -41,6 +41,10 @@ const en = {
 				name: "Toc always expand",
 				desc: "Enable or disable always expanding the table of contents， you can use the document property `cssclasses` to control show and hide: ",
 			},
+			renderInAllVisibleViews: {
+				name: "Render TOC in all visible views",
+				desc: "When enabled, the inline table of contents will be displayed in all currently visible Markdown views; when disabled, it will only be shown in the active view. Disabled by default to avoid additional rendering overhead.",
+			},
 			width: {
 				name: "Toc width",
 				desc: "Set the width of the table of contents",

@@ -39,6 +39,10 @@ const zh = {
 				name: "始终展开目录",
 				desc: "启用或禁用始终展开目录，可使用文档属性 `cssclasses` 来控制显示与隐藏：",
 			},
+			renderInAllVisibleViews: {
+				name: "在所有可见视图中渲染目录",
+				desc: "开启后，会在所有当前可见的 Markdown 视图中显示内联目录；关闭时仅在当前活动视图中显示。默认关闭以避免额外渲染开销。",
+			},
 			width: {
 				name: "目录宽度",
 				desc: "设置目录的宽度",

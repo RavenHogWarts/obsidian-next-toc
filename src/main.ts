@@ -2,6 +2,7 @@ import { EditorView } from "@codemirror/view";
 import "@styles/styles";
 import { Editor, MarkdownView, Plugin } from "obsidian";
 import {
+	destroyNTocRenderForView,
 	NTocRenderProps,
 	updateNTocRender,
 } from "./components/toc-navigator/NTocRender";
@@ -29,6 +30,8 @@ export default class NTocPlugin extends Plugin {
 	currentView = this.app.workspace.getActiveViewOfType(MarkdownView);
 	readonly settingsStore = new SettingsStore(this);
 	private scrollListenerCleanup: (() => void) | null = null;
+	private visibleViewScrollCleanups: WeakMap<MarkdownView, () => void> =
+		new WeakMap();
 
 	async onload() {
 		await this.settingsStore.loadSettings();
@@ -47,11 +50,21 @@ export default class NTocPlugin extends Plugin {
 		// Setup initial scroll listener
 		this.setupScrollListener();
 
-		this.updateNToc();
+		if (this.settings.toc.renderInAllVisibleViews) {
+			this.updateVisibleNTocs();
+		} else {
+			this.updateNToc();
+		}
+
+		// Listen for setting changes to handle renderInAllVisibleViews toggle
+		this.settingsStore.store.subscribe(() => {
+			this.onSettingsChanged();
+		});
 	}
 
 	onunload() {
 		this.cleanupScrollListener();
+		this.cleanupAllVisibleViewScrollListeners();
 		this.app.workspace
 			.getLeavesOfType(VIEW_TYPE_NTOC)
 			.forEach((leaf) => leaf.detach());
@@ -285,7 +298,11 @@ export default class NTocPlugin extends Plugin {
 					// 使用 requestAnimationFrame 延迟初始化，避免闪烁
 					window.requestAnimationFrame(() => {
 						this.setupScrollListener();
-						this.updateNToc();
+						if (this.settings.toc.renderInAllVisibleViews) {
+							this.updateVisibleNTocs();
+						} else {
+							this.updateViewNToc(this.currentView!);
+						}
 					});
 				} else {
 					// 切换到非MarkdownView（且非NTocView），清理当前TOC
@@ -295,28 +312,57 @@ export default class NTocPlugin extends Plugin {
 						headings: [],
 						activeHeadingIndex: -1,
 					});
+					// Also clear sidebar
+					this.updateSidebarNToc();
 				}
 			}),
 		);
 
 		this.registerEvent(
 			this.app.workspace.on("layout-change", () => {
-				this.updateNToc();
-			}),
-		);
-
-		this.registerEvent(
-			this.app.workspace.on("editor-change", (editor) => {
-				if (this.currentView && this.currentView.editor === editor) {
+				if (this.settings.toc.renderInAllVisibleViews) {
+					this.updateVisibleNTocs();
+				} else {
 					this.updateNToc();
 				}
 			}),
 		);
 
 		this.registerEvent(
+			this.app.workspace.on("editor-change", (editor) => {
+				if (this.settings.toc.renderInAllVisibleViews) {
+					// Find the visible view that owns this editor and update it
+					const visibleViews = this.getVisibleMarkdownViews();
+					for (const view of visibleViews) {
+						if (view.editor === editor) {
+							this.updateViewNToc(view);
+							break;
+						}
+					}
+				} else {
+					if (
+						this.currentView &&
+						this.currentView.editor === editor
+					) {
+						this.updateNToc();
+					}
+				}
+			}),
+		);
+
+		this.registerEvent(
 			this.app.metadataCache.on("changed", (file) => {
-				if (this.currentView && this.currentView.file === file) {
-					this.updateNToc();
+				if (this.settings.toc.renderInAllVisibleViews) {
+					const visibleViews = this.getVisibleMarkdownViews();
+					for (const view of visibleViews) {
+						if (view.file === file) {
+							this.updateViewNToc(view);
+						}
+					}
+				} else {
+					if (this.currentView && this.currentView.file === file) {
+						this.updateNToc();
+					}
 				}
 			}),
 		);
@@ -359,11 +405,61 @@ export default class NTocPlugin extends Plugin {
 		);
 	}
 
+	private setupViewScrollListener(view: MarkdownView): () => void {
+		if (!view.contentEl) return () => {};
+
+		const cleanup = createScrollListener(view.contentEl, {
+			debounceMs: 16,
+			onScroll: (event) => {
+				const target = event.target as HTMLElement;
+				if (
+					target.classList.contains("cm-scroller") ||
+					target.classList.contains("markdown-preview-view")
+				) {
+					this.updateViewNToc(view);
+				}
+			},
+		});
+
+		this.visibleViewScrollCleanups.set(view, cleanup);
+		return cleanup;
+	}
+
 	private cleanupScrollListener() {
 		if (this.scrollListenerCleanup) {
 			this.scrollListenerCleanup();
 			this.scrollListenerCleanup = null;
 		}
+	}
+
+	private cleanupAllVisibleViewScrollListeners() {
+		// WeakMap doesn't support iteration, so we clean up via getVisibleMarkdownViews
+		const views = this.getVisibleMarkdownViews();
+		for (const view of views) {
+			const cleanup = this.visibleViewScrollCleanups.get(view);
+			if (cleanup) {
+				cleanup();
+				this.visibleViewScrollCleanups.delete(view);
+			}
+		}
+	}
+
+	private getVisibleMarkdownViews(): MarkdownView[] {
+		const result: MarkdownView[] = [];
+		const leaves = this.app.workspace.getLeavesOfType("markdown");
+
+		for (const leaf of leaves) {
+			const view = leaf.view;
+			if (!(view instanceof MarkdownView)) continue;
+
+			// A leaf is "visible" if its contentEl has an offsetParent
+			// (meaning it's actually rendered in the DOM and displayed)
+			if (view.contentEl && view.contentEl.offsetParent !== null) {
+				result.push(view);
+			}
+		}
+
+		return result;
 	}
 
 	private getActiveMarkdownView(): MarkdownView | null {
@@ -390,38 +486,122 @@ export default class NTocPlugin extends Plugin {
 			return;
 		}
 
-		const headings = getFileHeadings(this.currentView);
-		const activeHeadingIndex = updateActiveHeading(
-			this.currentView,
-			headings,
-		);
-		this.renderNToc(this.currentView, {
+		this.updateViewNToc(this.currentView);
+		this.updateSidebarNToc();
+	}
+
+	private updateViewNToc(view: MarkdownView) {
+		if (!view || !view.file) {
+			return;
+		}
+
+		const headings = getFileHeadings(view);
+		const activeHeadingIndex = updateActiveHeading(view, headings);
+		this.renderNToc(view, {
 			headings,
 			activeHeadingIndex,
 		});
 	}
 
+	private updateVisibleNTocs() {
+		const visibleViews = this.getVisibleMarkdownViews();
+
+		// Setup scroll listeners for all visible views
+		for (const view of visibleViews) {
+			if (!this.visibleViewScrollCleanups.has(view)) {
+				this.setupViewScrollListener(view);
+			}
+		}
+
+		// Update each visible view's inline TOC
+		for (const view of visibleViews) {
+			this.updateViewNToc(view);
+		}
+
+		// Sidebar always follows the active view
+		this.updateSidebarNToc();
+	}
+
 	private renderNToc(view: MarkdownView | null, props: NTocRenderProps) {
 		// 更新内联 TOC（页面内显示）
-		updateNTocRender(this.settingsStore, view, props);
+		updateNTocRender(this.settingsStore, view, {
+			...props,
+			multiViewMode: this.settings.toc.renderInAllVisibleViews,
+		});
+	}
 
-		// 更新侧边栏 TOC 视图
+	private updateSidebarNToc() {
+		// 更新侧边栏 TOC 视图（始终跟随当前活动文档）
 		const ntocViews = this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC);
+
+		if (!this.currentView || !this.currentView.file) {
+			ntocViews.forEach((leaf) => {
+				if (leaf.view instanceof NTocView) {
+					leaf.view.updateTocData(null, [], -1);
+				}
+			});
+			return;
+		}
+
+		const headings = getFileHeadings(this.currentView);
+		const activeHeadingIndex = updateActiveHeading(
+			this.currentView,
+			headings,
+		);
+
 		ntocViews.forEach((leaf) => {
 			if (leaf.view instanceof NTocView) {
 				leaf.view.updateTocData(
-					view,
-					props.headings,
-					props.activeHeadingIndex,
+					this.currentView,
+					headings,
+					activeHeadingIndex,
 				);
 			}
 		});
 	}
 
+	private onSettingsChanged() {
+		if (this.settings.toc.renderInAllVisibleViews) {
+			// Clean up single-view scroll listener since we're using per-view ones
+			this.cleanupScrollListener();
+			this.updateVisibleNTocs();
+		} else {
+			// Clean up all per-view scroll listeners
+			this.cleanupAllVisibleViewScrollListeners();
+			// Destroy non-active inline TOCs via NTocRender
+			this.destroyNonActiveInlineNTocs();
+			this.setupScrollListener();
+			this.updateNToc();
+		}
+	}
+
+	private destroyNonActiveInlineNTocs() {
+		const visibleViews = this.getVisibleMarkdownViews();
+		for (const view of visibleViews) {
+			if (view !== this.currentView) {
+				destroyNTocRenderForView(view);
+			}
+		}
+	}
+
 	onCursorMoved(_view: EditorView): void {
 		// Debounced via rAF in the extension. Keep minimal work here.
 		// Update ToC highlighting on cursor/selection movement.
-		// No await to keep it snappy; internal updateNToc uses async.
-		void this.updateNToc();
+		if (this.settings.toc.renderInAllVisibleViews) {
+			// Find the visible view that owns this editor
+			const visibleViews = this.getVisibleMarkdownViews();
+			for (const mdView of visibleViews) {
+				if (
+					(mdView.editor as unknown as { cm: EditorView }).cm ===
+					_view
+				) {
+					this.updateViewNToc(mdView);
+					break;
+				}
+			}
+			this.updateSidebarNToc();
+		} else {
+			void this.updateNToc();
+		}
 	}
 }

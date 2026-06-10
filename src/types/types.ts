@@ -10,6 +10,7 @@ export interface IPluginSettings {
 	toc: {
 		show: boolean;
 		alwaysExpand: boolean;
+		renderInAllVisibleViews: boolean;
 		width: number;
 		position: NTocPosition;
 		offset: number;
@@ -39,6 +40,7 @@ export const DEFAULT_SETTINGS: IPluginSettings = {
 	toc: {
 		show: true,
 		alwaysExpand: true,
+		renderInAllVisibleViews: false,
 		width: 240,
 		position: "right",
 		offset: 12,
