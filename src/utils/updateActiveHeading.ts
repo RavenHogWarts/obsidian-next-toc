@@ -57,41 +57,6 @@ export default function (
 	} else if (mode === "preview") {
 		const scrollLine = view.currentMode.getScroll();
 		activeHeadingIndex = binarySearchClosestHeading(headings, scrollLine);
-
-		// In preview mode, all headings near the scroll position are considered visible
-		// Use the preview container to determine visible headings
-		const previewView = view.contentEl.querySelector(
-			".markdown-preview-view",
-		) as HTMLElement | null;
-		if (previewView) {
-			const scrollTop = previewView.scrollTop;
-			const viewportBottom = scrollTop + previewView.clientHeight;
-
-			// Find all heading elements in the preview
-			const headingEls = previewView.querySelectorAll(
-				"h1, h2, h3, h4, h5, h6",
-			);
-			const headingElList = Array.from(headingEls) as HTMLElement[];
-
-			headings.forEach((heading, index) => {
-				// Find matching heading element by text content
-				const matchingEl = headingElList.find(
-					(el) => el.textContent?.trim() === heading.heading.trim(),
-				);
-				if (matchingEl) {
-					const rect = matchingEl.getBoundingClientRect();
-					const containerRect = previewView.getBoundingClientRect();
-					const relativeTop =
-						rect.top - containerRect.top + scrollTop;
-					if (
-						relativeTop >= scrollTop - rect.height &&
-						relativeTop <= viewportBottom + rect.height
-					) {
-						visibleHeadingIndices.push(index);
-					}
-				}
-			});
-		}
 	}
 
 	return {
