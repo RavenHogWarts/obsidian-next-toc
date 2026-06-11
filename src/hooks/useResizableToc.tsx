@@ -35,12 +35,12 @@ export const useResizableToc = ({
 	);
 
 	const handleMouseDrag = useCallback(
-		(e: MouseEvent) => {
+		(e: Event) => {
 			if (!isMouseDragging || !tocItemsRef.current) {
 				return;
 			}
 
-			const delta = e.clientX - startX;
+			const delta = (e as unknown as { clientX: number }).clientX - startX;
 			const widthDelta = tocPosition === "left" ? delta : -delta;
 			const newWidth = startWidth + widthDelta;
 
