@@ -18,6 +18,22 @@ interface TocItemProps {
 	headingChildren: boolean;
 	isCollapsedParent: boolean;
 	onToggleCollapse: (index: number) => void;
+	// 拖拽排序相关
+	enableDrag?: boolean;
+	isDragging?: boolean;
+	isDragOver?: boolean;
+	dragOverPosition?: "before" | "after" | null;
+	isDragReady?: boolean;
+	onDragStart?: (e: React.DragEvent, index: number) => void;
+	onDragOver?: (e: React.DragEvent, index: number) => void;
+	onDragLeave?: (e: React.DragEvent) => void;
+	onDrop?: (e: React.DragEvent, index: number) => void;
+	onDragEnd?: () => void;
+	onPointerDown?: (e: React.PointerEvent, index: number) => void;
+	onPointerUp?: (e: React.PointerEvent) => void;
+	onPointerMove?: (e: React.PointerEvent) => void;
+	onPointerLeave?: (e: React.PointerEvent) => void;
+	consumeLongPressClick?: () => boolean;
 }
 
 export const TocItem: FC<TocItemProps> = ({
@@ -31,6 +47,21 @@ export const TocItem: FC<TocItemProps> = ({
 	headingChildren,
 	isCollapsedParent,
 	onToggleCollapse,
+	enableDrag = false,
+	isDragging = false,
+	isDragOver = false,
+	dragOverPosition = null,
+	isDragReady = false,
+	onDragStart,
+	onDragOver,
+	onDragLeave,
+	onDrop,
+	onDragEnd,
+	onPointerDown,
+	onPointerUp,
+	onPointerMove,
+	onPointerLeave,
+	consumeLongPressClick,
 }) => {
 	const settingsStore = useSettingsStore();
 	const settings = usePluginSettings(settingsStore);
@@ -90,14 +121,30 @@ export const TocItem: FC<TocItemProps> = ({
 
 	return (
 		<div
-			className="NToc__toc-item-container"
+			className={`NToc__toc-item-container${isDragging ? " NToc__toc-item-container--dragging" : ""}${isDragOver && dragOverPosition === "before" ? " NToc__toc-item-container--drag-over-before" : ""}${isDragOver && dragOverPosition === "after" ? " NToc__toc-item-container--drag-over-after" : ""}${isDragReady ? " NToc__toc-item-container--drag-ready" : ""}`}
 			data-index={headingIndex}
 			data-level={heading.level}
 			data-actual-depth={headingActualDepth}
 			data-start-line={heading.position.start.line}
 			data-active={headingActive}
 			data-visible={headingVisible}
+			onDragStart={
+				enableDrag ? (e) => onDragStart?.(e, headingIndex) : undefined
+			}
+			onDragOver={
+				enableDrag ? (e) => onDragOver?.(e, headingIndex) : undefined
+			}
+			onDragLeave={enableDrag ? onDragLeave : undefined}
+			onDrop={enableDrag ? (e) => onDrop?.(e, headingIndex) : undefined}
+			onDragEnd={enableDrag ? onDragEnd : undefined}
+			onPointerDown={
+				enableDrag ? (e) => onPointerDown?.(e, headingIndex) : undefined
+			}
+			onPointerUp={enableDrag ? onPointerUp : undefined}
+			onPointerMove={enableDrag ? onPointerMove : undefined}
+			onPointerLeave={enableDrag ? onPointerLeave : undefined}
 			onClick={() => {
+				if (enableDrag && consumeLongPressClick?.()) return;
 				void scrollToHeading(currentView, heading);
 			}}
 		>

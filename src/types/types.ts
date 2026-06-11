@@ -24,6 +24,7 @@ export interface IPluginSettings {
 		renderMarkdown: boolean;
 		showWhenSingleHeading: boolean;
 		hideHeadingNumberBlacklist: string[]; // Files that should hide heading numbers (only works when useHeadingNumber is true)
+		enableDragSort: boolean;
 	};
 	tool: {
 		useToolbar: boolean;
@@ -56,6 +57,7 @@ export const DEFAULT_SETTINGS: IPluginSettings = {
 		renderMarkdown: true,
 		showWhenSingleHeading: true,
 		hideHeadingNumberBlacklist: [],
+		enableDragSort: false,
 	},
 	tool: {
 		useToolbar: true,

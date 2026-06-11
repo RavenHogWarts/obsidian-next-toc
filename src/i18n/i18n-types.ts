@@ -88,6 +88,35 @@ type RootTranslation = {
 		 * 已​被​某​个​规​则​覆​盖​，​如​需​移​除​请​手​动​删​除​该​规​则
 		 */
 		coveredByPattern: string
+		/**
+		 * 已​移​动​「​{​h​e​a​d​i​n​g​}​」
+		 * @param {unknown} heading
+		 */
+		reorderSuccess: RequiredParams<'heading'>
+		/**
+		 * 移​动​失​败​：​未​找​到​文​件
+		 */
+		reorderFailedNoFile: string
+		/**
+		 * 移​动​失​败​：​标​题​索​引​超​出​范​围
+		 */
+		reorderFailedInvalidIndex: string
+		/**
+		 * 移​动​失​败​：​源​位​置​与​目​标​位​置​相​同
+		 */
+		reorderFailedSamePosition: string
+		/**
+		 * 移​动​失​败​：​不​能​将​标​题​移​入​自​身​子​树​内
+		 */
+		reorderFailedTargetIsDescendant: string
+		/**
+		 * 移​动​失​败​：​文​档​没​有​标​题
+		 */
+		reorderFailedNoHeadings: string
+		/**
+		 * 移​动​失​败​：​编​辑​器​操​作​失​败
+		 */
+		reorderFailedEditor: string
 	}
 	view: {
 		/**
@@ -278,6 +307,16 @@ type RootTranslation = {
 				name: string
 				/**
 				 * 指​定​需​要​隐​藏​标​题​编​号​的​文​件​（​每​行​一​个​路​径​）​。​支​持​通​配​符​：​*​ ​(​任​意​字​符​)​，​?​ ​(​单​个​字​符​)​。​仅​在​「​使​用​标​题​编​号​」​开​启​时​生​效​。​示​例​：​f​o​l​d​e​r​/​f​i​l​e​.​m​d​ ​或​ ​*​.​m​d
+				 */
+				desc: string
+			}
+			enableDragSort: {
+				/**
+				 * 启​用​拖​拽​排​序
+				 */
+				name: string
+				/**
+				 * 允​许​在​目​录​中​拖​拽​标​题​来​重​新​排​序​文​档​章​节​内​容
 				 */
 				desc: string
 			}
@@ -629,6 +668,34 @@ export type TranslationFunctions = {
 		 * 已被某个规则覆盖，如需移除请手动删除该规则
 		 */
 		coveredByPattern: () => LocalizedString
+		/**
+		 * 已移动「{heading}」
+		 */
+		reorderSuccess: (arg: { heading: unknown }) => LocalizedString
+		/**
+		 * 移动失败：未找到文件
+		 */
+		reorderFailedNoFile: () => LocalizedString
+		/**
+		 * 移动失败：标题索引超出范围
+		 */
+		reorderFailedInvalidIndex: () => LocalizedString
+		/**
+		 * 移动失败：源位置与目标位置相同
+		 */
+		reorderFailedSamePosition: () => LocalizedString
+		/**
+		 * 移动失败：不能将标题移入自身子树内
+		 */
+		reorderFailedTargetIsDescendant: () => LocalizedString
+		/**
+		 * 移动失败：文档没有标题
+		 */
+		reorderFailedNoHeadings: () => LocalizedString
+		/**
+		 * 移动失败：编辑器操作失败
+		 */
+		reorderFailedEditor: () => LocalizedString
 	}
 	view: {
 		/**
@@ -819,6 +886,16 @@ export type TranslationFunctions = {
 				name: () => LocalizedString
 				/**
 				 * 指定需要隐藏标题编号的文件（每行一个路径）。支持通配符：* (任意字符)，? (单个字符)。仅在「使用标题编号」开启时生效。示例：folder/file.md 或 *.md
+				 */
+				desc: () => LocalizedString
+			}
+			enableDragSort: {
+				/**
+				 * 启用拖拽排序
+				 */
+				name: () => LocalizedString
+				/**
+				 * 允许在目录中拖拽标题来重新排序文档章节内容
 				 */
 				desc: () => LocalizedString
 			}

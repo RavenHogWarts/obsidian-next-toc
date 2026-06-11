@@ -25,6 +25,15 @@ const en = {
 		removed: "Removed",
 		coveredByPattern:
 			"Covered by a pattern. Remove the pattern manually if needed",
+		reorderSuccess: "Moved「{heading}」",
+		reorderFailedNoFile: "Move failed: file not found",
+		reorderFailedInvalidIndex: "Move failed: invalid heading index",
+		reorderFailedSamePosition:
+			"Move failed: source and target are the same",
+		reorderFailedTargetIsDescendant:
+			"Move failed: cannot move heading into its own subtree",
+		reorderFailedNoHeadings: "Move failed: document has no headings",
+		reorderFailedEditor: "Move failed: editor operation failed",
 	},
 	view: {
 		view_empty:
@@ -104,6 +113,10 @@ const en = {
 			hideHeadingNumberBlacklist: {
 				name: "Heading number blacklist",
 				desc: "Specify files that should hide heading numbers (one path per line). supports wildcards: * (any characters), ? (single character). only works when 'Use heading number' is enabled. example: folder/file.md or *.md",
+			},
+			enableDragSort: {
+				name: "Enable drag sort",
+				desc: "Allow reordering document sections by dragging headings in the table of contents",
 			},
 		},
 		tool: {
