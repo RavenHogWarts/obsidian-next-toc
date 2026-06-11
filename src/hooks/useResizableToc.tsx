@@ -35,7 +35,7 @@ export const useResizableToc = ({
 	);
 
 	const handleMouseDrag = useCallback(
-		(e: globalThis.MouseEvent) => {
+		(e: MouseEvent) => {
 			if (!isMouseDragging || !tocItemsRef.current) {
 				return;
 			}
