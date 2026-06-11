@@ -25,6 +25,17 @@ const fr = {
 		removed: "Supprimé",
 		coveredByPattern:
 			"Couvert par un motif. Supprimez le motif manuellement si nécessaire",
+		reorderSuccess: "Déplacé「{heading}」",
+		reorderFailedNoFile: "Échec du déplacement : fichier introuvable",
+		reorderFailedInvalidIndex:
+			"Échec du déplacement : index de titre invalide",
+		reorderFailedSamePosition:
+			"Échec du déplacement : source et cible identiques",
+		reorderFailedTargetIsDescendant:
+			"Échec du déplacement : impossible de déplacer dans son propre sous-arbre",
+		reorderFailedNoHeadings:
+			"Échec du déplacement : le document n'a pas de titres",
+		reorderFailedEditor: "Échec du déplacement : erreur de l'éditeur",
 	},
 	view: {
 		view_empty:
@@ -96,6 +107,10 @@ const fr = {
 			hideHeadingNumberBlacklist: {
 				name: "Liste noire des numéros de titres",
 				desc: "Spécifiez les fichiers qui doivent masquer les numéros de titres (un chemin par ligne). Prend en charge les caractères génériques : * (tout caractère), ? (caractère unique). Fonctionne uniquement lorsque 'Utiliser les numéros de titres' est activé. Exemple : dossier/fichier.md ou *.md",
+			},
+			enableDragSort: {
+				name: "Activer le tri par glisser-déposer",
+				desc: "Permet de réorganiser les sections du document en glissant les titres dans la table des matières",
 			},
 		},
 		tool: {

@@ -1,5 +1,6 @@
 import { TocItem } from "@src/components/toc-item/TocItem";
 import { useActiveHeadingScroll } from "@src/hooks/useActiveHeadingScroll";
+import { useDragSort } from "@src/hooks/useDragSort";
 import { useHeadingNumbering } from "@src/hooks/useHeadingNumbering";
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import { useScrollProgress } from "@src/hooks/useScrollProgress";
@@ -60,6 +61,22 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 		visibleHeadingIndices,
 	);
 
+	// 使用拖拽排序 Hook
+	const {
+		dragState,
+		dragReadyIndex,
+		handlePointerDown,
+		handlePointerUp,
+		handlePointerMove,
+		handlePointerLeave,
+		handleDragStart,
+		handleDragOver,
+		handleDragLeave,
+		handleDrop,
+		handleDragEnd,
+		consumeLongPressClick,
+	} = useDragSort(currentView, headings, settings.render.enableDragSort);
+
 	// 更新进度条宽度
 	useEffect(() => {
 		if (NTocProgressBarRef.current && settings.tool.showProgressBar) {
@@ -103,6 +120,25 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 							headingChildren={hasChildren(index, headings)}
 							isCollapsedParent={collapsedSet.has(index)}
 							onToggleCollapse={toggleCollapsedAt}
+							enableDrag={settings.render.enableDragSort}
+							isDragging={dragState.dragIndex === index}
+							isDragOver={dragState.overIndex === index}
+							dragOverPosition={
+								dragState.overIndex === index
+									? dragState.dropPosition
+									: null
+							}
+							isDragReady={dragReadyIndex === index}
+							onDragStart={handleDragStart}
+							onDragOver={handleDragOver}
+							onDragLeave={handleDragLeave}
+							onDrop={handleDrop}
+							onDragEnd={handleDragEnd}
+							onPointerDown={handlePointerDown}
+							onPointerUp={handlePointerUp}
+							onPointerMove={handlePointerMove}
+							onPointerLeave={handlePointerLeave}
+							consumeLongPressClick={consumeLongPressClick}
 						/>
 					);
 				})}

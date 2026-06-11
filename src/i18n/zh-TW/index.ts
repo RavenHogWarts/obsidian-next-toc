@@ -23,6 +23,13 @@ const zh_TW = {
 		notInBlacklist: "不在黑名單中",
 		removed: "已移除",
 		coveredByPattern: "已被某個規則覆蓋，如需移除請手動刪除該規則",
+		reorderSuccess: "已移動「{heading}」",
+		reorderFailedNoFile: "移動失敗：未找到檔案",
+		reorderFailedInvalidIndex: "移動失敗：標題索引超出範圍",
+		reorderFailedSamePosition: "移動失敗：源位置與目標位置相同",
+		reorderFailedTargetIsDescendant: "移動失敗：不能將標題移入自身子樹內",
+		reorderFailedNoHeadings: "移動失敗：文件沒有標題",
+		reorderFailedEditor: "移動失敗：編輯器操作失敗",
 	},
 	view: {
 		view_empty:
@@ -102,6 +109,10 @@ const zh_TW = {
 			hideHeadingNumberBlacklist: {
 				name: "標題編號黑名單",
 				desc: "指定需要隱藏標題編號的檔案（每行一個路徑）。支援萬用字元：* (任意字元)，? (單一字元)。僅在「使用標題編號」開啟時生效。範例：folder/file.md 或 *.md",
+			},
+			enableDragSort: {
+				name: "啟用拖曳排序",
+				desc: "允許在目錄中拖曳標題來重新排序文件章節內容",
 			},
 		},
 		tool: {

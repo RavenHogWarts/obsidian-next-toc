@@ -23,6 +23,13 @@ const zh = {
 		notInBlacklist: "不在黑名单中",
 		removed: "已移除",
 		coveredByPattern: "已被某个规则覆盖，如需移除请手动删除该规则",
+		reorderSuccess: "已移动「{heading}」",
+		reorderFailedNoFile: "移动失败：未找到文件",
+		reorderFailedInvalidIndex: "移动失败：标题索引超出范围",
+		reorderFailedSamePosition: "移动失败：源位置与目标位置相同",
+		reorderFailedTargetIsDescendant: "移动失败：不能将标题移入自身子树内",
+		reorderFailedNoHeadings: "移动失败：文档没有标题",
+		reorderFailedEditor: "移动失败：编辑器操作失败",
 	},
 	view: {
 		view_empty:
@@ -102,6 +109,10 @@ const zh = {
 			hideHeadingNumberBlacklist: {
 				name: "标题编号黑名单",
 				desc: "指定需要隐藏标题编号的文件（每行一个路径）。支持通配符：* (任意字符)，? (单个字符)。仅在「使用标题编号」开启时生效。示例：folder/file.md 或 *.md",
+			},
+			enableDragSort: {
+				name: "启用拖拽排序",
+				desc: "允许在目录中拖拽标题来重新排序文档章节内容",
 			},
 		},
 		tool: {

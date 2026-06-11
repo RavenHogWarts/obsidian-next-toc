@@ -1,4 +1,5 @@
 import { useActiveHeadingScroll } from "@src/hooks/useActiveHeadingScroll";
+import { useDragSort } from "@src/hooks/useDragSort";
 import { useHeadingNumbering } from "@src/hooks/useHeadingNumbering";
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import { useResizableToc } from "@src/hooks/useResizableToc";
@@ -88,6 +89,22 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 			void settingsStore.updateSettingByPath("toc.width", width);
 		},
 	});
+
+	// 使用拖拽排序 Hook
+	const {
+		dragState,
+		dragReadyIndex,
+		handlePointerDown,
+		handlePointerUp,
+		handlePointerMove,
+		handlePointerLeave,
+		handleDragStart,
+		handleDragOver,
+		handleDragLeave,
+		handleDrop,
+		handleDragEnd,
+		consumeLongPressClick,
+	} = useDragSort(currentView, headings, settings.render.enableDragSort);
 
 	// 使用useEffect来设置CSS变量，避免内联样式
 	useEffect(() => {
@@ -240,6 +257,33 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 											index,
 										)}
 										onToggleCollapse={toggleCollapsedAt}
+										enableDrag={
+											settings.render.enableDragSort
+										}
+										isDragging={
+											dragState.dragIndex === index
+										}
+										isDragOver={
+											dragState.overIndex === index
+										}
+										dragOverPosition={
+											dragState.overIndex === index
+												? dragState.dropPosition
+												: null
+										}
+										isDragReady={dragReadyIndex === index}
+										onDragStart={handleDragStart}
+										onDragOver={handleDragOver}
+										onDragLeave={handleDragLeave}
+										onDrop={handleDrop}
+										onDragEnd={handleDragEnd}
+										onPointerDown={handlePointerDown}
+										onPointerUp={handlePointerUp}
+										onPointerMove={handlePointerMove}
+										onPointerLeave={handlePointerLeave}
+										consumeLongPressClick={
+											consumeLongPressClick
+										}
 									/>
 								);
 							})}

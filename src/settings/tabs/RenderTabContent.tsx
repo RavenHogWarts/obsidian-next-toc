@@ -168,6 +168,24 @@ export const RenderTabContent: FC = () => {
 					),
 				}}
 			/>
+
+			<ObsidianSetting
+				slots={{
+					name: LL.settings.render.enableDragSort.name(),
+					desc: LL.settings.render.enableDragSort.desc(),
+					control: (
+						<ObsidianSetting.Toggle
+							value={settings.render.enableDragSort}
+							onChange={async (value) => {
+								await settingsStore.updateSettingByPath(
+									"render.enableDragSort",
+									value,
+								);
+							}}
+						/>
+					),
+				}}
+			/>
 		</ObsidianSetting.Container>
 	);
 };
