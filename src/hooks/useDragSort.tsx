@@ -40,14 +40,14 @@ export const useDragSort = (
 	const [dragReadyIndex, setDragReadyIndex] = useState<number | null>(null);
 	const [wasLongPress, setWasLongPress] = useState(false);
 
-	const longPressTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
+	const longPressTimerRef = useRef<number | null>(
 		null,
 	);
 	const activeElementRef = useRef<HTMLElement | null>(null);
 
 	const cancelLongPress = useCallback(() => {
 		if (longPressTimerRef.current) {
-			clearTimeout(longPressTimerRef.current);
+			window.clearTimeout(longPressTimerRef.current);
 			longPressTimerRef.current = null;
 		}
 		if (activeElementRef.current) {
@@ -65,7 +65,7 @@ export const useDragSort = (
 			const element = e.currentTarget as HTMLElement;
 			activeElementRef.current = element;
 
-			longPressTimerRef.current = setTimeout(() => {
+			longPressTimerRef.current = window.setTimeout(() => {
 				element.draggable = true;
 				setDragReadyIndex(index);
 				setWasLongPress(true);
@@ -76,7 +76,7 @@ export const useDragSort = (
 
 	const handlePointerUp = useCallback(() => {
 		if (longPressTimerRef.current) {
-			clearTimeout(longPressTimerRef.current);
+			window.clearTimeout(longPressTimerRef.current);
 			longPressTimerRef.current = null;
 		}
 		// 长按已触发但未拖动 → 清理 draggable，保留 wasLongPress 供 click 判断
@@ -125,7 +125,7 @@ export const useDragSort = (
 			e.stopPropagation();
 			e.dataTransfer.effectAllowed = "move";
 			e.dataTransfer.setData("text/plain", String(index));
-			requestAnimationFrame(() => {
+			window.requestAnimationFrame(() => {
 				setDragState({
 					isDragging: true,
 					dragIndex: index,

@@ -1,3 +1,32 @@
+# [2.1.0](https://github.com/Raven-Pensieve/obsidian-next-toc/compare/2.0.1...2.1.0) (2026-06-11)
+
+
+### ♻️ Refactor
+
+* 更新设置页翻译 ([e8a8913](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/e8a891311eb639b11bfe818885dba5446a95a600))
+
+
+### ✨ Features
+
+* 编辑模式下，目录同样跟随鼠标的滚动事件 ([d82dd0f](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/d82dd0fae6647283b72ed718f545dc110291bbdd))
+* 编辑模式下也高亮显示滚动位置 ([1800972](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/180097224e103e539c2c0597c4b476c0111a6e1e))
+* 新增垂直偏移支持，避免界面重叠 ([895fcdf](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/895fcdf7cf368a549cfc89abafc71ce14278f472))
+* 新增工具栏常驻显示设置 (#173) ([16fbf25](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/16fbf25fcec4ac6bac3796ae689ca18fa4c95ca7)), closes [#173](https://github.com/Raven-Pensieve/obsidian-next-toc/issues/173)
+* 长按触发拖拽 + 修复空行问题 + 完善移动校验 ([396a515](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/396a515343ea8306dd3bb6c15a88491260dd0571))
+* 支持在所有可见视图中渲染内联目录 ([6113813](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/611381368300bdb3aa8eb4cd68cc2237ca7ac055))
+* 支持自定义跳过任意标题层级 (#155) ([4130c69](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/4130c698c5810f7b4409279068773c4a5840d631)), closes [#155](https://github.com/Raven-Pensieve/obsidian-next-toc/issues/155)
+
+
+### 🐛 Bug Fixes
+
+* “单一标题时显示目录”设置关闭时正确隐藏指示器 (#176) ([69b5800](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/69b5800f72fbad930a0c0f02309dcd0239c7c246)), closes [#176](https://github.com/Raven-Pensieve/obsidian-next-toc/issues/176)
+* 修正预检查工作流中的构建产物路径 (#169) ([0b15aa4](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/0b15aa4e6d36eb918f97a1b69441689a9c0fe793)), closes [#169](https://github.com/Raven-Pensieve/obsidian-next-toc/issues/169)
+* 阅读模式无多重可视 ([4feb14b](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/4feb14b87049f2fa0b02330da074889ba13f50c4))
+
+
+### 🔨 Chore
+
+* downgrade React to 18.3.1 (#172) ([fe3765c](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/fe3765cc2b347dff2b7fa5d0d554be55eea0626e)), closes [#172](https://github.com/Raven-Pensieve/obsidian-next-toc/issues/172)
 ## [2.0.1](https://github.com/Raven-Pensieve/obsidian-next-toc/compare/2.0.0...2.0.1) (2026-05-19)
 
 
