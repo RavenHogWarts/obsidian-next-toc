@@ -1,3 +1,5 @@
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { useHeadingNumberState } from "@src/hooks/useHeadingNumberState";
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
@@ -20,19 +22,12 @@ interface TocItemProps {
 	onToggleCollapse: (index: number) => void;
 	// 拖拽排序相关
 	enableDrag?: boolean;
+	dndId?: string;
 	isDragging?: boolean;
 	isDragOver?: boolean;
 	dragOverPosition?: "before" | "after" | null;
 	isDragReady?: boolean;
-	onDragStart?: (e: React.DragEvent, index: number) => void;
-	onDragOver?: (e: React.DragEvent, index: number) => void;
-	onDragLeave?: (e: React.DragEvent) => void;
-	onDrop?: (e: React.DragEvent, index: number) => void;
-	onDragEnd?: () => void;
 	onPointerDown?: (e: React.PointerEvent, index: number) => void;
-	onPointerUp?: (e: React.PointerEvent) => void;
-	onPointerMove?: (e: React.PointerEvent) => void;
-	onPointerLeave?: (e: React.PointerEvent) => void;
 	consumeLongPressClick?: () => boolean;
 }
 
@@ -48,19 +43,12 @@ export const TocItem: FC<TocItemProps> = ({
 	isCollapsedParent,
 	onToggleCollapse,
 	enableDrag = false,
+	dndId,
 	isDragging = false,
 	isDragOver = false,
 	dragOverPosition = null,
 	isDragReady = false,
-	onDragStart,
-	onDragOver,
-	onDragLeave,
-	onDrop,
-	onDragEnd,
 	onPointerDown,
-	onPointerUp,
-	onPointerMove,
-	onPointerLeave,
 	consumeLongPressClick,
 }) => {
 	const settingsStore = useSettingsStore();
@@ -119,8 +107,35 @@ export const TocItem: FC<TocItemProps> = ({
 		};
 	}, [markdownComponent]);
 
+	const {
+		attributes,
+		listeners,
+		setNodeRef,
+		transform,
+		transition,
+		isDragging: sortableIsDragging,
+	} = useSortable({
+		id: dndId ?? `toc-heading-${headingIndex}`,
+		disabled: !enableDrag,
+	});
+
+	const dragTransform = sortableIsDragging
+		? CSS.Transform.toString(transform)
+		: null;
+	const sensorPointerDown = listeners?.onPointerDown;
+
 	return (
 		<div
+			ref={enableDrag ? setNodeRef : undefined}
+			style={
+				dragTransform
+					? {
+							transform: dragTransform,
+							transition: transition ?? undefined,
+							zIndex: 2,
+						}
+					: undefined
+			}
 			className={`NToc__toc-item-container${isDragging ? " NToc__toc-item-container--dragging" : ""}${isDragOver && dragOverPosition === "before" ? " NToc__toc-item-container--drag-over-before" : ""}${isDragOver && dragOverPosition === "after" ? " NToc__toc-item-container--drag-over-after" : ""}${isDragReady ? " NToc__toc-item-container--drag-ready" : ""}`}
 			data-index={headingIndex}
 			data-level={heading.level}
@@ -128,21 +143,16 @@ export const TocItem: FC<TocItemProps> = ({
 			data-start-line={heading.position.start.line}
 			data-active={headingActive}
 			data-visible={headingVisible}
-			onDragStart={
-				enableDrag ? (e) => onDragStart?.(e, headingIndex) : undefined
-			}
-			onDragOver={
-				enableDrag ? (e) => onDragOver?.(e, headingIndex) : undefined
-			}
-			onDragLeave={enableDrag ? onDragLeave : undefined}
-			onDrop={enableDrag ? (e) => onDrop?.(e, headingIndex) : undefined}
-			onDragEnd={enableDrag ? onDragEnd : undefined}
+			{...(enableDrag ? attributes : {})}
+			{...(enableDrag ? listeners : {})}
 			onPointerDown={
-				enableDrag ? (e) => onPointerDown?.(e, headingIndex) : undefined
+				enableDrag
+					? (e) => {
+							onPointerDown?.(e, headingIndex);
+							sensorPointerDown?.(e);
+						}
+					: undefined
 			}
-			onPointerUp={enableDrag ? onPointerUp : undefined}
-			onPointerMove={enableDrag ? onPointerMove : undefined}
-			onPointerLeave={enableDrag ? onPointerLeave : undefined}
 			onClick={() => {
 				if (enableDrag && consumeLongPressClick?.()) return;
 				void scrollToHeading(currentView, heading);
@@ -152,6 +162,9 @@ export const TocItem: FC<TocItemProps> = ({
 				{headingChildren && (
 					<button
 						className="NToc__toc-item-collapse clickable-icon"
+						onPointerDown={(e) => {
+							e.stopPropagation();
+						}}
 						onClick={(e) => {
 							e.stopPropagation();
 							onToggleCollapse(headingIndex);

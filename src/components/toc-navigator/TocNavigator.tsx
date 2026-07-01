@@ -1,3 +1,8 @@
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import {
+	SortableContext,
+	verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import { useActiveHeadingScroll } from "@src/hooks/useActiveHeadingScroll";
 import { useDragSort } from "@src/hooks/useDragSort";
 import { useHeadingNumbering } from "@src/hooks/useHeadingNumbering";
@@ -11,7 +16,7 @@ import { useTocVisibility } from "@src/hooks/useTocVisibility";
 import calculateActualDepth from "@src/utils/calculateActualDepth";
 import hasChildren from "@src/utils/hasChildren";
 import { HeadingCache, MarkdownView } from "obsidian";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useMemo, useRef, useState } from "react";
 import { ProgressCircle } from "../progress-circle/ProgressCircle";
 import { TocIndicator } from "../toc-indicator/TocIndicator";
 import { TocItem } from "../toc-item/TocItem";
@@ -44,35 +49,36 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 
 	const [isHovered, setIsHovered] = useState<boolean>(false);
 
-	// 获取滚动进度
 	const scrollProgress = useScrollProgress(currentView);
 
-	// 使用 TOC 展开状态 Hook（结合 frontmatter 和 alwaysExpand）
 	const shouldExpandToc = useTocExpansion({
 		currentView,
 		alwaysExpand: settings.toc.alwaysExpand,
 	});
 
-	// 使用折叠管理 Hook
 	const { collapsedSet, toggleCollapsedAt, onCollapseAll, onExpandAll } =
 		useTocCollapse(currentView, headings);
 
-	// 使用标题编号 Hook
 	const generateHeadingNumber = useHeadingNumbering(
 		headings,
 		settings.render.skipHeadingLevels,
 		settings.render.numberingStartIndex,
 	);
 
-	// 使用可见性计算 Hook
 	const { visibilityMap, shouldShowToc } = useTocVisibility({
 		headings,
 		collapsedSet,
 		skipHeadingLevels: settings.render.skipHeadingLevels,
 		showWhenSingleHeading: settings.render.showWhenSingleHeading,
 	});
+	const visibleItems = useMemo(
+		() =>
+			headings.flatMap((heading, index) =>
+				visibilityMap[index] ? [{ heading, index }] : [],
+			),
+		[headings, visibilityMap],
+	);
 
-	// 使用可调整大小 Hook
 	const { handleMouseDragStart, isMouseDragging } = useResizableToc({
 		currentView,
 		tocItemsRef: NTocGroupTocItemsRef,
@@ -83,36 +89,37 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 		},
 	});
 
-	// 使用拖拽排序 Hook
 	const {
+		sensors,
+		itemIds,
 		dragState,
 		dragReadyIndex,
+		interactionActive,
+		getItemId,
 		handlePointerDown,
-		handlePointerUp,
-		handlePointerMove,
-		handlePointerLeave,
 		handleDragStart,
 		handleDragOver,
-		handleDragLeave,
-		handleDrop,
 		handleDragEnd,
+		handleDragCancel,
 		consumeLongPressClick,
-	} = useDragSort(
-		currentView,
-		headings,
-		settings.render.enableDragSort,
-		NTocGroupTocItemsRef,
+	} = useDragSort(currentView, headings, settings.render.enableDragSort);
+	const visibleItemIds = useMemo(
+		() =>
+			visibleItems.map(({ index }) => itemIds[index] ?? getItemId(index)),
+		[getItemId, itemIds, visibleItems],
+	);
+	const scrollRefs = useMemo(
+		() => [NTocGroupTocItemsRef, NTocGroupIndicatorsRef],
+		[],
 	);
 
-	// 使用自动滚动 Hook
 	useActiveHeadingScroll(
 		activeHeadingIndex,
-		[NTocGroupTocItemsRef, NTocGroupIndicatorsRef],
+		scrollRefs,
 		visibleHeadingIndices,
-		dragState.isDragging,
+		interactionActive,
 	);
 
-	// 使用useEffect来设置CSS变量，避免内联样式
 	useEffect(() => {
 		if (NTocContainerRef.current) {
 			const container = NTocContainerRef.current;
@@ -127,7 +134,6 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 		}
 	}, [settings.toc.offset, settings.toc.offsetY]);
 
-	// 更新进度条宽度
 	useEffect(() => {
 		if (NTocProgressBarRef.current && settings.tool.showProgressBar) {
 			NTocProgressBarRef.current.style.setProperty(
@@ -142,7 +148,6 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 			const group = NTocGroupRef.current;
 			if (settings.toc.show === false || !shouldShowToc) {
 				group.classList.add("NToc__group-hidden");
-				// 当隐藏TOC时，重置悬停状态
 				setIsHovered(false);
 			} else {
 				group.classList.remove("NToc__group-hidden");
@@ -150,7 +155,6 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 		}
 	}, [settings.toc.show, shouldShowToc]);
 
-	// 当 TOC 显示状态变化时重新应用宽度样式
 	useEffect(() => {
 		if (NTocGroupTocItemsRef.current && shouldShowToc) {
 			NTocGroupTocItemsRef.current.style.width = `${settings.toc.width}px`;
@@ -234,65 +238,72 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 									className="NToc__toc-progress-bar"
 								></div>
 							)}
-							{headings.map((heading, index) => {
-								if (!visibilityMap[index]) return null;
-								return (
-									<TocItem
-										key={`toc-item-${index}-${heading.position.start.line}`}
-										currentView={currentView}
-										heading={heading}
-										headingIndex={index}
-										headingActualDepth={calculateActualDepth(
-											index,
-											headings,
-										)}
-										headingNumber={generateHeadingNumber(
-											index,
-										)}
-										headingActive={
-											index === activeHeadingIndex
-										}
-										headingVisible={visibleHeadingIndices.includes(
-											index,
-										)}
-										headingChildren={hasChildren(
-											index,
-											headings,
-										)}
-										isCollapsedParent={collapsedSet.has(
-											index,
-										)}
-										onToggleCollapse={toggleCollapsedAt}
-										enableDrag={
-											settings.render.enableDragSort
-										}
-										isDragging={
-											dragState.dragIndex === index
-										}
-										isDragOver={
-											dragState.overIndex === index
-										}
-										dragOverPosition={
-											dragState.overIndex === index
-												? dragState.dropPosition
-												: null
-										}
-										isDragReady={dragReadyIndex === index}
-										onDragStart={handleDragStart}
-										onDragOver={handleDragOver}
-										onDragLeave={handleDragLeave}
-										onDrop={handleDrop}
-										onDragEnd={handleDragEnd}
-										onPointerDown={handlePointerDown}
-										onPointerUp={handlePointerUp}
-										onPointerMove={handlePointerMove}
-										onPointerLeave={handlePointerLeave}
-										consumeLongPressClick={
-											consumeLongPressClick
-										}
-									/>
-								);
-							})}
+							<DndContext
+								autoScroll={settings.render.enableDragSort}
+								collisionDetection={closestCenter}
+								onDragStart={handleDragStart}
+								onDragOver={handleDragOver}
+								onDragEnd={handleDragEnd}
+								onDragCancel={handleDragCancel}
+								sensors={sensors}
+							>
+								<SortableContext
+									items={visibleItemIds}
+									strategy={verticalListSortingStrategy}
+								>
+									{visibleItems.map(({ heading, index }) => (
+										<TocItem
+											key={`toc-item-${index}-${heading.position.start.line}`}
+											currentView={currentView}
+											heading={heading}
+											headingIndex={index}
+											headingActualDepth={calculateActualDepth(
+												index,
+												headings,
+											)}
+											headingNumber={generateHeadingNumber(
+												index,
+											)}
+											headingActive={
+												index === activeHeadingIndex
+											}
+											headingVisible={visibleHeadingIndices.includes(
+												index,
+											)}
+											headingChildren={hasChildren(
+												index,
+												headings,
+											)}
+											isCollapsedParent={collapsedSet.has(
+												index,
+											)}
+											onToggleCollapse={toggleCollapsedAt}
+											enableDrag={
+												settings.render.enableDragSort
+											}
+											dndId={getItemId(index)}
+											isDragging={
+												dragState.dragIndex === index
+											}
+											isDragOver={
+												dragState.overIndex === index
+											}
+											dragOverPosition={
+												dragState.overIndex === index
+													? dragState.dropPosition
+													: null
+											}
+											isDragReady={
+												dragReadyIndex === index
+											}
+											onPointerDown={handlePointerDown}
+											consumeLongPressClick={
+												consumeLongPressClick
+											}
+										/>
+									))}
+								</SortableContext>
+							</DndContext>
 						</div>
 					)}
 				</div>

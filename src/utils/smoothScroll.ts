@@ -1,8 +1,20 @@
+const scrollAnimationMap = new WeakMap<HTMLElement, number>();
+
+export const cancelSmoothScroll = (container: HTMLElement) => {
+	const frameId = scrollAnimationMap.get(container);
+	if (frameId !== undefined) {
+		window.cancelAnimationFrame(frameId);
+		scrollAnimationMap.delete(container);
+	}
+};
+
 export default function (
 	container: HTMLElement,
 	element: HTMLElement,
 	duration = 300,
 ) {
+	cancelSmoothScroll(container);
+
 	const startTime = performance.now();
 	const startScroll = container.scrollTop;
 	const containerHeight = container.clientHeight;
@@ -11,6 +23,10 @@ export default function (
 	const targetScroll = elementOffset - (containerHeight - elementHeight) / 2;
 	const distance = targetScroll - startScroll;
 
+	if (distance === 0) {
+		return () => {};
+	}
+
 	const animate = (currentTime: number) => {
 		const elapsed = currentTime - startTime;
 		const progress = Math.min(elapsed / duration, 1);
@@ -18,9 +34,17 @@ export default function (
 		container.scrollTop = startScroll + distance * easeProgress;
 
 		if (progress < 1) {
-			window.requestAnimationFrame(animate);
+			const frameId = window.requestAnimationFrame(animate);
+			scrollAnimationMap.set(container, frameId);
+		} else {
+			scrollAnimationMap.delete(container);
 		}
 	};
 
-	window.requestAnimationFrame(animate);
+	const frameId = window.requestAnimationFrame(animate);
+	scrollAnimationMap.set(container, frameId);
+
+	return () => {
+		cancelSmoothScroll(container);
+	};
 }
