@@ -81,12 +81,23 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 		handleDragEnd,
 		handleDragCancel,
 		consumeLongPressClick,
-	} = useDragSort(currentView, headings, settings.render.enableDragSort);
+	} = useDragSort(
+		currentView,
+		headings,
+		settings.render.enableDragSort,
+		listItemsRef,
+	);
 	const visibleItemIds = useMemo(
 		() =>
 			visibleItems.map(({ index }) => itemIds[index] ?? getItemId(index)),
 		[getItemId, itemIds, visibleItems],
 	);
+	const lastVisibleIndex = visibleItems[visibleItems.length - 1]?.index;
+	const showDropTailIndicator =
+		dragState.isDragging &&
+		lastVisibleIndex !== undefined &&
+		dragState.overIndex === lastVisibleIndex &&
+		dragState.dropPosition === "after";
 
 	// 使用自动滚动 Hook
 	useActiveHeadingScroll(
@@ -167,6 +178,12 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 								consumeLongPressClick={consumeLongPressClick}
 							/>
 						))}
+						{showDropTailIndicator && (
+							<div
+								className="NToc__toc-drop-tail-indicator"
+								aria-hidden="true"
+							/>
+						)}
 					</div>
 				</SortableContext>
 			</DndContext>
