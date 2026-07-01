@@ -104,7 +104,12 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 		handleDrop,
 		handleDragEnd,
 		consumeLongPressClick,
-	} = useDragSort(currentView, headings, settings.render.enableDragSort);
+	} = useDragSort(
+		currentView,
+		headings,
+		settings.render.enableDragSort,
+		NTocGroupTocItemsRef,
+	);
 
 	// 使用useEffect来设置CSS变量，避免内联样式
 	useEffect(() => {

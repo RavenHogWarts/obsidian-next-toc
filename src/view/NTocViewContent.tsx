@@ -75,7 +75,12 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 		handleDrop,
 		handleDragEnd,
 		consumeLongPressClick,
-	} = useDragSort(currentView, headings, settings.render.enableDragSort);
+	} = useDragSort(
+		currentView,
+		headings,
+		settings.render.enableDragSort,
+		listItemsRef,
+	);
 
 	// 更新进度条宽度
 	useEffect(() => {
