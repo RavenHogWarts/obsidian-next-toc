@@ -67,7 +67,8 @@ export const useDragSort = (
 	const [dragReadyIndex, setDragReadyIndex] = useState<number | null>(null);
 	const suppressClickRef = useRef(false);
 	const clientYRef = useRef<number | null>(null);
-	const itemRectsRef = useRef<ItemRectSnapshot[]>([]);
+	const rafIdRef = useRef<number | null>(null);
+	const dragIndexRef = useRef<number | null>(null);
 
 	const itemIds = useMemo(
 		() => headings.map((_heading, index) => `toc-heading-${index}`),
@@ -91,73 +92,76 @@ export const useDragSort = (
 		setDragReadyIndex(null);
 		setDragState(INITIAL_DRAG_STATE);
 		clientYRef.current = null;
-		itemRectsRef.current = [];
+		dragIndexRef.current = null;
+		if (rafIdRef.current !== null) {
+			window.cancelAnimationFrame(rafIdRef.current);
+			rafIdRef.current = null;
+		}
 	}, []);
 
-	const captureItemRects = useCallback(() => {
-		const container = containerRef?.current ?? null;
-		if (!container) {
-			itemRectsRef.current = [];
-			return;
-		}
+	const resolveDropTarget = useCallback(
+		(clientY: number | null) => {
+			if (clientY === null) return null;
+			const container = containerRef?.current ?? null;
+			if (!container) return null;
 
-		const snapshots: ItemRectSnapshot[] = [];
-		const elements =
-			container.querySelectorAll<HTMLElement>("[data-index]");
-		elements.forEach((element) => {
-			const index = Number(element.dataset.index);
-			if (!Number.isInteger(index)) return;
-			const rect = element.getBoundingClientRect();
-			snapshots.push({
-				index,
-				top: rect.top,
-				bottom: rect.bottom,
-				height: rect.height,
+			const elements =
+				container.querySelectorAll<HTMLElement>("[data-index]");
+
+			const rects: ItemRectSnapshot[] = [];
+			elements.forEach((element) => {
+				const index = Number(element.dataset.index);
+				if (!Number.isInteger(index)) return;
+				// 跳过被拖拽项本身（跟随鼠标移动，位置不可靠）
+				if (index === dragIndexRef.current) return;
+				const rect = element.getBoundingClientRect();
+				rects.push({
+					index,
+					top: rect.top,
+					bottom: rect.bottom,
+					height: rect.height,
+				});
 			});
-		});
-		snapshots.sort((a, b) => a.top - b.top);
-		itemRectsRef.current = snapshots;
-	}, [containerRef]);
+			rects.sort((a, b) => a.top - b.top);
 
-	const resolveDropTarget = useCallback((clientY: number | null) => {
-		if (clientY === null) return null;
-		const rects = itemRectsRef.current;
-		if (rects.length === 0) return null;
+			if (rects.length === 0) return null;
 
-		const first = rects[0];
-		const last = rects[rects.length - 1];
+			const first = rects[0];
+			const last = rects[rects.length - 1];
 
-		if (clientY <= first.top) {
-			return {
-				overIndex: first.index,
-				dropPosition: "before" as const,
-			};
-		}
-		if (clientY >= last.bottom) {
+			if (clientY <= first.top) {
+				return {
+					overIndex: first.index,
+					dropPosition: "before" as const,
+				};
+			}
+			if (clientY >= last.bottom) {
+				return {
+					overIndex: last.index,
+					dropPosition: "after" as const,
+				};
+			}
+
+			for (const rect of rects) {
+				const midY = rect.top + rect.height / 2;
+				if (clientY < rect.bottom) {
+					return {
+						overIndex: rect.index,
+						dropPosition:
+							clientY < midY
+								? ("before" as const)
+								: ("after" as const),
+					};
+				}
+			}
+
 			return {
 				overIndex: last.index,
 				dropPosition: "after" as const,
 			};
-		}
-
-		for (const rect of rects) {
-			const midY = rect.top + rect.height / 2;
-			if (clientY < rect.bottom) {
-				return {
-					overIndex: rect.index,
-					dropPosition:
-						clientY < midY
-							? ("before" as const)
-							: ("after" as const),
-				};
-			}
-		}
-
-		return {
-			overIndex: last.index,
-			dropPosition: "after" as const,
-		};
-	}, []);
+		},
+		[containerRef],
+	);
 
 	const applyDrop = useCallback(
 		async (
@@ -253,7 +257,7 @@ export const useDragSort = (
 			}
 
 			suppressClickRef.current = true;
-			captureItemRects();
+			dragIndexRef.current = dragIndex;
 			if (event.activatorEvent && "clientY" in event.activatorEvent) {
 				clientYRef.current = (
 					event.activatorEvent as PointerEvent
@@ -268,7 +272,7 @@ export const useDragSort = (
 				dropPosition: null,
 			});
 		},
-		[captureItemRects, enabled, idToIndex],
+		[enabled, idToIndex],
 	);
 
 	useEffect(() => {
@@ -276,28 +280,37 @@ export const useDragSort = (
 
 		const handlePointerMove = (event: PointerEvent) => {
 			clientYRef.current = event.clientY;
-			const target = resolveDropTarget(event.clientY);
-			if (!target) return;
 
-			setDragState((prev) => {
-				if (prev.phase !== "dragging") return prev;
-				if (
-					prev.overIndex === target.overIndex &&
-					prev.dropPosition === target.dropPosition
-				) {
-					return prev;
-				}
-				return {
-					...prev,
-					overIndex: target.overIndex,
-					dropPosition: target.dropPosition,
-				};
+			if (rafIdRef.current !== null) return;
+			rafIdRef.current = window.requestAnimationFrame(() => {
+				rafIdRef.current = null;
+				const target = resolveDropTarget(clientYRef.current);
+				if (!target) return;
+
+				setDragState((prev) => {
+					if (prev.phase !== "dragging") return prev;
+					if (
+						prev.overIndex === target.overIndex &&
+						prev.dropPosition === target.dropPosition
+					) {
+						return prev;
+					}
+					return {
+						...prev,
+						overIndex: target.overIndex,
+						dropPosition: target.dropPosition,
+					};
+				});
 			});
 		};
 
 		window.addEventListener("pointermove", handlePointerMove, true);
 		return () => {
 			window.removeEventListener("pointermove", handlePointerMove, true);
+			if (rafIdRef.current !== null) {
+				window.cancelAnimationFrame(rafIdRef.current);
+				rafIdRef.current = null;
+			}
 		};
 	}, [dragState.phase, resolveDropTarget]);
 
