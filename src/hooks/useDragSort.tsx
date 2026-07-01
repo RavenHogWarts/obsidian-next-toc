@@ -4,7 +4,7 @@ import {
 	reorderSections,
 } from "@src/utils/reorderSections";
 import { HeadingCache, MarkdownView, Notice } from "obsidian";
-import { useCallback, useRef, useState } from "react";
+import { RefObject, useCallback, useRef, useState } from "react";
 
 const FAIL_NOTICE_MAP: Record<ReorderFailReason, () => string> = {
 	noFile: LL.notices.reorderFailedNoFile,
@@ -30,20 +30,116 @@ const INITIAL_DRAG_STATE: DragState = {
 };
 
 const LONG_PRESS_MS = 200;
+const AUTO_SCROLL_EDGE_PX = 48;
+const AUTO_SCROLL_MAX_SPEED = 18;
 
 export const useDragSort = (
 	currentView: MarkdownView,
 	headings: HeadingCache[],
 	enabled: boolean,
+	scrollContainerRef?: RefObject<HTMLElement | null>,
 ) => {
 	const [dragState, setDragState] = useState<DragState>(INITIAL_DRAG_STATE);
 	const [dragReadyIndex, setDragReadyIndex] = useState<number | null>(null);
 	const [wasLongPress, setWasLongPress] = useState(false);
 
-	const longPressTimerRef = useRef<number | null>(
-		null,
-	);
+	const longPressTimerRef = useRef<number | null>(null);
 	const activeElementRef = useRef<HTMLElement | null>(null);
+	const autoScrollFrameRef = useRef<number | null>(null);
+	const autoScrollContainerRef = useRef<HTMLElement | null>(null);
+	const autoScrollVelocityRef = useRef(0);
+
+	const stopAutoScroll = useCallback(() => {
+		if (autoScrollFrameRef.current !== null) {
+			window.cancelAnimationFrame(autoScrollFrameRef.current);
+			autoScrollFrameRef.current = null;
+		}
+		autoScrollContainerRef.current = null;
+		autoScrollVelocityRef.current = 0;
+	}, []);
+
+	const runAutoScroll = useCallback(() => {
+		const container = autoScrollContainerRef.current;
+		const velocity = autoScrollVelocityRef.current;
+
+		if (!container || velocity === 0) {
+			autoScrollFrameRef.current = null;
+			return;
+		}
+
+		const maxScrollTop = container.scrollHeight - container.clientHeight;
+		const nextScrollTop = Math.max(
+			0,
+			Math.min(container.scrollTop + velocity, maxScrollTop),
+		);
+
+		if (nextScrollTop === container.scrollTop) {
+			stopAutoScroll();
+			return;
+		}
+
+		container.scrollTop = nextScrollTop;
+		autoScrollFrameRef.current =
+			window.requestAnimationFrame(runAutoScroll);
+	}, [stopAutoScroll]);
+
+	const updateAutoScroll = useCallback(
+		(target: HTMLElement, clientY: number) => {
+			const container =
+				scrollContainerRef?.current ??
+				(target.closest(
+					".NToc__toc-items, .NToc__view-content-items",
+				) as HTMLElement | null);
+
+			if (
+				!container ||
+				container.scrollHeight <= container.clientHeight
+			) {
+				stopAutoScroll();
+				return;
+			}
+
+			const rect = container.getBoundingClientRect();
+			const topDistance = clientY - rect.top;
+			const bottomDistance = rect.bottom - clientY;
+			let velocity = 0;
+
+			if (topDistance < AUTO_SCROLL_EDGE_PX) {
+				const ratio = Math.max(
+					0,
+					(AUTO_SCROLL_EDGE_PX - topDistance) / AUTO_SCROLL_EDGE_PX,
+				);
+				velocity = -Math.max(
+					1,
+					Math.ceil(ratio * AUTO_SCROLL_MAX_SPEED),
+				);
+			} else if (bottomDistance < AUTO_SCROLL_EDGE_PX) {
+				const ratio = Math.max(
+					0,
+					(AUTO_SCROLL_EDGE_PX - bottomDistance) /
+						AUTO_SCROLL_EDGE_PX,
+				);
+				velocity = Math.max(
+					1,
+					Math.ceil(ratio * AUTO_SCROLL_MAX_SPEED),
+				);
+			}
+
+			if (velocity === 0) {
+				stopAutoScroll();
+				return;
+			}
+
+			autoScrollContainerRef.current = container;
+			autoScrollVelocityRef.current = velocity;
+
+			if (autoScrollFrameRef.current === null) {
+				autoScrollFrameRef.current =
+					window.requestAnimationFrame(runAutoScroll);
+			}
+		},
+		[runAutoScroll, scrollContainerRef, stopAutoScroll],
+	);
 
 	const cancelLongPress = useCallback(() => {
 		if (longPressTimerRef.current) {
@@ -117,6 +213,7 @@ export const useDragSort = (
 	const handleDragStart = useCallback(
 		(e: React.DragEvent, index: number) => {
 			if (!enabled) return;
+			stopAutoScroll();
 			// 只允许长按触发的拖拽
 			if (dragReadyIndex !== index) {
 				e.preventDefault();
@@ -143,6 +240,7 @@ export const useDragSort = (
 			e.preventDefault();
 			e.stopPropagation();
 			e.dataTransfer.dropEffect = "move";
+			updateAutoScroll(e.currentTarget as HTMLElement, e.clientY);
 
 			const rect = (
 				e.currentTarget as HTMLElement
@@ -158,19 +256,24 @@ export const useDragSort = (
 		[enabled, dragState.isDragging],
 	);
 
-	const handleDragLeave = useCallback((e: React.DragEvent) => {
-		e.stopPropagation();
-		setDragState((prev) => ({
-			...prev,
-			overIndex: null,
-			dropPosition: null,
-		}));
-	}, []);
+	const handleDragLeave = useCallback(
+		(e: React.DragEvent) => {
+			e.stopPropagation();
+			stopAutoScroll();
+			setDragState((prev) => ({
+				...prev,
+				overIndex: null,
+				dropPosition: null,
+			}));
+		},
+		[stopAutoScroll],
+	);
 
 	const handleDrop = useCallback(
 		async (e: React.DragEvent, targetIndex: number) => {
 			e.preventDefault();
 			e.stopPropagation();
+			stopAutoScroll();
 
 			const sourceIndexStr = e.dataTransfer?.getData("text/plain");
 			if (!sourceIndexStr) {
@@ -229,10 +332,11 @@ export const useDragSort = (
 
 			setDragState(INITIAL_DRAG_STATE);
 		},
-		[enabled, currentView, headings],
+		[currentView, headings, stopAutoScroll],
 	);
 
 	const handleDragEnd = useCallback(() => {
+		stopAutoScroll();
 		if (activeElementRef.current) {
 			activeElementRef.current.draggable = false;
 		}
@@ -240,7 +344,7 @@ export const useDragSort = (
 		setDragReadyIndex(null);
 		setWasLongPress(false);
 		setDragState(INITIAL_DRAG_STATE);
-	}, []);
+	}, [stopAutoScroll]);
 
 	return {
 		dragState,
