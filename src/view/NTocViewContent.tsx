@@ -54,13 +54,6 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 		showWhenSingleHeading: settings.render.showWhenSingleHeading,
 	});
 
-	// 使用自动滚动 Hook
-	useActiveHeadingScroll(
-		activeHeadingIndex,
-		[listItemsRef],
-		visibleHeadingIndices,
-	);
-
 	// 使用拖拽排序 Hook
 	const {
 		dragState,
@@ -80,6 +73,14 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 		headings,
 		settings.render.enableDragSort,
 		listItemsRef,
+	);
+
+	// 使用自动滚动 Hook
+	useActiveHeadingScroll(
+		activeHeadingIndex,
+		[listItemsRef],
+		visibleHeadingIndices,
+		dragState.isDragging,
 	);
 
 	// 更新进度条宽度
