@@ -1,6 +1,6 @@
 import { EditorView } from "@codemirror/view";
 import "@styles/styles";
-import { Editor, MarkdownView, Plugin } from "obsidian";
+import { Editor, HeadingCache, MarkdownView, Plugin } from "obsidian";
 import {
 	destroyNTocRenderForView,
 	NTocRenderProps,
@@ -16,7 +16,9 @@ import {
 	toggleFolderInBlacklist,
 } from "./utils/blacklistManager";
 import { createScrollListener } from "./utils/eventListenerManager";
-import getFileHeadings from "./utils/getFileHeadings";
+import getFileHeadings, {
+	getHeadingsFromEditor,
+} from "./utils/getFileHeadings";
 import {
 	navigateHeading,
 	returnToCursor,
@@ -329,12 +331,22 @@ export default class NTocPlugin extends Plugin {
 
 		this.registerEvent(
 			this.app.workspace.on("editor-change", (editor) => {
+				// Parse the editor's live text directly: metadataCache lags behind
+				// edits, so reading it here would re-render with stale headings and
+				// the TOC wouldn't visibly update until metadataCache.on("changed")
+				// fires later (the perceived "slow" update).
 				if (this.settings.toc.renderInAllVisibleViews) {
 					// Find the visible view that owns this editor and update it
 					const visibleViews = this.getVisibleMarkdownViews();
 					for (const view of visibleViews) {
 						if (view.editor === editor) {
-							this.updateViewNToc(view);
+							const liveHeadings = getHeadingsFromEditor(view);
+							this.updateViewNToc(view, liveHeadings);
+							// Sidebar always follows the active view; update it
+							// live too so it doesn't lag behind metadataCache.
+							if (view === this.currentView) {
+								this.updateSidebarNToc(liveHeadings);
+							}
 							break;
 						}
 					}
@@ -343,7 +355,9 @@ export default class NTocPlugin extends Plugin {
 						this.currentView &&
 						this.currentView.editor === editor
 					) {
-						this.updateNToc();
+						this.updateNToc(
+							getHeadingsFromEditor(this.currentView),
+						);
 					}
 				}
 			}),
@@ -480,25 +494,25 @@ export default class NTocPlugin extends Plugin {
 		return null;
 	}
 
-	private updateNToc() {
+	private updateNToc(headings?: HeadingCache[]) {
 		if (!this.currentView || !this.currentView.file) {
 			return;
 		}
 
-		this.updateViewNToc(this.currentView);
-		this.updateSidebarNToc();
+		this.updateViewNToc(this.currentView, headings);
+		this.updateSidebarNToc(headings);
 	}
 
-	private updateViewNToc(view: MarkdownView) {
+	private updateViewNToc(view: MarkdownView, headings?: HeadingCache[]) {
 		if (!view || !view.file) {
 			return;
 		}
 
-		const headings = getFileHeadings(view);
+		const resolvedHeadings = headings ?? getFileHeadings(view);
 		const { activeHeadingIndex, visibleHeadingIndices } =
-			updateActiveHeading(view, headings);
+			updateActiveHeading(view, resolvedHeadings);
 		this.renderNToc(view, {
-			headings,
+			headings: resolvedHeadings,
 			activeHeadingIndex,
 			visibleHeadingIndices,
 		});
@@ -531,7 +545,7 @@ export default class NTocPlugin extends Plugin {
 		});
 	}
 
-	private updateSidebarNToc() {
+	private updateSidebarNToc(headings?: HeadingCache[]) {
 		// 更新侧边栏 TOC 视图（始终跟随当前活动文档）
 		const ntocViews = this.app.workspace.getLeavesOfType(VIEW_TYPE_NTOC);
 
@@ -544,15 +558,15 @@ export default class NTocPlugin extends Plugin {
 			return;
 		}
 
-		const headings = getFileHeadings(this.currentView);
+		const resolvedHeadings = headings ?? getFileHeadings(this.currentView);
 		const { activeHeadingIndex, visibleHeadingIndices } =
-			updateActiveHeading(this.currentView, headings);
+			updateActiveHeading(this.currentView, resolvedHeadings);
 
 		ntocViews.forEach((leaf) => {
 			if (leaf.view instanceof NTocView) {
 				leaf.view.updateTocData(
 					this.currentView,
-					headings,
+					resolvedHeadings,
 					activeHeadingIndex,
 					visibleHeadingIndices,
 				);
