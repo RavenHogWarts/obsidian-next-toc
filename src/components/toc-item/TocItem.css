@@ -161,6 +161,11 @@
 }
 
 /* ===== 拖拽排序样式 ===== */
+/* 拖拽进行中：取消所有标题的悬停浮动效果，避免位置偏移干扰落点判定 */
+.NToc__toc-items--dragging .NToc__toc-item-container:hover {
+	transform: none;
+}
+
 .NToc__toc-item-container--drag-ready {
 	cursor: grab;
 }

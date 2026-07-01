@@ -230,7 +230,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 					{shouldShowToc && (
 						<div
 							ref={NTocGroupTocItemsRef}
-							className={`NToc__toc-items ${isMouseDragging ? "NToc__toc-items-resizing" : ""}`}
+							className={`NToc__toc-items ${isMouseDragging ? "NToc__toc-items-resizing" : ""} ${dragState.isDragging ? "NToc__toc-items--dragging" : ""}`}
 						>
 							<div
 								className="NToc__group-resize"
