@@ -72,13 +72,6 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 		showWhenSingleHeading: settings.render.showWhenSingleHeading,
 	});
 
-	// 使用自动滚动 Hook
-	useActiveHeadingScroll(
-		activeHeadingIndex,
-		[NTocGroupTocItemsRef, NTocGroupIndicatorsRef],
-		visibleHeadingIndices,
-	);
-
 	// 使用可调整大小 Hook
 	const { handleMouseDragStart, isMouseDragging } = useResizableToc({
 		currentView,
@@ -109,6 +102,14 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 		headings,
 		settings.render.enableDragSort,
 		NTocGroupTocItemsRef,
+	);
+
+	// 使用自动滚动 Hook
+	useActiveHeadingScroll(
+		activeHeadingIndex,
+		[NTocGroupTocItemsRef, NTocGroupIndicatorsRef],
+		visibleHeadingIndices,
+		dragState.isDragging,
 	);
 
 	// 使用useEffect来设置CSS变量，避免内联样式

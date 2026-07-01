@@ -11,8 +11,11 @@ export const useActiveHeadingScroll = (
 	activeHeadingIndex: number,
 	containerRefs: RefObject<HTMLElement | null>[],
 	visibleHeadingIndices?: number[],
+	disabled = false,
 ) => {
 	useEffect(() => {
+		if (disabled) return;
+
 		// 优先滚动到可视区域的第一个标题，否则跟随光标位置
 		const scrollTarget =
 			visibleHeadingIndices && visibleHeadingIndices.length > 0
@@ -32,5 +35,5 @@ export const useActiveHeadingScroll = (
 				smoothScroll(containerRef.current, activeHeadingEl);
 			}
 		});
-	}, [activeHeadingIndex, containerRefs, visibleHeadingIndices]);
+	}, [activeHeadingIndex, containerRefs, disabled, visibleHeadingIndices]);
 };
