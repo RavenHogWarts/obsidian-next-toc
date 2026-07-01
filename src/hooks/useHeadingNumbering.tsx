@@ -15,39 +15,40 @@ export const useHeadingNumbering = (
 ) => {
 	const generateHeadingNumber = useCallback(
 		(index: number): string => {
-			if (skipHeadingLevels.includes(headings[index].level)) {
+			const currentHeading = headings[index];
+
+			if (
+				!currentHeading ||
+				skipHeadingLevels.includes(currentHeading.level)
+			) {
 				return "";
 			}
 
+			const levelStack: number[] = [];
 			const numberStack: number[] = [];
-			let prevLevel = 0;
 
 			for (let i = 0; i <= index; i++) {
 				const { level } = headings[i];
 
-				// 跳过配置中指定的层级
 				if (skipHeadingLevels.includes(level)) {
 					continue;
 				}
 
-				if (level > prevLevel) {
-					// 新的更深层级，补 startIndex
-					numberStack.push(startIndex);
-				} else if (level === prevLevel) {
-					// 同级，递增
-					numberStack[numberStack.length - 1]++;
-				} else {
-					// 回到上层，弹出多余层级，递增
-					const diff = prevLevel - level;
-					for (let d = 0; d < diff; d++) {
-						numberStack.pop();
-					}
-					// 确保栈不为空 (处理异常情况)
-					if (numberStack.length > 0) {
-						numberStack[numberStack.length - 1]++;
-					}
+				while (
+					levelStack.length > 0 &&
+					levelStack[levelStack.length - 1] >= level
+				) {
+					levelStack.pop();
 				}
-				prevLevel = level;
+
+				const depth = levelStack.length;
+				if (numberStack.length <= depth) {
+					numberStack.push(startIndex);
+				} else {
+					numberStack[depth] += 1;
+					numberStack.length = depth + 1;
+				}
+				levelStack.push(level);
 			}
 
 			return numberStack.join(".") + ".";
