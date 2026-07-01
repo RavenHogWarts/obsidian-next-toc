@@ -13,7 +13,14 @@ import {
 	reorderSections,
 } from "@src/utils/reorderSections";
 import { HeadingCache, MarkdownView, Notice } from "obsidian";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+	type RefObject,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 
 const FAIL_NOTICE_MAP: Record<ReorderFailReason, () => string> = {
 	noFile: LL.notices.reorderFailedNoFile,
@@ -43,14 +50,24 @@ const INITIAL_DRAG_STATE: DragState = {
 const LONG_PRESS_MS = 200;
 const POINTER_TOLERANCE_PX = 6;
 
+interface ItemRectSnapshot {
+	index: number;
+	top: number;
+	bottom: number;
+	height: number;
+}
+
 export const useDragSort = (
 	currentView: MarkdownView,
 	headings: HeadingCache[],
 	enabled: boolean,
+	containerRef?: RefObject<HTMLElement | null>,
 ) => {
 	const [dragState, setDragState] = useState<DragState>(INITIAL_DRAG_STATE);
 	const [dragReadyIndex, setDragReadyIndex] = useState<number | null>(null);
 	const suppressClickRef = useRef(false);
+	const clientYRef = useRef<number | null>(null);
+	const itemRectsRef = useRef<ItemRectSnapshot[]>([]);
 
 	const itemIds = useMemo(
 		() => headings.map((_heading, index) => `toc-heading-${index}`),
@@ -73,6 +90,73 @@ export const useDragSort = (
 	const resetInteraction = useCallback(() => {
 		setDragReadyIndex(null);
 		setDragState(INITIAL_DRAG_STATE);
+		clientYRef.current = null;
+		itemRectsRef.current = [];
+	}, []);
+
+	const captureItemRects = useCallback(() => {
+		const container = containerRef?.current ?? null;
+		if (!container) {
+			itemRectsRef.current = [];
+			return;
+		}
+
+		const snapshots: ItemRectSnapshot[] = [];
+		const elements =
+			container.querySelectorAll<HTMLElement>("[data-index]");
+		elements.forEach((element) => {
+			const index = Number(element.dataset.index);
+			if (!Number.isInteger(index)) return;
+			const rect = element.getBoundingClientRect();
+			snapshots.push({
+				index,
+				top: rect.top,
+				bottom: rect.bottom,
+				height: rect.height,
+			});
+		});
+		snapshots.sort((a, b) => a.top - b.top);
+		itemRectsRef.current = snapshots;
+	}, [containerRef]);
+
+	const resolveDropTarget = useCallback((clientY: number | null) => {
+		if (clientY === null) return null;
+		const rects = itemRectsRef.current;
+		if (rects.length === 0) return null;
+
+		const first = rects[0];
+		const last = rects[rects.length - 1];
+
+		if (clientY <= first.top) {
+			return {
+				overIndex: first.index,
+				dropPosition: "before" as const,
+			};
+		}
+		if (clientY >= last.bottom) {
+			return {
+				overIndex: last.index,
+				dropPosition: "after" as const,
+			};
+		}
+
+		for (const rect of rects) {
+			const midY = rect.top + rect.height / 2;
+			if (clientY < rect.bottom) {
+				return {
+					overIndex: rect.index,
+					dropPosition:
+						clientY < midY
+							? ("before" as const)
+							: ("after" as const),
+				};
+			}
+		}
+
+		return {
+			overIndex: last.index,
+			dropPosition: "after" as const,
+		};
 	}, []);
 
 	const applyDrop = useCallback(
@@ -81,7 +165,7 @@ export const useDragSort = (
 			targetIndex: number,
 			dropPosition: "before" | "after",
 		) => {
-			if (Number.isNaN(sourceIndex) || sourceIndex === targetIndex) {
+			if (Number.isNaN(sourceIndex)) {
 				setDragState(INITIAL_DRAG_STATE);
 				return;
 			}
@@ -89,6 +173,12 @@ export const useDragSort = (
 			const gap =
 				dropPosition === "before" ? targetIndex : targetIndex + 1;
 			const finalTarget = gap <= sourceIndex ? gap : gap - 1;
+
+			// 源位置与最终目标位置一致 → 无需移动，静默退出
+			if (sourceIndex === finalTarget) {
+				setDragState(INITIAL_DRAG_STATE);
+				return;
+			}
 
 			const result = await reorderSections(
 				currentView,
@@ -114,6 +204,7 @@ export const useDragSort = (
 			if (!enabled || e.button !== 0) return;
 
 			suppressClickRef.current = false;
+			clientYRef.current = e.clientY;
 			setDragReadyIndex(index);
 			setDragState({
 				phase: "pressing",
@@ -162,6 +253,12 @@ export const useDragSort = (
 			}
 
 			suppressClickRef.current = true;
+			captureItemRects();
+			if (event.activatorEvent && "clientY" in event.activatorEvent) {
+				clientYRef.current = (
+					event.activatorEvent as PointerEvent
+				).clientY;
+			}
 			setDragReadyIndex(dragIndex);
 			setDragState({
 				phase: "dragging",
@@ -171,82 +268,99 @@ export const useDragSort = (
 				dropPosition: null,
 			});
 		},
-		[enabled, idToIndex],
+		[captureItemRects, enabled, idToIndex],
 	);
+
+	useEffect(() => {
+		if (dragState.phase !== "dragging") return;
+
+		const handlePointerMove = (event: PointerEvent) => {
+			clientYRef.current = event.clientY;
+			const target = resolveDropTarget(event.clientY);
+			if (!target) return;
+
+			setDragState((prev) => {
+				if (prev.phase !== "dragging") return prev;
+				if (
+					prev.overIndex === target.overIndex &&
+					prev.dropPosition === target.dropPosition
+				) {
+					return prev;
+				}
+				return {
+					...prev,
+					overIndex: target.overIndex,
+					dropPosition: target.dropPosition,
+				};
+			});
+		};
+
+		window.addEventListener("pointermove", handlePointerMove, true);
+		return () => {
+			window.removeEventListener("pointermove", handlePointerMove, true);
+		};
+	}, [dragState.phase, resolveDropTarget]);
 
 	const handleDragOver = useCallback(
 		(event: DragOverEvent) => {
 			if (!enabled) return;
 
-			if (!event.over) {
-				setDragState((prev) =>
-					prev.phase !== "dragging"
-						? prev
-						: { ...prev, overIndex: null, dropPosition: null },
-				);
-				return;
+			let pointerY = clientYRef.current;
+			if (pointerY === null) {
+				const activeRect = event.active.rect.current.translated;
+				pointerY = activeRect
+					? activeRect.top + activeRect.height / 2
+					: null;
 			}
 
-			const overIndex = idToIndex.get(String(event.over.id));
-			if (overIndex === undefined) {
-				return;
-			}
-
-			const activeRect = event.active.rect.current.translated;
-			const overRect = event.over.rect;
-			const activeCenterY = activeRect
-				? activeRect.top + activeRect.height / 2
-				: overRect.top + overRect.height / 2;
-			const overMidY = overRect.top + overRect.height / 2;
-			const dropPosition = activeCenterY < overMidY ? "before" : "after";
+			const target = resolveDropTarget(pointerY);
+			if (!target) return;
 
 			setDragState((prev) => {
 				if (
 					prev.phase === "dragging" &&
-					prev.overIndex === overIndex &&
-					prev.dropPosition === dropPosition
+					prev.overIndex === target.overIndex &&
+					prev.dropPosition === target.dropPosition
 				) {
 					return prev;
 				}
-
 				return {
 					...prev,
-					overIndex,
-					dropPosition,
+					overIndex: target.overIndex,
+					dropPosition: target.dropPosition,
 				};
 			});
 		},
-		[enabled, idToIndex],
+		[enabled, resolveDropTarget],
 	);
 
 	const handleDragEnd = useCallback(
 		async (event: DragEndEvent) => {
 			const sourceIndex = idToIndex.get(String(event.active.id));
-			const targetIndex = event.over
-				? idToIndex.get(String(event.over.id))
-				: dragState.overIndex;
-			const dropPosition = dragState.dropPosition;
+
+			let pointerY = clientYRef.current;
+			if (pointerY === null) {
+				const activeRect = event.active.rect.current.translated;
+				pointerY = activeRect
+					? activeRect.top + activeRect.height / 2
+					: null;
+			}
+			const target = resolveDropTarget(pointerY);
 
 			if (
 				sourceIndex === undefined ||
-				targetIndex === null ||
-				targetIndex === undefined ||
-				dropPosition === null
+				!target ||
+				(target.overIndex === sourceIndex &&
+					target.dropPosition === "before")
 			) {
 				resetInteraction();
 				return;
 			}
 
-			await applyDrop(sourceIndex, targetIndex, dropPosition);
+			await applyDrop(sourceIndex, target.overIndex, target.dropPosition);
 			resetInteraction();
 		},
-		[
-			applyDrop,
-			dragState.dropPosition,
-			dragState.overIndex,
-			idToIndex,
-			resetInteraction,
-		],
+		[applyDrop, idToIndex, resolveDropTarget, resetInteraction],
 	);
 
 	const handleDragCancel = useCallback(() => {

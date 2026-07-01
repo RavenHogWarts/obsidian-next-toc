@@ -102,7 +102,12 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 		handleDragEnd,
 		handleDragCancel,
 		consumeLongPressClick,
-	} = useDragSort(currentView, headings, settings.render.enableDragSort);
+	} = useDragSort(
+		currentView,
+		headings,
+		settings.render.enableDragSort,
+		NTocGroupTocItemsRef,
+	);
 	const visibleItemIds = useMemo(
 		() =>
 			visibleItems.map(({ index }) => itemIds[index] ?? getItemId(index)),
