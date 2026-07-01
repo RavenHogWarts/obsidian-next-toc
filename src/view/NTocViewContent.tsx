@@ -1,6 +1,10 @@
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import {
+	SortableContext,
+	verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import { TocItem } from "@src/components/toc-item/TocItem";
 import { useActiveHeadingScroll } from "@src/hooks/useActiveHeadingScroll";
-import { useDragSort } from "@src/hooks/useDragSort";
 import { useHeadingNumbering } from "@src/hooks/useHeadingNumbering";
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import { useScrollProgress } from "@src/hooks/useScrollProgress";
@@ -10,7 +14,8 @@ import { useTocVisibility } from "@src/hooks/useTocVisibility";
 import calculateActualDepth from "@src/utils/calculateActualDepth";
 import hasChildren from "@src/utils/hasChildren";
 import { HeadingCache, MarkdownView } from "obsidian";
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useMemo, useRef } from "react";
+import { useDragSort } from "../hooks/useDragSort";
 
 interface NTocViewContentProps {
 	currentView: MarkdownView;
@@ -53,34 +58,42 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 		skipHeadingLevels: settings.render.skipHeadingLevels,
 		showWhenSingleHeading: settings.render.showWhenSingleHeading,
 	});
+	const visibleItems = useMemo(
+		() =>
+			headings.flatMap((heading, index) =>
+				visibilityMap[index] ? [{ heading, index }] : [],
+			),
+		[headings, visibilityMap],
+	);
+	const scrollRefs = useMemo(() => [listItemsRef], []);
 
 	// 使用拖拽排序 Hook
 	const {
+		sensors,
+		itemIds,
 		dragState,
 		dragReadyIndex,
+		interactionActive,
+		getItemId,
 		handlePointerDown,
-		handlePointerUp,
-		handlePointerMove,
-		handlePointerLeave,
 		handleDragStart,
 		handleDragOver,
-		handleDragLeave,
-		handleDrop,
 		handleDragEnd,
+		handleDragCancel,
 		consumeLongPressClick,
-	} = useDragSort(
-		currentView,
-		headings,
-		settings.render.enableDragSort,
-		listItemsRef,
+	} = useDragSort(currentView, headings, settings.render.enableDragSort);
+	const visibleItemIds = useMemo(
+		() =>
+			visibleItems.map(({ index }) => itemIds[index] ?? getItemId(index)),
+		[getItemId, itemIds, visibleItems],
 	);
 
 	// 使用自动滚动 Hook
 	useActiveHeadingScroll(
 		activeHeadingIndex,
-		[listItemsRef],
+		scrollRefs,
 		visibleHeadingIndices,
-		dragState.isDragging,
+		interactionActive,
 	);
 
 	// 更新进度条宽度
@@ -105,50 +118,58 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 					className="NToc__toc-progress-bar"
 				></div>
 			)}
-			<div ref={listItemsRef} className="NToc__view-content-items">
-				{headings.map((heading, index) => {
-					if (!visibilityMap[index]) return null;
-					return (
-						<TocItem
-							key={`toc-item-${index}-${heading.position.start.line}`}
-							currentView={currentView}
-							heading={heading}
-							headingIndex={index}
-							headingActualDepth={calculateActualDepth(
-								index,
-								headings,
-							)}
-							headingNumber={generateHeadingNumber(index)}
-							headingActive={index === activeHeadingIndex}
-							headingVisible={visibleHeadingIndices.includes(
-								index,
-							)}
-							headingChildren={hasChildren(index, headings)}
-							isCollapsedParent={collapsedSet.has(index)}
-							onToggleCollapse={toggleCollapsedAt}
-							enableDrag={settings.render.enableDragSort}
-							isDragging={dragState.dragIndex === index}
-							isDragOver={dragState.overIndex === index}
-							dragOverPosition={
-								dragState.overIndex === index
-									? dragState.dropPosition
-									: null
-							}
-							isDragReady={dragReadyIndex === index}
-							onDragStart={handleDragStart}
-							onDragOver={handleDragOver}
-							onDragLeave={handleDragLeave}
-							onDrop={handleDrop}
-							onDragEnd={handleDragEnd}
-							onPointerDown={handlePointerDown}
-							onPointerUp={handlePointerUp}
-							onPointerMove={handlePointerMove}
-							onPointerLeave={handlePointerLeave}
-							consumeLongPressClick={consumeLongPressClick}
-						/>
-					);
-				})}
-			</div>
+			<DndContext
+				autoScroll={settings.render.enableDragSort}
+				collisionDetection={closestCenter}
+				onDragStart={handleDragStart}
+				onDragOver={handleDragOver}
+				onDragEnd={handleDragEnd}
+				onDragCancel={handleDragCancel}
+				sensors={sensors}
+			>
+				<SortableContext
+					items={visibleItemIds}
+					strategy={verticalListSortingStrategy}
+				>
+					<div
+						ref={listItemsRef}
+						className="NToc__view-content-items"
+					>
+						{visibleItems.map(({ heading, index }) => (
+							<TocItem
+								key={`toc-item-${index}-${heading.position.start.line}`}
+								currentView={currentView}
+								heading={heading}
+								headingIndex={index}
+								headingActualDepth={calculateActualDepth(
+									index,
+									headings,
+								)}
+								headingNumber={generateHeadingNumber(index)}
+								headingActive={index === activeHeadingIndex}
+								headingVisible={visibleHeadingIndices.includes(
+									index,
+								)}
+								headingChildren={hasChildren(index, headings)}
+								isCollapsedParent={collapsedSet.has(index)}
+								onToggleCollapse={toggleCollapsedAt}
+								enableDrag={settings.render.enableDragSort}
+								dndId={getItemId(index)}
+								isDragging={dragState.dragIndex === index}
+								isDragOver={dragState.overIndex === index}
+								dragOverPosition={
+									dragState.overIndex === index
+										? dragState.dropPosition
+										: null
+								}
+								isDragReady={dragReadyIndex === index}
+								onPointerDown={handlePointerDown}
+								consumeLongPressClick={consumeLongPressClick}
+							/>
+						))}
+					</div>
+				</SortableContext>
+			</DndContext>
 		</div>
 	);
 };

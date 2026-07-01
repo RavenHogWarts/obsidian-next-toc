@@ -1,10 +1,19 @@
+import {
+	DragCancelEvent,
+	DragEndEvent,
+	DragOverEvent,
+	DragStartEvent,
+	PointerSensor,
+	useSensor,
+	useSensors,
+} from "@dnd-kit/core";
 import { LL } from "@src/i18n/i18n";
 import {
 	type ReorderFailReason,
 	reorderSections,
 } from "@src/utils/reorderSections";
 import { HeadingCache, MarkdownView, Notice } from "obsidian";
-import { RefObject, useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 const FAIL_NOTICE_MAP: Record<ReorderFailReason, () => string> = {
 	noFile: LL.notices.reorderFailedNoFile,
@@ -16,6 +25,7 @@ const FAIL_NOTICE_MAP: Record<ReorderFailReason, () => string> = {
 };
 
 interface DragState {
+	phase: "idle" | "pressing" | "dragging";
 	isDragging: boolean;
 	dragIndex: number | null;
 	overIndex: number | null;
@@ -23,6 +33,7 @@ interface DragState {
 }
 
 const INITIAL_DRAG_STATE: DragState = {
+	phase: "idle",
 	isDragging: false,
 	dragIndex: null,
 	overIndex: null,
@@ -30,290 +41,53 @@ const INITIAL_DRAG_STATE: DragState = {
 };
 
 const LONG_PRESS_MS = 200;
-const AUTO_SCROLL_EDGE_PX = 48;
-const AUTO_SCROLL_MAX_SPEED = 18;
+const POINTER_TOLERANCE_PX = 6;
 
 export const useDragSort = (
 	currentView: MarkdownView,
 	headings: HeadingCache[],
 	enabled: boolean,
-	scrollContainerRef?: RefObject<HTMLElement | null>,
 ) => {
 	const [dragState, setDragState] = useState<DragState>(INITIAL_DRAG_STATE);
 	const [dragReadyIndex, setDragReadyIndex] = useState<number | null>(null);
-	const [wasLongPress, setWasLongPress] = useState(false);
+	const suppressClickRef = useRef(false);
 
-	const longPressTimerRef = useRef<number | null>(null);
-	const activeElementRef = useRef<HTMLElement | null>(null);
-	const autoScrollFrameRef = useRef<number | null>(null);
-	const autoScrollContainerRef = useRef<HTMLElement | null>(null);
-	const autoScrollVelocityRef = useRef(0);
-
-	const stopAutoScroll = useCallback(() => {
-		if (autoScrollFrameRef.current !== null) {
-			window.cancelAnimationFrame(autoScrollFrameRef.current);
-			autoScrollFrameRef.current = null;
-		}
-		autoScrollContainerRef.current = null;
-		autoScrollVelocityRef.current = 0;
-	}, []);
-
-	const runAutoScroll = useCallback(() => {
-		const container = autoScrollContainerRef.current;
-		const velocity = autoScrollVelocityRef.current;
-
-		if (!container || velocity === 0) {
-			autoScrollFrameRef.current = null;
-			return;
-		}
-
-		const maxScrollTop = container.scrollHeight - container.clientHeight;
-		const nextScrollTop = Math.max(
-			0,
-			Math.min(container.scrollTop + velocity, maxScrollTop),
-		);
-
-		if (nextScrollTop === container.scrollTop) {
-			stopAutoScroll();
-			return;
-		}
-
-		container.scrollTop = nextScrollTop;
-		autoScrollFrameRef.current =
-			window.requestAnimationFrame(runAutoScroll);
-	}, [stopAutoScroll]);
-
-	const updateAutoScroll = useCallback(
-		(target: HTMLElement, clientY: number) => {
-			const container =
-				scrollContainerRef?.current ??
-				(target.closest(
-					".NToc__toc-items, .NToc__view-content-items",
-				) as HTMLElement | null);
-
-			if (
-				!container ||
-				container.scrollHeight <= container.clientHeight
-			) {
-				stopAutoScroll();
-				return;
-			}
-
-			const rect = container.getBoundingClientRect();
-			const topDistance = clientY - rect.top;
-			const bottomDistance = rect.bottom - clientY;
-			let velocity = 0;
-
-			if (topDistance < AUTO_SCROLL_EDGE_PX) {
-				const ratio = Math.max(
-					0,
-					(AUTO_SCROLL_EDGE_PX - topDistance) / AUTO_SCROLL_EDGE_PX,
-				);
-				velocity = -Math.max(
-					1,
-					Math.ceil(ratio * AUTO_SCROLL_MAX_SPEED),
-				);
-			} else if (bottomDistance < AUTO_SCROLL_EDGE_PX) {
-				const ratio = Math.max(
-					0,
-					(AUTO_SCROLL_EDGE_PX - bottomDistance) /
-						AUTO_SCROLL_EDGE_PX,
-				);
-				velocity = Math.max(
-					1,
-					Math.ceil(ratio * AUTO_SCROLL_MAX_SPEED),
-				);
-			}
-
-			if (velocity === 0) {
-				stopAutoScroll();
-				return;
-			}
-
-			autoScrollContainerRef.current = container;
-			autoScrollVelocityRef.current = velocity;
-
-			if (autoScrollFrameRef.current === null) {
-				autoScrollFrameRef.current =
-					window.requestAnimationFrame(runAutoScroll);
-			}
-		},
-		[runAutoScroll, scrollContainerRef, stopAutoScroll],
+	const itemIds = useMemo(
+		() => headings.map((_heading, index) => `toc-heading-${index}`),
+		[headings],
+	);
+	const idToIndex = useMemo(
+		() => new Map(itemIds.map((id, index) => [id, index])),
+		[itemIds],
 	);
 
-	const cancelLongPress = useCallback(() => {
-		if (longPressTimerRef.current) {
-			window.clearTimeout(longPressTimerRef.current);
-			longPressTimerRef.current = null;
-		}
-		if (activeElementRef.current) {
-			activeElementRef.current.draggable = false;
-		}
-		activeElementRef.current = null;
+	const sensors = useSensors(
+		useSensor(PointerSensor, {
+			activationConstraint: {
+				delay: LONG_PRESS_MS,
+				tolerance: POINTER_TOLERANCE_PX,
+			},
+		}),
+	);
+
+	const resetInteraction = useCallback(() => {
 		setDragReadyIndex(null);
+		setDragState(INITIAL_DRAG_STATE);
 	}, []);
 
-	const handlePointerDown = useCallback(
-		(e: React.PointerEvent, index: number) => {
-			if (!enabled || e.button !== 0) return;
-			cancelLongPress();
-
-			const element = e.currentTarget as HTMLElement;
-			activeElementRef.current = element;
-
-			longPressTimerRef.current = window.setTimeout(() => {
-				element.draggable = true;
-				setDragReadyIndex(index);
-				setWasLongPress(true);
-			}, LONG_PRESS_MS);
-		},
-		[enabled, cancelLongPress],
-	);
-
-	const handlePointerUp = useCallback(() => {
-		if (longPressTimerRef.current) {
-			window.clearTimeout(longPressTimerRef.current);
-			longPressTimerRef.current = null;
-		}
-		// 长按已触发但未拖动 → 清理 draggable，保留 wasLongPress 供 click 判断
-		if (dragReadyIndex !== null && activeElementRef.current) {
-			activeElementRef.current.draggable = false;
-			activeElementRef.current = null;
-			setDragReadyIndex(null);
-		}
-	}, [dragReadyIndex]);
-
-	const handlePointerMove = useCallback(
-		(e: React.PointerEvent) => {
-			// 长按已触发，让 HTML5 DnD 接管
-			if (dragReadyIndex !== null) return;
-			// 长按等待中移动 → 取消长按
-			if (longPressTimerRef.current) {
-				cancelLongPress();
-			}
-		},
-		[dragReadyIndex, cancelLongPress],
-	);
-
-	const handlePointerLeave = useCallback(() => {
-		// 长按等待中离开元素 → 取消长按
-		if (longPressTimerRef.current) {
-			cancelLongPress();
-		}
-	}, [cancelLongPress]);
-
-	const consumeLongPressClick = useCallback(() => {
-		if (wasLongPress) {
-			setWasLongPress(false);
-			return true;
-		}
-		return false;
-	}, [wasLongPress]);
-
-	const handleDragStart = useCallback(
-		(e: React.DragEvent, index: number) => {
-			if (!enabled) return;
-			stopAutoScroll();
-			// 只允许长按触发的拖拽
-			if (dragReadyIndex !== index) {
-				e.preventDefault();
-				return;
-			}
-			e.stopPropagation();
-			e.dataTransfer.effectAllowed = "move";
-			e.dataTransfer.setData("text/plain", String(index));
-			window.requestAnimationFrame(() => {
-				setDragState({
-					isDragging: true,
-					dragIndex: index,
-					overIndex: null,
-					dropPosition: null,
-				});
-			});
-		},
-		[enabled, dragReadyIndex, headings],
-	);
-
-	const handleDragOver = useCallback(
-		(e: React.DragEvent, index: number) => {
-			if (!enabled || !dragState.isDragging) return;
-			e.preventDefault();
-			e.stopPropagation();
-			e.dataTransfer.dropEffect = "move";
-			updateAutoScroll(e.currentTarget as HTMLElement, e.clientY);
-
-			const rect = (
-				e.currentTarget as HTMLElement
-			).getBoundingClientRect();
-			const midY = rect.top + rect.height / 2;
-
-			setDragState((prev) => ({
-				...prev,
-				overIndex: index,
-				dropPosition: e.clientY < midY ? "before" : "after",
-			}));
-		},
-		[enabled, dragState.isDragging],
-	);
-
-	const handleDragLeave = useCallback(
-		(e: React.DragEvent) => {
-			e.stopPropagation();
-			stopAutoScroll();
-			setDragState((prev) => ({
-				...prev,
-				overIndex: null,
-				dropPosition: null,
-			}));
-		},
-		[stopAutoScroll],
-	);
-
-	const handleDrop = useCallback(
-		async (e: React.DragEvent, targetIndex: number) => {
-			e.preventDefault();
-			e.stopPropagation();
-			stopAutoScroll();
-
-			const sourceIndexStr = e.dataTransfer?.getData("text/plain");
-			if (!sourceIndexStr) {
-				console.warn("[DragSort] drop: no sourceIndex data");
+	const applyDrop = useCallback(
+		async (
+			sourceIndex: number,
+			targetIndex: number,
+			dropPosition: "before" | "after",
+		) => {
+			if (Number.isNaN(sourceIndex) || sourceIndex === targetIndex) {
 				setDragState(INITIAL_DRAG_STATE);
 				return;
 			}
 
-			const sourceIndex = parseInt(sourceIndexStr);
-			if (isNaN(sourceIndex) || sourceIndex === targetIndex) {
-				console.warn("[DragSort] drop: invalid or same index", {
-					sourceIndex,
-					targetIndex,
-				});
-				setDragState(INITIAL_DRAG_STATE);
-				return;
-			}
-
-			// 计算鼠标在目标元素的上半还是下半
-			const rect = (
-				e.currentTarget as HTMLElement
-			).getBoundingClientRect();
-			const midY = rect.top + rect.height / 2;
-			const dropBefore = e.clientY < midY;
-
-			/**
-			 * 使用 gap 模型计算目标索引：
-			 * gap i = heading i 前面的位置, gap N = 所有标题之后
-			 * dropBefore heading[targetIndex] → gap targetIndex
-			 * dropAfter  heading[targetIndex] → gap targetIndex + 1
-			 *
-			 * reorderSections 的 targetIndex 语义：
-			 *   targetIndex < sourceIndex → 插入到 headings[targetIndex] 的起始行（gap targetIndex）
-			 *   targetIndex >= sourceIndex → 插入到 headings[targetIndex] 的节末尾（gap targetIndex + 1）
-			 *
-			 * 所以将 gap 转为 finalTarget：
-			 *   gap <= sourceIndex → finalTarget = gap
-			 *   gap > sourceIndex  → finalTarget = gap - 1
-			 */
-			const gap = dropBefore ? targetIndex : targetIndex + 1;
+			const gap =
+				dropPosition === "before" ? targetIndex : targetIndex + 1;
 			const finalTarget = gap <= sourceIndex ? gap : gap - 1;
 
 			const result = await reorderSections(
@@ -332,32 +106,176 @@ export const useDragSort = (
 
 			setDragState(INITIAL_DRAG_STATE);
 		},
-		[currentView, headings, stopAutoScroll],
+		[currentView, headings],
 	);
 
-	const handleDragEnd = useCallback(() => {
-		stopAutoScroll();
-		if (activeElementRef.current) {
-			activeElementRef.current.draggable = false;
+	const handlePointerDown = useCallback(
+		(e: React.PointerEvent, index: number) => {
+			if (!enabled || e.button !== 0) return;
+
+			suppressClickRef.current = false;
+			setDragReadyIndex(index);
+			setDragState({
+				phase: "pressing",
+				isDragging: false,
+				dragIndex: index,
+				overIndex: null,
+				dropPosition: null,
+			});
+		},
+		[enabled],
+	);
+
+	useEffect(() => {
+		if (dragState.phase !== "pressing") {
+			return;
 		}
-		activeElementRef.current = null;
-		setDragReadyIndex(null);
-		setWasLongPress(false);
-		setDragState(INITIAL_DRAG_STATE);
-	}, [stopAutoScroll]);
+
+		const clearPressing = () => {
+			setDragReadyIndex(null);
+			setDragState(INITIAL_DRAG_STATE);
+		};
+
+		window.addEventListener("pointerup", clearPressing, true);
+		window.addEventListener("pointercancel", clearPressing, true);
+
+		return () => {
+			window.removeEventListener("pointerup", clearPressing, true);
+			window.removeEventListener("pointercancel", clearPressing, true);
+		};
+	}, [dragState.phase]);
+
+	useEffect(() => {
+		if (!enabled) {
+			resetInteraction();
+			suppressClickRef.current = false;
+		}
+	}, [enabled, resetInteraction]);
+
+	const handleDragStart = useCallback(
+		(event: DragStartEvent) => {
+			if (!enabled) return;
+
+			const dragIndex = idToIndex.get(String(event.active.id));
+			if (dragIndex === undefined) {
+				return;
+			}
+
+			suppressClickRef.current = true;
+			setDragReadyIndex(dragIndex);
+			setDragState({
+				phase: "dragging",
+				isDragging: true,
+				dragIndex,
+				overIndex: null,
+				dropPosition: null,
+			});
+		},
+		[enabled, idToIndex],
+	);
+
+	const handleDragOver = useCallback(
+		(event: DragOverEvent) => {
+			if (!enabled) return;
+
+			if (!event.over) {
+				setDragState((prev) =>
+					prev.phase !== "dragging"
+						? prev
+						: { ...prev, overIndex: null, dropPosition: null },
+				);
+				return;
+			}
+
+			const overIndex = idToIndex.get(String(event.over.id));
+			if (overIndex === undefined) {
+				return;
+			}
+
+			const activeRect = event.active.rect.current.translated;
+			const overRect = event.over.rect;
+			const activeCenterY = activeRect
+				? activeRect.top + activeRect.height / 2
+				: overRect.top + overRect.height / 2;
+			const overMidY = overRect.top + overRect.height / 2;
+			const dropPosition = activeCenterY < overMidY ? "before" : "after";
+
+			setDragState((prev) => {
+				if (
+					prev.phase === "dragging" &&
+					prev.overIndex === overIndex &&
+					prev.dropPosition === dropPosition
+				) {
+					return prev;
+				}
+
+				return {
+					...prev,
+					overIndex,
+					dropPosition,
+				};
+			});
+		},
+		[enabled, idToIndex],
+	);
+
+	const handleDragEnd = useCallback(
+		async (event: DragEndEvent) => {
+			const sourceIndex = idToIndex.get(String(event.active.id));
+			const targetIndex = event.over
+				? idToIndex.get(String(event.over.id))
+				: dragState.overIndex;
+			const dropPosition = dragState.dropPosition;
+
+			if (
+				sourceIndex === undefined ||
+				targetIndex === null ||
+				targetIndex === undefined ||
+				dropPosition === null
+			) {
+				resetInteraction();
+				return;
+			}
+
+			await applyDrop(sourceIndex, targetIndex, dropPosition);
+			resetInteraction();
+		},
+		[
+			applyDrop,
+			dragState.dropPosition,
+			dragState.overIndex,
+			idToIndex,
+			resetInteraction,
+		],
+	);
+
+	const handleDragCancel = useCallback(() => {
+		resetInteraction();
+	}, [resetInteraction]);
+
+	const consumeLongPressClick = useCallback(() => {
+		if (!suppressClickRef.current) {
+			return false;
+		}
+
+		suppressClickRef.current = false;
+		return true;
+	}, []);
 
 	return {
+		sensors,
+		itemIds,
 		dragState,
 		dragReadyIndex,
+		interactionActive: dragState.phase !== "idle",
+		getItemId: (index: number) => itemIds[index] ?? `toc-heading-${index}`,
 		handlePointerDown,
-		handlePointerUp,
-		handlePointerMove,
-		handlePointerLeave,
+		handlePointerUp: () => {},
+		handlePointerLeave: () => {},
 		handleDragStart,
 		handleDragOver,
-		handleDragLeave,
-		handleDrop,
 		handleDragEnd,
+		handleDragCancel: (_event: DragCancelEvent) => handleDragCancel(),
 		consumeLongPressClick,
 	};
 };
