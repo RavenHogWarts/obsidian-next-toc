@@ -1,3 +1,9 @@
+## [2.2.1](https://github.com/Raven-Pensieve/obsidian-next-toc/compare/2.2.0...2.2.1) (2026-07-02)
+
+
+### ✨ Features
+
+* 增加“启用/禁用目录”命令 ([edb9f82](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/edb9f82824188f38dc572488c36320a2b460396f))
 # [2.2.0](https://github.com/Raven-Pensieve/obsidian-next-toc/compare/2.1.0...2.2.0) (2026-07-02)
 
 
