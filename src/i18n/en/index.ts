@@ -2,6 +2,7 @@ import type { BaseTranslation } from "../i18n-types";
 
 const en = {
 	commands: {
+		enableDisableToc: "Enable/disable toc",
 		openTocView: "Open toc view",
 		returnToCursor: "Return to cursor",
 		scrollToTop: "Scroll to top",

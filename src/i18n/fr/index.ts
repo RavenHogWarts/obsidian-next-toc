@@ -2,6 +2,7 @@ import type { BaseTranslation } from "../i18n-types";
 
 const fr = {
 	commands: {
+		enableDisableToc: "Activer/désactiver la table des matières",
 		openTocView: "Ouvrir la vue de la table des matières",
 		returnToCursor: "Retourner au curseur",
 		scrollToTop: "Faire défiler vers le haut",
@@ -91,6 +92,14 @@ const fr = {
 			useHeadingNumber: {
 				name: "Utiliser les numéros de titres",
 				desc: "Activer ou désactiver l'utilisation des numéros de titres dans la table des matières. Vous pouvez utiliser la propriété de document `cssclasses` pour contrôler l'affichage et le masquage (Priorité supérieure à la liste noire) : ",
+			},
+			numberingStartIndex: {
+				name: "TODO: 标题编号起始序号",
+				desc: "TODO: 选择标题编号是从 0 开始还是从 1 开始。",
+				options: {
+					zero: "TODO: 0",
+					one: "TODO: 1",
+				},
 			},
 			skipHeadingLevels: {
 				name: "Ignorer les niveaux de titres",

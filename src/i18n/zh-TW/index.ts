@@ -2,6 +2,7 @@ import type { BaseTranslation } from "../i18n-types";
 
 const zh_TW = {
 	commands: {
+		enableDisableToc: "啟用/停用目錄",
 		openTocView: "開啟目錄側邊視圖",
 		returnToCursor: "返回游標位置",
 		scrollToTop: "捲動到頂部",

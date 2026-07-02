@@ -95,6 +95,17 @@ export default class NTocPlugin extends Plugin {
 
 	private registerCommands() {
 		this.addCommand({
+			id: "enable-disable-toc",
+			name: LL.commands.enableDisableToc(),
+			callback: async () => {
+				await this.settingsStore.updateSettingByPath(
+					"toc.show",
+					!this.settingsStore.settings.toc.show,
+				);
+			},
+		});
+
+		this.addCommand({
 			id: "open-toc-view",
 			name: LL.commands.openTocView(),
 			callback: async () => {
