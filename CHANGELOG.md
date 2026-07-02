@@ -1,3 +1,20 @@
+# [2.2.0](https://github.com/Raven-Pensieve/obsidian-next-toc/compare/2.1.0...2.2.0) (2026-07-02)
+
+
+### 🎨 Styles
+
+* 拖拽时禁用浮动样式 ([677d443](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/677d443c1cbae791baba75a2d8c96e42fff02b71))
+
+
+### 🐛 Bug Fixes
+
+* 标题错误编号 ([d975b4b](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/d975b4bce8004e67d02a987b1ebd347cbe8e23a9))
+* 目录即时更新 ([2442267](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/2442267077dbb1df0b80171c7383d777ba0df247))
+* 使用dnd-kit替换原生dnd ([44c029b](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/44c029bbb026e5d64ff3e2b11b9dd2b66c6c42d2))
+* 修复目录拖拽排序无法随滚动调整的问题 ([6a091e4](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/6a091e44f72125bd92a9f2578c2b213e3d6af11c))
+* 移除拖拽时的快照机制 ([67fe37a](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/67fe37aefaf86b3338173d06406444c6c645f84c))
+* 阅读模式下拖拽临时禁用目录更新 ([320e8ec](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/320e8ec4323b81452cbddd6f81a1d74964767d40))
+* 重写拖拽位置判定逻辑 ([b7c7767](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/b7c7767733ddf5081cf56b30d9161861c1c1f6f2))
 # [2.1.0](https://github.com/Raven-Pensieve/obsidian-next-toc/compare/2.0.1...2.1.0) (2026-06-11)
 
 
