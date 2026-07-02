@@ -18,6 +18,10 @@ export type Translations = RootTranslation
 type RootTranslation = {
 	commands: {
 		/**
+		 * 启​用​/​禁​用​目​录
+		 */
+		enableDisableToc: string
+		/**
 		 * 打​开​目​录​侧​边​视​图
 		 */
 		openTocView: string
@@ -598,6 +602,10 @@ type RootTranslation = {
 
 export type TranslationFunctions = {
 	commands: {
+		/**
+		 * 启用/禁用目录
+		 */
+		enableDisableToc: () => LocalizedString
 		/**
 		 * 打开目录侧边视图
 		 */
