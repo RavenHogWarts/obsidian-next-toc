@@ -455,6 +455,68 @@ export const useDragSort = (
 		[resolveDropTarget, applyDrop, resetInteraction],
 	);
 
+	// ---- 桌面端鼠标拖拽（无 MouseSensor）的事件装配 ----
+	// 注意：useDragSort 仅注册了 TouchSensor，鼠标拖拽依赖此处手动监听
+	// window 的 mousemove/mouseup。每个消费方只需把 onContainerMouseDown
+	// 绑定到承载 [data-index] 子项的容器上即可。
+	const mouseDragRef = useRef<{
+		startY: number;
+		startIndex: number | null;
+		dragging: boolean;
+	}>({ startY: 0, startIndex: null, dragging: false });
+
+	const onContainerMouseDown = useCallback(
+		(e: React.MouseEvent) => {
+			if (e.button !== 0 || !enabled) return;
+			const target = (e.target as HTMLElement).closest<HTMLElement>(
+				"[data-index]",
+			);
+			if (!target) return;
+			const idx = Number(target.dataset.index);
+			if (!Number.isInteger(idx)) return;
+			mouseDragRef.current = {
+				startY: e.clientY,
+				startIndex: idx,
+				dragging: false,
+			};
+		},
+		[enabled],
+	);
+
+	useEffect(() => {
+		if (!enabled) return;
+
+		const onMouseMove = (e: MouseEvent) => {
+			const md = mouseDragRef.current;
+			if (md.startIndex === null) return;
+			if (!md.dragging) {
+				if (Math.abs(e.clientY - md.startY) > 5) {
+					md.dragging = true;
+					startMouseDrag(md.startIndex);
+				}
+				return;
+			}
+			updateMouseDrag(e.clientY);
+		};
+
+		const onMouseUp = (e: MouseEvent) => {
+			const md = mouseDragRef.current;
+			if (md.startIndex === null) return;
+			if (md.dragging) {
+				void endMouseDrag(e.clientY);
+			}
+			md.startIndex = null;
+			md.dragging = false;
+		};
+
+		window.addEventListener("mousemove", onMouseMove);
+		window.addEventListener("mouseup", onMouseUp);
+		return () => {
+			window.removeEventListener("mousemove", onMouseMove);
+			window.removeEventListener("mouseup", onMouseUp);
+		};
+	}, [enabled, startMouseDrag, updateMouseDrag, endMouseDrag]);
+
 	return {
 		sensors,
 		itemIds,
@@ -473,5 +535,6 @@ export const useDragSort = (
 		startMouseDrag,
 		updateMouseDrag,
 		endMouseDrag,
+		onContainerMouseDown,
 	};
 };

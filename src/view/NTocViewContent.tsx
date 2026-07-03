@@ -81,6 +81,7 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 		handleDragEnd,
 		handleDragCancel,
 		consumeLongPressClick,
+		onContainerMouseDown,
 	} = useDragSort(
 		currentView,
 		headings,
@@ -145,6 +146,7 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 					<div
 						ref={listItemsRef}
 						className="NToc__view-content-items"
+						onMouseDown={onContainerMouseDown}
 					>
 						{visibleItems.map(({ heading, index }) => (
 							<TocItem
