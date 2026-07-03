@@ -171,6 +171,10 @@ const en = {
 					name: "Move down",
 					desc: "Move the TOC one step down",
 				},
+				locateActiveHeading: {
+					name: "Locate active heading",
+					desc: "Scroll the TOC list to bring the currently active heading into view",
+				},
 				copyTOC: {
 					name: "Copy TOC",
 					desc: "Copy the table of contents to the clipboard",
@@ -240,6 +244,7 @@ const en = {
 		rightOffset: "Add offset to the right",
 		upOffset: "Move up",
 		downOffset: "Move down",
+		locateActiveHeading: "Locate active heading",
 		copyTOC: "Copy toc to clipboard",
 		returnNavigation: "Return navigation",
 		returnToCursor: "To cursor",

@@ -167,6 +167,10 @@ const zh_TW = {
 					name: "向下移動",
 					desc: "將目錄向下移動一步",
 				},
+				locateActiveHeading: {
+					name: "定位到目前標題",
+					desc: "捲動目錄列表，使目前活動的標題進入可視範圍",
+				},
 				copyTOC: {
 					name: "複製目錄",
 					desc: "將目錄複製到剪貼簿",
@@ -236,6 +240,7 @@ const zh_TW = {
 		rightOffset: "向右偏移",
 		upOffset: "向上移動",
 		downOffset: "向下移動",
+		locateActiveHeading: "定位到目前標題",
 		copyTOC: "複製目錄到剪貼簿",
 		returnNavigation: "返回導航",
 		returnToCursor: "返回游標位置",

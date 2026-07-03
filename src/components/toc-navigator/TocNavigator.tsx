@@ -11,8 +11,9 @@ import { useTocExpansion } from "@src/hooks/useTocExpansion";
 import { useTocVisibility } from "@src/hooks/useTocVisibility";
 import calculateActualDepth from "@src/utils/calculateActualDepth";
 import hasChildren from "@src/utils/hasChildren";
+import smoothScroll from "@src/utils/smoothScroll";
 import { HeadingCache, MarkdownView } from "obsidian";
-import { FC, useEffect, useMemo, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ProgressCircle } from "../progress-circle/ProgressCircle";
 import { TocIndicator } from "../toc-indicator/TocIndicator";
 import { TocItem } from "../toc-item/TocItem";
@@ -116,6 +117,20 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 		visibleHeadingIndices,
 		interactionActive,
 	);
+
+	// 手动将目录列表滚动到当前活动标题（即使索引未变化也强制滚动）
+	const handleLocateActiveHeading = useCallback(() => {
+		const container = NTocGroupTocItemsRef.current;
+		if (!container) return;
+		if (activeHeadingIndex < 0 || activeHeadingIndex >= headings.length)
+			return;
+		const activeHeadingEl = container.querySelector(
+			`[data-index="${activeHeadingIndex}"]`,
+		) as HTMLElement | null;
+		if (activeHeadingEl) {
+			smoothScroll(container, activeHeadingEl);
+		}
+	}, [activeHeadingIndex, headings.length]);
 
 	useEffect(() => {
 		if (NTocContainerRef.current) {
@@ -236,6 +251,11 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 							onCollapseAll={onCollapseAll}
 							onExpandAll={onExpandAll}
 							hasAnyCollapsed={collapsedSet.size > 0}
+							onLocateActiveHeading={handleLocateActiveHeading}
+							canLocateActiveHeading={
+								activeHeadingIndex >= 0 &&
+								activeHeadingIndex < headings.length
+							}
 						/>
 					)}
 

@@ -451,6 +451,16 @@ type RootTranslation = {
 					 */
 					desc: string
 				}
+				locateActiveHeading: {
+					/**
+					 * 定​位​到​当​前​标​题
+					 */
+					name: string
+					/**
+					 * 滚​动​目​录​列​表​，​使​当​前​活​动​的​标​题​进​入​可​视​范​围
+					 */
+					desc: string
+				}
 				copyTOC: {
 					/**
 					 * 复​制​目​录
@@ -655,6 +665,10 @@ type RootTranslation = {
 		 * 向​下​移​动
 		 */
 		downOffset: string
+		/**
+		 * 定​位​到​当​前​标​题
+		 */
+		locateActiveHeading: string
 		/**
 		 * 复​制​目​录​到​剪​贴​板
 		 */
@@ -1120,6 +1134,16 @@ export type TranslationFunctions = {
 					 */
 					desc: () => LocalizedString
 				}
+				locateActiveHeading: {
+					/**
+					 * 定位到当前标题
+					 */
+					name: () => LocalizedString
+					/**
+					 * 滚动目录列表，使当前活动的标题进入可视范围
+					 */
+					desc: () => LocalizedString
+				}
 				copyTOC: {
 					/**
 					 * 复制目录
@@ -1324,6 +1348,10 @@ export type TranslationFunctions = {
 		 * 向下移动
 		 */
 		downOffset: () => LocalizedString
+		/**
+		 * 定位到当前标题
+		 */
+		locateActiveHeading: () => LocalizedString
 		/**
 		 * 复制目录到剪贴板
 		 */
