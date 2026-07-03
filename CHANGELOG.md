@@ -1,3 +1,31 @@
+# [2.3.0](https://github.com/Raven-Pensieve/obsidian-next-toc/compare/2.2.1...2.3.0) (2026-07-03)
+
+
+### ♻️ Refactor
+
+* **drag-sort:** 重构拖拽排序，分离桌面/移动端传感器 ([bc72f66](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/bc72f66c0615ea54ca1857141db495109f3d00d9))
+
+
+### ✨ Features
+
+* 为目录工具添加设置，以控制是否使用 ([fcd3354](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/fcd3354aa6f5903a1b4586eecec1172709905c37))
+* 增加 定位到当前标题 按钮 ([bb4a8d7](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/bb4a8d79f639e25b6a4261358839db91248b014e))
+
+
+### 🐛 Bug Fixes
+
+* 侧边栏适配鼠标拖拽的事件装配 ([3a1b035](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/3a1b035d1fe1402b5e8fada6c0c19c0abe1054ef))
+* 改用内容签名作为折叠 key，修复拖拽排序后自动展开 ([2b232f7](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/2b232f721b06b137877c1f7393555654a15467bd))
+
+
+### 👷 Build
+
+* **deps-dev:** bump esbuild from 0.28.0 to 0.28.1 ([3d242cc](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/3d242cc009097f0e5e8d82a9d78ba9b375f699fe))
+
+
+### 🔨 Chore
+
+* 优化区分目录工具按钮和导航工具按钮的翻译文本 ([67d4b6a](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/67d4b6acbc8e9b3f16d313d811e6f1166d72a9fc))
 ## [2.2.1](https://github.com/Raven-Pensieve/obsidian-next-toc/compare/2.2.0...2.2.1) (2026-07-02)
 
 
