@@ -174,6 +174,10 @@ const fr = {
 					name: "Déplacer vers le bas",
 					desc: "Déplacer la table des matières d'un pas vers le bas",
 				},
+				locateActiveHeading: {
+					name: "Localiser le titre actif",
+					desc: "Faire défiler la liste de la table des matières pour amener le titre actuellement actif dans la zone visible",
+				},
 				copyTOC: {
 					name: "Copier la table des matières",
 					desc: "Copier la table des matières dans le presse-papiers",
@@ -244,6 +248,7 @@ const fr = {
 		rightOffset: "Ajouter un décalage à droite",
 		upOffset: "Déplacer vers le haut",
 		downOffset: "Déplacer vers le bas",
+		locateActiveHeading: "Localiser le titre actif",
 		copyTOC: "Copier la table des matières dans le presse-papiers",
 		returnNavigation: "Navigation de retour",
 		returnToCursor: "Au curseur",

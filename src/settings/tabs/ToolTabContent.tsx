@@ -220,6 +220,26 @@ export const ToolTabContent: FC = () => {
 
 			<ObsidianSetting
 				slots={{
+					name: LL.settings.tool.toolbarButtons.locateActiveHeading.name(),
+					desc: LL.settings.tool.toolbarButtons.locateActiveHeading.desc(),
+					control: (
+						<ObsidianSetting.Toggle
+							value={
+								settings.tool.toolbarButtons.locateActiveHeading
+							}
+							onChange={(value) => {
+								void settingsStore.updateSettingByPath(
+									"tool.toolbarButtons.locateActiveHeading",
+									value,
+								);
+							}}
+						/>
+					),
+				}}
+			/>
+
+			<ObsidianSetting
+				slots={{
 					name: LL.settings.tool.toolbarButtons.copyTOC.name(),
 					desc: LL.settings.tool.toolbarButtons.copyTOC.desc(),
 					control: (

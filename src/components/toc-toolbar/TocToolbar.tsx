@@ -11,6 +11,7 @@ import {
 	ChevronsDownUp,
 	ChevronsUpDown,
 	ClipboardCopy,
+	LocateFixed,
 	Pin,
 } from "lucide-react";
 import { HeadingCache, Notice } from "obsidian";
@@ -22,6 +23,8 @@ interface TocToolbarProps {
 	onCollapseAll: () => void;
 	onExpandAll: () => void;
 	hasAnyCollapsed: boolean;
+	onLocateActiveHeading: () => void;
+	canLocateActiveHeading: boolean;
 }
 
 export const TocToolbar: FC<TocToolbarProps> = ({
@@ -29,6 +32,8 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 	onCollapseAll,
 	onExpandAll,
 	hasAnyCollapsed,
+	onLocateActiveHeading,
+	canLocateActiveHeading,
 }) => {
 	const settingsStore = useSettingsStore();
 	const settings = usePluginSettings(settingsStore);
@@ -177,6 +182,18 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 				>
 					<span className="NToc__toc-toolbar-button-icon">
 						<ChevronDown size={16} />
+					</span>
+				</button>
+			)}
+			{toolbarButtons.locateActiveHeading && (
+				<button
+					className="NToc__toc-toolbar-button"
+					aria-label={LL.tools.locateActiveHeading()}
+					disabled={!canLocateActiveHeading}
+					onClick={onLocateActiveHeading}
+				>
+					<span className="NToc__toc-toolbar-button-icon">
+						<LocateFixed size={16} />
 					</span>
 				</button>
 			)}

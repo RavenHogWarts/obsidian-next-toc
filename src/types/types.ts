@@ -11,6 +11,7 @@ interface IToolbarButtons {
 	rightOffset: boolean;
 	upOffset: boolean;
 	downOffset: boolean;
+	locateActiveHeading: boolean;
 	copyTOC: boolean;
 }
 
@@ -84,6 +85,7 @@ export const DEFAULT_SETTINGS: IPluginSettings = {
 			rightOffset: true,
 			upOffset: true,
 			downOffset: true,
+			locateActiveHeading: true,
 			copyTOC: true,
 		},
 		returnToCursor: {

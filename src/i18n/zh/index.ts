@@ -167,6 +167,10 @@ const zh = {
 					name: "向下移动",
 					desc: "将目录向下移动一步",
 				},
+				locateActiveHeading: {
+					name: "定位到当前标题",
+					desc: "滚动目录列表，使当前活动的标题进入可视范围",
+				},
 				copyTOC: {
 					name: "复制目录",
 					desc: "将目录复制到剪贴板",
@@ -236,6 +240,7 @@ const zh = {
 		rightOffset: "向右偏移",
 		upOffset: "向上移动",
 		downOffset: "向下移动",
+		locateActiveHeading: "定位到当前标题",
 		copyTOC: "复制目录到剪贴板",
 		returnNavigation: "返回导航",
 		returnToCursor: "返回光标位置",
