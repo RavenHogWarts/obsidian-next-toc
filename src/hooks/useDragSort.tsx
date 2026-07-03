@@ -3,7 +3,7 @@ import {
 	DragEndEvent,
 	DragOverEvent,
 	DragStartEvent,
-	PointerSensor,
+	TouchSensor,
 	useSensor,
 	useSensors,
 } from "@dnd-kit/core";
@@ -80,7 +80,7 @@ export const useDragSort = (
 	);
 
 	const sensors = useSensors(
-		useSensor(PointerSensor, {
+		useSensor(TouchSensor, {
 			activationConstraint: {
 				delay: LONG_PRESS_MS,
 				tolerance: POINTER_TOLERANCE_PX,
@@ -93,6 +93,7 @@ export const useDragSort = (
 		setDragState(INITIAL_DRAG_STATE);
 		clientYRef.current = null;
 		dragIndexRef.current = null;
+		suppressClickRef.current = false;
 		if (rafIdRef.current !== null) {
 			window.cancelAnimationFrame(rafIdRef.current);
 			rafIdRef.current = null;
@@ -389,6 +390,71 @@ export const useDragSort = (
 		return true;
 	}, []);
 
+	// ---- 桌面端鼠标拖拽（无 MouseSensor） ----
+	const startMouseDrag = useCallback(
+		(index: number) => {
+			if (!enabled) return;
+			suppressClickRef.current = true;
+			dragIndexRef.current = index;
+			setDragReadyIndex(index);
+			setDragState({
+				phase: "dragging",
+				isDragging: true,
+				dragIndex: index,
+				overIndex: null,
+				dropPosition: null,
+			});
+		},
+		[enabled],
+	);
+
+	const updateMouseDrag = useCallback(
+		(clientY: number) => {
+			if (rafIdRef.current !== null) return;
+			rafIdRef.current = window.requestAnimationFrame(() => {
+				rafIdRef.current = null;
+				const target = resolveDropTarget(clientY);
+				if (!target) return;
+				setDragState((prev) => {
+					if (prev.phase !== "dragging") return prev;
+					if (
+						prev.overIndex === target.overIndex &&
+						prev.dropPosition === target.dropPosition
+					) {
+						return prev;
+					}
+					return {
+						...prev,
+						overIndex: target.overIndex,
+						dropPosition: target.dropPosition,
+					};
+				});
+			});
+		},
+		[resolveDropTarget],
+	);
+
+	const endMouseDrag = useCallback(
+		async (clientY: number | null) => {
+			const sourceIndex = dragIndexRef.current;
+			const target = resolveDropTarget(clientY);
+
+			if (
+				sourceIndex === null ||
+				!target ||
+				(target.overIndex === sourceIndex &&
+					target.dropPosition === "before")
+			) {
+				resetInteraction();
+				return;
+			}
+
+			await applyDrop(sourceIndex, target.overIndex, target.dropPosition);
+			resetInteraction();
+		},
+		[resolveDropTarget, applyDrop, resetInteraction],
+	);
+
 	return {
 		sensors,
 		itemIds,
@@ -404,5 +470,8 @@ export const useDragSort = (
 		handleDragEnd,
 		handleDragCancel: (_event: DragCancelEvent) => handleDragCancel(),
 		consumeLongPressClick,
+		startMouseDrag,
+		updateMouseDrag,
+		endMouseDrag,
 	};
 };

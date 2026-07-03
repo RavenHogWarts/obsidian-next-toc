@@ -368,12 +368,6 @@
 	.NToc__toc-item-content {
 		max-width: auto;
 	}
-
-	.NToc__group-indicators {
-		padding: 0.5rem;
-		max-height: 30dvh;
-		min-height: fit-content;
-	}
 }
 
 /* Modal 特殊处理 */

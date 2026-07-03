@@ -175,15 +175,41 @@
 }
 
 .NToc__toc-item-container--dragging {
-	opacity: 0.35;
+	background: color-mix(in srgb, var(--interactive-accent) 12%, transparent);
+	border-radius: 5px;
+	pointer-events: none;
 }
 
 .NToc__toc-item-container--drag-over-before {
-	box-shadow: inset 0 2px 0 0 var(--interactive-accent);
-	border-radius: 5px;
+	position: relative;
+
+	&::before {
+		content: "";
+		position: absolute;
+		top: -3px;
+		left: 0;
+		right: 0;
+		height: 3px;
+		background: var(--interactive-accent);
+		border-radius: 2px;
+		pointer-events: none;
+		z-index: 1;
+	}
 }
 
 .NToc__toc-item-container--drag-over-after {
-	box-shadow: inset 0 -2px 0 0 var(--interactive-accent);
-	border-radius: 5px;
+	position: relative;
+
+	&::after {
+		content: "";
+		position: absolute;
+		bottom: -3px;
+		left: 0;
+		right: 0;
+		height: 3px;
+		background: var(--interactive-accent);
+		border-radius: 2px;
+		pointer-events: none;
+		z-index: 1;
+	}
 }

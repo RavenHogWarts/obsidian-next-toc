@@ -1,5 +1,4 @@
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
+import { useDraggable } from "@dnd-kit/core";
 import { useHeadingNumberState } from "@src/hooks/useHeadingNumberState";
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import useSettingsStore from "@src/hooks/useSettingsStore";
@@ -111,31 +110,14 @@ export const TocItem: FC<TocItemProps> = ({
 		attributes,
 		listeners,
 		setNodeRef,
-		transform,
-		transition,
-		isDragging: sortableIsDragging,
-	} = useSortable({
+	} = useDraggable({
 		id: dndId ?? `toc-heading-${headingIndex}`,
 		disabled: !enableDrag,
 	});
 
-	const dragTransform = sortableIsDragging
-		? CSS.Transform.toString(transform)
-		: null;
-	const sensorPointerDown = listeners?.onPointerDown;
-
 	return (
 		<div
 			ref={enableDrag ? setNodeRef : undefined}
-			style={
-				dragTransform
-					? {
-							transform: dragTransform,
-							transition: transition ?? undefined,
-							zIndex: 2,
-						}
-					: undefined
-			}
 			className={`NToc__toc-item-container${isDragging ? " NToc__toc-item-container--dragging" : ""}${isDragOver && dragOverPosition === "before" ? " NToc__toc-item-container--drag-over-before" : ""}${isDragOver && dragOverPosition === "after" ? " NToc__toc-item-container--drag-over-after" : ""}${isDragReady ? " NToc__toc-item-container--drag-ready" : ""}`}
 			data-index={headingIndex}
 			data-level={heading.level}
@@ -145,14 +127,6 @@ export const TocItem: FC<TocItemProps> = ({
 			data-visible={headingVisible}
 			{...(enableDrag ? attributes : {})}
 			{...(enableDrag ? listeners : {})}
-			onPointerDown={
-				enableDrag
-					? (e) => {
-							onPointerDown?.(e, headingIndex);
-							sensorPointerDown?.(e);
-						}
-					: undefined
-			}
 			onClick={() => {
 				if (enableDrag && consumeLongPressClick?.()) return;
 				void scrollToHeading(currentView, heading);

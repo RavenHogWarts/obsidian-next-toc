@@ -1,9 +1,7 @@
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import {
-	SortableContext,
-	verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
-import { useActiveHeadingScroll } from "@src/hooks/useActiveHeadingScroll";
+	useActiveHeadingScroll,
+} from "@src/hooks/useActiveHeadingScroll";
 import { useDragSort } from "@src/hooks/useDragSort";
 import { useHeadingNumbering } from "@src/hooks/useHeadingNumbering";
 import usePluginSettings from "@src/hooks/usePluginSettings";
@@ -16,7 +14,7 @@ import { useTocVisibility } from "@src/hooks/useTocVisibility";
 import calculateActualDepth from "@src/utils/calculateActualDepth";
 import hasChildren from "@src/utils/hasChildren";
 import { HeadingCache, MarkdownView } from "obsidian";
-import { FC, useEffect, useMemo, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ProgressCircle } from "../progress-circle/ProgressCircle";
 import { TocIndicator } from "../toc-indicator/TocIndicator";
 import { TocItem } from "../toc-item/TocItem";
@@ -91,7 +89,6 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 
 	const {
 		sensors,
-		itemIds,
 		dragState,
 		dragReadyIndex,
 		interactionActive,
@@ -102,17 +99,75 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 		handleDragEnd,
 		handleDragCancel,
 		consumeLongPressClick,
+		startMouseDrag,
+		updateMouseDrag,
+		endMouseDrag,
 	} = useDragSort(
 		currentView,
 		headings,
 		settings.render.enableDragSort,
 		NTocGroupTocItemsRef,
 	);
-	const visibleItemIds = useMemo(
-		() =>
-			visibleItems.map(({ index }) => itemIds[index] ?? getItemId(index)),
-		[getItemId, itemIds, visibleItems],
+
+	// 桌面端鼠标拖拽事件
+	const mouseDragRef = useRef<{
+		startY: number;
+		startIndex: number | null;
+		dragging: boolean;
+	}>({ startY: 0, startIndex: null, dragging: false });
+
+	const handleMouseDownOnItems = useCallback(
+		(e: React.MouseEvent) => {
+			if (e.button !== 0 || !settings.render.enableDragSort) return;
+			const target = (e.target as HTMLElement).closest<HTMLElement>(
+				"[data-index]",
+			);
+			if (!target) return;
+			const idx = Number(target.dataset.index);
+			if (!Number.isInteger(idx)) return;
+			mouseDragRef.current = {
+				startY: e.clientY,
+				startIndex: idx,
+				dragging: false,
+			};
+		},
+		[settings.render.enableDragSort],
 	);
+
+	useEffect(() => {
+		if (!settings.render.enableDragSort) return;
+
+		const onMouseMove = (e: MouseEvent) => {
+			const md = mouseDragRef.current;
+			if (md.startIndex === null) return;
+			if (!md.dragging) {
+				if (Math.abs(e.clientY - md.startY) > 5) {
+					md.dragging = true;
+					startMouseDrag(md.startIndex);
+				}
+				return;
+			}
+			updateMouseDrag(e.clientY);
+		};
+
+		const onMouseUp = (e: MouseEvent) => {
+			const md = mouseDragRef.current;
+			if (md.startIndex === null) return;
+			if (md.dragging) {
+				void endMouseDrag(e.clientY);
+			}
+			md.startIndex = null;
+			md.dragging = false;
+		};
+
+		window.addEventListener("mousemove", onMouseMove);
+		window.addEventListener("mouseup", onMouseUp);
+		return () => {
+			window.removeEventListener("mousemove", onMouseMove);
+			window.removeEventListener("mouseup", onMouseUp);
+		};
+	}, [settings.render.enableDragSort, startMouseDrag, updateMouseDrag, endMouseDrag]);
+
 	const scrollRefs = useMemo(
 		() => [NTocGroupTocItemsRef, NTocGroupIndicatorsRef],
 		[],
@@ -165,6 +220,17 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 			NTocGroupTocItemsRef.current.style.width = `${settings.toc.width}px`;
 		}
 	}, [shouldShowToc, settings.toc.width]);
+
+	const normalizedDrop = useMemo(() => {
+		if (dragState.overIndex === null || dragState.dropPosition === null) {
+			return { overIndex: null as number | null, position: null as "before" | "after" | null };
+		}
+		// 将 "before" 转为上一项的 "after"，确保相邻项之间只显示一条指示线
+		if (dragState.dropPosition === "before" && dragState.overIndex > 0) {
+			return { overIndex: dragState.overIndex - 1, position: "after" as const };
+		}
+		return { overIndex: dragState.overIndex, position: dragState.dropPosition };
+	}, [dragState.overIndex, dragState.dropPosition]);
 
 	return (
 		<div
@@ -231,6 +297,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 						<div
 							ref={NTocGroupTocItemsRef}
 							className={`NToc__toc-items ${isMouseDragging ? "NToc__toc-items-resizing" : ""} ${dragState.isDragging ? "NToc__toc-items--dragging" : ""}`}
+							onMouseDown={handleMouseDownOnItems}
 						>
 							<div
 								className="NToc__group-resize"
@@ -252,11 +319,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 								onDragCancel={handleDragCancel}
 								sensors={sensors}
 							>
-								<SortableContext
-									items={visibleItemIds}
-									strategy={verticalListSortingStrategy}
-								>
-									{visibleItems.map(({ heading, index }) => (
+								{visibleItems.map(({ heading, index }) => (
 										<TocItem
 											key={`toc-item-${index}-${heading.position.start.line}`}
 											currentView={currentView}
@@ -291,11 +354,11 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 												dragState.dragIndex === index
 											}
 											isDragOver={
-												dragState.overIndex === index
-											}
-											dragOverPosition={
-												dragState.overIndex === index
-													? dragState.dropPosition
+											normalizedDrop.overIndex === index
+										}
+										dragOverPosition={
+											normalizedDrop.overIndex === index
+												? normalizedDrop.position
 													: null
 											}
 											isDragReady={
@@ -307,7 +370,6 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 											}
 										/>
 									))}
-								</SortableContext>
 							</DndContext>
 						</div>
 					)}
