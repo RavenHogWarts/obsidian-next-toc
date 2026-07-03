@@ -39,7 +39,7 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 	const scrollProgress = useScrollProgress(currentView);
 
 	// 使用折叠管理 Hook
-	const { collapsedSet, toggleCollapsedAt } = useTocCollapse(
+	const { isCollapsed, toggleCollapsedAt } = useTocCollapse(
 		currentView,
 		headings,
 	);
@@ -54,7 +54,7 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 	// 使用可见性计算 Hook
 	const { visibilityMap, shouldShowToc } = useTocVisibility({
 		headings,
-		collapsedSet,
+		isCollapsed,
 		skipHeadingLevels: settings.render.skipHeadingLevels,
 		showWhenSingleHeading: settings.render.showWhenSingleHeading,
 	});
@@ -164,7 +164,7 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 									index,
 								)}
 								headingChildren={hasChildren(index, headings)}
-								isCollapsedParent={collapsedSet.has(index)}
+								isCollapsedParent={isCollapsed(index)}
 								onToggleCollapse={toggleCollapsedAt}
 								enableDrag={settings.render.enableDragSort}
 								dndId={getItemId(index)}

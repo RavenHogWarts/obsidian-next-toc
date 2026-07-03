@@ -3,7 +3,11 @@ import { useMemo } from "react";
 
 interface UseTocVisibilityParams {
 	headings: HeadingCache[];
-	collapsedSet: Set<number>;
+	/**
+	 * 判定指定下标标题是否处于折叠态。
+	 * 由调用方基于内容签名提供，与下标解耦。
+	 */
+	isCollapsed: (index: number) => boolean;
 	skipHeadingLevels: number[];
 	showWhenSingleHeading: boolean;
 }
@@ -20,7 +24,7 @@ interface UseTocVisibilityReturn {
  */
 export const useTocVisibility = ({
 	headings,
-	collapsedSet,
+	isCollapsed,
 	skipHeadingLevels,
 	showWhenSingleHeading,
 }: UseTocVisibilityParams): UseTocVisibilityReturn => {
@@ -49,13 +53,13 @@ export const useTocVisibility = ({
 			result[i] = collapsedLevels.length === 0;
 
 			// 若当前项为折叠父节点，则把其层级压栈，影响其后代
-			if (collapsedSet.has(i)) {
+			if (isCollapsed(i)) {
 				collapsedLevels.push(level);
 			}
 		}
 
 		return result;
-	}, [headings, collapsedSet, skipHeadingLevels]);
+	}, [headings, isCollapsed, skipHeadingLevels]);
 
 	const shouldShowToc = useMemo(() => {
 		if (skipHeadingLevels.length > 0) {
