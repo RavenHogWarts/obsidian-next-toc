@@ -53,8 +53,13 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 		alwaysExpand: settings.toc.alwaysExpand,
 	});
 
-	const { collapsedSet, toggleCollapsedAt, onCollapseAll, onExpandAll } =
-		useTocCollapse(currentView, headings);
+	const {
+		collapsedSet,
+		isCollapsed,
+		toggleCollapsedAt,
+		onCollapseAll,
+		onExpandAll,
+	} = useTocCollapse(currentView, headings);
 
 	const generateHeadingNumber = useHeadingNumbering(
 		headings,
@@ -64,7 +69,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 
 	const { visibilityMap, shouldShowToc } = useTocVisibility({
 		headings,
-		collapsedSet,
+		isCollapsed,
 		skipHeadingLevels: settings.render.skipHeadingLevels,
 		showWhenSingleHeading: settings.render.showWhenSingleHeading,
 	});
@@ -308,9 +313,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 											index,
 											headings,
 										)}
-										isCollapsedParent={collapsedSet.has(
-											index,
-										)}
+										isCollapsedParent={isCollapsed(index)}
 										onToggleCollapse={toggleCollapsedAt}
 										enableDrag={
 											settings.render.enableDragSort

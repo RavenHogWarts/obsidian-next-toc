@@ -1,43 +1,64 @@
 import hasChildren from "@src/utils/hasChildren";
 import { HeadingCache, MarkdownView } from "obsidian";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
+
+/**
+ * 生成标题的折叠键（基于内容签名，与数组下标解耦）。
+ * 使折叠态在标题重排 / headings 引用变化时保持稳定，
+ * 修复「拖拽排序后自动展开」的问题。
+ */
+export const getCollapseKey = (heading: HeadingCache): string =>
+	`${heading.level}::${heading.heading}`;
 
 /**
  * TOC 折叠/展开状态管理的 Hook
- * @param currentView 当前视图
+ *
+ * 折叠态以 `${level}::${heading}` 内容签名作为键，而非数组下标。
+ * 这样在拖拽排序、editor-change 热刷新、metadataCache 异步修正等
+ * 导致 headings 引用变化的场景下，折叠状态都能保持稳定。
+ *
+ * @param currentView 当前视图（保留以兼容调用方，内部未使用）
  * @param headings 标题列表
- * @returns 折叠状态集合、切换折叠函数、折叠全部函数、展开全部函数
  */
 export const useTocCollapse = (
 	currentView: MarkdownView,
-	headings: HeadingCache[]
+	headings: HeadingCache[],
 ) => {
-	const [collapsedSet, setCollapsedSet] = useState<Set<number>>(new Set());
+	const [collapsedSet, setCollapsedSet] = useState<Set<string>>(new Set());
 
-	// 当视图或标题列表变化时，重置折叠状态
-	useEffect(() => {
-		setCollapsedSet(new Set());
-	}, [currentView, headings]);
+	const isCollapsed = useCallback(
+		(index: number): boolean => {
+			const heading = headings[index];
+			return heading ? collapsedSet.has(getCollapseKey(heading)) : false;
+		},
+		[headings, collapsedSet],
+	);
 
-	const toggleCollapsedAt = useCallback((index: number) => {
-		setCollapsedSet((prev) => {
-			const next = new Set(prev);
-			if (next.has(index)) {
-				next.delete(index);
-			} else {
-				next.add(index);
-			}
-			return next;
-		});
-	}, []);
+	const toggleCollapsedAt = useCallback(
+		(index: number) => {
+			const heading = headings[index];
+			if (!heading) return;
+			const key = getCollapseKey(heading);
+			setCollapsedSet((prev) => {
+				const next = new Set(prev);
+				if (next.has(key)) {
+					next.delete(key);
+				} else {
+					next.add(key);
+				}
+				return next;
+			});
+		},
+		[headings],
+	);
 
 	const onCollapseAll = useCallback(() => {
 		setCollapsedSet(
 			new Set(
 				headings
-					.map((_, index) => index)
-					.filter((index) => hasChildren(index, headings))
-			)
+					.filter((_, index) => hasChildren(index, headings))
+					.map((heading) => getCollapseKey(heading)),
+			),
 		);
 	}, [headings]);
 
@@ -47,6 +68,7 @@ export const useTocCollapse = (
 
 	return {
 		collapsedSet,
+		isCollapsed,
 		toggleCollapsedAt,
 		onCollapseAll,
 		onExpandAll,
