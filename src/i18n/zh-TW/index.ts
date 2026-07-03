@@ -119,12 +119,12 @@ const zh_TW = {
 		tool: {
 			name: "工具",
 			headings: {
-				returnButtons: "導航按鈕組",
-				toolbarButtons: "工具列按鈕",
+				returnButtons: "文件導覽按鈕",
+				toolbarButtons: "目錄工具列按鈕",
 			},
 			useToolbar: {
 				name: "使用工具列",
-				desc: "顯示帶有導覽按鈕的工具列",
+				desc: "顯示用於控制目錄的工具列（固定、位置、展開、偏移、複製）",
 			},
 			toolbarAlwaysShow: {
 				name: "目錄工具列常駐顯示",

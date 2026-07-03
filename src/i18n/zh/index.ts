@@ -119,12 +119,12 @@ const zh = {
 		tool: {
 			name: "工具",
 			headings: {
-				returnButtons: "导航按钮组",
-				toolbarButtons: "工具栏按钮",
+				returnButtons: "文档导航按钮",
+				toolbarButtons: "目录工具栏按钮",
 			},
 			useToolbar: {
 				name: "使用工具栏",
-				desc: "显示带有导航按钮的工具栏",
+				desc: "显示用于控制目录的工具栏（固定、位置、展开、偏移、复制）",
 			},
 			toolbarAlwaysShow: {
 				name: "目录工具栏常驻显示",
