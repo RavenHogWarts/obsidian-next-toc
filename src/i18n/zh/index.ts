@@ -120,6 +120,7 @@ const zh = {
 			name: "工具",
 			headings: {
 				returnButtons: "导航按钮组",
+				toolbarButtons: "工具栏按钮",
 			},
 			useToolbar: {
 				name: "使用工具栏",
@@ -136,6 +137,40 @@ const zh = {
 			showProgressCircle: {
 				name: "显示进度圆环",
 				desc: "在指示器上方显示阅读进度，即收缩目录后",
+			},
+			toolbarButtons: {
+				pinTOC: {
+					name: "固定/取消固定目录",
+					desc: "切换目录是否常驻展开",
+				},
+				changePosition: {
+					name: "更改位置",
+					desc: "在左右两侧之间切换目录位置",
+				},
+				expandCollapse: {
+					name: "展开/收起目录项",
+					desc: "一键展开或收起所有目录项",
+				},
+				leftOffset: {
+					name: "向左偏移",
+					desc: "将目录向左移动一步",
+				},
+				rightOffset: {
+					name: "向右偏移",
+					desc: "将目录向右移动一步",
+				},
+				upOffset: {
+					name: "向上移动",
+					desc: "将目录向上移动一步",
+				},
+				downOffset: {
+					name: "向下移动",
+					desc: "将目录向下移动一步",
+				},
+				copyTOC: {
+					name: "复制目录",
+					desc: "将目录复制到剪贴板",
+				},
 			},
 			returnToCursor: {
 				name: "返回光标",

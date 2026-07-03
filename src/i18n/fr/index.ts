@@ -126,6 +126,7 @@ const fr = {
 			name: "Outils",
 			headings: {
 				returnButtons: "Groupe de boutons de navigation",
+				toolbarButtons: "Boutons de la barre d'outils",
 			},
 			useToolbar: {
 				name: "Utiliser la barre d'outils",
@@ -142,6 +143,40 @@ const fr = {
 			showProgressCircle: {
 				name: "Utiliser le cercle de progression",
 				desc: "Afficher l'indicateur circulaire de progression de lecture au-dessus du bouton de basculement, lorsque la table des matières est réduite",
+			},
+			toolbarButtons: {
+				pinTOC: {
+					name: "Épingler/Désépingler la table des matières",
+					desc: "Basculer le maintien développé de la table des matières",
+				},
+				changePosition: {
+					name: "Changer de position",
+					desc: "Basculer la table des matières entre la gauche et la droite",
+				},
+				expandCollapse: {
+					name: "Développer/Réduire les éléments",
+					desc: "Développer ou réduire tous les éléments à la fois",
+				},
+				leftOffset: {
+					name: "Décalage à gauche",
+					desc: "Déplacer la table des matières d'un pas vers la gauche",
+				},
+				rightOffset: {
+					name: "Décalage à droite",
+					desc: "Déplacer la table des matières d'un pas vers la droite",
+				},
+				upOffset: {
+					name: "Déplacer vers le haut",
+					desc: "Déplacer la table des matières d'un pas vers le haut",
+				},
+				downOffset: {
+					name: "Déplacer vers le bas",
+					desc: "Déplacer la table des matières d'un pas vers le bas",
+				},
+				copyTOC: {
+					name: "Copier la table des matières",
+					desc: "Copier la table des matières dans le presse-papiers",
+				},
 			},
 			returnToCursor: {
 				name: "Retourner au curseur",

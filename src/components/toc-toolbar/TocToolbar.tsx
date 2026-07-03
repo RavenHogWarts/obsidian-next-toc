@@ -32,6 +32,7 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 }) => {
 	const settingsStore = useSettingsStore();
 	const settings = usePluginSettings(settingsStore);
+	const toolbarButtons = settings.tool.toolbarButtons;
 
 	const handleOffsetChange = useCallback(
 		async (direction: "left" | "right") => {
@@ -78,104 +79,120 @@ export const TocToolbar: FC<TocToolbarProps> = ({
 
 	return (
 		<div className="NToc__toc-toolbar">
-			<button
-				className={`NToc__toc-toolbar-button  ${
-					settings.toc.alwaysExpand ? "active" : ""
-				}`}
-				aria-label={LL.tools.pinTOC()}
-				onClick={() => {
-					void settingsStore.updateSettingByPath(
-						"toc.alwaysExpand",
-						!settings.toc.alwaysExpand,
-					);
-				}}
-			>
-				<span className="NToc__toc-toolbar-button-icon">
-					<Pin size={16} />
-				</span>
-			</button>
-			<button
-				className="NToc__toc-toolbar-button"
-				aria-label={LL.tools.changePosition()}
-				onClick={() => {
-					void settingsStore.updateSettingByPath(
-						"toc.position",
-						settings.toc.position === "left" ? "right" : "left",
-					);
-				}}
-			>
-				<span className="NToc__toc-toolbar-button-icon">
-					<ArrowLeftRight size={16} />
-				</span>
-			</button>
-			<button
-				className="NToc__toc-toolbar-button"
-				aria-label={LL.tools.expandCollapse()}
-				onClick={hasAnyCollapsed ? onExpandAll : onCollapseAll}
-			>
-				<span className="NToc__toc-toolbar-button-icon">
-					{hasAnyCollapsed ? (
-						<ChevronsUpDown size={16} />
-					) : (
-						<ChevronsDownUp size={16} />
-					)}
-				</span>
-			</button>
-			<button
-				className="NToc__toc-toolbar-button"
-				aria-label={LL.tools.leftOffset()}
-				onClick={() => {
-					void handleOffsetChange("left");
-				}}
-			>
-				<span className="NToc__toc-toolbar-button-icon">
-					<ChevronLeft size={16} />
-				</span>
-			</button>
-			<button
-				className="NToc__toc-toolbar-button"
-				aria-label={LL.tools.rightOffset()}
-				onClick={() => {
-					void handleOffsetChange("right");
-				}}
-			>
-				<span className="NToc__toc-toolbar-button-icon">
-					<ChevronRight size={16} />
-				</span>
-			</button>
-			<button
-				className="NToc__toc-toolbar-button"
-				aria-label={LL.tools.upOffset()}
-				onClick={() => {
-					void handleOffsetYChange("up");
-				}}
-			>
-				<span className="NToc__toc-toolbar-button-icon">
-					<ChevronUp size={16} />
-				</span>
-			</button>
-			<button
-				className="NToc__toc-toolbar-button"
-				aria-label={LL.tools.downOffset()}
-				onClick={() => {
-					void handleOffsetYChange("down");
-				}}
-			>
-				<span className="NToc__toc-toolbar-button-icon">
-					<ChevronDown size={16} />
-				</span>
-			</button>
-			<button
-				className="NToc__toc-toolbar-button"
-				aria-label={LL.tools.copyTOC()}
-				onClick={() => {
-					void handleCopyToClipboard();
-				}}
-			>
-				<span className="NToc__toc-toolbar-button-icon">
-					<ClipboardCopy size={16} />
-				</span>
-			</button>
+			{toolbarButtons.pinTOC && (
+				<button
+					className={`NToc__toc-toolbar-button  ${
+						settings.toc.alwaysExpand ? "active" : ""
+					}`}
+					aria-label={LL.tools.pinTOC()}
+					onClick={() => {
+						void settingsStore.updateSettingByPath(
+							"toc.alwaysExpand",
+							!settings.toc.alwaysExpand,
+						);
+					}}
+				>
+					<span className="NToc__toc-toolbar-button-icon">
+						<Pin size={16} />
+					</span>
+				</button>
+			)}
+			{toolbarButtons.changePosition && (
+				<button
+					className="NToc__toc-toolbar-button"
+					aria-label={LL.tools.changePosition()}
+					onClick={() => {
+						void settingsStore.updateSettingByPath(
+							"toc.position",
+							settings.toc.position === "left" ? "right" : "left",
+						);
+					}}
+				>
+					<span className="NToc__toc-toolbar-button-icon">
+						<ArrowLeftRight size={16} />
+					</span>
+				</button>
+			)}
+			{toolbarButtons.expandCollapse && (
+				<button
+					className="NToc__toc-toolbar-button"
+					aria-label={LL.tools.expandCollapse()}
+					onClick={hasAnyCollapsed ? onExpandAll : onCollapseAll}
+				>
+					<span className="NToc__toc-toolbar-button-icon">
+						{hasAnyCollapsed ? (
+							<ChevronsUpDown size={16} />
+						) : (
+							<ChevronsDownUp size={16} />
+						)}
+					</span>
+				</button>
+			)}
+			{toolbarButtons.leftOffset && (
+				<button
+					className="NToc__toc-toolbar-button"
+					aria-label={LL.tools.leftOffset()}
+					onClick={() => {
+						void handleOffsetChange("left");
+					}}
+				>
+					<span className="NToc__toc-toolbar-button-icon">
+						<ChevronLeft size={16} />
+					</span>
+				</button>
+			)}
+			{toolbarButtons.rightOffset && (
+				<button
+					className="NToc__toc-toolbar-button"
+					aria-label={LL.tools.rightOffset()}
+					onClick={() => {
+						void handleOffsetChange("right");
+					}}
+				>
+					<span className="NToc__toc-toolbar-button-icon">
+						<ChevronRight size={16} />
+					</span>
+				</button>
+			)}
+			{toolbarButtons.upOffset && (
+				<button
+					className="NToc__toc-toolbar-button"
+					aria-label={LL.tools.upOffset()}
+					onClick={() => {
+						void handleOffsetYChange("up");
+					}}
+				>
+					<span className="NToc__toc-toolbar-button-icon">
+						<ChevronUp size={16} />
+					</span>
+				</button>
+			)}
+			{toolbarButtons.downOffset && (
+				<button
+					className="NToc__toc-toolbar-button"
+					aria-label={LL.tools.downOffset()}
+					onClick={() => {
+						void handleOffsetYChange("down");
+					}}
+				>
+					<span className="NToc__toc-toolbar-button-icon">
+						<ChevronDown size={16} />
+					</span>
+				</button>
+			)}
+			{toolbarButtons.copyTOC && (
+				<button
+					className="NToc__toc-toolbar-button"
+					aria-label={LL.tools.copyTOC()}
+					onClick={() => {
+						void handleCopyToClipboard();
+					}}
+				>
+					<span className="NToc__toc-toolbar-button-icon">
+						<ClipboardCopy size={16} />
+					</span>
+				</button>
+			)}
 		</div>
 	);
 };

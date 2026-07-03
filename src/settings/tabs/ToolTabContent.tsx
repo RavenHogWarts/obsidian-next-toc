@@ -87,6 +87,157 @@ export const ToolTabContent: FC = () => {
 
 			<ObsidianSetting
 				slots={{
+					name: LL.settings.tool.headings.toolbarButtons(),
+				}}
+				heading={true}
+			/>
+
+			<ObsidianSetting
+				slots={{
+					name: LL.settings.tool.toolbarButtons.pinTOC.name(),
+					desc: LL.settings.tool.toolbarButtons.pinTOC.desc(),
+					control: (
+						<ObsidianSetting.Toggle
+							value={settings.tool.toolbarButtons.pinTOC}
+							onChange={(value) => {
+								void settingsStore.updateSettingByPath(
+									"tool.toolbarButtons.pinTOC",
+									value,
+								);
+							}}
+						/>
+					),
+				}}
+			/>
+
+			<ObsidianSetting
+				slots={{
+					name: LL.settings.tool.toolbarButtons.changePosition.name(),
+					desc: LL.settings.tool.toolbarButtons.changePosition.desc(),
+					control: (
+						<ObsidianSetting.Toggle
+							value={settings.tool.toolbarButtons.changePosition}
+							onChange={(value) => {
+								void settingsStore.updateSettingByPath(
+									"tool.toolbarButtons.changePosition",
+									value,
+								);
+							}}
+						/>
+					),
+				}}
+			/>
+
+			<ObsidianSetting
+				slots={{
+					name: LL.settings.tool.toolbarButtons.expandCollapse.name(),
+					desc: LL.settings.tool.toolbarButtons.expandCollapse.desc(),
+					control: (
+						<ObsidianSetting.Toggle
+							value={settings.tool.toolbarButtons.expandCollapse}
+							onChange={(value) => {
+								void settingsStore.updateSettingByPath(
+									"tool.toolbarButtons.expandCollapse",
+									value,
+								);
+							}}
+						/>
+					),
+				}}
+			/>
+
+			<ObsidianSetting
+				slots={{
+					name: LL.settings.tool.toolbarButtons.leftOffset.name(),
+					desc: LL.settings.tool.toolbarButtons.leftOffset.desc(),
+					control: (
+						<ObsidianSetting.Toggle
+							value={settings.tool.toolbarButtons.leftOffset}
+							onChange={(value) => {
+								void settingsStore.updateSettingByPath(
+									"tool.toolbarButtons.leftOffset",
+									value,
+								);
+							}}
+						/>
+					),
+				}}
+			/>
+
+			<ObsidianSetting
+				slots={{
+					name: LL.settings.tool.toolbarButtons.rightOffset.name(),
+					desc: LL.settings.tool.toolbarButtons.rightOffset.desc(),
+					control: (
+						<ObsidianSetting.Toggle
+							value={settings.tool.toolbarButtons.rightOffset}
+							onChange={(value) => {
+								void settingsStore.updateSettingByPath(
+									"tool.toolbarButtons.rightOffset",
+									value,
+								);
+							}}
+						/>
+					),
+				}}
+			/>
+
+			<ObsidianSetting
+				slots={{
+					name: LL.settings.tool.toolbarButtons.upOffset.name(),
+					desc: LL.settings.tool.toolbarButtons.upOffset.desc(),
+					control: (
+						<ObsidianSetting.Toggle
+							value={settings.tool.toolbarButtons.upOffset}
+							onChange={(value) => {
+								void settingsStore.updateSettingByPath(
+									"tool.toolbarButtons.upOffset",
+									value,
+								);
+							}}
+						/>
+					),
+				}}
+			/>
+
+			<ObsidianSetting
+				slots={{
+					name: LL.settings.tool.toolbarButtons.downOffset.name(),
+					desc: LL.settings.tool.toolbarButtons.downOffset.desc(),
+					control: (
+						<ObsidianSetting.Toggle
+							value={settings.tool.toolbarButtons.downOffset}
+							onChange={(value) => {
+								void settingsStore.updateSettingByPath(
+									"tool.toolbarButtons.downOffset",
+									value,
+								);
+							}}
+						/>
+					),
+				}}
+			/>
+
+			<ObsidianSetting
+				slots={{
+					name: LL.settings.tool.toolbarButtons.copyTOC.name(),
+					desc: LL.settings.tool.toolbarButtons.copyTOC.desc(),
+					control: (
+						<ObsidianSetting.Toggle
+							value={settings.tool.toolbarButtons.copyTOC}
+							onChange={(value) => {
+								void settingsStore.updateSettingByPath(
+									"tool.toolbarButtons.copyTOC",
+									value,
+								);
+							}}
+						/>
+					),
+				}}
+			/>
+
+			<ObsidianSetting
+				slots={{
 					name: LL.settings.tool.headings.returnButtons(),
 				}}
 				heading={true}
