@@ -3,6 +3,17 @@ interface IButtonTool {
 	icon: string;
 }
 
+interface IToolbarButtons {
+	pinTOC: boolean;
+	changePosition: boolean;
+	expandCollapse: boolean;
+	leftOffset: boolean;
+	rightOffset: boolean;
+	upOffset: boolean;
+	downOffset: boolean;
+	copyTOC: boolean;
+}
+
 export type NTocPosition = "left" | "right";
 export type NTocIndicatorMode = "bar" | "dot" | "hidden";
 
@@ -31,6 +42,7 @@ export interface IPluginSettings {
 		toolbarAlwaysShow: boolean;
 		showProgressBar: boolean;
 		showProgressCircle: boolean;
+		toolbarButtons: IToolbarButtons;
 		returnToCursor: IButtonTool;
 		returnToTop: IButtonTool;
 		returnToBottom: IButtonTool;
@@ -64,6 +76,16 @@ export const DEFAULT_SETTINGS: IPluginSettings = {
 		toolbarAlwaysShow: false,
 		showProgressBar: true,
 		showProgressCircle: true,
+		toolbarButtons: {
+			pinTOC: true,
+			changePosition: true,
+			expandCollapse: true,
+			leftOffset: true,
+			rightOffset: true,
+			upOffset: true,
+			downOffset: true,
+			copyTOC: true,
+		},
 		returnToCursor: {
 			enabled: true,
 			icon: "text-cursor-input",

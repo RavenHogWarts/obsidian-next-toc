@@ -335,6 +335,10 @@ type RootTranslation = {
 				 * 导​航​按​钮​组
 				 */
 				returnButtons: string
+				/**
+				 * 工​具​栏​按​钮
+				 */
+				toolbarButtons: string
 			}
 			useToolbar: {
 				/**
@@ -375,6 +379,88 @@ type RootTranslation = {
 				 * 在​指​示​器​上​方​显​示​阅​读​进​度​，​即​收​缩​目​录​后
 				 */
 				desc: string
+			}
+			toolbarButtons: {
+				pinTOC: {
+					/**
+					 * 固​定​/​取​消​固​定​目​录
+					 */
+					name: string
+					/**
+					 * 切​换​目​录​是​否​常​驻​展​开
+					 */
+					desc: string
+				}
+				changePosition: {
+					/**
+					 * 更​改​位​置
+					 */
+					name: string
+					/**
+					 * 在​左​右​两​侧​之​间​切​换​目​录​位​置
+					 */
+					desc: string
+				}
+				expandCollapse: {
+					/**
+					 * 展​开​/​收​起​目​录​项
+					 */
+					name: string
+					/**
+					 * 一​键​展​开​或​收​起​所​有​目​录​项
+					 */
+					desc: string
+				}
+				leftOffset: {
+					/**
+					 * 向​左​偏​移
+					 */
+					name: string
+					/**
+					 * 将​目​录​向​左​移​动​一​步
+					 */
+					desc: string
+				}
+				rightOffset: {
+					/**
+					 * 向​右​偏​移
+					 */
+					name: string
+					/**
+					 * 将​目​录​向​右​移​动​一​步
+					 */
+					desc: string
+				}
+				upOffset: {
+					/**
+					 * 向​上​移​动
+					 */
+					name: string
+					/**
+					 * 将​目​录​向​上​移​动​一​步
+					 */
+					desc: string
+				}
+				downOffset: {
+					/**
+					 * 向​下​移​动
+					 */
+					name: string
+					/**
+					 * 将​目​录​向​下​移​动​一​步
+					 */
+					desc: string
+				}
+				copyTOC: {
+					/**
+					 * 复​制​目​录
+					 */
+					name: string
+					/**
+					 * 将​目​录​复​制​到​剪​贴​板
+					 */
+					desc: string
+				}
 			}
 			returnToCursor: {
 				/**
@@ -918,6 +1004,10 @@ export type TranslationFunctions = {
 				 * 导航按钮组
 				 */
 				returnButtons: () => LocalizedString
+				/**
+				 * 工具栏按钮
+				 */
+				toolbarButtons: () => LocalizedString
 			}
 			useToolbar: {
 				/**
@@ -958,6 +1048,88 @@ export type TranslationFunctions = {
 				 * 在指示器上方显示阅读进度，即收缩目录后
 				 */
 				desc: () => LocalizedString
+			}
+			toolbarButtons: {
+				pinTOC: {
+					/**
+					 * 固定/取消固定目录
+					 */
+					name: () => LocalizedString
+					/**
+					 * 切换目录是否常驻展开
+					 */
+					desc: () => LocalizedString
+				}
+				changePosition: {
+					/**
+					 * 更改位置
+					 */
+					name: () => LocalizedString
+					/**
+					 * 在左右两侧之间切换目录位置
+					 */
+					desc: () => LocalizedString
+				}
+				expandCollapse: {
+					/**
+					 * 展开/收起目录项
+					 */
+					name: () => LocalizedString
+					/**
+					 * 一键展开或收起所有目录项
+					 */
+					desc: () => LocalizedString
+				}
+				leftOffset: {
+					/**
+					 * 向左偏移
+					 */
+					name: () => LocalizedString
+					/**
+					 * 将目录向左移动一步
+					 */
+					desc: () => LocalizedString
+				}
+				rightOffset: {
+					/**
+					 * 向右偏移
+					 */
+					name: () => LocalizedString
+					/**
+					 * 将目录向右移动一步
+					 */
+					desc: () => LocalizedString
+				}
+				upOffset: {
+					/**
+					 * 向上移动
+					 */
+					name: () => LocalizedString
+					/**
+					 * 将目录向上移动一步
+					 */
+					desc: () => LocalizedString
+				}
+				downOffset: {
+					/**
+					 * 向下移动
+					 */
+					name: () => LocalizedString
+					/**
+					 * 将目录向下移动一步
+					 */
+					desc: () => LocalizedString
+				}
+				copyTOC: {
+					/**
+					 * 复制目录
+					 */
+					name: () => LocalizedString
+					/**
+					 * 将目录复制到剪贴板
+					 */
+					desc: () => LocalizedString
+				}
 			}
 			returnToCursor: {
 				/**

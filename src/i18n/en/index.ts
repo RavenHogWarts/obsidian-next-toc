@@ -124,6 +124,7 @@ const en = {
 			name: "Tool",
 			headings: {
 				returnButtons: "Navigation button group",
+				toolbarButtons: "Toolbar buttons",
 			},
 			useToolbar: {
 				name: "Use toolbar",
@@ -140,6 +141,40 @@ const en = {
 			showProgressCircle: {
 				name: "Use progress circle",
 				desc: "Show the circular reading progress indicator above the toggle button, when the toc is collapsed",
+			},
+			toolbarButtons: {
+				pinTOC: {
+					name: "Pin/Unpin TOC",
+					desc: "Toggle whether the TOC stays expanded",
+				},
+				changePosition: {
+					name: "Change position",
+					desc: "Switch the TOC between left and right",
+				},
+				expandCollapse: {
+					name: "Expand/Collapse items",
+					desc: "Expand or collapse all TOC items at once",
+				},
+				leftOffset: {
+					name: "Left offset",
+					desc: "Move the TOC one step to the left",
+				},
+				rightOffset: {
+					name: "Right offset",
+					desc: "Move the TOC one step to the right",
+				},
+				upOffset: {
+					name: "Move up",
+					desc: "Move the TOC one step up",
+				},
+				downOffset: {
+					name: "Move down",
+					desc: "Move the TOC one step down",
+				},
+				copyTOC: {
+					name: "Copy TOC",
+					desc: "Copy the table of contents to the clipboard",
+				},
 			},
 			returnToCursor: {
 				name: "Return to cursor",

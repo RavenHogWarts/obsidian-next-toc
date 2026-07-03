@@ -120,6 +120,7 @@ const zh_TW = {
 			name: "工具",
 			headings: {
 				returnButtons: "導航按鈕組",
+				toolbarButtons: "工具列按鈕",
 			},
 			useToolbar: {
 				name: "使用工具列",
@@ -136,6 +137,40 @@ const zh_TW = {
 			showProgressCircle: {
 				name: "顯示進度圓環",
 				desc: "在指示器上方顯示閱讀進度，即收縮目錄後",
+			},
+			toolbarButtons: {
+				pinTOC: {
+					name: "固定／取消固定目錄",
+					desc: "切換目錄是否常駐展開",
+				},
+				changePosition: {
+					name: "更改位置",
+					desc: "在左右兩側之間切換目錄位置",
+				},
+				expandCollapse: {
+					name: "展開／收合目錄項目",
+					desc: "一鍵展開或收合所有目錄項目",
+				},
+				leftOffset: {
+					name: "向左偏移",
+					desc: "將目錄向左移動一步",
+				},
+				rightOffset: {
+					name: "向右偏移",
+					desc: "將目錄向右移動一步",
+				},
+				upOffset: {
+					name: "向上移動",
+					desc: "將目錄向上移動一步",
+				},
+				downOffset: {
+					name: "向下移動",
+					desc: "將目錄向下移動一步",
+				},
+				copyTOC: {
+					name: "複製目錄",
+					desc: "將目錄複製到剪貼簿",
+				},
 			},
 			returnToCursor: {
 				name: "返回游標",
