@@ -123,12 +123,12 @@ const en = {
 		tool: {
 			name: "Tool",
 			headings: {
-				returnButtons: "Navigation button group",
-				toolbarButtons: "Toolbar buttons",
+				returnButtons: "Document navigation buttons",
+				toolbarButtons: "TOC toolbar buttons",
 			},
 			useToolbar: {
 				name: "Use toolbar",
-				desc: "Show the toolbar with navigation buttons",
+				desc: "Show the toolbar with buttons to control the table of contents (pin, position, expand, offset, copy)",
 			},
 			toolbarAlwaysShow: {
 				name: "Always show TOC toolbar",

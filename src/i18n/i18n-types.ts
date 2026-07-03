@@ -332,11 +332,11 @@ type RootTranslation = {
 			name: string
 			headings: {
 				/**
-				 * 导​航​按​钮​组
+				 * 文​档​导​航​按​钮
 				 */
 				returnButtons: string
 				/**
-				 * 工​具​栏​按​钮
+				 * 目​录​工​具​栏​按​钮
 				 */
 				toolbarButtons: string
 			}
@@ -346,7 +346,7 @@ type RootTranslation = {
 				 */
 				name: string
 				/**
-				 * 显​示​带​有​导​航​按​钮​的​工​具​栏
+				 * 显​示​用​于​控​制​目​录​的​工​具​栏​（​固​定​、​位​置​、​展​开​、​偏​移​、​复​制​）
 				 */
 				desc: string
 			}
@@ -1001,11 +1001,11 @@ export type TranslationFunctions = {
 			name: () => LocalizedString
 			headings: {
 				/**
-				 * 导航按钮组
+				 * 文档导航按钮
 				 */
 				returnButtons: () => LocalizedString
 				/**
-				 * 工具栏按钮
+				 * 目录工具栏按钮
 				 */
 				toolbarButtons: () => LocalizedString
 			}
@@ -1015,7 +1015,7 @@ export type TranslationFunctions = {
 				 */
 				name: () => LocalizedString
 				/**
-				 * 显示带有导航按钮的工具栏
+				 * 显示用于控制目录的工具栏（固定、位置、展开、偏移、复制）
 				 */
 				desc: () => LocalizedString
 			}

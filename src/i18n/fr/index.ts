@@ -125,12 +125,13 @@ const fr = {
 		tool: {
 			name: "Outils",
 			headings: {
-				returnButtons: "Groupe de boutons de navigation",
-				toolbarButtons: "Boutons de la barre d'outils",
+				returnButtons: "Boutons de navigation dans le document",
+				toolbarButtons:
+					"Boutons de la barre d'outils de la table des matières",
 			},
 			useToolbar: {
 				name: "Utiliser la barre d'outils",
-				desc: "Afficher la barre d'outils avec les boutons de navigation",
+				desc: "Afficher la barre d'outils avec les boutons de contrôle de la table des matières (épingler, position, développement, décalage, copie)",
 			},
 			toolbarAlwaysShow: {
 				name: "Toujours afficher la barre d'outils de la table des matières",
