@@ -6,6 +6,7 @@ import {
 import { TocItem } from "@src/components/toc-item/TocItem";
 import { useActiveHeadingScroll } from "@src/hooks/useActiveHeadingScroll";
 import { useHeadingNumbering } from "@src/hooks/useHeadingNumbering";
+import { useJustAddedHeadings } from "@src/hooks/useJustAddedHeadings";
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import { useScrollProgress } from "@src/hooks/useScrollProgress";
 import useSettingsStore from "@src/hooks/useSettingsStore";
@@ -80,6 +81,8 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 		() => getStableHeadingKeys(headings),
 		[headings],
 	);
+	// 方案 C：相对上次渲染净新增的标题，闪一下高亮
+	const justAddedKeys = useJustAddedHeadings(stableKeys);
 	const scrollRefs = useMemo(() => [listItemsRef], []);
 
 	// 使用拖拽排序 Hook
@@ -183,6 +186,7 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 								)}
 								headingChildren={hasChildren(index, headings)}
 								collapsedHidden={collapsedHiddenMap[index]}
+								justAdded={justAddedKeys.has(stableKeys[index])}
 								isCollapsedParent={isCollapsed(index)}
 								onToggleCollapse={toggleCollapsedAt}
 								enableDrag={settings.render.enableDragSort}

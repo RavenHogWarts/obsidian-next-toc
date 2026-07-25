@@ -315,11 +315,12 @@ CSS 经 `postcss-nesting` 处理后由 esbuild 打包（`scripts/esbuild.config.
 
 **Phase 3 · 工具按钮出场（方案 D-1）✅ 已实现（待验证）+ 动效用户开关（待做）**
 - **D-1 工具按钮对称出场** ✅：`TocReturnTools` 展开按钮组从「条件渲染 + `slideIn` keyframe（仅进）」改为**常挂载 + `data-collapsed` 切换**，`display 0.22s allow-discrete` 出场 + `@starting-style` 进场（缩放淡入淡出），删除 `@keyframes slideIn`；随附 `prefers-reduced-motion` 守卫。涉及 `src/components/toc-return-tools/TocReturnTools.tsx` + `.css`。
-- **动效用户开关**（待做）：补 `animationLevel`（off / subtle / full）或 `enableMotion` 设置项（[§6.2](#62-用户可控开关)），映射到根节点 class，让用户可全局关停 A/B/D 的动画（当前仅系统「减弱动效」可关）。涉及 `src/settings/*`、`src/types/types.ts`、`migrateSettings`、i18n（en/zh/zh-TW/fr）。
+- **动效用户开关** ❌ 已取消（用户决定不做）：不新增 `animationLevel` / `enableMotion` 设置项。全局关停动画仍可通过系统「减弱动效」(`prefers-reduced-motion: reduce`) —— 已在各方案落地守卫。
 
-**Phase 4 · 动态高亮与 Tooltip（方案 C / D-2，依赖决策）**
-- 方案 C 新条目高亮（依赖 Phase 2 的稳定 key）；方案 D-2 Tooltip 需产品确认后再排。
-- 涉及：`TocNavigator.tsx` / `NTocViewContent.tsx` 的数据层 diff、（可选）新增 Tooltip 组件。
+**Phase 4 · 动态高亮与 Tooltip（方案 C ✅ 已实现（待验证）/ D-2 待定）**
+- **方案 C 动态注入高亮** ✅：新增 `src/hooks/useJustAddedHeadings.tsx`——按稳定 key diff 出「相对上次渲染**净新增**」的标题（`current.size > prev.size` 才判定，从而**排除逐字编辑标题文本**的误触发；与上次无交集 / 单次新增过多则跳过，排除切换文档 / 大段粘贴；每项 750ms 自动过期以免折叠再展开重复闪）。`TocItem` 透出 `data-just-added`，`TocItem.css` 用 `inset box-shadow` 的 `@keyframes NToc-just-added` 闪一下强调色（位于文字之下、不碰 `background`、不占 `::after`，播完自动回落）。`prefers-reduced-motion: reduce` 下不触发。
+- **方案 D-2 Tooltip**（待定）：属新增能力（截断长标题 / 阅读进度气泡），需产品确认后再排；建议结合 Popover API + CSS Anchor Positioning 或复用 Obsidian 内置 tooltip。
+- 涉及：`src/hooks/useJustAddedHeadings.tsx`、`TocNavigator.tsx` / `NTocViewContent.tsx`（调用 hook + 透传）、`TocItem.tsx` + `TocItem.css`。
 
 ---
 

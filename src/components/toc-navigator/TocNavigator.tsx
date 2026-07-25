@@ -2,6 +2,7 @@ import { DndContext, closestCenter } from "@dnd-kit/core";
 import { useActiveHeadingScroll } from "@src/hooks/useActiveHeadingScroll";
 import { useDragSort } from "@src/hooks/useDragSort";
 import { useHeadingNumbering } from "@src/hooks/useHeadingNumbering";
+import { useJustAddedHeadings } from "@src/hooks/useJustAddedHeadings";
 import usePluginSettings from "@src/hooks/usePluginSettings";
 import { useResizableToc } from "@src/hooks/useResizableToc";
 import { useScrollProgress } from "@src/hooks/useScrollProgress";
@@ -88,6 +89,8 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 		() => getStableHeadingKeys(headings),
 		[headings],
 	);
+	// 方案 C：相对上次渲染净新增的标题，闪一下高亮
+	const justAddedKeys = useJustAddedHeadings(stableKeys);
 
 	const { handleMouseDragStart, isMouseDragging } = useResizableToc({
 		currentView,
@@ -327,6 +330,9 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 										collapsedHidden={
 											collapsedHiddenMap[index]
 										}
+										justAdded={justAddedKeys.has(
+											stableKeys[index],
+										)}
 										isCollapsedParent={isCollapsed(index)}
 										onToggleCollapse={toggleCollapsedAt}
 										enableDrag={
