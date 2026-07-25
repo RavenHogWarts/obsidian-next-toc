@@ -1,3 +1,15 @@
+# [2.4.0](https://github.com/Raven-Pensieve/obsidian-next-toc/compare/2.3.0...2.4.0) (2026-07-25)
+
+
+### Features
+
+* 动态标题注入高亮 ([491a3ea](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/491a3eae88345840912ac3d95adef2acfd7d735e))
+* 返回工具按钮的对称出场 ([fd489c9](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/fd489c92173314586b5c64fe8900be780203cab6))
+* 节点展开进场动画 + 稳定 key ([9545262](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/954526250ffa1d5f35eed4519827de926407fe3c))
+* 悬浮面板呼出/收起动画 ([73309d6](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/73309d6cbda8154b4966ee021b4d11cebc0a142d))
+* 折叠出场动画 ([4e10f20](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/4e10f203a1893d9134a618dfff9b02fa7015cb90))
+* toolbar 动效 ([3c6e2f6](https://github.com/Raven-Pensieve/obsidian-next-toc/commit/3c6e2f61410da8c74d1bf42b6e339cd092d93723))
+
 # [2.3.0](https://github.com/Raven-Pensieve/obsidian-next-toc/compare/2.2.1...2.3.0) (2026-07-03)
 
 
