@@ -313,9 +313,9 @@ CSS 经 `postcss-nesting` 处理后由 esbuild 打包（`scripts/esbuild.config.
   - 减弱动效：`prefers-reduced-motion: reduce` 下进出场均瞬时。
 - 涉及：`src/utils/getStableHeadingKeys.ts`、`src/hooks/useTocVisibility.tsx`、`src/hooks/useDragSort.tsx`、`src/hooks/useActiveHeadingScroll.tsx`、`src/components/toc-item/TocItem.tsx` + `TocItem.css`、`src/components/toc-navigator/TocNavigator.tsx`、`src/view/NTocViewContent.tsx`。
 
-**Phase 3 · 工具按钮出场（方案 D-1）+ 动效用户开关**
-- 方案 D-1（返回工具按钮的对称出场）；补齐 `animationLevel` / `enableMotion` 用户开关（[§6.2](#62-用户可控开关)），映射到根节点 class。（`prefers-reduced-motion` 无障碍基线已随 Phase 1 落地，此处补的是用户显式开关。）
-- 涉及：`src/components/toc-return-tools/*`、`src/settings/*` + i18n。
+**Phase 3 · 工具按钮出场（方案 D-1）✅ 已实现（待验证）+ 动效用户开关（待做）**
+- **D-1 工具按钮对称出场** ✅：`TocReturnTools` 展开按钮组从「条件渲染 + `slideIn` keyframe（仅进）」改为**常挂载 + `data-collapsed` 切换**，`display 0.22s allow-discrete` 出场 + `@starting-style` 进场（缩放淡入淡出），删除 `@keyframes slideIn`；随附 `prefers-reduced-motion` 守卫。涉及 `src/components/toc-return-tools/TocReturnTools.tsx` + `.css`。
+- **动效用户开关**（待做）：补 `animationLevel`（off / subtle / full）或 `enableMotion` 设置项（[§6.2](#62-用户可控开关)），映射到根节点 class，让用户可全局关停 A/B/D 的动画（当前仅系统「减弱动效」可关）。涉及 `src/settings/*`、`src/types/types.ts`、`migrateSettings`、i18n（en/zh/zh-TW/fr）。
 
 **Phase 4 · 动态高亮与 Tooltip（方案 C / D-2，依赖决策）**
 - 方案 C 新条目高亮（依赖 Phase 2 的稳定 key）；方案 D-2 Tooltip 需产品确认后再排。
