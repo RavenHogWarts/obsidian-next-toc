@@ -27,7 +27,8 @@
 			left: 0;
 			right: auto;
 			margin-left: 8px;
-			transform: translateX(-8px);
+			--NToc__content-rest-transform: translateX(-8px);
+			--NToc__content-enter-transform: translateX(-20px) scale(0.98);
 			gap: 3px;
 		}
 
@@ -67,7 +68,8 @@
 			right: 0;
 			left: auto;
 			margin-right: 8px;
-			transform: translateX(8px);
+			--NToc__content-rest-transform: translateX(8px);
+			--NToc__content-enter-transform: translateX(20px) scale(0.98);
 		}
 
 		.NToc__group-resize {
@@ -137,17 +139,33 @@
 .NToc__group-content {
 	position: absolute;
 	top: 0;
-	visibility: hidden;
 	opacity: 0;
-	transition: all 0.2s ease;
+	transform: var(--NToc__content-enter-transform, scale(0.98));
 	display: flex;
 	flex-direction: column;
 	pointer-events: none; /* 防止内容区域触发父元素的鼠标事件 */
+	transition:
+		opacity 0.2s ease,
+		transform 0.2s cubic-bezier(0.2, 0, 0, 1),
+		display 0.2s allow-discrete;
+
+	/* 收起态：从布局中移除，避免占位与误触；display 借助 allow-discrete 参与过渡 */
+	&:not(.NToc__group-content-expanded) {
+		display: none;
+	}
 
 	&.NToc__group-content-expanded {
 		opacity: 1;
-		visibility: visible;
+		transform: var(--NToc__content-rest-transform, none);
 		pointer-events: auto; /* 展开时恢复鼠标事件 */
+	}
+
+	/* 进场起始态：比静止位置更靠屏幕边缘、略缩小、透明，配合上面的过渡形成"从边缘滑入淡入" */
+	@starting-style {
+		&.NToc__group-content-expanded {
+			opacity: 0;
+			transform: var(--NToc__content-enter-transform, scale(0.98));
+		}
 	}
 
 	/* 使用扩展的 hover 区域来防止闪烁 */
@@ -374,3 +392,14 @@
 .modal .NToc__view {
 	display: none;
 }
+
+/* ========================================
+   减弱动效：尊重系统「prefers-reduced-motion: reduce」
+   关闭悬浮面板的进出场过渡，回退为瞬时显示/隐藏（即旧行为）。
+   注意：动画只是装饰层，不承载状态——关掉过渡后 display 立即翻转，功能不受影响。
+   ======================================== */
+/* @media (prefers-reduced-motion: reduce) {
+	.NToc__group-content {
+		transition: none;
+	}
+} */
