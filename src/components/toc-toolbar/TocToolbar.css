@@ -2,18 +2,25 @@
 	position: absolute;
 	top: -30px;
 	left: 50%;
-	transform: translateX(-50%);
-	display: flex;
+	/* 隐藏态 = 起始态：display:none 让不可见时既不占布局也不吃事件，
+	   修复此前 opacity:0 仍 pointer-events:auto 时按钮行「隐形可点击」的问题。
+	   显示由 .NToc__group-content 的 hover / toolbar-always 状态驱动
+	   （见 TocNavigator.css），进出场借 allow-discrete + @starting-style 对称过渡。 */
+	display: none;
 	align-items: center;
 	justify-content: center;
 	gap: 4px;
 	margin-bottom: 4px;
 	opacity: 0;
-	pointer-events: auto;
+	transform: translateX(-50%) translateY(-4px);
+	pointer-events: none;
 	z-index: 10;
-	transition: opacity 150ms ease;
+	transition:
+		opacity 150ms ease,
+		transform 150ms cubic-bezier(0.2, 0, 0, 1),
+		display 150ms allow-discrete;
 
-	/* 扩展可交互区域，防止闪烁 */
+	/* 扩展可交互区域，防止在按钮间移动时闪烁 */
 	&:before {
 		content: "";
 		position: absolute;
@@ -23,10 +30,12 @@
 		bottom: -5px;
 		z-index: -1;
 	}
+}
 
-	/* 当 toolbar 自身被 hover 时保持显示 */
-	&:hover {
-		opacity: 1;
+/* 减弱动效：进出场瞬时直出终态（display 立即翻转，无残留过渡） */
+@media (prefers-reduced-motion: reduce) {
+	.NToc__toc-toolbar {
+		transition: none;
 	}
 }
 

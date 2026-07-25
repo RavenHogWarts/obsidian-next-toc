@@ -182,8 +182,16 @@
 	&:hover,
 	&:before:hover {
 		.NToc__toc-toolbar {
+			display: flex;
 			opacity: 1;
+			transform: translateX(-50%);
 			pointer-events: auto;
+
+			/* 呼出起始态：略上移 + 透明，配合 allow-discrete 从 display:none 滑入淡入 */
+			@starting-style {
+				opacity: 0;
+				transform: translateX(-50%) translateY(-4px);
+			}
 		}
 	}
 
@@ -205,8 +213,15 @@
 .NToc__group-content-toolbar-always {
 	/* 展开状态下 toolbar 始终可见，不需要额外 hover */
 	&.NToc__group-content-expanded .NToc__toc-toolbar {
+		display: flex;
 		opacity: 1;
+		transform: translateX(-50%);
 		pointer-events: auto;
+
+		@starting-style {
+			opacity: 0;
+			transform: translateX(-50%) translateY(-4px);
+		}
 	}
 }
 
