@@ -10,7 +10,9 @@
 	line-height: 1.5;
 	min-height: 1.75rem; /* 28px -> rem */
 	margin: 0.1875rem 0; /* 3px -> rem */
-	transition: all 0.2s ease;
+	transition:
+		all 0.2s ease,
+		display 0.2s allow-discrete;
 	padding: 0.3vh 1vh 0.3vh 0.6vh;
 
 	&[data-actual-depth="0"] {
@@ -214,17 +216,35 @@
 	}
 }
 
-/* ===== 展开进场动画 =====
-   折叠的父节点被展开时，新挂载的子标题项向下淡入落位；切换文档 / 首次打开时整表
-   也会有一次轻微进场。依赖内容签名 React key（见 utils/getStableHeadingKeys）：
-   仅真正新挂载的项触发，编辑 / 滚动等不改变标题身份的场景不会误触发整表动画。
-   过渡复用容器已有的 `transition: all 0.2s ease`。
-   仅在系统未开启「减弱动效」时启用；@starting-style 不被支持的环境自动降级为瞬间出现。 */
+/* ===== 展开 / 折叠进出场动画（B-1 进场 + B-2 出场） =====
+   render-but-hide：被折叠祖先隐藏的后代项保留在 DOM，仅切换 display。
+   容器 transition 里的 `display 0.2s allow-discrete` 让 display 参与过渡：
+   - 折叠：opacity/transform 先动画到"向上淡出"，display 才切到 none（出场）；
+   - 展开 / 挂载：display 从 none→显示触发下方 @starting-style，从"向上淡出"过渡到静止（进场）。
+   依赖内容签名 React key（utils/getStableHeadingKeys）：仅身份真正变化的项才重挂载。
+   仅在系统未开启「减弱动效」时启用；不支持 @starting-style 的环境自动降级为瞬间显隐。 */
+
+/* 被折叠祖先隐藏：动画到"向上淡出"后从布局移除；同时作为出场过渡的目标态 */
+.NToc__toc-item-container[data-collapsed-hidden="true"] {
+	display: none;
+	opacity: 0;
+	transform: translateY(-4px);
+	pointer-events: none;
+}
+
 @media (prefers-reduced-motion: no-preference) {
+	/* 进场起始态：display:none→显示 / 首次挂载时的过渡起点 */
 	@starting-style {
-		.NToc__toc-item-container {
+		.NToc__toc-item-container:not([data-collapsed-hidden="true"]) {
 			opacity: 0;
 			transform: translateY(-4px);
 		}
+	}
+}
+
+/* 减弱动效：进出场都瞬时完成（display 立即翻转，不留过渡） */
+@media (prefers-reduced-motion: reduce) {
+	.NToc__toc-item-container {
+		transition: none;
 	}
 }

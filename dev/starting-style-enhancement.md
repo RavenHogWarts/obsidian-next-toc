@@ -300,15 +300,18 @@ CSS 经 `postcss-nesting` 处理后由 esbuild 打包（`scripts/esbuild.config.
 - 内容：`visibility` 切换改为 `display` 切换 + 方向滑入 / 缩放淡入（进出场对称）；随附 `prefers-reduced-motion` 守卫。
 - 涉及：`src/components/toc-navigator/TocNavigator.css`（纯 CSS，无需改 `.tsx`）。
 
-**Phase 2 · 大纲节点展开/折叠（方案 B）· 价值最高** — B-1 ✅ 已实现（待验证）；B-2 待做
-- **前置依赖（本次代码分析新增）**：
-  1. **稳定 React key** ✅ 已实现：新增 `src/utils/getStableHeadingKeys.ts`（内容签名 `${level}::${heading}::${occurrence}`），`TocNavigator.tsx` / `NTocViewContent.tsx` 的列表 key 由 `toc-item-${index}-${start.line}` 改为该稳定 key。**此项对方案 C 亦为前置，现已就绪**。
-  2. **拖拽命中改造**（B-2 才需要）：`useDragSort` 的 `resolveDropTarget`（`src/hooks/useDragSort.tsx:109`）按 `getBoundingClientRect()` 扫描 `[data-index]`。若用 render-but-hide（`display:none`）实现"折叠出场动画"，隐藏项的零高度矩形会污染落点计算，需在扫描时跳过零高度项。
-- 拆两步交付：
-  - **B-1 展开进场** ✅ 已实现：稳定 key + `TocItem` 挂载即 `@starting-style` 淡入落位（`translateY(-4px)` → 静止，复用容器已有 `transition: all 0.2s ease`）。仅进场，零拖拽 / 性能风险。同时惠及悬浮面板与侧边栏（共用 `TocItem`）。
-  - **B-2 折叠出场**（待做）：render-but-hide + `allow-discrete` + 上述拖拽命中改造（区分 skipped 与 collapsed-hidden，先基准测试大文档 DOM 成本）。
-- **B-1 已知取舍**：① 切换文档 / 首次打开会有一次整表轻微进场（一次性，尚可）；② 编辑某个标题的**文本**会使该项 key 变化、单独重挂载并再播一次进场（局部、克制，属可接受的"编辑反馈"，与方案 C 同源）。若后续觉得扰人，用"作用域标记（仅用户主动展开才播）"细化，见 [§5](#五能力边界诚实说明不能做什么) 第 3 点。
-- 涉及：新增稳定 key 工具（`src/utils/getStableHeadingKeys.ts`）、`TocNavigator.tsx` / `NTocViewContent.tsx`（key）、`TocItem.css`（进场）；B-2 另需 `useTocVisibility.tsx`、`TocItem.tsx`、`useDragSort.tsx`。
+**Phase 2 · 大纲节点展开/折叠（方案 B）· 价值最高** — B-1 / B-2 ✅ 已实现（待验证）
+- **前置依赖（本次代码分析新增，均已就绪）**：
+  1. **稳定 React key** ✅：新增 `src/utils/getStableHeadingKeys.ts`（内容签名 `${level}::${heading}::${occurrence}`），两条渲染路径的列表 key 由 `toc-item-${index}-${start.line}` 改为该稳定 key。**此项对方案 C 亦为前置，现已就绪**。
+  2. **拖拽 / 滚动命中改造** ✅：`useDragSort.resolveDropTarget`、`useActiveHeadingScroll`、`handleLocateActiveHeading` 的 DOM 扫描均加 `:not([data-collapsed-hidden="true"])`，排除 `display:none` 的隐藏项（其零高度矩形会污染落点判定 / 误滚动）。
+- 两步交付：
+  - **B-1 展开进场** ✅：`@starting-style` 淡入落位（`translateY(-4px)` → 静止）。
+  - **B-2 折叠出场** ✅：**render-but-hide** —— `useTocVisibility` 新增 `renderMap`（未跳过即渲染，含被折叠祖先隐藏的项）与 `collapsedHiddenMap`（`display:none` 标记）；两组件改渲染 `renderMap`（`visibilityMap` 仍供指示条 / 拖拽 id），`TocItem` 透出 `data-collapsed-hidden`；`TocItem.css` 以 `transition: … , display 0.2s allow-discrete` + `[data-collapsed-hidden="true"]` 目标态实现出场，展开 / 挂载走同一 `@starting-style` 进场。
+- **已知取舍**：
+  - **DOM 成本**：render-but-hide 让被折叠的后代**保留在 DOM**（`display:none`，且已渲染过 Markdown），折叠不再卸载节点——超大文档 + 大范围「全部折叠」时常驻节点数偏高。缓解（未做）：仅对最近切换的子树 render-but-hide、其余仍过滤；或 `content-visibility`。**建议在大文档上验证**。
+  - **编辑反馈**：编辑标题文本会让该项 key 变、单独重播一次进场（局部克制，与方案 C 同源）。
+  - 减弱动效：`prefers-reduced-motion: reduce` 下进出场均瞬时。
+- 涉及：`src/utils/getStableHeadingKeys.ts`、`src/hooks/useTocVisibility.tsx`、`src/hooks/useDragSort.tsx`、`src/hooks/useActiveHeadingScroll.tsx`、`src/components/toc-item/TocItem.tsx` + `TocItem.css`、`src/components/toc-navigator/TocNavigator.tsx`、`src/view/NTocViewContent.tsx`。
 
 **Phase 3 · 工具按钮出场（方案 D-1）+ 动效用户开关**
 - 方案 D-1（返回工具按钮的对称出场）；补齐 `animationLevel` / `enableMotion` 用户开关（[§6.2](#62-用户可控开关)），映射到根节点 class。（`prefers-reduced-motion` 无障碍基线已随 Phase 1 落地，此处补的是用户显式开关。）

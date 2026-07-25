@@ -13,14 +13,19 @@ interface UseTocVisibilityParams {
 }
 
 interface UseTocVisibilityReturn {
+	/** 完全可见：未跳过、且无折叠祖先 */
 	visibilityMap: boolean[];
+	/** 应作为列表项渲染：未跳过（含被折叠祖先隐藏的项，供出场动画保留在 DOM） */
+	renderMap: boolean[];
+	/** 已渲染但因折叠祖先需 display:none 的项（B-2 出场动画标记） */
+	collapsedHiddenMap: boolean[];
 	shouldShowToc: boolean;
 }
 
 /**
  * 计算 TOC 可见性的 Hook
  * @param params 参数对象
- * @returns 可见性映射和是否应该显示 TOC
+ * @returns 可见性 / 渲染 / 折叠隐藏映射，以及是否应该显示 TOC
  */
 export const useTocVisibility = ({
 	headings,
@@ -28,16 +33,26 @@ export const useTocVisibility = ({
 	skipHeadingLevels,
 	showWhenSingleHeading,
 }: UseTocVisibilityParams): UseTocVisibilityReturn => {
-	const visibilityMap = useMemo(() => {
-		const result: boolean[] = new Array(headings.length).fill(true);
+	const { visibilityMap, renderMap, collapsedHiddenMap } = useMemo(() => {
+		const visibility: boolean[] = new Array<boolean>(
+			headings.length,
+		).fill(true);
+		const render: boolean[] = new Array<boolean>(headings.length).fill(
+			true,
+		);
+		const collapsedHidden: boolean[] = new Array<boolean>(
+			headings.length,
+		).fill(false);
 		const collapsedLevels: number[] = [];
 
 		for (let i = 0; i < headings.length; i++) {
 			const level = headings[i].level;
 
-			// 如果当前标题层级在跳过列表中，则隐藏
+			// 跳过层级：完全不渲染
 			if (skipHeadingLevels.includes(level)) {
-				result[i] = false;
+				visibility[i] = false;
+				render[i] = false;
+				collapsedHidden[i] = false;
 				continue;
 			}
 
@@ -49,8 +64,11 @@ export const useTocVisibility = ({
 				collapsedLevels.pop();
 			}
 
-			// 如果仍存在折叠祖先，则当前项不可见
-			result[i] = collapsedLevels.length === 0;
+			// 存在折叠祖先 → 渲染但隐藏（display:none），保留在 DOM 供出场动画
+			const underCollapsed = collapsedLevels.length > 0;
+			collapsedHidden[i] = underCollapsed;
+			visibility[i] = !underCollapsed;
+			render[i] = true;
 
 			// 若当前项为折叠父节点，则把其层级压栈，影响其后代
 			if (isCollapsed(i)) {
@@ -58,7 +76,11 @@ export const useTocVisibility = ({
 			}
 		}
 
-		return result;
+		return {
+			visibilityMap: visibility,
+			renderMap: render,
+			collapsedHiddenMap: collapsedHidden,
+		};
 	}, [headings, isCollapsed, skipHeadingLevels]);
 
 	const shouldShowToc = useMemo(() => {
@@ -90,6 +112,8 @@ export const useTocVisibility = ({
 
 	return {
 		visibilityMap,
+		renderMap,
+		collapsedHiddenMap,
 		shouldShowToc,
 	};
 };

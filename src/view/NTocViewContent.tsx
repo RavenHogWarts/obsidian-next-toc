@@ -53,18 +53,27 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 	);
 
 	// 使用可见性计算 Hook
-	const { visibilityMap, shouldShowToc } = useTocVisibility({
-		headings,
-		isCollapsed,
-		skipHeadingLevels: settings.render.skipHeadingLevels,
-		showWhenSingleHeading: settings.render.showWhenSingleHeading,
-	});
+	const { visibilityMap, renderMap, collapsedHiddenMap, shouldShowToc } =
+		useTocVisibility({
+			headings,
+			isCollapsed,
+			skipHeadingLevels: settings.render.skipHeadingLevels,
+			showWhenSingleHeading: settings.render.showWhenSingleHeading,
+		});
 	const visibleItems = useMemo(
 		() =>
 			headings.flatMap((heading, index) =>
 				visibilityMap[index] ? [{ heading, index }] : [],
 			),
 		[headings, visibilityMap],
+	);
+	// 渲染集：含被折叠祖先隐藏的项（display:none，供 B-2 出场动画），仅排除跳过层级
+	const renderItems = useMemo(
+		() =>
+			headings.flatMap((heading, index) =>
+				renderMap[index] ? [{ heading, index }] : [],
+			),
+		[headings, renderMap],
 	);
 	// 内容签名 key：与行号解耦，避免编辑 / 排序时误触发进场动画
 	const stableKeys = useMemo(
@@ -154,7 +163,7 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 						className="NToc__view-content-items"
 						onMouseDown={onContainerMouseDown}
 					>
-						{visibleItems.map(({ heading, index }) => (
+						{renderItems.map(({ heading, index }) => (
 							<TocItem
 								key={
 									stableKeys[index] ??
@@ -173,6 +182,7 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 									index,
 								)}
 								headingChildren={hasChildren(index, headings)}
+								collapsedHidden={collapsedHiddenMap[index]}
 								isCollapsedParent={isCollapsed(index)}
 								onToggleCollapse={toggleCollapsedAt}
 								enableDrag={settings.render.enableDragSort}
