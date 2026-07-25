@@ -106,8 +106,11 @@ export const useDragSort = (
 			const container = containerRef?.current ?? null;
 			if (!container) return null;
 
-			const elements =
-				container.querySelectorAll<HTMLElement>("[data-index]");
+			// 排除被折叠隐藏的项：display:none 元素 getBoundingClientRect 全为 0，
+			// 会污染按 top 排序的落点判定
+			const elements = container.querySelectorAll<HTMLElement>(
+				'[data-index]:not([data-collapsed-hidden="true"])',
+			);
 
 			const rects: ItemRectSnapshot[] = [];
 			elements.forEach((element) => {

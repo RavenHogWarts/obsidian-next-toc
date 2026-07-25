@@ -37,8 +37,9 @@ export const useActiveHeadingScroll = (
 		lastScrollTargetRef.current = scrollTarget;
 
 		const cancelFns = containers.map((container) => {
+			// 目标若被折叠隐藏（display:none）则不滚动，保持既有行为
 			const activeHeadingEl = container.querySelector(
-				`[data-index="${scrollTarget}"]`,
+				`[data-index="${scrollTarget}"]:not([data-collapsed-hidden="true"])`,
 			) as HTMLElement;
 
 			if (activeHeadingEl) {

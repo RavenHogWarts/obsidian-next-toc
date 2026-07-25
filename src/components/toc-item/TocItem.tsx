@@ -17,6 +17,7 @@ interface TocItemProps {
 	headingActive: boolean;
 	headingVisible: boolean;
 	headingChildren: boolean;
+	collapsedHidden?: boolean;
 	isCollapsedParent: boolean;
 	onToggleCollapse: (index: number) => void;
 	// 拖拽排序相关
@@ -39,6 +40,7 @@ export const TocItem: FC<TocItemProps> = ({
 	headingActive,
 	headingVisible,
 	headingChildren,
+	collapsedHidden = false,
 	isCollapsedParent,
 	onToggleCollapse,
 	enableDrag = false,
@@ -125,6 +127,7 @@ export const TocItem: FC<TocItemProps> = ({
 			data-start-line={heading.position.start.line}
 			data-active={headingActive}
 			data-visible={headingVisible}
+			data-collapsed-hidden={collapsedHidden}
 			{...(enableDrag ? attributes : {})}
 			{...(enableDrag ? listeners : {})}
 			onClick={() => {

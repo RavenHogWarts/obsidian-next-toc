@@ -68,18 +68,20 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 		settings.render.numberingStartIndex,
 	);
 
-	const { visibilityMap, shouldShowToc } = useTocVisibility({
-		headings,
-		isCollapsed,
-		skipHeadingLevels: settings.render.skipHeadingLevels,
-		showWhenSingleHeading: settings.render.showWhenSingleHeading,
-	});
-	const visibleItems = useMemo(
+	const { visibilityMap, renderMap, collapsedHiddenMap, shouldShowToc } =
+		useTocVisibility({
+			headings,
+			isCollapsed,
+			skipHeadingLevels: settings.render.skipHeadingLevels,
+			showWhenSingleHeading: settings.render.showWhenSingleHeading,
+		});
+	// 渲染集：含被折叠祖先隐藏的项（display:none，供 B-2 出场动画），仅排除跳过层级
+	const renderItems = useMemo(
 		() =>
 			headings.flatMap((heading, index) =>
-				visibilityMap[index] ? [{ heading, index }] : [],
+				renderMap[index] ? [{ heading, index }] : [],
 			),
-		[headings, visibilityMap],
+		[headings, renderMap],
 	);
 	// 内容签名 key：与行号解耦，避免编辑 / 排序时误触发进场动画
 	const stableKeys = useMemo(
@@ -135,8 +137,8 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 		if (!container) return;
 		if (activeHeadingIndex < 0 || activeHeadingIndex >= headings.length)
 			return;
-		const activeHeadingEl = container.querySelector(
-			`[data-index="${activeHeadingIndex}"]`,
+		const activeHeadingEl = container.querySelector<HTMLElement>(
+			`[data-index="${activeHeadingIndex}"]:not([data-collapsed-hidden="true"])`,
 		);
 		if (activeHeadingEl) {
 			smoothScroll(container, activeHeadingEl);
@@ -296,7 +298,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 								onDragCancel={handleDragCancel}
 								sensors={sensors}
 							>
-								{visibleItems.map(({ heading, index }) => (
+								{renderItems.map(({ heading, index }) => (
 									<TocItem
 										key={
 											stableKeys[index] ??
@@ -322,6 +324,9 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 											index,
 											headings,
 										)}
+										collapsedHidden={
+											collapsedHiddenMap[index]
+										}
 										isCollapsedParent={isCollapsed(index)}
 										onToggleCollapse={toggleCollapsedAt}
 										enableDrag={
