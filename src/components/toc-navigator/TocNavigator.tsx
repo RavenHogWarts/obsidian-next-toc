@@ -10,6 +10,7 @@ import { useTocCollapse } from "@src/hooks/useTocCollapse";
 import { useTocExpansion } from "@src/hooks/useTocExpansion";
 import { useTocVisibility } from "@src/hooks/useTocVisibility";
 import calculateActualDepth from "@src/utils/calculateActualDepth";
+import { getStableHeadingKeys } from "@src/utils/getStableHeadingKeys";
 import hasChildren from "@src/utils/hasChildren";
 import smoothScroll from "@src/utils/smoothScroll";
 import { HeadingCache, MarkdownView } from "obsidian";
@@ -80,6 +81,11 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 			),
 		[headings, visibilityMap],
 	);
+	// 内容签名 key：与行号解耦，避免编辑 / 排序时误触发进场动画
+	const stableKeys = useMemo(
+		() => getStableHeadingKeys(headings),
+		[headings],
+	);
 
 	const { handleMouseDragStart, isMouseDragging } = useResizableToc({
 		currentView,
@@ -131,7 +137,7 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 			return;
 		const activeHeadingEl = container.querySelector(
 			`[data-index="${activeHeadingIndex}"]`,
-		) as HTMLElement | null;
+		);
 		if (activeHeadingEl) {
 			smoothScroll(container, activeHeadingEl);
 		}
@@ -292,7 +298,10 @@ export const TocNavigator: FC<TocNavigatorProps> = ({
 							>
 								{visibleItems.map(({ heading, index }) => (
 									<TocItem
-										key={`toc-item-${index}-${heading.position.start.line}`}
+										key={
+											stableKeys[index] ??
+											`toc-item-${index}-${heading.position.start.line}`
+										}
 										currentView={currentView}
 										heading={heading}
 										headingIndex={index}

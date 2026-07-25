@@ -213,3 +213,18 @@
 		z-index: 1;
 	}
 }
+
+/* ===== 展开进场动画 =====
+   折叠的父节点被展开时，新挂载的子标题项向下淡入落位；切换文档 / 首次打开时整表
+   也会有一次轻微进场。依赖内容签名 React key（见 utils/getStableHeadingKeys）：
+   仅真正新挂载的项触发，编辑 / 滚动等不改变标题身份的场景不会误触发整表动画。
+   过渡复用容器已有的 `transition: all 0.2s ease`。
+   仅在系统未开启「减弱动效」时启用；@starting-style 不被支持的环境自动降级为瞬间出现。 */
+@media (prefers-reduced-motion: no-preference) {
+	@starting-style {
+		.NToc__toc-item-container {
+			opacity: 0;
+			transform: translateY(-4px);
+		}
+	}
+}
