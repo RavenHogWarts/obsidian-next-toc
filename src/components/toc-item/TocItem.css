@@ -248,3 +248,25 @@
 		transition: none;
 	}
 }
+
+/* ===== 动态注入高亮（方案 C）=====
+   相对上一次渲染"净新增"的标题项（键入新标题）闪一下强调色，作为"已捕捉修改"的反馈。
+   data-just-added 由内容签名 diff 驱动（useJustAddedHeadings），与进场 / 折叠动画解耦；
+   用 inset box-shadow 作叠层（位于文字之下、不改 background、不占用 ::after，
+   故与 hover/active 及拖拽落点指示互不冲突），动画播完自动回落、无需 forwards。
+   仅在未开启「减弱动效」时启用。 */
+@media (prefers-reduced-motion: no-preference) {
+	.NToc__toc-item-container[data-just-added="true"] {
+		animation: NToc-just-added 0.75s ease;
+	}
+}
+
+@keyframes NToc-just-added {
+	from {
+		box-shadow: inset 0 0 0 999px
+			color-mix(in srgb, var(--interactive-accent) 26%, transparent);
+	}
+	to {
+		box-shadow: inset 0 0 0 999px transparent;
+	}
+}
