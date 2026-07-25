@@ -103,14 +103,15 @@ export const TocReturnTools: FC<TocReturnToolsProps> = ({
 				<Component size={24} />
 			</button>
 
-			{/* 展开的工具按钮 */}
-			{isExpanded && enabledTools.length > 0 && (
+			{/* 展开的工具按钮：常挂载，靠 data-collapsed 切换，进出场对称 */}
+			{enabledTools.length > 0 && (
 				<div
 					className={`NToc__tool-buttons ${
 						settings.toc.position === "left"
 							? "NToc__tool-expand-right"
 							: "NToc__tool-expand-left"
 					}`}
+					data-collapsed={!isExpanded}
 					aria-label={LL.tools.returnNavigation()}
 				>
 					{enabledTools.map((tool) => {

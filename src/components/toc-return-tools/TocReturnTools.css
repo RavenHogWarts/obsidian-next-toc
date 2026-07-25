@@ -45,7 +45,18 @@
 	display: flex;
 	align-items: center;
 	gap: 8px;
-	animation: slideIn 0.3s ease;
+	transition:
+		opacity 0.22s ease,
+		transform 0.22s ease,
+		display 0.22s allow-discrete;
+}
+
+/* 收起态：淡出缩小后从布局移除（display 借助 allow-discrete 参与过渡） */
+.NToc__tool-buttons[data-collapsed="true"] {
+	display: none;
+	opacity: 0;
+	transform: scale(0.8);
+	pointer-events: none;
 }
 
 .NToc__tool-buttons.NToc__tool-expand-right {
@@ -78,14 +89,21 @@
 	}
 }
 
-@keyframes slideIn {
-	from {
-		opacity: 0;
-		transform: scale(0.8);
+/* ===== 工具按钮进出场（对称）=====
+   常挂载 + data-collapsed 切换：展开走 @starting-style 进场，收起走 allow-discrete 出场。
+   仅在未开启「减弱动效」时启用；不支持 @starting-style 的环境自动降级为瞬间显隐。 */
+@media (prefers-reduced-motion: no-preference) {
+	@starting-style {
+		.NToc__tool-buttons:not([data-collapsed="true"]) {
+			opacity: 0;
+			transform: scale(0.8);
+		}
 	}
-	to {
-		opacity: 1;
-		transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.NToc__tool-buttons {
+		transition: none;
 	}
 }
 
