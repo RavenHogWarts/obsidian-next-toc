@@ -12,6 +12,7 @@ import useSettingsStore from "@src/hooks/useSettingsStore";
 import { useTocCollapse } from "@src/hooks/useTocCollapse";
 import { useTocVisibility } from "@src/hooks/useTocVisibility";
 import calculateActualDepth from "@src/utils/calculateActualDepth";
+import { getStableHeadingKeys } from "@src/utils/getStableHeadingKeys";
 import hasChildren from "@src/utils/hasChildren";
 import { HeadingCache, MarkdownView } from "obsidian";
 import { FC, useEffect, useMemo, useRef } from "react";
@@ -64,6 +65,11 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 				visibilityMap[index] ? [{ heading, index }] : [],
 			),
 		[headings, visibilityMap],
+	);
+	// 内容签名 key：与行号解耦，避免编辑 / 排序时误触发进场动画
+	const stableKeys = useMemo(
+		() => getStableHeadingKeys(headings),
+		[headings],
 	);
 	const scrollRefs = useMemo(() => [listItemsRef], []);
 
@@ -150,7 +156,10 @@ export const NTocViewContent: FC<NTocViewContentProps> = ({
 					>
 						{visibleItems.map(({ heading, index }) => (
 							<TocItem
-								key={`toc-item-${index}-${heading.position.start.line}`}
+								key={
+									stableKeys[index] ??
+									`toc-item-${index}-${heading.position.start.line}`
+								}
 								currentView={currentView}
 								heading={heading}
 								headingIndex={index}
