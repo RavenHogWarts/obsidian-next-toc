@@ -140,13 +140,16 @@
 	vertical-align: baseline;
 }
 
+.NToc__toc-item-text.markdown-rendered span {
+	display: inline-flex;
+	align-items: center;
+}
+
 .NToc__toc-item-text.markdown-rendered p,
-.NToc__toc-item-text.markdown-rendered span,
 .NToc__toc-item-text.markdown-rendered em,
 .NToc__toc-item-text.markdown-rendered strong,
 .NToc__toc-item-text.markdown-rendered a,
 .NToc__toc-item-text.markdown-rendered code {
-	display: inline;
 	margin: 0;
 	line-height: 1.5;
 }
@@ -157,6 +160,7 @@
 .NToc__toc-item-text.markdown-rendered .katex,
 .NToc__toc-item-text.markdown-rendered .math,
 .NToc__toc-item-text.markdown-rendered .math-inline {
+	display: inline-flex;
 	height: 1em;
 	max-height: 1.2em;
 	vertical-align: -0.1em;
